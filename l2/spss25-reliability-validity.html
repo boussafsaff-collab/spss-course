@@ -1228,20 +1228,28 @@
   var $=function(x){return document.getElementById(x)};
   var CLS={ok:'p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-xs sm:text-sm text-emerald-800 dark:text-emerald-300',
     warn:'p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-300 dark:border-red-800 text-xs sm:text-sm text-red-800 dark:text-red-300',
+    rev:'p-3 rounded-lg text-xs sm:text-sm att-rev',
     info:'p-3 rounded-lg bg-sky-50 dark:bg-sky-950/40 border border-sky-300 dark:border-sky-800 text-xs sm:text-sm text-sky-800 dark:text-sky-300'};
   function note(h,k){var n=$('att-lock-note');if(n){n.innerHTML=h;n.className=CLS[k||'ok'];}}
   function esc(t){var e=document.createElement('span');e.textContent=t;return e.innerHTML;}
+  (function(){if(document.getElementById('rv46-css'))return;var s=document.createElement('style');s.id='rv46-css';s.textContent='.att-rev{background:#fffbeb;border:2px solid #f59e0b;color:#78350f;line-height:1.7}.dark .att-rev,html.dark .att-rev{background:#3b2405;border-color:#d97706;color:#fde68a}.att-rev b.rv46{font-size:1.08em}';document.head.appendChild(s);})();
+  function dmyT(){var d=new Date();return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();}
+  function rvTxt(st){var dn=st.dn?'<div style="margin-top:6px" id="att-done">✅ أدّيت هذا التقييم'+(st.sc!==''&&st.sc!=null?': <bdi dir="ltr">'+esc(st.sc+' / '+st.tt)+'</bdi>':'')+'، ولا يمكن إعادته.</div>':'';if(st.md==='review_past'||st.mode==='L')return '<b class="rv46" id="att-review" data-md="review_past">🔒 دخول للمراجعة فقط</b><br>انقضى تاريخ المحاضرة'+(st.dt?' (<bdi dir="ltr">'+esc(st.dt)+'</bdi>)':'')+'؛ هذا الدخول للمراجعة فقط ولا يُحتسب حضوراً، ولا يمكن إجراء التقييم.'+dn;if(st.md==='review_attended')return '<b class="rv46" id="att-review" data-md="review_attended">🔒 دخول للمراجعة فقط</b><br>حضورك مسجَّل مسبقاً في هذه الحصة'+(st.hh?' (الساعة <bdi dir="ltr">'+esc(st.hh)+'</bdi>)':'')+'؛ لن يُسجَّل مرة أخرى.'+dn;return '';}
   function noSlides(){var b=$('deck-btn');if(b){b.disabled=true;b.onclick=null;b.removeAttribute('onclick');b.innerHTML='<i class="fa-solid fa-lock ml-2"></i>عرض الشرائح غير متاح';}var s=$('mod-slides');if(s){var p=s.querySelector('p');if(p)p.textContent='الشرائح متاحة يوم إلقاء المحاضرة فقط';}window.openDeck=function(){};}
+  function paint(st){var who=st.nom?' <bdi dir="ltr">'+esc((st.nom+' '+st.prenom).trim())+'</bdi>'+(st.grp?' (الفوج '+esc(st.grp)+')':''):'';var rv=rvTxt(st);
+    if(st.mode==='L'){noSlides();note(rv+'<div style="margin-top:4px">'+who+' يمكنك الاطلاع على محتوى المحاضرة أدناه دون الشرائح.</div>','rev');}
+    else if(rv)note(rv+'<div style="margin-top:4px">'+who+' محتوى الحصة متاح أدناه للمراجعة.</div>','rev');
+    else note('<i class="fa-solid fa-circle-check ml-1 text-emerald-600"></i> تم تسجيل حضورك'+who+(st.hh?' (الساعة '+esc(st.hh)+')':'')+'. محتوى الحصة متاح الآن أدناه.','ok');}
+  function recheck(sv){if(!sv||!/^\d{6,9}$/.test(String(sv.bac||'')))return;try{fetch(U,{method:'POST',body:new URLSearchParams({bac:sv.bac,code:sv.code||'',lecture:LECN,dry:'1'})}).then(function(r){return r.text()}).then(function(x){var p=String(x).trim().split('|');if(p[0]==='OK')p.splice(1,0,'');else if(p[0]!=='DUPLICATE')return;var md=p[8]||'',dn=p[9]==='1';if(md!=='review_attended'&&md!=='review_past')return;if(md===sv.md&&dn===!!sv.dn)return;sv.md=md;sv.dn=dn;sv.sc=p[10]||'';sv.tt=p[11]||'';if(p[1])sv.hh=p[1];if(p[6]==='L')sv.mode='L';if(p[7])sv.dt=p[7];try{localStorage.setItem(KEY,JSON.stringify(sv))}catch(e){}paint(sv);try{window.lqRefresh&&window.lqRefresh();}catch(e){}}).catch(function(){});}catch(e){}}
   function unlock(st){document.body.classList.remove('att-locked');var w=$('att-frame-wrap');if(w)w.style.display='none';
     var who=st.nom?' <bdi dir="ltr">'+esc((st.nom+' '+st.prenom).trim())+'</bdi>'+(st.grp?' (الفوج '+esc(st.grp)+')':''):'';
-    if(st.mode==='L'){noSlides();note('<i class="fa-solid fa-triangle-exclamation ml-1"></i> المحاضرة أُلقيت يوم '+esc(st.dt||'')+'، وسيتم تسجيلكم كغائب عن المحاضرة.'+who+' يمكنك الاطلاع على محتوى المحاضرة أدناه دون الشرائح.','warn');}
-    else note('<i class="fa-solid fa-circle-check ml-1 text-emerald-600"></i> تم تسجيل حضورك'+who+(st.hh?' (الساعة '+esc(st.hh)+')':'')+'. محتوى الحصة متاح الآن أدناه.','ok');}
+paint(st);}
   try{localStorage.removeItem('dk-prof')}catch(e){}
   function profOn(){document.body.classList.remove('att-locked');var w=$('att-frame-wrap');if(w)w.style.display='none';note('<i class="fa-solid fa-chalkboard-user ml-1"></i> وضع الأستاذ: تم تخطي تسجيل الحضور، ويمكنك التحكم في الشرائح.','info');}
   var pb=$('prof-btn');if(pb)pb.addEventListener('click',function(){var k=prompt('أدخل الرمز السري للأستاذ');if(!k)return;pb.disabled=true;fetch(U,{method:'POST',body:new URLSearchParams({action:'checkkey',key:k})}).then(function(r){return r.text()}).then(function(x){pb.disabled=false;if(String(x).indexOf('OK')===0){sessionStorage.setItem('dk-prof',k);location.reload();}else alert('الرمز غير صحيح');}).catch(function(){pb.disabled=false;alert('تعذّر الاتصال')});});
   try{ if(sessionStorage.getItem('dk-prof')){profOn();return;} }catch(e){}
   // المتصفح يتذكر حالة التسجيل
-  try{ var sv=JSON.parse(localStorage.getItem(KEY)||'null'); if(sv&&sv.mode){unlock(sv);return;} if(localStorage.getItem(OLD)==='1'){unlock({mode:'P'});return;} }catch(e){}
+  try{ var sv=JSON.parse(localStorage.getItem(KEY)||'null'); if(sv&&sv.mode){unlock(sv);recheck(sv);return;} if(localStorage.getItem(OLD)==='1'){unlock({mode:'P'});return;} }catch(e){}
   document.body.classList.add('att-locked');
   var fm=$('att-form'); if(!fm){unlock({mode:'P'});return;}
   fm.addEventListener('submit',function(ev){ev.preventDefault();var m=$('att-msg'),b=$('att-btn');var d=new FormData(fm);
@@ -1257,9 +1265,9 @@
       if(p[0]==='NO_ROSTER'){bad('قوائم الطلبة غير مهيّأة بعد. أبلغ الأستاذ.');return;}
       if(p[0]==='OK')p.splice(1,0,'');else if(p[0]!=='DUPLICATE'){bad('الخادم مشغول، أعد المحاولة.');return;}
       // p: الحالة، الساعة، اللقب، الاسم، التخصص، الفوج، P/L، التاريخ
-      var st={bac:bac,hh:p[1]||'',nom:p[2]||'',prenom:p[3]||'',sp:p[4]||'',grp:p[5]||'',mode:p[6]==='L'?'L':'P',dt:p[7]||''};
+      var st={bac:bac,hh:p[1]||'',nom:p[2]||'',prenom:p[3]||'',sp:p[4]||'',grp:p[5]||'',mode:p[6]==='L'?'L':'P',dt:p[7]||'',md:p[8]||'',dn:p[9]==='1',sc:p[10]||'',tt:p[11]||''};
       try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}
-      unlock(st);var t=$('mod-intro');if(t)setTimeout(function(){t.scrollIntoView({behavior:'smooth'});},1200);
+      unlock(st);try{window.lqRefresh&&window.lqRefresh();}catch(e){}var t=$('mod-intro');if(t)setTimeout(function(){t.scrollIntoView({behavior:'smooth'});},1200);
     }).catch(function(){bad('تعذّر الاتصال، تحقق من الإنترنت وأعد المحاولة.');});});
 })();
 </script>

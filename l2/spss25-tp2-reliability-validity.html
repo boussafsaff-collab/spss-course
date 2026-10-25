@@ -230,11 +230,15 @@ function fs(){var r=d.requestFullscreen||d.webkitRequestFullscreen;if(r&&!docume
 SCR.forEach(function(x){var e=$(x);['touchstart','touchend','click'].forEach(function(t){e.addEventListener(t,function(ev){ev.stopPropagation();})});});
 function dkOpen(){d.classList.add('on');document.body.style.overflow='hidden';}
 function dkClose(){d.classList.remove('on','show');document.body.style.overflow='';try{if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen();}catch(e){}}
-window.qzOpen=window.qzLogin=function(){if(st&&!st.done){resume();return;}var sv=null;try{sv=JSON.parse(localStorage.getItem(KL)||'null')}catch(e){}if(sv&&sv.f&&sv.f.bac&&!sessionStorage.getItem('dk-prof')){dkOpen();fs();if(sv.mode==='L'){lateGo(sv,true);return;}DUP=null;show('qz-login');$('qz-lmsg').style.color='#cbd5e1';$('qz-lmsg').textContent='جارٍ التحقق…';status(sv.f);return;}dkOpen();fs();show('qz-login');setTimeout(function(){ori('portrait')},400);};
+window.qzOpen=window.qzLogin=function(){if(st&&!st.done){resume();return;}var sv=null;try{sv=JSON.parse(localStorage.getItem(KL)||'null')}catch(e){}if(sv&&sv.f&&sv.f.bac&&!sessionStorage.getItem('dk-prof')){dkOpen();fs();if(isRv(sv)){lateGo(sv,true);return;}DUP=null;show('qz-login');$('qz-lmsg').style.color='#cbd5e1';$('qz-lmsg').textContent='جارٍ التحقق…';rchk(sv,function(s2){if(isRv(s2)){lateGo(s2,true);return;}status(s2.f);});return;}dkOpen();fs();show('qz-login');setTimeout(function(){ori('portrait')},400);};
 try{localStorage.removeItem('dk-prof')}catch(e){}window.qzProf=function(){var k=prompt('أدخل الرمز السري للأستاذ');if(!k)return;
  fetch(U,{method:'POST',body:new URLSearchParams({action:'checkkey',key:k})}).then(function(r){return r.text()}).then(function(x){if(x.indexOf('OK')===0){sessionStorage.setItem('dk-prof',k);try{sessionStorage.setItem('dk-open','1')}catch(e){}location.reload();}else alert('الرمز غير صحيح');}).catch(function(){alert('تعذّر الاتصال')});};
 $('qz-cancel').onclick=function(){show(null);dkClose();};
 function bad(m,t){var g=$('qz-go');g.disabled=false;m.style.color='#fca5a5';m.textContent=t;}
+function dmyT(){var d=new Date();return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();}
+function esc(t){var e=document.createElement('span');e.textContent=t==null?'':String(t);return e.innerHTML;}
+function isRv(sv){return sv.mode==='L'||sv.md==='review_past'||(sv.md==='review_attended'&&!!sv.dt&&sv.dt!==dmyT());}
+function rchk(sv,cb){var done=0,fin=function(){if(!done){done=1;cb(sv);}};setTimeout(fin,8000);try{fetch(U,{method:'POST',body:new URLSearchParams({bac:sv.f.bac,code:'',lecture:LECN,dry:'1'})}).then(function(r){return r.text()}).then(function(x){var p=String(x).trim().split('|');if(p[0]==='OK')p.splice(1,0,'');else if(p[0]!=='DUPLICATE'){fin();return;}if(p[8]){sv.md=p[8];sv.dn=p[9]==='1';sv.sc=p[10]||'';sv.tt=p[11]||'';if(p[1])sv.hh=p[1];if(p[6]==='L')sv.mode='L';if(p[7])sv.dt=p[7];if(p[0]==='DUPLICATE')DUP=p[1]||'';try{localStorage.setItem(KL,JSON.stringify(sv))}catch(e){}}fin();}).catch(fin);}catch(e){fin();}}
 var DUP=null;$('qz-go').onclick=function(){
  var bac=$('qz-bac').value.replace(/\D/g,''),code=$('qz-code').value.trim(),m=$('qz-lmsg');m.style.color='#fca5a5';
  if(!bac){m.textContent='أدخل رقم شهادة البكالوريا.';return;}
@@ -252,9 +256,9 @@ var DUP=null;$('qz-go').onclick=function(){
   else throw 'الخادم مشغول، أعد المحاولة.';
   // p: [حالة، الساعة، اللقب، الاسم، التخصص، الفوج، P حاضر يوم التطبيق / L دخول بعد التاريخ، التاريخ]
   f={bac:bac,matricule:bac,nom:p[2]||'',prenom:p[3]||'',sp:p[4]||'',grp:p[5]||''};f.groupe=(f.sp?f.sp+' - ':'')+'فوج '+f.grp;
-  var sv={f:f,mode:p[6]==='L'?'L':'P',dt:p[7]||''};try{localStorage.setItem(KL,JSON.stringify(sv))}catch(e){}
+  var sv={f:f,mode:p[6]==='L'?'L':'P',dt:p[7]||'',md:p[8]||'',dn:p[9]==='1',sc:p[10]||'',tt:p[11]||'',hh:DUP||''};try{localStorage.setItem(KL,JSON.stringify(sv))}catch(e){}
   g.disabled=false;m.textContent='';
-  if(sv.mode==='L'){lateGo(sv,false);return;}
+  if(isRv(sv)){lateGo(sv,false);return;}
   status(f);
  }).catch(function(e){bad(m,typeof e==='string'?e:'تعذّر الاتصال، تحقق من الإنترنت وأعد المحاولة.');});};
 // حالة الاختبار للطالب الحاضر: أنجزه سابقاً أو ينتظر إطلاقه
@@ -263,7 +267,12 @@ function status(f){var m=$('qz-lmsg');fetch(U+'?action=qzstatus&quiz='+encodeURI
   if(x.indexOf('NEW')!==0)throw 'الخادم مشغول، أعد المحاولة.';
   wait(f);}).catch(function(e){show('qz-login');bad(m,typeof e==='string'?e:'تعذّر الاتصال، تحقق من الإنترنت وأعد المحاولة.');});}
 // دخول بعد تاريخ التطبيق: مسجَّل غائباً، دون اختبار، والشرائح في تصفح حر
-function lateGo(sv,again){if(!again)alert('التطبيق أُلقي يوم '+(sv.dt||'')+'، ويتم تسجيلكم كغائب عن التطبيق.\nيمكنكم الاطلاع على محتوى التطبيق دون الاختبار.');show(null);fs();ori('landscape');setTimeout(function(){ori('landscape')},400);if(window.dkLate)window.dkLate();if(window.dkGo)window.dkGo(1);}
+var C0=null;
+function lateGo(sv,again){show('qz-end');clearInterval(gp);var et=$('qz-etxt');
+ et.innerHTML='<b id="qz-review" data-md="'+(sv.md==='review_attended'?'review_attended':'review_past')+'" style="color:#fbbf24">🔒 دخول للمراجعة فقط</b><br>'+(sv.md==='review_attended'?'حضورك مسجَّل مسبقاً في هذه الحصة'+(sv.hh?' (الساعة <bdi dir="ltr">'+esc(sv.hh)+'</bdi>)':'')+'؛ لن يُسجَّل مرة أخرى.':'انقضى تاريخ التطبيق'+(sv.dt?' (<bdi dir="ltr">'+esc(sv.dt)+'</bdi>)':'')+'؛ هذا الدخول للمراجعة فقط ولا يُحتسب حضوراً.');
+ $('qz-erea').textContent=sv.dn?('✅ أدّيت هذا التقييم'+(sv.sc!==''&&sv.sc!=null?': \u2066'+sv.sc+' / '+sv.tt+'\u2069':'')+'، ولا يمكن إعادته.'):'لا يمكن إجراء التقييم في هذا الدخول.';
+ var c=$('qz-cont'),m=$('qz-smsg');if(C0===null)C0=c.innerHTML;c.innerHTML='تصفّح محتوى التطبيق ←';c.disabled=false;c.className='ok';m.style.color='';m.textContent='';
+ c.onclick=function(){c.innerHTML=C0;show(null);fs();ori('landscape');setTimeout(function(){ori('landscape')},400);if(window.dkLate)window.dkLate();if(window.dkGo)window.dkGo(1);};}
 function dupTxt(){return DUP!==null?'أنت مسجَّل مسبقاً في ورقة الحضور لهذه الحصة'+(DUP?' (الساعة '+DUP+')':''):'';}
 function wait(f){$('qz-wname').innerHTML='';$('qz-wname').append('مرحباً ');var bn=document.createElement('bdi');bn.dir='ltr';bn.textContent=(f.nom+' '+f.prenom).trim();$('qz-wname').append(bn);
  $('qz-winfo').textContent=(f.sp?'ماستر 2 '+f.sp+' – ':'')+'الفوج '+f.grp;var dt=dupTxt();$('qz-wdup').textContent=dt?'ℹ️ '+dt+'.':'';
@@ -293,7 +302,7 @@ function finish(reason){if(!st||st.done)return;st.done=1;clearInterval(tick);
  var f=st.f,b=new URLSearchParams({action:'quiz',quiz:QN,nom:f.nom||'',prenom:f.prenom||'',matricule:f.matricule||'',groupe:f.groupe||'',lecture:LECN,answers:parts.join(';'),reason:reason,warnings:'0',duration:String(Math.min(DUR,Math.round((Date.now()-st.t0)/1000)))});if(f.bac)b.append('bac',f.bac);
  var ok=false;try{ok=navigator.sendBeacon&&navigator.sendBeacon(U,b)}catch(e){}if(!ok){try{fetch(U,{method:'POST',mode:'no-cors',body:b,keepalive:true}).catch(function(){})}catch(e){}}
  var dn={score:sc,total:Q.length,reason:reason,mat:f.matricule};try{localStorage.removeItem(KS)}catch(e){}st=null;endScreen(dn,false);}
-function endScreen(dn,old){show('qz-end');ori('landscape');setTimeout(function(){ori('landscape')},400);var et=$('qz-etxt');if(dn.score===null||dn.score===undefined){et.textContent='تم إرسال إجاباتك. … جارٍ التصحيح';var mat=dn.mat,tr=0,pq=setInterval(function(){if(++tr>24||!$('qz-end').classList.contains('on')){clearInterval(pq);if(tr>24)et.textContent='تم إرسال إجاباتك. تظهر نتيجتك عند الأستاذ.';return;}fetch(U+'?action=qzstatus&quiz='+encodeURIComponent(QN)+'&mat='+encodeURIComponent(mat)+'&t='+Date.now()).then(function(r){return r.text()}).then(function(x){if(x.indexOf('DONE')===0){clearInterval(pq);var p=x.split('|');et.textContent='تم تسجيل إجاباتك. نتيجتك: '+p[1]+' / '+p[2];}}).catch(function(){});},2500);}else et.textContent=(old?(DUP!==null?dupTxt()+'. ':'')+'أنجزت الاختبار سابقاً. ':'تم تسجيل إجاباتك. ')+'نتيجتك: '+dn.score+' / '+dn.total;
+function endScreen(dn,old){show('qz-end');if(C0!==null)$('qz-cont').innerHTML=C0;ori('landscape');setTimeout(function(){ori('landscape')},400);var et=$('qz-etxt');if(dn.score===null||dn.score===undefined){et.textContent='تم إرسال إجاباتك. … جارٍ التصحيح';var mat=dn.mat,tr=0,pq=setInterval(function(){if(++tr>24||!$('qz-end').classList.contains('on')){clearInterval(pq);if(tr>24)et.textContent='تم إرسال إجاباتك. تظهر نتيجتك عند الأستاذ.';return;}fetch(U+'?action=qzstatus&quiz='+encodeURIComponent(QN)+'&mat='+encodeURIComponent(mat)+'&t='+Date.now()).then(function(r){return r.text()}).then(function(x){if(x.indexOf('DONE')===0){clearInterval(pq);var p=x.split('|');et.textContent='تم تسجيل إجاباتك. نتيجتك: '+p[1]+' / '+p[2];}}).catch(function(){});},2500);}else et.textContent=(old?(DUP!==null?'دخول للمراجعة فقط: '+dupTxt()+'. ':'')+'أدّيت هذا التقييم. ':'تم تسجيل إجاباتك. ')+'نتيجتك: '+dn.score+' / '+dn.total;
  $('qz-erea').textContent=(!dn.reason||dn.reason==='أنهى الطالب الاختبار')?'':('سبب الإنهاء: '+dn.reason);
  var c=$('qz-cont'),m=$('qz-smsg'),bz=0,auto=null;c.disabled=true;c.className='pr';m.style.color='';m.textContent='⏳ انتظر إشارة الأستاذ لبدء الحصة.';clearInterval(gp);
  c.onclick=function(){if(c.disabled)return;clearInterval(gp);clearTimeout(auto);cont();};
