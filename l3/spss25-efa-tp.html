@@ -949,7 +949,7 @@ function deckWait(w){var b=$('deck-btn');if(!b)return;if(dkTxt===null)dkTxt=b.in
 window.TP3QZ.deckWait=deckWait;
 window.TP3QZ.addrStart=function(){if(addrTimer)return;addrTimer=1;var f=function(){getCfg(function(o,ok){if(ok){showAddr(o&&o.addr||'');var ww=!(o&&o.go===1);deckWait(ww);}else if(dkW===null)deckWait(false);addrTimer=setTimeout(f,dkW?8000:45000);});};deckWait(true);f();};
 // ===== التقييم عند الطالب =====
-var ov=$('tqz'),st=null,tick=null,gp=null,SCR=['tq-wait','tq-box','tq-end','tq-go'],F=null,LG=null;
+var ov=$('tqz'),st=null,tick=null,wd=null,lt=0,gp=null,SCR=['tq-wait','tq-box','tq-end','tq-go'],F=null,LG=null;
 function show(id){SCR.forEach(function(x){$(x).classList.toggle('on',x===id)});ov.classList.toggle('on',!!id);document.documentElement.style.overflow=id?'hidden':'';document.body.style.overflow=id?'hidden':'';if(id)ov.scrollTop=0;}
 function save(){if(st)ls(KS,st);}
 function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
@@ -1024,7 +1024,7 @@ window.TP3QZ.goWait=function(){if(F)goWait();};
 // ===== وضع المتابعة عند الطالب: الشريحة يحددها الأستاذ (cfg.si) حتى «إنهاء الحصة» (cfg.end=1) =====
 function folOK(){return !isProf()&&!!LG&&LG.mode==='P'&&(!LG.day||LG.day===today());}
 var fol={on:false,T:null};
-function folApply(c){var D=window.dkCtl;if(!D)return;
+function folApply(c){var D=window.dkCtl;if(!D)return;if(st&&!st.done)return;   // أثناء التقييم: لا متابعة للأستاذ
  if(c&&c.end===1){if(fol.on){fol.on=false;D.lock(false);deckWait(dkW);}return;}
  if(!fol.on){fol.on=true;D.lock(true);}
  if(c&&typeof c.si==='number'&&c.si>=0){var k=Math.min(c.si,D.count()-1);if(k!==D.cur())D.go(k);}}
@@ -1049,7 +1049,11 @@ function start(q,c){var d=(c&&c.d&&c.d.length)?c.d:DEF,ov=c&&c.ov===1;
  st={f:F,q:q.map(function(x){return {id:x.id,t:x.t,o:x.o}}),opt:q.map(function(x){return shuf(x.o.map(function(o,i){return i}))}),
   d:q.map(function(x,i){var pg=clampD(d[i],clampD(DEF[i],10));return (!ov&&x.d)?clampD(x.d,pg):pg;}),ans:{},cur:0,qs:Date.now(),t0:Date.now(),day:today(),to:0};
  save();run();}
-function run(){show('tq-box');render();clearInterval(tick);tick=setInterval(timer,200);timer();}
+function run(){var dk=$('dk');if(dk&&dk.classList.contains('on')){var x=dk.querySelector('[data-a=x]');if(x)try{x.click()}catch(e){}}show('tq-box');render();arm();timer();}
+// العدّاد: مؤقت كل 200 ms + حارس يعيد تشغيله إن توقف؛ الوقت يُحسب دائماً من st.qs
+function arm(){clearInterval(tick);tick=setInterval(timer,200);if(!wd)wd=setInterval(function(){if(st&&!st.done&&Date.now()-lt>800)arm();},1000);}
+function wake(){if(st&&!st.done){arm();timer();}}
+document.addEventListener('visibilitychange',wake);window.addEventListener('pageshow',wake);window.addEventListener('focus',wake);
 // استئناف بعد إعادة التحميل: الوقت يُحسب من لحظة بدء كل سؤال، فلا يُعاد العدّاد من جديد
 function resume(){var now=Date.now();while(st.cur<st.q.length&&now>=st.qs+st.d[st.cur]*1000){st.qs+=st.d[st.cur]*1000;st.cur++;st.to=1;}save();
  if(st.cur>=st.q.length){finish('انتهى الوقت');return;}run();}
@@ -1061,10 +1065,10 @@ function render(){var i=st.cur,q=st.q[i];$('tq-num').textContent='السؤال '
 $('tq-next')&&($('tq-next').onclick=function(){if(!st||st.done)return;next(false);});
 function next(byTime){var i=st.cur;st.qs=byTime?st.qs+st.d[i]*1000:Date.now();if(byTime)st.to=1;st.cur=i+1;save();
  if(st.cur>=st.q.length){finish(byTime?'انتهى الوقت':'أنهى الطالب الاختبار');return;}render();timer();}
-function timer(){if(!st||st.done)return;var i=st.cur,tot=st.d[i]*1000,rem=st.qs+tot-Date.now();
+function timer(){lt=Date.now();if(!st||st.done)return;try{var i=st.cur,tot=st.d[i]*1000,rem=st.qs+tot-Date.now();
  if(rem<=0){next(true);return;}
  var s=Math.ceil(rem/1000),tm=$('tq-tm');tm.textContent=(s>=60?Math.floor(s/60)+':'+('0'+s%60).slice(-2):('0'+s).slice(-2));tm.classList.toggle('lo',s<=5);
- $('tq-bar').style.width=Math.max(0,Math.min(100,rem/tot*100))+'%';}
+ $('tq-bar').style.width=Math.max(0,Math.min(100,rem/tot*100))+'%';}catch(e){}}
 function finish(reason){if(!st||st.done)return;st.done=1;clearInterval(tick);
  var parts=st.q.map(function(q,i){var a=st.ans[q.id];return q.id+'='+(a===undefined?'-':'abcd'.charAt(a));});
  var f=st.f,dur=Math.round((Date.now()-st.t0)/1000),tot=0;st.d.forEach(function(x){tot+=x});
