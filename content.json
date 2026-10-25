@@ -1,13 +1,13 @@
 {
-  "ok": true,
-  "source": "static",
-  "updated": "",
+  "note": "العناوين والمسارات فقط. التواريخ تُقرأ من ورقة «الإعدادات» عبر Apps Script (action=course)، ويُربط كل عنصر بسطره هناك باسم الحصة (session، العمود A).",
+  "specialties": ["إدارة أعمال", "إدارة مالية"],
+  "groups": ["إدارة مالية - فوج 1", "إدارة مالية - فوج 2", "إدارة مالية - فوج 3"],
   "items": [
-    {"type": "lecture", "number": 1, "title": "فلسفة تطهير البيانات (Data Cleaning) في SPSS 25", "date": "", "path": "l1/spss25-data-cleaning.html", "visible": true},
-    {"type": "lecture", "number": 2, "title": "ثبات وصدق أدوات الدراسة: معامل ألفا كرونباخ والصدق الاتساقي الداخلي", "date": "", "path": "l2/spss25-reliability-validity.html", "visible": true},
-    {"type": "lecture", "number": 3, "title": "التحليل العاملي الاستكشافي (EFA): اختزال البيانات واختبار KMO وتدوير المحاور Varimax", "date": "", "path": "l3/spss25-efa.html", "visible": true},
-    {"type": "tp", "number": 1, "title": "تطهير البيانات في SPSS 25", "date": "", "path": "l1/spss25-tp1-data-cleaning.html", "visible": true},
-    {"type": "tp", "number": 2, "title": "الثبات والصدق في SPSS 25", "date": "", "path": "l2/spss25-tp2-reliability-validity.html", "visible": true},
-    {"type": "tp", "number": 3, "title": "التحليل العاملي الاستكشافي (EFA) في SPSS 27", "date": "", "path": "l3/spss25-efa-tp.html", "visible": true}
+    {"type": "lecture", "number": 1, "session": "المحاضرة 1: تطهير البيانات", "title": "فلسفة تطهير البيانات (Data Cleaning) في SPSS 25", "path": "l1/spss25-data-cleaning.html"},
+    {"type": "lecture", "number": 2, "session": "المحاضرة 2: الثبات والصدق", "title": "ثبات وصدق أدوات الدراسة: معامل ألفا كرونباخ والصدق الاتساقي الداخلي", "path": "l2/spss25-reliability-validity.html"},
+    {"type": "lecture", "number": 3, "session": "المحاضرة 3: التحليل العاملي الاستكشافي", "title": "التحليل العاملي الاستكشافي (EFA): اختزال البيانات واختبار KMO وتدوير المحاور Varimax", "path": "l3/spss25-efa.html"},
+    {"type": "tp", "number": 1, "session": "التطبيق 1: تطهير البيانات", "title": "تطهير البيانات في SPSS 25", "path": "l1/spss25-tp1-data-cleaning.html"},
+    {"type": "tp", "number": 2, "session": "التطبيق 2: الثبات والصدق", "title": "الثبات والصدق في SPSS 25", "path": "l2/spss25-tp2-reliability-validity.html"},
+    {"type": "tp", "number": 3, "session": "التطبيق 3: التحليل العاملي الاستكشافي (EFA)", "title": "التحليل العاملي الاستكشافي (EFA) في SPSS 27", "path": "l3/spss25-efa-tp.html"}
   ]
 }
