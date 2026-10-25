@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المحاضرة 2: ثبات وصدق أدوات الدراسة في SPSS 25 | د. بوصفصاف فريد</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        sky: {50:'#f2f6fb',100:'#e3ebf5',200:'#c3d3e8',300:'#95b1d6',400:'#6189bd',500:'#3d6aa3',600:'#2c5288',700:'#234270',800:'#1e375c',900:'#1b2f4d',950:'#0f1c30'},
+                        amber: {50:'#fbf8f1',100:'#f5eedc',200:'#eadbb5',300:'#dcc283',400:'#cda85a',500:'#b98f3e',600:'#9c7531',700:'#7d5c29',800:'#674b26',900:'#573f23',950:'#312211'},
+                        emerald: {50:'#f2f8f5',100:'#e0efe6',200:'#c2dfcd',300:'#96c6aa',400:'#66a682',500:'#458a65',600:'#336f50',700:'#2a5942',800:'#244837',900:'#1f3c2f',950:'#0f211a'},
+                        rose: {50:'#fbf4f4',100:'#f6e5e5',200:'#eecfcf',300:'#e0abab',400:'#cc7f7f',500:'#b55a5a',600:'#9c4444',700:'#823838',800:'#6c3131',900:'#5c2d2d',950:'#321414'},
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                            900: '#0f172a',
+                        },
+                        spss: {
+                            blue: '#006699',
+                            accent: '#e67e22',
+                            bg: '#f4f7f9'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Cairo & Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cairo', sans-serif;
+            letter-spacing: 0;
+        }
+        .math-block {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.03) 0%, rgba(44, 82, 136, 0.04) 100%);
+            border-right: 4px solid #2c5288;
+        }
+        .dark .math-block {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(97, 137, 189, 0.08) 100%);
+            border-right-color: #6189bd;
+        }
+        .spss-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            background-color: #f2f6fb;
+            color: #1e375c;
+            border: 1px solid #c3d3e8;
+        }
+        .dark .spss-badge {
+            background-color: #1b2f4d;
+            color: #c3d3e8;
+            border-color: #2c5288;
+        }
+        .arrow-sep {
+            color: #94a3b8;
+            font-size: 0.75rem;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2c5288;
+            border-radius: 3px;
+        }
+    </style>
+<style>body.att-locked #main-content-wrapper > section:not(#mod-attendance){display:none!important}body.att-locked #quick-nav-hide{}</style>
+<style id="dk-css">
+#dk{position:fixed;inset:0;z-index:9999;background:#0b1e33;color:#fff;display:none;direction:rtl;font-family:inherit;overflow:hidden;touch-action:pan-y}
+#dk.on{display:block}#dk .trk{height:100%}
+#dk .sl{display:none;height:100%;box-sizing:border-box;padding:9vh 7vw 5vh;flex-direction:column;justify-content:center;overflow:auto;animation:dkf .3s}#dk .sl.cur{display:flex}@keyframes dkf{from{opacity:0}to{opacity:1}}
+#dk .tag{color:#38bdf8;font-weight:700;font-size:clamp(12px,2.2vh,18px)}#dk h3{font-size:clamp(20px,6vh,44px);font-weight:800;margin:.3em 0 .6em}
+#dk .bd{font-size:clamp(13px,3.6vh,24px);line-height:1.6}#dk ul,#dk ol{padding-right:1.2em;list-style:disc}#dk ol{list-style:decimal}#dk li{margin:.2em 0}
+#dk .big{font-size:1.4em;font-weight:800;color:#fbbf24}#dk .hint{color:#94a3b8;font-size:.75em;margin-top:1em}
+#dk .grid2,#dk .grid3{display:grid;gap:2vw}#dk .grid2{grid-template-columns:1fr 1fr}#dk .grid3{grid-template-columns:1fr 1fr 1fr}
+#dk .card{background:#12304f;border:1px solid #1e4a73;border-radius:14px;padding:1.6vh 1.6vw} #dk table{border-collapse:collapse;margin:.3em auto} .qo{background:#12304f;border:1px solid #3b82c4;border-radius:8px;padding:.2em .6em;cursor:pointer} .qo.ok{background:#16a34a;border-color:#16a34a} .qo.ko{background:#dc2626;border-color:#dc2626} #dk th,#dk td{border:1.5px solid #3b82c4;padding:.25em .6em;text-align:center;color:#f1f5f9} #dk th{background:#1e4a73;font-weight:700} #dk td{background:#0b2238;font-weight:600}#dk .card.warn{border-color:#f59e0b}
+#dk .path,#dk .code{direction:ltr;text-align:left;font-family:monospace;background:#020617;color:#7dd3fc;border-radius:8px;padding:.3em .6em;margin:.4em 0;display:inline-block}
+#dk .exc{cursor:pointer;transition:transform .15s}#dk .exc.sel{outline:2px solid #38bdf8;transform:translateY(-2px)}#dk .qm{display:inline-flex;align-items:center;justify-content:center;width:1.3em;height:1.3em;border-radius:50%;background:#38bdf8;color:#0b1e33;font-weight:800;font-size:.8em;cursor:pointer;margin-right:.3em;vertical-align:middle}#dk .qm.sel{background:#fbbf24}#dk .menu{direction:ltr;display:flex;flex-direction:column;align-items:flex-start;gap:.2em;font-family:monospace;font-size:.85em}#dk .menu span{background:#e2e8f0;color:#0f172a;padding:.1em .6em;border-radius:4px}#dk .menu span.hl{background:#fbbf24}#dk .menu i{color:#94a3b8;font-style:normal;padding-left:1em}#dk .spo{background:#fff;color:#0f172a;border-radius:10px;padding:1.2vh 1.4vw;direction:ltr;font-size:.85em}#dk .spt{text-align:center;font-weight:700}#dk .spo table{margin:.4em auto;border-collapse:collapse}#dk .spo td{border-top:1px solid #cbd5e1;padding:.15em .8em}#dk .spo .mrow td{background:#fee2e2;color:#991b1b;font-weight:700}#dk .rd{direction:rtl;text-align:center;background:#f1f5f9;border-radius:8px;padding:.3em}#dk .strip{position:relative;width:20em;height:3.2em;flex:0 0 auto;direction:ltr;border-bottom:2px solid #64748b;margin-bottom:1.2em}#dk .dot{position:absolute;bottom:.3em;transform:translateX(-50%);background:#38bdf8;border:2px solid #0b1e33;border-radius:50%;width:.8em;height:.8em}#dk .dot.od{width:auto;height:auto;border-radius:999px;font-size:.7em;padding:0 .4em;color:#fff;font-weight:700}#dk .cl{position:absolute;top:-.4em;transform:translateX(-50%);font-size:.6em;color:#7dd3fc;white-space:nowrap}#dk .dot.od{background:#ef4444;color:#fff}#dk .ax{position:absolute;top:100%;left:0;right:0;display:flex;justify-content:space-between;font-size:.55em;color:#94a3b8}#dk .bell{flex:0 0 auto}#dk .zf{direction:ltr;font-family:monospace;background:#020617;color:#7dd3fc;border-radius:8px;padding:.4em .8em;flex:0 0 auto;line-height:1.8}#dk .zf b{color:#f87171}#dk .exc .path{font-size:.62em!important;padding:.15em .5em!important;margin:.25em 0!important}#dk .exbox .ext{font-size:.72em}#dk .exc{padding:.5em .8em!important}#dk .sl .ext{font-size:.78em}#dk .hdr{position:absolute;top:.9em;left:0;right:0;text-align:center;font-size:.72em;color:#94a3b8;pointer-events:none;padding:0 4.5em}#dk .hdr1{font-size:.8em;line-height:1.6;color:#cbd5e1}#dk .hdr1 span{color:#7dd3fc}#dk .sl{position:relative}#dk button.pbtn{width:auto;height:auto;padding:.5em 1.2em;font-size:.85em;background:#7c3aed;border-radius:999px}#dk .tap{color:#7dd3fc}#dk .exbox{display:none;margin-top:1.4vh;background:#0f2a45;border-right:4px solid #38bdf8;border-radius:10px;padding:1.2vh 1.4vw;font-size:.85em}#dk .exbox.on{display:flex;gap:2vw;align-items:center;animation:dkf .3s}#dk .ext{border-collapse:collapse;font-size:1em;flex:0 0 auto}#dk .exbox .ext td,#dk .exbox .ext th{padding:0 .6em;line-height:1.35}#dk .ext{order:2}#dk .ext ~ .exn,#dk .exbox>b{}#dk .ext td,#dk .ext th{border:1px solid #1e4a73;padding:.15em .8em;text-align:center}#dk .ext th{background:#12304f}#dk .ext td.na{color:#fca5a5;font-weight:700}#dk .exn{color:#fde68a;margin:0}#dk .warnt{color:#fca5a5}#dk small{color:#cbd5e1}
+#dk .ctl{position:absolute;top:10px;display:flex;gap:8px;opacity:0;pointer-events:none;transition:opacity .25s}#dk.show .ctl{opacity:1;pointer-events:auto}
+#dk .ctl.r{right:10px}#dk .ctl.l{left:10px}#dk button{background:rgba(255,255,255,.15);color:#fff;border:0;border-radius:999px;width:42px;height:42px;font-size:22px;line-height:1}
+#dk .cnt{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);text-align:center;color:#64748b;font-size:12px;padding:4px 10px;z-index:3;white-space:nowrap}
+#dk .rot{display:none;position:absolute;inset:0;background:#0b1e33;z-index:5;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px;font-size:20px}
+@media (orientation:portrait) and (max-width:900px){#dk .rot{display:flex}}
+</style></head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col antialiased">
+
+    <!-- READING PROGRESS BAR -->
+    <div class="fixed top-0 left-0 right-0 h-1.5 bg-slate-200 dark:bg-slate-800 z-50">
+        <div id="progress-bar" class="h-full bg-sky-700 w-0 transition-all duration-150"></div>
+    </div>
+
+    <!-- STICKY HEADER -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+            
+            <!-- Brand Title -->
+            <div class="flex items-center gap-2 min-w-0 flex-1">
+                <div class="hidden sm:flex shrink-0 w-10 h-10 rounded-xl bg-sky-800 items-center justify-center text-white shadow-sm">
+                    <i class="fa-solid fa-chart-line text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-tight">SPSS 25 | مقياس برمجيات إحصائية <span class="whitespace-nowrap font-semibold text-slate-600 dark:text-slate-300">(الأستاذ: بوصفصاف فريد)</span></h1>
+                    <p class="text-xs text-sky-600 dark:text-sky-400 font-medium">المحاضرة 2: ثبات وصدق أدوات الدراسة</p>
+                </div>
+            </div>
+
+            <!-- Header Controls: Font Adjuster & Dark Mode -->
+            <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <!-- Home: back to course lectures -->
+                <a id="btn-home" href="../index.html" title="العودة إلى الصفحة الرئيسية للمحاضرات" aria-label="العودة إلى الصفحة الرئيسية للمحاضرات" class="w-9 h-9 flex items-center justify-center rounded-lg bg-sky-800 text-white border border-sky-900 hover:bg-sky-700 hover:scale-105 transition shadow-sm">
+                    <i class="fa-solid fa-house"></i>
+                </a>
+                <!-- Font Size Controls -->
+                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1 border border-slate-200 dark:border-slate-700">
+                    <button id="btn-font-dec" title="تصغير الخط" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-sky-600 transition">
+                        <i class="fa-solid fa-minus text-xs"></i>
+                    </button>
+                    <button id="btn-font-reset" title="إعادة ضبط الخط" class="px-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-sky-600">
+                        <i class="fa-solid fa-font"></i>
+                    </button>
+                    <button id="btn-font-inc" title="تكبير الخط" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-sky-600 transition">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Dark Mode Toggle Button -->
+                <button id="btn-theme-toggle" title="تبديل المظهر" class="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-amber-400 border border-slate-200 dark:border-slate-700 hover:scale-105 transition">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+
+                <!-- Quick Accordion Toggle All -->
+                <button id="btn-expand-all" title="توسيع/طيل كل المحاور" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 text-xs font-bold hover:bg-sky-100 transition">
+                    <i class="fa-solid fa-angles-down"></i>
+                    <span>توسيع الكل</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SEARCH & FILTER FLOATING STRIP -->
+    <div class="bg-slate-100 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 py-2 px-4 sticky top-[61px] z-30">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div class="relative w-full sm:w-72">
+                <input type="text" id="content-search" placeholder="ابحث في المحاضرة (مثال: Alpha, KMO, الاتساق)..." class="w-full pl-3 pr-9 py-1.5 text-xs sm:text-sm rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-slate-400 text-xs"></i>
+            </div>
+            <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 text-xs custom-scrollbar">
+                <span class="text-slate-500 dark:text-slate-400 whitespace-nowrap font-medium"><i class="fa-solid fa-filter ml-1"></i>انتقال سريع:</span>
+                <button onclick="scrollToModule('mod-attendance')" class="px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-800 font-bold whitespace-nowrap transition">الحضور</button>
+                <button onclick="scrollToModule('mod-intro')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">المقدمة</button>
+                <button onclick="scrollToModule('mod-1')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">الثبات</button>
+                <button onclick="scrollToModule('mod-2')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">الصدق</button>
+                <button onclick="scrollToModule('mod-3')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">العرض في المذكرة</button>
+                <button onclick="scrollToModule('mod-case')" class="px-2.5 py-1 rounded-full bg-sky-50 dark:bg-sky-950/60 text-sky-800 dark:text-sky-200 border border-sky-200 dark:border-sky-800 font-bold whitespace-nowrap transition">دراسة حالة</button>
+                <button onclick="scrollToModule('mod-quiz')" class="px-2.5 py-1 rounded-full bg-sky-50 dark:bg-sky-950/60 text-sky-800 dark:text-sky-200 border border-sky-200 dark:border-sky-800 font-bold whitespace-nowrap transition">اختبار</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main id="main-content-wrapper" class="flex-grow max-w-6xl w-full mx-auto px-4 py-6 sm:py-10 space-y-8 text-base">
+
+        <!-- CREDITS (TOP) -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm px-4 py-3 text-sm text-center">
+            <span><i class="fa-solid fa-user-tie text-sky-600 dark:text-sky-400 ml-1.5"></i>تقديم و إعداد: <strong class="text-slate-900 dark:text-white">د. بوصفصاف فريد</strong></span>
+            <span class="hidden sm:inline text-slate-300 dark:text-slate-600">|</span>
+            <span><i class="fa-solid fa-robot text-sky-600 dark:text-sky-400 ml-1.5"></i>التصميم على الويب: <strong class="text-slate-900 dark:text-white">الذكاء الاصطناعي</strong></span>
+        </div>
+
+        <!-- HERO SECTION -->
+        <section class="relative overflow-hidden rounded-3xl bg-sky-950 text-white p-6 sm:p-10 shadow-md border border-sky-900">
+
+            <div class="relative z-10 space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30 text-xs font-bold tracking-wide">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>مقياس برمجيات إحصائية • المحاضرة 2 • ماستر 2</span>
+                </div>
+
+                <h1 class="text-2xl sm:text-4xl font-extrabold leading-tight text-white">
+                    المحاضرة 2: ثبات وصدق أدوات الدراسة <span class="block mt-2 text-sky-200 font-bold">معامل ألفا كرونباخ والصدق الاتساقي الداخلي في SPSS 25</span>
+                </h1>
+
+                <p class="text-slate-300 text-sm sm:text-lg leading-relaxed max-w-3xl">
+                    من النظرية الكلاسيكية للقياس إلى المخرجات الفعلية لـ SPSS 25: كيف يثبت الباحث أن استبيانه يقيس بدقة، وأنه يقيس ما وُضع لقياسه، وكيف يعرض ذلك في مذكرة الماستر بصرامة تقنع لجنة المناقشة.
+                </p>
+
+                <!-- Academic Meta Info Badges -->
+                <div class="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs sm:text-sm">
+                    <div class="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center gap-3">
+                        <i class="fa-solid fa-book-bookmark text-sky-300 text-lg"></i>
+                        <div>
+                            <span class="block text-slate-400 text-[10px] sm:text-xs">الموسم الجامعي</span>
+                            <span class="font-bold text-white">2026 - 2027</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center gap-3">
+                        <i class="fa-solid fa-laptop-code text-sky-300 text-lg"></i>
+                        <div>
+                            <span class="block text-slate-400 text-[10px] sm:text-xs">البرنامج المعالج</span>
+                            <span class="font-bold text-white">IBM SPSS 25</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center gap-3">
+                        <i class="fa-solid fa-microscope text-sky-300 text-lg"></i>
+                        <div>
+                            <span class="block text-slate-400 text-[10px] sm:text-xs">المستوى</span>
+                            <span class="font-bold text-white">ماستر 2 علوم التسيير</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center gap-3">
+                        <i class="fa-solid fa-shield-halved text-sky-300 text-lg"></i>
+                        <div>
+                            <span class="block text-slate-400 text-[10px] sm:text-xs">الهدف الجوهري</span>
+                            <span class="font-bold text-white">موثوقية أداة القياس</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ATTENDANCE -->
+        <section id="mod-attendance" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border-2 border-amber-400 dark:border-amber-600 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-amber-50 dark:bg-amber-950/30 border-b border-amber-200 dark:border-amber-800 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center"><i class="fa-solid fa-user-check text-sm"></i></span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">تسجيل الحضور (إجباري)</h2>
+                        <span class="text-xs text-amber-700 dark:text-amber-400 font-semibold" dir="ltr">Attendance – Mandatory</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-attendance', 'icon-attendance')" class="text-slate-400 hover:text-amber-600 transition">
+                    <i id="icon-attendance" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-attendance" class="p-5 sm:p-6 space-y-4">
+                <p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">تسجيل الحضور <strong>خطوة إجبارية</strong> قبل الاطلاع على محتوى الحصة: أدخل رقم شهادة البكالوريا ورمز الحصة ثم اضغط <strong>دخول</strong>.</p>
+                <div id="att-lock-note" class="p-3 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs sm:text-sm text-slate-700 dark:text-slate-300"><i class="fa-solid fa-lock ml-1 text-amber-600"></i> محتوى الحصة محجوب. أدخل رقم البكالوريا ثم اضغط <strong>دخول</strong> ليظهر المحتوى تلقائياً.</div>
+                <div id="att-frame-wrap" class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
+                    <form id="att-form" class="grid sm:grid-cols-2 gap-3 p-4" autocomplete="off"><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">رقم شهادة البكالوريا<input name="bac" required inputmode="numeric" dir="ltr" maxlength="9" placeholder="6 إلى 9 أرقام" oninput="this.value=this.value.replace(/\D/g,'').slice(0,9)" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"></label><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">رمز الحصة (يعلنه الأستاذ يوم المحاضرة)<input name="code" dir="ltr" autocomplete="off" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"></label><div class="sm:col-span-2"><button type="submit" id="att-btn" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold">دخول</button> <span id="att-msg" class="text-sm mr-2"></span></div></form><div class="px-4 pb-4 text-center border-t border-slate-200 dark:border-slate-700 pt-3"><button type="button" id="prof-btn" class="px-6 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-800 text-white font-bold shadow"><i class="fa-solid fa-chalkboard-user ml-2"></i>تسجيل دخول الأستاذ</button></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 00: INTRO -->
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section id="mod-slides" class="module-card rounded-2xl border border-sky-300 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/40 p-5 text-center"><p class="mb-3 text-slate-800 dark:text-slate-200 font-bold">ابدأ بالشرائح المبسطة قبل قراءة التفاصيل</p><button type="button" id="deck-btn" onclick="openDeck()" class="px-6 py-3 rounded-xl bg-sky-600 disabled:bg-slate-400 disabled:cursor-not-allowed hover:bg-sky-700 text-white font-bold"><i class="fa-solid fa-display ml-2"></i>عرض الشرائح</button><p class="mt-2 text-xs text-slate-500">على الهاتف: أدر الشاشة أفقياً</p></section>
+<section id="mod-intro" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">00</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">مقدمة: لماذا نختبر أداة القياس قبل أي تحليل؟</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold" dir="ltr">Measurement Theory: Reliability before Validity</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-intro', 'icon-intro')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-intro" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-intro" class="p-5 sm:p-6 space-y-6">
+<div class="space-y-3"><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">لا تُقاس المفاهيم التي يدرسها طالب الماستر في علوم التسيير مباشرة، مثل جودة الخدمة والرضا والالتزام التنظيمي، بل تُقاس عبر عبارات استبيان. لذلك لا تُقبل أي نتيجة إحصائية لاحقة، من ارتباط أو انحدار أو مقارنة، إلا إذا أثبت الباحث أولاً أن أداته <strong>تقيس بدقة</strong> (الثبات) وأنها <strong>تقيس ما وُضعت لقياسه</strong> (الصدق).</p><div class="roadmap space-y-2"><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300"><strong>خريطة طريق المذكرة:</strong> سبع مراحل من الإشكالية إلى الانحدار. يظهر ألفا كرونباخ في مرحلتين: المرحلة 3 على العينة الاستطلاعية لتنقيح العبارات، والمرحلة 6 على العينة النهائية لاعتماد النتائج.</p><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2" dir="rtl"><div class="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 opacity-50 space-y-1"><div class="text-sm font-bold text-slate-900 dark:text-white">🎯 1. بناء النموذج</div><div class="text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">الإشكالية، المتغير التابع والمستقل، الفرضيات</div></div><div class="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 opacity-50 space-y-1"><div class="text-sm font-bold text-slate-900 dark:text-white">🧱 2. بناء الأداة</div><div class="text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">المتغير ← محور، المحور ← أبعاد، صياغة العبارات وسلّم ليكرت، العبارات العكسية</div></div><div class="p-3 rounded-xl border-2 border-amber-400 bg-amber-50 dark:bg-amber-950/40 space-y-1"><div class="text-sm font-bold text-slate-900 dark:text-white">🧪 3. التحكيم والدراسة الاستطلاعية</div><div class="text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">صدق المحكمين، عينة استطلاعية (30 فأكثر)، ألفا أولي، تنقيح العبارات</div><span class="inline-block mt-1 rounded-full bg-amber-400 text-slate-900 text-[11px] font-extrabold px-2 py-0.5">📍 المحاضرة 2: ألفا أولي</span></div><div class="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 opacity-50 space-y-1"><div class="text-sm font-bold text-slate-900 dark:text-white">📮 4. التوزيع النهائي وجمع البيانات</div><div class="text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">المجتمع والعينة وحجمها (5–10 مستجيبين لكل عبارة للتحليل العاملي)، ورقي أو <bdi dir='ltr'>Google Forms</bdi>، استبعاد الاستمارات غير الصالحة</div></div><div class="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 opacity-50 space-y-1"><div class="text-sm font-bold text-slate-900 dark:text-white">🗂️ 5. تجهيز البيانات في <bdi dir='ltr'>SPSS</bdi></div><div class="text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">الترميز، القيم المفقودة، عكس العبارات العكسية (المحاضرة 1)</div></div><div class="p-3 rounded-xl border-2 border-amber-400 bg-amber-50 dark:bg-amber-950/40 space-y-1"><div class="text-sm font-bold text-slate-900 dark:text-white">🔬 6. الاختبارات والتعديلات على العينة النهائية</div><div class="text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">التحليل العاملي لكل متغير ← ألفا والاتساق الداخلي لكل بُعد ← حساب درجات الأبعاد</div><span class="inline-block mt-1 rounded-full bg-amber-400 text-slate-900 text-[11px] font-extrabold px-2 py-0.5">📍 المحاضرة 2 ثم 3: ألفا النهائي</span></div><div class="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 opacity-50 space-y-1"><div class="text-sm font-bold text-slate-900 dark:text-white">📈 7. ما بعدها</div><div class="text-[11px] leading-relaxed text-slate-600 dark:text-slate-400">التوزيع الطبيعي (المحاضرة 4) ← الانحدار (المحاضرة 5)</div></div></div></div><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">أ. النظرية الكلاسيكية للقياس (Classical Test Theory)</h3><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">تفترض النظرية أن كل درجة ملاحظة تتكوّن من درجة حقيقية وخطأ قياس عشوائي، ويُعرَّف الثبات بأنه نسبة تباين الدرجة الحقيقية إلى التباين الكلي للدرجات:</p><div class="math-block p-3 rounded-lg text-center text-sm text-slate-800 dark:text-slate-200 overflow-x-auto">$$X = T + E \qquad\qquad \rho_{XX^{\prime}} = \frac{\sigma^2_T}{\sigma^2_X} = 1 - \frac{\sigma^2_E}{\sigma^2_X}$$</div><p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">فإذا كان الثبات 0.88 فمعنى ذلك أن 88% من تباين الدرجات يعود إلى فروق حقيقية بين المستجوبين، و12% يعود إلى خطأ القياس.</p><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">ب. العلاقة بين الثبات والصدق</h3><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-bullseye text-sky-600 dark:text-sky-400"></i> ثابت وصادق</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">إجابات متقاربة ومتمركزة حول الهدف. هذا هو المطلوب في أداة الدراسة.</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-crosshairs text-sky-600 dark:text-sky-400"></i> ثابت لكنه غير صادق</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">إجابات متقاربة لكنها بعيدة عن الهدف: الأداة تقيس شيئاً آخر بدقة. مثال: عبارات تقيس الرضا وهي موضوعة لقياس جودة الخدمة.</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-shuffle text-sky-600 dark:text-sky-400"></i> غير ثابت وغير صادق</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">إجابات مشتتة. خطأ القياس كبير، فلا يمكن الحديث عن الصدق أصلاً.</div></div></div><div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border-r-4 border-amber-500 text-amber-900 dark:text-amber-200 space-y-2">
+<div class="flex items-center gap-2 font-bold text-sm sm:text-base"><i class="fa-solid fa-triangle-exclamation text-amber-600 dark:text-amber-400"></i><span>قاعدة منهجية</span></div>
+<div class="text-xs sm:text-sm leading-relaxed text-amber-800 dark:text-amber-300 space-y-1.5"><p>الثبات <strong>شرط لازم وغير كافٍ</strong> للصدق: لا صدق بلا ثبات، لكن الثبات المرتفع لا يثبت الصدق. لذلك فإن الاكتفاء بمعامل ألفا كرونباخ في المذكرة لا يُعدّ دليلاً على صدق الأداة.</p></div></div></div>
+            </div>
+        </section>
+
+        <!-- MODULE 1: RELIABILITY -->
+        <section id="mod-1" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">01</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">المحور الأول: الثبات ومعامل ألفا كرونباخ</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold" dir="ltr">Reliability, Cronbach's Alpha &amp; Split-Half</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-1', 'icon-mod-1')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-1" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-mod-1" class="p-5 sm:p-6 space-y-6">
+<div class="space-y-3"><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">أ. أنواع الثبات وما يجيب عنه كل نوع</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left text-sky-600 dark:text-sky-400"></i> ثبات الاستقرار (Test-Retest)</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">تطبيق الأداة مرتين على العينة نفسها بفاصل أسبوعين إلى ثلاثة، ثم حساب معامل الارتباط بين التطبيقين. يجيب عن سؤال: هل النتائج مستقرة عبر الزمن؟</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-clone text-sky-600 dark:text-sky-400"></i> ثبات التكافؤ (Parallel Forms)</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">تطبيق صورتين متكافئتين من الأداة. نادر في استبيانات التسيير لصعوبة بناء صورتين متكافئتين.</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-layer-group text-sky-600 dark:text-sky-400"></i> الاتساق الداخلي (Internal Consistency)</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">تطبيق واحد، ثم قياس تجانس العبارات فيما بينها: ألفا كرونباخ، والتجزئة النصفية، و<bdi dir="ltr" class="font-mono">KR-20</bdi> للعبارات الثنائية (نعم/لا). هو الأكثر استعمالاً في المذكرات.</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-user-check text-sky-600 dark:text-sky-400"></i> ثبات المصححين (Inter-Rater)</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">اتفاق محكّمَين أو أكثر على ترميز البيانات النوعية، ويُقاس بمعامل كابا لكوهين (Cohen's Kappa).</div></div></div><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">ب. معامل ألفا كرونباخ (Cronbach's Alpha, 1951)</h3><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">يقارن المعامل مجموع تباينات العبارات بتباين الدرجة الكلية: كلما ارتبطت العبارات فيما بينها كبر تباين المجموع مقارنة بمجموع تباينات العبارات، فيرتفع ألفا.</p><div class="math-block p-3 rounded-lg text-center text-sm text-slate-800 dark:text-slate-200 overflow-x-auto">$$\alpha = \frac{k}{k-1}\left(1 - \frac{\sum_{i=1}^{k}\sigma^2_{i}}{\sigma^2_{X}}\right) \qquad\qquad \alpha_{std} = \frac{k\,\bar{r}}{1+(k-1)\,\bar{r}}$$</div><p class="text-xs text-slate-500 dark:text-slate-400">حيث <bdi dir="ltr" class="font-mono">k</bdi> عدد العبارات، و<bdi dir="ltr" class="font-mono">σ²ᵢ</bdi> تباين العبارة، و<bdi dir="ltr" class="font-mono">σ²X</bdi> تباين الدرجة الكلية، و<bdi dir="ltr" class="font-mono">r̄</bdi> متوسط الارتباطات بين العبارات.</p><div class="p-4 rounded-xl bg-sky-50 dark:bg-sky-950/40 border-r-4 border-sky-500 text-sky-900 dark:text-sky-200 space-y-2">
+<div class="flex items-center gap-2 font-bold text-sm sm:text-base"><i class="fa-solid fa-calculator text-sky-600 dark:text-sky-400"></i><span>مثال محسوب من ملف الدراسة (محور جودة الخدمة، <bdi dir="ltr" class="font-mono">N = 188</bdi>)</span></div>
+<div class="text-xs sm:text-sm leading-relaxed text-sky-800 dark:text-sky-300 space-y-1.5"><p>لدينا أربع عبارات، ومجموع تبايناتها 4.314، وتباين الدرجة الكلية 12.724، إذن:</p><p dir="ltr" class="font-mono text-center">α = (4/3) × (1 − 4.314 / 12.724) = 0.881</p><p>والصيغة المعيارية بمتوسط ارتباط 0.651 تعطي 0.882، وهي القيمة نفسها تقريباً لأن تباينات العبارات متقاربة.</p></div></div><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">ج. سلّم التفسير (George & Mallery, 2003)</h3><div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700"><table class="w-full text-xs text-right">
+<thead class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700"><tr><th class="p-2.5">قيمة ألفا</th><th class="p-2.5">الحكم</th><th class="p-2.5">ملاحظة منهجية</th></tr></thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-slate-700 dark:text-slate-300"><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">≥ 0.90</td><td class="p-2.5">ممتاز (Excellent)</td><td class="p-2.5">قد يدل الارتفاع الشديد (أكثر من 0.95) على تكرار العبارات</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">0.80 – 0.89</td><td class="p-2.5">جيد (Good)</td><td class="p-2.5">مناسب للبحث العلمي</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">0.70 – 0.79</td><td class="p-2.5">مقبول (Acceptable)</td><td class="p-2.5">الحد الأدنى الشائع (Nunnally, 1978)</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">0.60 – 0.69</td><td class="p-2.5">مشكوك فيه (Questionable)</td><td class="p-2.5">يُقبل في الدراسات الاستكشافية مع التبرير</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">0.50 – 0.59</td><td class="p-2.5">ضعيف (Poor)</td><td class="p-2.5">يستوجب مراجعة العبارات</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">< 0.50</td><td class="p-2.5">غير مقبول (Unacceptable)</td><td class="p-2.5">الأداة غير صالحة للتحليل</td></tr></tbody></table></div><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">د. شروط ألفا وحدوده: ما يغفل عنه أغلب الطلبة</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-sitemap text-sky-600 dark:text-sky-400"></i> أحادية البعد</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">ألفا <strong>ليس</strong> مقياساً لأحادية البعد. يُحسب لكل محور على حدة أولاً، ثم للأداة كاملة. حساب ألفا واحد لاستبيان من خمسة محاور مختلفة يعطي قيمة مرتفعة مضللة.</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-arrow-up-wide-short text-sky-600 dark:text-sky-400"></i> حساسيته لعدد العبارات</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">يرتفع ألفا آلياً بزيادة عدد العبارات حتى لو كانت ضعيفة الارتباط. فقيمة 0.80 لثلاثين عبارة أضعف دلالة من 0.80 لأربع عبارات.</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-right-left text-sky-600 dark:text-sky-400"></i> العبارات السالبة</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">يجب عكس ترميز العبارات المصاغة سلباً قبل الحساب، عبر <bdi dir="ltr" class="font-mono">Recode into Different Variables</bdi> (مثلاً 1←5، 2←4). علامتها في المخرجات معامل ارتباط مصحح سالب.</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-scale-unbalanced text-sky-600 dark:text-sky-400"></i> شرط تكافؤ تاو (Tau-Equivalence)</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">يفترض ألفا تساوي تشبعات العبارات على العامل. عند اختلافها يصبح ألفا حداً أدنى للثبات، والبديل الأدق معامل أوميغا لماكدونالد (McDonald's Omega)، وهو غير متاح مباشرة في SPSS 25 فيُحسب في JASP أو R.</div></div></div><div class="math-block p-3 rounded-lg text-center text-sm text-slate-800 dark:text-slate-200 overflow-x-auto">$$\omega = \frac{\left(\sum \lambda_i\right)^2}{\left(\sum \lambda_i\right)^2 + \sum \theta_i}$$</div><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">هـ. التجزئة النصفية (Split-Half)</h3><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">تُقسم العبارات إلى نصفين، ويُحسب الارتباط بينهما، ثم يُصحَّح بمعادلة سبيرمان-براون لأن الارتباط بين نصفين يقدّر ثبات نصف الأداة فقط. أما معامل غوتمان فلا يشترط تساوي تبايني النصفين.</p><div class="math-block p-3 rounded-lg text-center text-sm text-slate-800 dark:text-slate-200 overflow-x-auto">$$\rho_{SB} = \frac{2\,r_{AB}}{1 + r_{AB}} \qquad\qquad \lambda_{G} = 2\left(1 - \frac{\sigma^2_A + \sigma^2_B}{\sigma^2_X}\right)$$</div><div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-300 dark:border-amber-800/60 space-y-1.5"><h4 class="font-bold text-sm text-amber-800 dark:text-amber-300 flex items-center gap-2"><i class="fa-solid fa-clock-rotate-left"></i> ألفا في لحظتين</h4><ul class="list-disc pr-5 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed space-y-1"><li><strong>العينة الاستطلاعية</strong> (30 مفردة فأكثر، المرحلة 3): ألفا أولي لتنقيح العبارات قبل التوزيع النهائي.</li><li><strong>العينة النهائية</strong> (المرحلة 6، عندنا 188 زبوناً): ألفا لكل بُعد لاعتماد النتائج. هذا ما نطبّقه أدناه.</li></ul><p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">في المحاضرة 3 نرى أن التحليل العاملي يسبق ألفا على العينة النهائية.</p></div><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">و. التطبيق الإجرائي في IBM SPSS 25</h3><div class="p-4 rounded-xl bg-sky-50/60 dark:bg-slate-900/80 border border-sky-200 dark:border-sky-900/50 space-y-2">
+<div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">1</span>
+<h4 class="font-bold text-sm text-slate-900 dark:text-white">حساب ألفا كرونباخ لمحور واحد</h4></div>
+<div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold"><span class="spss-badge"><i class="fa-solid fa-chart-pie"></i> Analyze</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Scale</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Reliability Analysis</span></div>
+<div class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed space-y-1"><p>ننقل عبارات المحور الواحد فقط إلى خانة <bdi dir="ltr" class="font-mono">Items</bdi>، ونختار <bdi dir="ltr" class="font-mono">Model: Alpha</bdi>، ونكتب اسم المحور في <bdi dir="ltr" class="font-mono">Scale label</bdi>.</p></div></div><div class="p-4 rounded-xl bg-sky-50/60 dark:bg-slate-900/80 border border-sky-200 dark:border-sky-900/50 space-y-2">
+<div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">2</span>
+<h4 class="font-bold text-sm text-slate-900 dark:text-white">تفعيل الإحصاءات الضرورية للتشخيص</h4></div>
+<div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold"><span class="spss-badge">Reliability Analysis</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Statistics...</span></div>
+<div class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed space-y-1"><p>نفعّل <bdi dir="ltr" class="font-mono">Item</bdi> و<bdi dir="ltr" class="font-mono">Scale</bdi> و<bdi dir="ltr" class="font-mono">Scale if item deleted</bdi> في خانة <bdi dir="ltr" class="font-mono">Descriptives for</bdi>، ثم <bdi dir="ltr" class="font-mono">Correlations</bdi> في خانة <bdi dir="ltr" class="font-mono">Inter-Item</bdi>، و<bdi dir="ltr" class="font-mono">Means</bdi> في <bdi dir="ltr" class="font-mono">Summaries</bdi>.</p></div></div><div class="p-4 rounded-xl bg-sky-50/60 dark:bg-slate-900/80 border border-sky-200 dark:border-sky-900/50 space-y-2">
+<div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">3</span>
+<h4 class="font-bold text-sm text-slate-900 dark:text-white">قراءة جدول Item-Total Statistics واتخاذ القرار</h4></div>
+<div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold"><span class="spss-badge">Output</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Item-Total Statistics</span></div>
+<div class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed space-y-1"><p>نقرأ عمودين: <strong>الارتباط المصحح بين العبارة والدرجة الكلية</strong> <bdi dir="ltr" class="font-mono">(Corrected Item-Total Correlation)</bdi>، والقيمة المقبولة 0.30 فأكثر؛ و<strong>ألفا عند حذف العبارة</strong> <bdi dir="ltr" class="font-mono">(Cronbach's Alpha if Item Deleted)</bdi>، فإذا تجاوزت ألفا الكلي كانت العبارة مرشّحة للحذف.</p><p class="font-bold text-rose-700 dark:text-rose-300">لا تُحذف عبارة لمجرد رفع ألفا ببضعة أجزاء من المئة، فالحذف قد يُفقر المحتوى النظري للمحور ويضر بصدق المحتوى. يُوثَّق كل حذف ويُبرَّر نظرياً.</p></div></div></div>
+            </div>
+        </section>
+
+        <!-- MODULE 2: VALIDITY -->
+        <section id="mod-2" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">02</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">المحور الثاني: الصدق والاتساق الداخلي</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold" dir="ltr">Validity Evidence, Internal Consistency &amp; EFA</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-2', 'icon-mod-2')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-2" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-mod-2" class="p-5 sm:p-6 space-y-6">
+<div class="space-y-3"><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">ينظر الإطار المرجعي الحديث (معايير AERA/APA/NCME، 2014) إلى الصدق على أنه <strong>درجة تراكم الأدلة</strong> التي تدعم تفسير الدرجات، لا خاصية ثابتة في الأداة. فلا يقول الباحث «الأداة صادقة»، بل «قدّمنا الأدلة التالية على صدق تفسير الدرجات في هذه العينة».</p><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">أ. مصادر أدلة الصدق</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-user-graduate text-sky-600 dark:text-sky-400"></i> صدق المحتوى والصدق الظاهري</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">عرض الأداة على محكّمين متخصصين لتقدير مدى تغطية العبارات للمفهوم. يمكن تكميم الحكم بنسبة صدق المحتوى للوشي (Lawshe, 1975):<div dir="ltr" class="font-mono text-center pt-1">CVR = (nₑ − N/2) / (N/2)</div>حيث nₑ عدد المحكّمين الذين حكموا بأن العبارة «أساسية»، وN العدد الكلي للمحكّمين.</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-link text-sky-600 dark:text-sky-400"></i> الصدق المرتبط بالمحك (Criterion Validity)</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">ارتباط درجات الأداة بمحك خارجي يُفترض أنه مرتبط بالمفهوم نظرياً: <strong>تلازمي</strong> إذا قيس المحك في الوقت نفسه، و<strong>تنبؤي</strong> إذا قيس لاحقاً.</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-cubes text-sky-600 dark:text-sky-400"></i> الصدق البنائي (Construct Validity)</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">هل تتجمع العبارات في الأبعاد التي افترضها النموذج النظري؟ أدلته: التحليل العاملي الاستكشافي (EFA) والتوكيدي (CFA)، والصدق التقاربي (Convergent) والصدق التمييزي (Discriminant).</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-diagram-project text-sky-600 dark:text-sky-400"></i> الصدق الاتساقي الداخلي</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">ارتباط كل عبارة بالدرجة الكلية لمحورها، وارتباط كل محور بالدرجة الكلية للأداة. هو الأكثر شيوعاً في المذكرات الجزائرية، لكنه يحتاج إلى قراءة نقدية (انظر الفقرة ب).</div></div></div><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">ب. الصدق الاتساقي الداخلي (Internal Consistency Validity): الإجراء والنقد</h3><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">يُحسب معامل ارتباط بيرسون بين كل عبارة والدرجة الكلية لمحورها، ثم بين كل محور والدرجة الكلية للاستبيان. ويُعدّ الاتساق قائماً إذا كانت المعاملات <strong>دالة إحصائياً</strong> (عند 0.01 أو 0.05) و<strong>موجبة ومعتبرة</strong>، أي 0.30 فأكثر.</p><div class="math-block p-3 rounded-lg text-center text-sm text-slate-800 dark:text-slate-200 overflow-x-auto">$$r_{i,X} = \frac{\sum (x_i-\bar{x}_i)(X-\bar{X})}{\sqrt{\sum (x_i-\bar{x}_i)^2 \sum (X-\bar{X})^2}}$$</div><div class="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border-r-4 border-rose-500 text-rose-900 dark:text-rose-200 space-y-2">
+<div class="flex items-center gap-2 font-bold text-sm sm:text-base"><i class="fa-solid fa-magnifying-glass-chart text-rose-600 dark:text-rose-400"></i><span>نقد منهجي لطلبة ماستر 2: تضخم الارتباط</span></div>
+<div class="text-xs sm:text-sm leading-relaxed text-rose-800 dark:text-rose-300 space-y-1.5"><p>العبارة جزء من الدرجة الكلية التي نربطها بها، فيرتبط جزء من الدرجة الكلية بنفسه، ويتضخم المعامل خاصة عندما يكون عدد العبارات قليلاً.</p><p>في ملف الدراسة بلغ الارتباط الخام للعبارة Q1 مع المجموع 0.854، بينما بلغ الارتباط المصحح الذي يستبعد العبارة من المجموع 0.729.</p><p><strong>التوصية:</strong> نعرض الارتباط المصحح من جدول Item-Total Statistics إلى جانب ارتباط بيرسون الخام، ونذكر أن الاتساق الداخلي دليل على <strong>تجانس العبارات</strong> وليس دليلاً كافياً على الصدق البنائي.</p></div></div><div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border-r-4 border-amber-500 text-amber-900 dark:text-amber-200 space-y-2">
+<div class="flex items-center gap-2 font-bold text-sm sm:text-base"><i class="fa-solid fa-triangle-exclamation text-amber-600 dark:text-amber-400"></i><span>خطأ شائع: «الصدق الذاتي = جذر ألفا»</span></div>
+<div class="text-xs sm:text-sm leading-relaxed text-amber-800 dark:text-amber-300 space-y-1.5"><p>تعرض مذكرات كثيرة <bdi dir="ltr" class="font-mono">√α</bdi> على أنه «صدق ذاتي». هذا المقدار هو في الحقيقة <strong>مؤشر الثبات</strong> (Reliability Index)، أي الارتباط النظري بين الدرجة الملاحظة والدرجة الحقيقية، ولا يقدّم أي دليل على أن الأداة تقيس المفهوم المقصود. فلا يُقدَّم كدليل صدق.</p></div></div><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">ج. أدلة الصدق البنائي بالتحليل العاملي</h3><div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700"><table class="w-full text-xs text-right">
+<thead class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700"><tr><th class="p-2.5">المؤشر</th><th class="p-2.5">المعيار المرجعي</th><th class="p-2.5">المرجع</th></tr></thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-slate-700 dark:text-slate-300"><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">مؤشر كفاية العينة (KMO)</td><td class="p-2.5">0.60 فأكثر (0.80 فأكثر: جيد جداً)</td><td class="p-2.5">Kaiser (1974)</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">اختبار بارتليت للتكوّر (Bartlett's Test)</td><td class="p-2.5"><bdi dir="ltr" class="font-mono">p < 0.05</bdi></td><td class="p-2.5">Bartlett (1954)</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">الجذر الكامن (Eigenvalue)</td><td class="p-2.5">أكبر من 1 لكل عامل مستخرج</td><td class="p-2.5">Kaiser (1960)</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">التشبعات (Loadings)</td><td class="p-2.5">0.50 فأكثر، والمثالي 0.70 فأكثر</td><td class="p-2.5">Hair et al. (2019)</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">متوسط التباين المستخلص (AVE)</td><td class="p-2.5">0.50 فأكثر (صدق تقاربي)</td><td class="p-2.5">Fornell & Larcker (1981)</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">الثبات المركب (CR)</td><td class="p-2.5">0.70 فأكثر</td><td class="p-2.5">Fornell & Larcker (1981)</td></tr></tbody></table></div><div class="math-block p-3 rounded-lg text-center text-sm text-slate-800 dark:text-slate-200 overflow-x-auto">$$AVE = \frac{\sum \lambda_i^2}{k} \qquad\qquad CR = \frac{\left(\sum \lambda_i\right)^2}{\left(\sum \lambda_i\right)^2 + \sum (1-\lambda_i^2)}$$</div><p class="text-xs sm:text-sm text-slate-600 dark:text-slate-400">يقوم <strong>الصدق التمييزي</strong> على أن يكون الجذر التربيعي لـ AVE لكل محور أكبر من ارتباطه بباقي المحاور (معيار فورنل ولاركر). أما الحساب الدقيق لـ AVE وCR فيتم عبر التحليل العاملي التوكيدي في AMOS أو SmartPLS، وما يُستخرج من SPSS تقريب أولي.</p><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">د. التطبيق الإجرائي في IBM SPSS 25</h3><div class="p-4 rounded-xl bg-sky-50/60 dark:bg-slate-900/80 border border-sky-200 dark:border-sky-900/50 space-y-2">
+<div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">1</span>
+<h4 class="font-bold text-sm text-slate-900 dark:text-white">حساب الدرجة الكلية للمحور</h4></div>
+<div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold"><span class="spss-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> Transform</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Compute Variable</span></div>
+<div class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed space-y-1"><p>نكتب <bdi dir="ltr" class="font-mono">SQ_Total = SUM.4(Q1 TO Q4)</bdi>. اللاحقة 4 تشترط إجابة العبارات الأربع كلها، حتى تُحسب الارتباطات على العينة نفسها التي حُسب عليها ألفا.</p></div></div><div class="p-4 rounded-xl bg-sky-50/60 dark:bg-slate-900/80 border border-sky-200 dark:border-sky-900/50 space-y-2">
+<div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">2</span>
+<h4 class="font-bold text-sm text-slate-900 dark:text-white">مصفوفة ارتباط العبارات بالدرجة الكلية</h4></div>
+<div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold"><span class="spss-badge"><i class="fa-solid fa-chart-pie"></i> Analyze</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Correlate</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Bivariate</span></div>
+<div class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed space-y-1"><p>ننقل العبارات والدرجة الكلية، ونختار <bdi dir="ltr" class="font-mono">Pearson</bdi> و<bdi dir="ltr" class="font-mono">Two-tailed</bdi>، ونفعّل <bdi dir="ltr" class="font-mono">Flag significant correlations</bdi>. نقرأ العمود الأخير فقط، أي ارتباط كل عبارة بالمجموع.</p></div></div><div class="p-4 rounded-xl bg-sky-50/60 dark:bg-slate-900/80 border border-sky-200 dark:border-sky-900/50 space-y-2">
+<div class="flex items-center gap-2"><span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">3</span>
+<h4 class="font-bold text-sm text-slate-900 dark:text-white">التحليل العاملي الاستكشافي</h4></div>
+<div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold"><span class="spss-badge"><i class="fa-solid fa-chart-pie"></i> Analyze</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Dimension Reduction</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Factor</span></div>
+<div class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed space-y-1"><p>من <bdi dir="ltr" class="font-mono">Descriptives</bdi> نفعّل <bdi dir="ltr" class="font-mono">KMO and Bartlett's test of sphericity</bdi>. ومن <bdi dir="ltr" class="font-mono">Extraction</bdi> نختار <bdi dir="ltr" class="font-mono">Principal components</bdi> مع <bdi dir="ltr" class="font-mono">Eigenvalues greater than 1</bdi>. ومن <bdi dir="ltr" class="font-mono">Rotation</bdi> نختار <bdi dir="ltr" class="font-mono">Varimax</bdi> عند وجود أكثر من عامل.</p></div></div></div>
+            </div>
+        </section>
+
+        <!-- MODULE 3: REPORTING -->
+        <section id="mod-3" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">03</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">المحور الثالث: عرض النتائج في مذكرة الماستر</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold" dir="ltr">Reporting Reliability &amp; Validity</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-3', 'icon-mod-3')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-3" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-mod-3" class="p-5 sm:p-6 space-y-6">
+<div class="space-y-3"><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">أ. نموذج جدول الثبات والصدق في المذكرة</h3><div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700"><table class="w-full text-xs text-right">
+<thead class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700"><tr><th class="p-2.5">المحور</th><th class="p-2.5">عدد العبارات</th><th class="p-2.5">ألفا كرونباخ</th><th class="p-2.5">مدى الارتباط المصحح</th><th class="p-2.5">مدى ارتباط بيرسون مع المحور</th></tr></thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-slate-700 dark:text-slate-300"><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">جودة الخدمة</td><td class="p-2.5">4</td><td class="p-2.5">0.881</td><td class="p-2.5">0.729 – 0.763</td><td class="p-2.5">0.854 – 0.871**</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">المحور الثاني …</td><td class="p-2.5">…</td><td class="p-2.5">…</td><td class="p-2.5">…</td><td class="p-2.5">…</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">الأداة كاملة</td><td class="p-2.5">…</td><td class="p-2.5">…</td><td class="p-2.5">—</td><td class="p-2.5">—</td></tr></tbody></table></div><p class="text-[11px] text-slate-500 dark:text-slate-400">** دال عند مستوى 0.01. يُذكر حجم العينة الذي حُسبت عليه المعاملات (هنا 188 بعد الحذف الإجمالي للحالات الناقصة).</p><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">ب. فقرة نموذجية للتحرير</h3><div class="p-4 rounded-xl bg-sky-50 dark:bg-sky-950/40 border-r-4 border-sky-500 text-sky-900 dark:text-sky-200 space-y-2">
+<div class="flex items-center gap-2 font-bold text-sm sm:text-base"><i class="fa-solid fa-pen-nib text-sky-600 dark:text-sky-400"></i><span>صيغة مقترحة</span></div>
+<div class="text-xs sm:text-sm leading-relaxed text-sky-800 dark:text-sky-300 space-y-1.5"><p>«بلغ معامل ألفا كرونباخ لمحور جودة الخدمة (<bdi dir="ltr" class="font-mono">N = 188</bdi>) 0.881، وهي قيمة جيدة وفق سلّم George & Mallery (2003). وتراوحت معاملات الارتباط المصححة بين العبارات والدرجة الكلية بين 0.729 و0.763، ولم يؤدِّ حذف أي عبارة إلى رفع قيمة ألفا. كما أظهر التحليل العاملي الاستكشافي كفاية العينة (<bdi dir="ltr" class="font-mono">KMO = 0.840</bdi>) ودلالة اختبار بارتليت (<bdi dir="ltr" class="font-mono">χ²(6) = 384.93, p < .001</bdi>)، واستُخرج عامل واحد يفسر 73.84% من التباين بتشبعات تراوحت بين 0.849 و0.873، مما يدعم أحادية البعد والصدق البنائي للمحور.»</p></div></div><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">ج. أخطاء شائعة تُرفض في المناقشة</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-vial text-sky-600 dark:text-sky-400"></i> الاعتماد على العينة الاستطلاعية وحدها</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">ألفا في لحظتين: على عينة استطلاعية (30 مفردة فأكثر) لتنقيح الأداة، ثم على العينة النهائية بعد التحليل العاملي لاعتماد النتائج وعرضها في المذكرة.</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-table-cells-large text-sky-600 dark:text-sky-400"></i> ألفا واحد لكل الاستبيان</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">يُعرض ألفا لكل محور، ولا يُكتفى بقيمة واحدة للأداة كاملة.</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-eraser text-sky-600 dark:text-sky-400"></i> حذف العبارات دون تبرير</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">كل عبارة محذوفة تُذكر مع سبب الحذف الإحصائي والنظري.</div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-copy text-sky-600 dark:text-sky-400"></i> نسخ معاملات دراسة سابقة</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5">الثبات خاصية للدرجات في العينة الحالية، لا للأداة في المطلق، فيجب حسابه على بيانات الباحث نفسه.</div></div></div><h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">د. مراجع أساسية</h3><ul class="list-disc pr-5 text-xs text-slate-600 dark:text-slate-400 space-y-1" dir="ltr" style="text-align:left"><li>Cronbach, L. J. (1951). Coefficient alpha and the internal structure of tests. Psychometrika, 16(3), 297–334.</li><li>Nunnally, J. C. (1978). Psychometric theory (2nd ed.). McGraw-Hill.</li><li>George, D., &amp; Mallery, P. (2003). SPSS for Windows step by step (4th ed.). Allyn &amp; Bacon.</li><li>Lawshe, C. H. (1975). A quantitative approach to content validity. Personnel Psychology, 28(4), 563–575.</li><li>Fornell, C., &amp; Larcker, D. F. (1981). Evaluating structural equation models with unobservable variables and measurement error. Journal of Marketing Research, 18(1), 39–50.</li><li>Kaiser, H. F. (1974). An index of factorial simplicity. Psychometrika, 39(1), 31–36.</li><li>Clark, L. A., &amp; Watson, D. (1995). Constructing validity: Basic issues in objective scale development. Psychological Assessment, 7(3), 309–319.</li><li>McDonald, R. P. (1999). Test theory: A unified treatment. Lawrence Erlbaum.</li><li>AERA, APA, &amp; NCME (2014). Standards for educational and psychological testing. AERA.</li></ul></div>
+            </div>
+        </section>
+
+        <!-- MODULE 5: APPLIED CASE STUDY -->
+        <section id="mod-case" class="module-card bg-slate-900 text-white rounded-2xl border border-slate-700 shadow-md overflow-hidden">
+            <div class="p-5 sm:p-6 border-b border-slate-700/80 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-white/10 text-sky-200 flex items-center justify-center text-sm"><i class="fa-solid fa-briefcase"></i></span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-white">دراسة حالة تطبيقية مدمجة (Case Study)</h2>
+                        <span class="text-xs text-amber-400 font-medium">التحقق من ثبات وصدق محور جودة الخدمة على ملف المحاضرة 1</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-5 sm:p-6 space-y-6">
+                
+                <!-- Scenario Box -->
+                <div class="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2 text-sm">
+                    <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30">السيناريو البحثي التطبيقي</span>
+                    <p class="text-slate-200 leading-relaxed">
+                        بعد تطهير البيانات في المحاضرة 1، يريد الباحث نفسه الذي يدرس أثر <strong>جودة الخدمة</strong> على <strong>رضا الزبائن</strong> في <strong>4 وكالات بنكية جزائرية</strong> أن يتحقق من صلاحية محور جودة الخدمة قبل اختبار الفرضيات. يتكوّن المحور من أربع عبارات على سلّم ليكرت الخماسي (<bdi dir="ltr" class="font-mono text-sky-300">Q1 – Q4</bdi>): السرعة، واللباقة، والالتزام بالمواعيد، والتجهيزات. وتُحسب المعاملات على <strong>188 زبوناً</strong> أجابوا عن العبارات الأربع كلها.
+                    </p>
+                    <div class="text-xs font-bold text-amber-300 pt-1">
+                        المطلوب من الطالب: حساب ألفا كرونباخ وتشخيص العبارات، ثم تأكيده بالتجزئة النصفية، ثم تقديم ثلاثة أدلة صدق (الاتساق الداخلي، والتحليل العاملي، والمحك الخارجي)، وأخيراً تحرير فقرة النتائج.
+                    </div>
+                    <a id="dataset-download" href="Bank_Customer_Satisfaction.xlsx" download="Bank_Customer_Satisfaction.xlsx" class="inline-flex items-center gap-2 mt-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow transition">
+                        <i class="fa-solid fa-file-excel"></i>
+                        <span>تحميل ملف البيانات (Excel)</span>
+                    </a>
+                    <p class="text-[11px] text-slate-400 pt-1"><i class="fa-solid fa-circle-info ml-1"></i>هو ملف المحاضرة 1 نفسه. يُحمَّل الملف مباشرة من هذا الموقع، دون الحاجة إلى تسجيل الدخول.</p>
+                </div>
+
+                <!-- Interactive Roadmap Steps -->
+                <div class="space-y-3">
+                    <h4 class="font-bold text-sm text-sky-400 flex items-center gap-2">
+                        <i class="fa-solid fa-map-location-dot"></i> محاكاة حل دراسة الحالة (تفاعلي):
+                    </h4>
+
+                    <!-- Step Buttons -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold">
+                        <button onclick="showCaseStep(1)" id="case-btn-1" class="case-step-btn px-3 py-2 rounded-lg bg-sky-600 text-white shadow transition">الخطوة 1: تهيئة العينة</button>
+                        <button onclick="showCaseStep(2)" id="case-btn-2" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 2: ألفا كرونباخ</button>
+                        <button onclick="showCaseStep(3)" id="case-btn-3" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 3: الارتباط بين العبارات</button>
+                        <button onclick="showCaseStep(4)" id="case-btn-4" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 4: تشخيص العبارات</button>
+                        <button onclick="showCaseStep(5)" id="case-btn-5" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 5: التجزئة النصفية</button>
+                        <button onclick="showCaseStep(6)" id="case-btn-6" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 6: الاتساق الداخلي</button>
+                        <button onclick="showCaseStep(7)" id="case-btn-7" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 7: التحليل العاملي</button>
+                        <button onclick="showCaseStep(8)" id="case-btn-8" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 8: المحك والتحرير</button>
+                    </div>
+
+                    <!-- Dynamic Case Step Content -->
+                    <div id="case-step-content" class="p-4 rounded-xl bg-slate-900/90 border border-slate-700 min-h-[220px] text-xs sm:text-sm space-y-2">
+                <div class="space-y-2">
+                    <div class="text-white font-bold text-sm">الخطوة 1: فحص اتجاه العبارات وتحديد عينة التحليل</div>
+                    <div class="inline-block px-2.5 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700 font-mono text-xs">
+                        <i class="fa-solid fa-code ml-1"></i> Analyze -&gt; Descriptive Statistics -&gt; Frequencies
+                    </div>
+                    <div dir="ltr" class="p-2 rounded bg-black/40 font-mono text-slate-200 text-xs text-left border border-white/5 whitespace-pre-wrap overflow-x-auto">FREQUENCIES VARIABLES=Q1 Q2 Q3 Q4
+  /STATISTICS=MEAN STDDEV MIN MAX
+  /ORDER=ANALYSIS.</div>
+                    <p class="text-slate-300 text-xs leading-relaxed pt-1">
+                        قبل أي معامل نتأكد من أمرين: أن كل العبارات مصاغة في الاتجاه نفسه، وإلا وجب عكس ترميز السالبة، وكم حالة كاملة سيعتمد عليها التحليل. يحذف SPSS في تحليل الثبات كل حالة تنقصها عبارة واحدة (Listwise).
+                    </p>
+                    <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-100 text-xs leading-relaxed">
+                        <i class="fa-solid fa-circle-check text-emerald-400 ml-1"></i><strong class="text-emerald-300">النتيجة المتوقعة: </strong>العبارات الأربع موجبة الصياغة فلا حاجة إلى عكس الترميز. القيم المفقودة: Q1 = 4، Q2 = 4، Q3 = 3، Q4 = 4، فتبقى <strong>188 حالة كاملة</strong> من أصل 200. المتوسطات متقاربة: 3.24 و3.30 و3.26 و3.31.
+                    </div>
+                </div>
+            </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MODULE 6: INTERACTIVE TOOLS & QUIZ -->
+        <section id="mod-quiz" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">04</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">المحور الرابع: دليل القوائم السريع واختبار التقييم الذاتي</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold">Quick Menu Finder & Self-Assessment Quiz</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-5 sm:p-6 space-y-8">
+                
+                <!-- Quick SPSS Menu Lookup -->
+                <div class="space-y-3">
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-sky-500"></i> دليل اختصارات مسارات SPSS 25:
+                    </h3>
+
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+                        <table class="w-full text-xs text-right">
+                            <thead class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700">
+                                <tr>
+                                    <th class="p-3">الإجراء الإحصائي</th>
+                                    <th class="p-3">المسار في برنامج SPSS 25</th>
+                                    <th class="p-3">الهدف المنهجي</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">ألفا كرونباخ</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Analyze -> Scale -> Reliability Analysis</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">ثبات الاتساق الداخلي لكل محور</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">تشخيص العبارات</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Reliability Analysis -> Statistics -> Scale if item deleted</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">الارتباط المصحح وألفا عند الحذف</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">التجزئة النصفية</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Reliability Analysis -> Model: Split-half</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">سبيرمان-براون وغوتمان</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">عكس العبارات السالبة</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Transform -> Recode into Different Variables</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">توحيد اتجاه الترميز قبل ألفا</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">الدرجة الكلية للمحور</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Transform -> Compute Variable</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">SUM.4 أو MEAN.4</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">الاتساق الداخلي</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Analyze -> Correlate -> Bivariate</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">ارتباط العبارة بمحورها</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">التحليل العاملي</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Analyze -> Dimension Reduction -> Factor</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">KMO وبارتليت والتشبعات</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Self Assessment Quiz Engine -->
+                <div class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <i class="fa-solid fa-circle-question text-sky-500"></i> اختبار التقييم الذاتي (6 أسئلة):
+                        </h3>
+                        <span id="quiz-score-badge" class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200">
+                            النتيجة: 0 / 6
+                        </span>
+                    </div>
+
+                    <!-- Quiz Container -->
+                    <div id="quiz-container" class="space-y-4">
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                        <span>يعتمد معامل ألفا كرونباخ أساساً على المقارنة بين:</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(1, 0)" id="q-1-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                متوسطات العبارات والمتوسط الكلي
+                            </button>
+                        
+                            <button onclick="answerQuiz(1, 1)" id="q-1-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                مجموع تباينات العبارات وتباين الدرجة الكلية
+                            </button>
+                        
+                            <button onclick="answerQuiz(1, 2)" id="q-1-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                درجات التطبيق الأول والتطبيق الثاني
+                            </button>
+                        
+                            <button onclick="answerQuiz(1, 3)" id="q-1-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                آراء المحكّمين
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-1-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                        <span>ظهر لعبارة ارتباط مصحح سالب (<bdi dir="ltr">−0.21</bdi>) في جدول Item-Total Statistics. ما التفسير الأرجح؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(2, 0)" id="q-2-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                العينة صغيرة
+                            </button>
+                        
+                            <button onclick="answerQuiz(2, 1)" id="q-2-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                العبارة مصاغة سلباً ولم يُعكس ترميزها
+                            </button>
+                        
+                            <button onclick="answerQuiz(2, 2)" id="q-2-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                ألفا مرتفع جداً
+                            </button>
+                        
+                            <button onclick="answerQuiz(2, 3)" id="q-2-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                العبارة تقيس الرضا
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-2-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                        <span>ما الوصف الصحيح لما يُسمّى في بعض المذكرات «الصدق الذاتي = √α»؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(3, 0)" id="q-3-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                دليل على صدق المحتوى
+                            </button>
+                        
+                            <button onclick="answerQuiz(3, 1)" id="q-3-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                مؤشر للثبات وليس دليلاً على الصدق
+                            </button>
+                        
+                            <button onclick="answerQuiz(3, 2)" id="q-3-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                دليل على الصدق التمييزي
+                            </button>
+                        
+                            <button onclick="answerQuiz(3, 3)" id="q-3-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                بديل عن التحليل العاملي
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-3-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                        <span>لماذا يتضخم ارتباط بيرسون بين العبارة والدرجة الكلية لمحورها؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(4, 0)" id="q-4-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لأن بيرسون لا يناسب ليكرت
+                            </button>
+                        
+                            <button onclick="answerQuiz(4, 1)" id="q-4-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لأن العبارة نفسها جزء من الدرجة الكلية
+                            </button>
+                        
+                            <button onclick="answerQuiz(4, 2)" id="q-4-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لأن العينة كبيرة
+                            </button>
+                        
+                            <button onclick="answerQuiz(4, 3)" id="q-4-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لأن المتغيرات غير طبيعية
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-4-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
+                        <span>حصل باحث على ألفا = 0.97 لمحور من 25 عبارة. ما القراءة الأكثر نضجاً؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(5, 0)" id="q-5-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                ثبات مثالي لا يُناقش
+                            </button>
+                        
+                            <button onclick="answerQuiz(5, 1)" id="q-5-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                قد يدل على تكرار العبارات وتأثر ألفا بعددها الكبير
+                            </button>
+                        
+                            <button onclick="answerQuiz(5, 2)" id="q-5-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                يجب حذف المحور
+                            </button>
+                        
+                            <button onclick="answerQuiz(5, 3)" id="q-5-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                يدل على صدق تمييزي
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-5-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">6</span>
+                        <span>في التحليل العاملي، ما الحد الأدنى المقبول لمؤشر KMO لاعتبار العينة كافية؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(6, 0)" id="q-6-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                0.30
+                            </button>
+                        
+                            <button onclick="answerQuiz(6, 1)" id="q-6-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                0.50
+                            </button>
+                        
+                            <button onclick="answerQuiz(6, 2)" id="q-6-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                0.60
+                            </button>
+                        
+                            <button onclick="answerQuiz(6, 3)" id="q-6-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                0.95
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-6-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FLOATING SCROLL TO TOP & BOTTOM MOBILE BAR -->
+    <div class="fixed bottom-5 left-5 z-40 flex flex-col gap-2">
+        <button id="btn-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-11 h-11 rounded-full bg-sky-600 text-white shadow-lg flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:bg-sky-700 hover:scale-110">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-12 bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-3">
+            <div class="flex items-start justify-center gap-2 text-white text-sm">
+                <i class="fa-solid fa-graduation-cap text-sky-400 mt-1"></i>
+                <div class="space-y-0.5">
+                    <span class="block font-bold">جامعة عبد الحميد مهري قسنطينة 2، كلية العلوم الاقتصادية، التجارية وعلوم التسيير</span>
+                    <span class="block text-slate-300 font-semibold">قسم علوم التسيير</span>
+                </div>
+            </div>
+            <p class="max-w-2xl mx-auto text-slate-400 leading-relaxed">
+                مصممة خصيصاً لطلبة دراسات الماستر والباحثين للأغراض الأكاديمية والتدريبية على بيئة IBM SPSS 25.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-6 text-sm text-slate-300 pt-1">
+                <span><i class="fa-solid fa-user-tie text-sky-400 ml-1.5"></i>تقديم و إعداد: <strong class="text-white">د. بوصفصاف فريد</strong></span>
+                <span><i class="fa-solid fa-robot text-sky-400 ml-1.5"></i>التصميم على الويب: <strong class="text-white">الذكاء الاصطناعي</strong></span>
+            </div>
+            <div class="text-[11px] text-slate-500 pt-2">
+                &copy; 2026 - 2027 • المحاضرة 2: ثبات وصدق أدوات الدراسة.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MATHJAX JS FOR LATEX RENDERING -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- INTERACTIVE SCRIPT LOGIC -->
+    <script>
+        // State variables
+        let currentFontScale = 100;
+        let quizAnswers = {};
+
+        // Case Study Step Data
+        const caseSteps = {
+  "1": {
+    "title": "الخطوة 1: فحص اتجاه العبارات وتحديد عينة التحليل",
+    "path": "Analyze -> Descriptive Statistics -> Frequencies",
+    "code": "FREQUENCIES VARIABLES=Q1 Q2 Q3 Q4\n  /STATISTICS=MEAN STDDEV MIN MAX\n  /ORDER=ANALYSIS.",
+    "desc": "قبل أي معامل نتأكد من أمرين: أن كل العبارات مصاغة في الاتجاه نفسه، وإلا وجب عكس ترميز السالبة، وكم حالة كاملة سيعتمد عليها التحليل. يحذف SPSS في تحليل الثبات كل حالة تنقصها عبارة واحدة (Listwise).",
+    "expected": "العبارات الأربع موجبة الصياغة فلا حاجة إلى عكس الترميز. القيم المفقودة: Q1 = 4، Q2 = 4، Q3 = 3، Q4 = 4، فتبقى <strong>188 حالة كاملة</strong> من أصل 200. المتوسطات متقاربة: 3.24 و3.30 و3.26 و3.31."
+  },
+  "2": {
+    "title": "الخطوة 2: حساب معامل ألفا كرونباخ",
+    "path": "Analyze -> Scale -> Reliability Analysis",
+    "code": "RELIABILITY\n  /VARIABLES=Q1 Q2 Q3 Q4\n  /SCALE('Service_Quality') ALL\n  /MODEL=ALPHA\n  /STATISTICS=DESCRIPTIVE SCALE CORR\n  /SUMMARY=TOTAL MEANS.",
+    "desc": "نختار النموذج Alpha، ونفعّل من Statistics الخيارات Item وScale وScale if item deleted وInter-Item Correlations، ثم نقرأ جدول Reliability Statistics.",
+    "expected": "ألفا كرونباخ = <strong>0.881</strong>، وألفا المعياري = 0.882، وعدد العبارات 4، و<bdi dir=\"ltr\" class=\"font-mono\">N = 188</bdi>. الحكم: ثبات جيد وفق سلّم George &amp; Mallery."
+  },
+  "3": {
+    "title": "الخطوة 3: قراءة مصفوفة الارتباط بين العبارات",
+    "path": "Output -> Inter-Item Correlation Matrix",
+    "code": "* تُعرض تلقائياً بعد تفعيل Inter-Item Correlations\n* في الخطوة 2.",
+    "desc": "يجب أن تكون كل الارتباطات موجبة. ويوصي Clark &amp; Watson (1995) بأن يقع متوسطها بين 0.15 و0.50 للمفاهيم الواسعة، فالمتوسط الأعلى يعني أن العبارات تقيس جانباً ضيقاً من المفهوم أو أنها متقاربة الصياغة.",
+    "expected": "الارتباطات بين 0.626 و0.674، ومتوسطها <strong>0.651</strong>. كلها موجبة ومعتبرة، لكن ارتفاع المتوسط يشير إلى محور ضيق المجال. هذه نقطة تُناقش في حدود الدراسة: هل تغطي العبارات الأربع كل أبعاد جودة الخدمة، مثل نموذج SERVQUAL بأبعاده الخمسة؟"
+  },
+  "4": {
+    "title": "الخطوة 4: تشخيص كل عبارة (Item-Total Statistics)",
+    "path": "Output -> Item-Total Statistics",
+    "code": "* Corrected Item-Total Correlation  >= 0.30\n* Cronbach's Alpha if Item Deleted  <  Alpha",
+    "desc": "نقرأ لكل عبارة الارتباط المصحح، أي ارتباطها بمجموع العبارات الأخرى، وقيمة ألفا لو حُذفت. تكون العبارة سليمة إذا تجاوز ارتباطها 0.30 وكان حذفها يُنقص ألفا.",
+    "expected": "الارتباطات المصححة: Q1 = 0.729، Q2 = 0.746، Q3 = 0.734، Q4 = 0.763. وألفا عند الحذف: Q1 = 0.853، Q2 = 0.847، Q3 = 0.851، Q4 = 0.839. كل القيم أقل من 0.881، فلا تُحذف أي عبارة."
+  },
+  "5": {
+    "title": "الخطوة 5: التأكيد بالتجزئة النصفية",
+    "path": "Analyze -> Scale -> Reliability Analysis -> Model: Split-half",
+    "code": "RELIABILITY\n  /VARIABLES=Q1 Q2 Q3 Q4\n  /SCALE('Service_Quality') ALL\n  /MODEL=SPLIT.",
+    "desc": "يضع SPSS العبارتين الأوليين (Q1 وQ2) في النصف الأول والأخريين (Q3 وQ4) في الثاني، بحسب ترتيب إدخالهما. نقرأ الارتباط بين النصفين ثم معامل سبيرمان-براون (Equal Length) ومعامل غوتمان.",
+    "expected": "ألفا النصف الأول = 0.777، وألفا النصف الثاني = 0.797. الارتباط بين النصفين = 0.788. سبيرمان-براون = <strong>0.882</strong>، وغوتمان = <strong>0.882</strong>. النتيجة متطابقة تقريباً مع ألفا، فالثبات مؤكد بطريقتين."
+  },
+  "6": {
+    "title": "الخطوة 6: الصدق الاتساقي الداخلي (عبارة مع محور)",
+    "path": "Transform -> Compute Variable  |  Analyze -> Correlate -> Bivariate",
+    "code": "COMPUTE SQ_Total = SUM.4(Q1 TO Q4).\nEXECUTE.\nCORRELATIONS\n  /VARIABLES=Q1 Q2 Q3 Q4 SQ_Total\n  /PRINT=TWOTAIL NOSIG\n  /MISSING=PAIRWISE.",
+    "desc": "نحسب الدرجة الكلية للمحور، ثم معامل بيرسون بين كل عبارة وهذه الدرجة. وللمقارنة النقدية نضع بجانبه الارتباط المصحح من الخطوة 4.",
+    "expected": "ارتباط بيرسون الخام: Q1 = 0.854، Q2 = 0.855، Q3 = 0.856، Q4 = 0.871 (كلها دالة عند <bdi dir=\"ltr\" class=\"font-mono\">p &lt; .001</bdi>). أما المصحح فبين 0.729 و0.763. الفرق، أي نحو 0.12، هو مقدار التضخم الناتج عن وجود العبارة داخل المجموع، ولهذا نعرض المعاملين معاً."
+  },
+  "7": {
+    "title": "الخطوة 7: الصدق البنائي بالتحليل العاملي الاستكشافي",
+    "path": "Analyze -> Dimension Reduction -> Factor",
+    "code": "FACTOR\n  /VARIABLES Q1 Q2 Q3 Q4\n  /MISSING LISTWISE\n  /PRINT INITIAL KMO EXTRACTION\n  /CRITERIA MINEIGEN(1)\n  /EXTRACTION PC\n  /ROTATION NOROTATE.",
+    "desc": "نتحقق أولاً من صلاحية البيانات للتحليل العاملي (KMO وبارتليت)، ثم من عدد العوامل المستخرجة، ثم من تشبع كل عبارة.",
+    "expected": "<bdi dir=\"ltr\" class=\"font-mono\">KMO = 0.840</bdi> (جيد جداً)، واختبار بارتليت <bdi dir=\"ltr\" class=\"font-mono\">χ²(6) = 384.93, p &lt; .001</bdi>. استُخرج <strong>عامل واحد</strong> بجذر كامن 2.953 يفسر 73.84% من التباين، والجذر الثاني 0.375. التشبعات: Q1 = 0.849، Q2 = 0.861، Q3 = 0.853، Q4 = 0.873. القيمتان التقريبيتان من هذه التشبعات: <bdi dir=\"ltr\" class=\"font-mono\">AVE ≈ 0.74</bdi> و<bdi dir=\"ltr\" class=\"font-mono\">CR ≈ 0.92</bdi>. تشبعات المكونات الرئيسية أعلى عادة من تشبعات CFA، فتؤكَّد هاتان القيمتان في AMOS."
+  },
+  "8": {
+    "title": "الخطوة 8: الصدق المرتبط بالمحك ثم تحرير النتائج",
+    "path": "Transform -> Compute Variable  |  Analyze -> Correlate -> Bivariate",
+    "code": "COMPUTE SQ_Mean = MEAN.4(Q1 TO Q4).\nEXECUTE.\nCORRELATIONS\n  /VARIABLES=SQ_Mean Satisfaction\n  /PRINT=TWOTAIL NOSIG.",
+    "desc": "تتوقع النظرية أن ترتبط جودة الخدمة إيجابياً بالرضا العام، فيُستعمل متغير Satisfaction محكاً خارجياً تلازمياً. وحدّ هذا الدليل أن المحك عبارة واحدة، ولذلك يُعرض دليلاً مكمّلاً لا دليلاً وحيداً.",
+    "expected": "<bdi dir=\"ltr\" class=\"font-mono\">r = 0.639, p &lt; .001, N = 188</bdi>: ارتباط موجب وقوي يدعم الصدق التلازمي. الخلاصة: المحور ثابت (0.881)، أحادي البعد، وتدعمه ثلاثة أدلة صدق. والفقرة النموذجية لتحرير هذه النتائج موجودة في المحور الثالث."
+  }
+};
+
+        // Quiz Questions Data
+        const quizQuestions = [
+  {
+    "id": 1,
+    "q": "يعتمد معامل ألفا كرونباخ أساساً على المقارنة بين:",
+    "options": [
+      "متوسطات العبارات والمتوسط الكلي",
+      "مجموع تباينات العبارات وتباين الدرجة الكلية",
+      "درجات التطبيق الأول والتطبيق الثاني",
+      "آراء المحكّمين"
+    ],
+    "correct": 1,
+    "explain": "ألفا = (k/(k−1)) × (1 − مجموع تباينات العبارات / تباين المجموع). كلما ارتبطت العبارات زاد تباين المجموع فارتفع ألفا."
+  },
+  {
+    "id": 2,
+    "q": "ظهر لعبارة ارتباط مصحح سالب (<bdi dir=\"ltr\">−0.21</bdi>) في جدول Item-Total Statistics. ما التفسير الأرجح؟",
+    "options": [
+      "العينة صغيرة",
+      "العبارة مصاغة سلباً ولم يُعكس ترميزها",
+      "ألفا مرتفع جداً",
+      "العبارة تقيس الرضا"
+    ],
+    "correct": 1,
+    "explain": "الارتباط السالب علامة كلاسيكية على عبارة سالبة الصياغة. يُعكس ترميزها عبر Recode into Different Variables ثم يُعاد الحساب."
+  },
+  {
+    "id": 3,
+    "q": "ما الوصف الصحيح لما يُسمّى في بعض المذكرات «الصدق الذاتي = √α»؟",
+    "options": [
+      "دليل على صدق المحتوى",
+      "مؤشر للثبات وليس دليلاً على الصدق",
+      "دليل على الصدق التمييزي",
+      "بديل عن التحليل العاملي"
+    ],
+    "correct": 1,
+    "explain": "√α هو مؤشر الثبات (الارتباط النظري مع الدرجة الحقيقية). لا يقدّم أي دليل على أن الأداة تقيس المفهوم المقصود."
+  },
+  {
+    "id": 4,
+    "q": "لماذا يتضخم ارتباط بيرسون بين العبارة والدرجة الكلية لمحورها؟",
+    "options": [
+      "لأن بيرسون لا يناسب ليكرت",
+      "لأن العبارة نفسها جزء من الدرجة الكلية",
+      "لأن العينة كبيرة",
+      "لأن المتغيرات غير طبيعية"
+    ],
+    "correct": 1,
+    "explain": "العبارة داخل المجموع فترتبط بنفسها جزئياً. لذلك يُعرض الارتباط المصحح (Corrected Item-Total) الذي يستبعدها، وفي مثالنا انخفض من 0.854 إلى 0.729."
+  },
+  {
+    "id": 5,
+    "q": "حصل باحث على ألفا = 0.97 لمحور من 25 عبارة. ما القراءة الأكثر نضجاً؟",
+    "options": [
+      "ثبات مثالي لا يُناقش",
+      "قد يدل على تكرار العبارات وتأثر ألفا بعددها الكبير",
+      "يجب حذف المحور",
+      "يدل على صدق تمييزي"
+    ],
+    "correct": 1,
+    "explain": "يرتفع ألفا آلياً بزيادة عدد العبارات، والقيم فوق 0.95 قد تعني عبارات مكررة بصياغات مختلفة. تُراجع مصفوفة الارتباط بين العبارات."
+  },
+  {
+    "id": 6,
+    "q": "في التحليل العاملي، ما الحد الأدنى المقبول لمؤشر KMO لاعتبار العينة كافية؟",
+    "options": [
+      "0.30",
+      "0.50",
+      "0.60",
+      "0.95"
+    ],
+    "correct": 2,
+    "explain": "يعدّ Kaiser (1974) قيمة 0.60 حداً أدنى، و0.80 فأكثر جيداً جداً. في ملف الدراسة KMO = 0.840."
+  }
+];
+
+        function safe(fn){ try { fn(); } catch (err) { console.error(err); } }
+        function initPage() {
+            safe(() => initTheme());
+            safe(() => initScrollProgress());
+            safe(() => showCaseStep(1));
+            safe(() => renderQuiz());
+
+            // Font size listeners
+            safe(() => document.getElementById('btn-font-inc').addEventListener('click', () => adjustFontSize(10)));
+            safe(() => document.getElementById('btn-font-dec').addEventListener('click', () => adjustFontSize(-10)));
+            safe(() => document.getElementById('btn-font-reset').addEventListener('click', () => resetFontSize()));
+
+            // Theme toggle listener
+            safe(() => document.getElementById('btn-theme-toggle').addEventListener('click', toggleTheme));
+
+            // Search filter listener
+            safe(() => document.getElementById('content-search').addEventListener('input', handleContentSearch));
+
+            // Expand all listener
+            safe(() => document.getElementById('btn-expand-all').addEventListener('click', toggleExpandAll));
+        }
+        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initPage); } else { initPage(); }
+
+        // Theme management
+        function initTheme() {
+            const isDark = localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-sun';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-moon';
+            }
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                document.getElementById('theme-icon').className = 'fa-solid fa-moon';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-sun';
+            }
+        }
+
+        // Reading Progress Bar & Scroll Top Visibility
+        function initScrollProgress() {
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progress-bar').style.width = scrolled + '%';
+
+                const btnTop = document.getElementById('btn-back-to-top');
+                if (winScroll > 300) {
+                    btnTop.classList.remove('opacity-0', 'pointer-events-none');
+                } else {
+                    btnTop.classList.add('opacity-0', 'pointer-events-none');
+                }
+            });
+        }
+
+        // Dynamic Font Sizer
+        function adjustFontSize(delta) {
+            currentFontScale = Math.min(Math.max(currentFontScale + delta, 80), 140);
+            document.getElementById('main-content-wrapper').style.fontSize = `${currentFontScale}%`;
+        }
+
+        function resetFontSize() {
+            currentFontScale = 100;
+            document.getElementById('main-content-wrapper').style.fontSize = '100%';
+        }
+
+        // Accordion Toggle Logic
+        function toggleAccordion(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            if (!content || !icon) return;
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.className = 'fa-solid fa-chevron-up text-lg';
+            } else {
+                content.classList.add('hidden');
+                icon.className = 'fa-solid fa-chevron-down text-lg';
+            }
+        }
+
+        function toggleExpandAll() {
+            const allContents = document.querySelectorAll('[id^="content-"]');
+            const btn = document.getElementById('btn-expand-all');
+            const isExpanding = btn.innerText.includes('توسيع');
+
+            allContents.forEach(c => {
+                if (isExpanding) {
+                    c.classList.remove('hidden');
+                } else {
+                    c.classList.add('hidden');
+                }
+            });
+
+            btn.innerHTML = isExpanding ? 
+                '<i class="fa-solid fa-angles-up"></i><span>طي الكل</span>' : 
+                '<i class="fa-solid fa-angles-down"></i><span>توسيع الكل</span>';
+        }
+
+        // Smooth Scroll Helper
+        function scrollToModule(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                // Ensure accordion is open
+                const content = el.querySelector('[id^="content-"]');
+                if (content && content.classList.contains('hidden')) {
+                    content.classList.remove('hidden');
+                }
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Live Content Search Filter
+        function handleContentSearch(e) {
+            const query = e.target.value.trim().toLowerCase();
+            const cards = document.querySelectorAll('.module-card');
+
+            cards.forEach(card => {
+                if (!query) {
+                    card.style.display = 'block';
+                    return;
+                }
+                const text = card.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'block';
+                    // Auto open matching card accordion
+                    const content = card.querySelector('[id^="content-"]');
+                    if (content) content.classList.remove('hidden');
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Case Study Step Switcher
+        function showCaseStep(step) {
+            const data = caseSteps[step];
+            if (!data) return;
+
+            // Update active button state
+            for (let i = 1; i <= Object.keys(caseSteps).length; i++) {
+                const btn = document.getElementById(`case-btn-${i}`);
+                if (i === step) {
+                    btn.className = 'case-step-btn px-3 py-2 rounded-lg bg-sky-600 text-white shadow font-bold transition';
+                } else {
+                    btn.className = 'case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition';
+                }
+            }
+
+            // Render content
+            const contentBox = document.getElementById('case-step-content');
+            contentBox.innerHTML = `
+                <div class="space-y-2">
+                    <div class="text-white font-bold text-sm">${data.title}</div>
+                    <div class="inline-block px-2.5 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700 font-mono text-xs">
+                        <i class="fa-solid fa-code ml-1"></i> ${data.path}
+                    </div>
+                    <div dir="ltr" class="p-2 rounded bg-black/40 font-mono text-slate-200 text-xs text-left border border-white/5 whitespace-pre-wrap overflow-x-auto">${data.code}</div>
+                    <p class="text-slate-300 text-xs leading-relaxed pt-1">
+                        ${data.desc}
+                    </p>
+                    <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-100 text-xs leading-relaxed">
+                        <i class="fa-solid fa-circle-check text-emerald-400 ml-1"></i><strong class="text-emerald-300">النتيجة المتوقعة: </strong>${data.expected}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Quiz Engine Rendering & Interaction
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            if (!container) return;
+
+            container.innerHTML = quizQuestions.map((q, idx) => `
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">${idx + 1}</span>
+                        <span>${q.q}</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        ${q.options.map((opt, oIdx) => `
+                            <button onclick="answerQuiz(${q.id}, ${oIdx})" id="q-${q.id}-opt-${oIdx}" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <div id="q-${q.id}-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            `).join('');
+        }
+
+        function answerQuiz(qId, optIdx) {
+            const question = quizQuestions.find(q => q.id === qId);
+            if (!question) return;
+
+            quizAnswers[qId] = optIdx;
+
+            const isCorrect = optIdx === question.correct;
+            const feedbackEl = document.getElementById(`q-${qId}-feedback`);
+
+            // Disable option buttons for this question
+            question.options.forEach((_, oIdx) => {
+                const btn = document.getElementById(`q-${qId}-opt-${oIdx}`);
+                btn.disabled = true;
+                if (oIdx === question.correct) {
+                    btn.className = 'p-2.5 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-500 font-bold text-emerald-900 dark:text-emerald-200 text-right';
+                } else if (oIdx === optIdx && !isCorrect) {
+                    btn.className = 'p-2.5 rounded-lg bg-rose-100 dark:bg-rose-950/80 border border-rose-500 font-bold text-rose-900 dark:text-rose-200 text-right';
+                } else {
+                    btn.className = 'p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 text-slate-400 text-right opacity-60';
+                }
+            });
+
+            // Show Feedback
+            feedbackEl.classList.remove('hidden');
+            if (isCorrect) {
+                feedbackEl.className = 'p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs';
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 ml-1"></i> <strong>إجابة صحيحة!</strong> ${question.explain}`;
+            } else {
+                feedbackEl.className = 'p-3 rounded-lg bg-rose-50 dark:bg-rose-950/50 border border-rose-300 dark:border-rose-800 text-rose-900 dark:text-rose-200 text-xs';
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600 ml-1"></i> <strong>إجابة خاطئة.</strong> ${question.explain}`;
+            }
+
+            // Update Total Score
+            let correctCount = 0;
+            quizQuestions.forEach(q => {
+                if (quizAnswers[q.id] === q.correct) correctCount++;
+            });
+            document.getElementById('quiz-score-badge').innerText = `النتيجة: ${correctCount} / ${quizQuestions.length}`;
+        }
+    </script>
+<script>
+(function(){
+  // إعدادات الصفحة: اسم الحصة كما في ورقة «الإعدادات» ومفتاح الحفظ في المتصفح
+  var U='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec',LECN='المحاضرة 2: الثبات والصدق',KEY='lec2-login-v3',OLD='lec2-attendance-v2';
+  var $=function(x){return document.getElementById(x)};
+  var CLS={ok:'p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-xs sm:text-sm text-emerald-800 dark:text-emerald-300',
+    warn:'p-3 rounded-lg bg-red-50 dark:bg-red-950/40 border border-red-300 dark:border-red-800 text-xs sm:text-sm text-red-800 dark:text-red-300',
+    info:'p-3 rounded-lg bg-sky-50 dark:bg-sky-950/40 border border-sky-300 dark:border-sky-800 text-xs sm:text-sm text-sky-800 dark:text-sky-300'};
+  function note(h,k){var n=$('att-lock-note');if(n){n.innerHTML=h;n.className=CLS[k||'ok'];}}
+  function esc(t){var e=document.createElement('span');e.textContent=t;return e.innerHTML;}
+  function noSlides(){var b=$('deck-btn');if(b){b.disabled=true;b.onclick=null;b.removeAttribute('onclick');b.innerHTML='<i class="fa-solid fa-lock ml-2"></i>عرض الشرائح غير متاح';}var s=$('mod-slides');if(s){var p=s.querySelector('p');if(p)p.textContent='الشرائح متاحة يوم إلقاء المحاضرة فقط';}window.openDeck=function(){};}
+  function unlock(st){document.body.classList.remove('att-locked');var w=$('att-frame-wrap');if(w)w.style.display='none';
+    var who=st.nom?' <bdi dir="ltr">'+esc((st.nom+' '+st.prenom).trim())+'</bdi>'+(st.grp?' (الفوج '+esc(st.grp)+')':''):'';
+    if(st.mode==='L'){noSlides();note('<i class="fa-solid fa-triangle-exclamation ml-1"></i> المحاضرة أُلقيت يوم '+esc(st.dt||'')+'، وسيتم تسجيلكم كغائب عن المحاضرة.'+who+' يمكنك الاطلاع على محتوى المحاضرة أدناه دون الشرائح.','warn');}
+    else note('<i class="fa-solid fa-circle-check ml-1 text-emerald-600"></i> تم تسجيل حضورك'+who+(st.hh?' (الساعة '+esc(st.hh)+')':'')+'. محتوى الحصة متاح الآن أدناه.','ok');}
+  try{localStorage.removeItem('dk-prof')}catch(e){}
+  function profOn(){document.body.classList.remove('att-locked');var w=$('att-frame-wrap');if(w)w.style.display='none';note('<i class="fa-solid fa-chalkboard-user ml-1"></i> وضع الأستاذ: تم تخطي تسجيل الحضور، ويمكنك التحكم في الشرائح.','info');}
+  var pb=$('prof-btn');if(pb)pb.addEventListener('click',function(){var k=prompt('أدخل الرمز السري للأستاذ');if(!k)return;pb.disabled=true;fetch(U,{method:'POST',body:new URLSearchParams({action:'checkkey',key:k})}).then(function(r){return r.text()}).then(function(x){pb.disabled=false;if(String(x).indexOf('OK')===0){sessionStorage.setItem('dk-prof',k);location.reload();}else alert('الرمز غير صحيح');}).catch(function(){pb.disabled=false;alert('تعذّر الاتصال')});});
+  try{ if(sessionStorage.getItem('dk-prof')){profOn();return;} }catch(e){}
+  // المتصفح يتذكر حالة التسجيل
+  try{ var sv=JSON.parse(localStorage.getItem(KEY)||'null'); if(sv&&sv.mode){unlock(sv);return;} if(localStorage.getItem(OLD)==='1'){unlock({mode:'P'});return;} }catch(e){}
+  document.body.classList.add('att-locked');
+  var fm=$('att-form'); if(!fm){unlock({mode:'P'});return;}
+  fm.addEventListener('submit',function(ev){ev.preventDefault();var m=$('att-msg'),b=$('att-btn');var d=new FormData(fm);
+    var bac=String(d.get('bac')||'').replace(/\D/g,''),code=String(d.get('code')||'').trim();
+    var bad=function(t){b.disabled=false;m.textContent=t;m.className='text-sm mr-2 text-red-600';};
+    if(!/^\d{6,9}$/.test(bac)){bad('رقم البكالوريا يتكوّن من 6 إلى 9 أرقام.');return;}
+    b.disabled=true;m.textContent='جارٍ التحقق…';m.className='text-sm mr-2 text-slate-500';
+    fetch(U,{method:'POST',body:new URLSearchParams({bac:bac,code:code,lecture:LECN})}).then(function(r){return r.text();}).then(function(x){x=String(x).trim();var p=x.split('|');
+      if(p[0]==='TOO_EARLY'){bad('تعذّر الدخول: تاريخ إلقاء المحاضرة هو يوم '+(p[1]||'')+'.');return;}
+      if(p[0]==='NO_DATE'){bad('لم يحدّد الأستاذ تاريخ هذه المحاضرة بعد.');return;}
+      if(p[0]==='BAD_CODE'){bad(code?'رمز الحصة غير صحيح.':'اليوم هو يوم المحاضرة: أدخل رمز الحصة الذي يعلنه الأستاذ.');return;}
+      if(p[0]==='UNKNOWN_BAC'){bad('رقم البكالوريا هذا غير موجود في قوائم الطلبة. تحقّق من الرقم أو راجع الأستاذ.');return;}
+      if(p[0]==='NO_ROSTER'){bad('قوائم الطلبة غير مهيّأة بعد. أبلغ الأستاذ.');return;}
+      if(p[0]==='OK')p.splice(1,0,'');else if(p[0]!=='DUPLICATE'){bad('الخادم مشغول، أعد المحاولة.');return;}
+      // p: الحالة، الساعة، اللقب، الاسم، التخصص، الفوج، P/L، التاريخ
+      var st={bac:bac,hh:p[1]||'',nom:p[2]||'',prenom:p[3]||'',sp:p[4]||'',grp:p[5]||'',mode:p[6]==='L'?'L':'P',dt:p[7]||''};
+      try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}
+      unlock(st);var t=$('mod-intro');if(t)setTimeout(function(){t.scrollIntoView({behavior:'smooth'});},1200);
+    }).catch(function(){bad('تعذّر الاتصال، تحقق من الإنترنت وأعد المحاولة.');});});
+})();
+</script>
+<div id="dk"><div class="trk"><div class='sl'><div class='hdr hdr1'>جامعة عبد الحميد مهري<br>كلية العلوم الاقتصادية والتجارية وعلوم التسيير<br>قسم علوم التسيير<br><span>من إعداد وتقديم: الأستاذ بوصفصاف فريد</span></div><div class='tag'>محاضرة 2</div><h3>الثبات والصدق في SPSS 25</h3><div class='bd'><p class='big'>Reliability &amp; Validity</p><p>ماستر 2</p><p><button type='button' class='pbtn' data-a='prof'><i class='fa-solid fa-chalkboard-user'></i> <span>تفعيل شاشة الأستاذ</span></button></p><p class='hint'>اسحب يميناً أو يساراً للتنقل، والمس الشاشة لإظهار الأزرار</p></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>خريطة الطريق</div><h3>خريطة طريق المذكرة</h3><div class='bd'><div style='display:flex;gap:.3vw;align-items:stretch;direction:rtl'><div style='flex:1 1 0;min-width:0;border-radius:10px;padding:.3em .4em;border:1px solid #334155;background:#0f2238;opacity:.42;font-size:.56em;line-height:1.35'><div style='font-weight:800;color:#e2e8f0'>🎯 1. بناء النموذج</div><div style='color:#cbd5e1;margin-top:.12em'>الإشكالية، المتغير التابع والمستقل، الفرضيات</div></div><div style='align-self:center;color:#64748b;flex:0 0 auto;font-size:.8em'>←</div><div style='flex:1 1 0;min-width:0;border-radius:10px;padding:.3em .4em;border:1px solid #334155;background:#0f2238;opacity:.42;font-size:.56em;line-height:1.35'><div style='font-weight:800;color:#e2e8f0'>🧱 2. بناء الأداة</div><div style='color:#cbd5e1;margin-top:.12em'>المتغير ← محور، المحور ← أبعاد، صياغة العبارات وسلّم ليكرت، العبارات العكسية</div></div><div style='align-self:center;color:#64748b;flex:0 0 auto;font-size:.8em'>←</div><div style='flex:1 1 0;min-width:0;border-radius:10px;padding:.3em .4em;border:2px solid #fbbf24;background:#2a1f05;box-shadow:0 0 0 2px rgba(251,191,36,.25);font-size:.56em;line-height:1.35'><div style='font-weight:800;color:#fde68a'>🧪 3. التحكيم والدراسة الاستطلاعية</div><div style='color:#cbd5e1;margin-top:.12em'>صدق المحكمين، عينة استطلاعية (30 فأكثر)، ألفا أولي، تنقيح العبارات</div><div style='margin-top:.25em'><span style='display:inline-block;background:#fbbf24;color:#1c1206;font-weight:800;border-radius:999px;padding:0 .55em;font-size:.9em'>📍 ألفا أولي: لتنقيح الأداة</span></div></div><div style='align-self:center;color:#64748b;flex:0 0 auto;font-size:.8em'>←</div><div style='flex:1 1 0;min-width:0;border-radius:10px;padding:.3em .4em;border:1px solid #334155;background:#0f2238;opacity:.42;font-size:.56em;line-height:1.35'><div style='font-weight:800;color:#e2e8f0'>📮 4. التوزيع النهائي وجمع البيانات</div><div style='color:#cbd5e1;margin-top:.12em'>المجتمع والعينة وحجمها (5–10 مستجيبين لكل عبارة للتحليل العاملي)، ورقي أو <bdi dir='ltr'>Google Forms</bdi>، استبعاد الاستمارات غير الصالحة</div></div></div><div style='height:.35em'></div><div style='display:flex;gap:.3vw;align-items:stretch;direction:rtl'><div style='flex:1 1 0;min-width:0;border-radius:10px;padding:.3em .4em;border:1px solid #334155;background:#0f2238;opacity:.42;font-size:.56em;line-height:1.35'><div style='font-weight:800;color:#e2e8f0'>🗂️ 5. تجهيز البيانات في <bdi dir='ltr'>SPSS</bdi></div><div style='color:#cbd5e1;margin-top:.12em'>الترميز، القيم المفقودة، عكس العبارات العكسية (المحاضرة 1)</div></div><div style='align-self:center;color:#64748b;flex:0 0 auto;font-size:.8em'>←</div><div style='flex:1 1 0;min-width:0;border-radius:10px;padding:.3em .4em;border:2px solid #fbbf24;background:#2a1f05;box-shadow:0 0 0 2px rgba(251,191,36,.25);font-size:.56em;line-height:1.35'><div style='font-weight:800;color:#fde68a'>🔬 6. الاختبارات والتعديلات على العينة النهائية</div><div style='color:#cbd5e1;margin-top:.12em'>التحليل العاملي لكل متغير ← ألفا والاتساق الداخلي لكل بُعد ← حساب درجات الأبعاد</div><div style='margin-top:.25em'><span style='display:inline-block;background:#fbbf24;color:#1c1206;font-weight:800;border-radius:999px;padding:0 .55em;font-size:.9em'>📍 ألفا النهائي: بعد التحليل العاملي</span></div></div><div style='align-self:center;color:#64748b;flex:0 0 auto;font-size:.8em'>←</div><div style='flex:1 1 0;min-width:0;border-radius:10px;padding:.3em .4em;border:1px solid #334155;background:#0f2238;opacity:.42;font-size:.56em;line-height:1.35'><div style='font-weight:800;color:#e2e8f0'>📈 7. ما بعدها</div><div style='color:#cbd5e1;margin-top:.12em'>التوزيع الطبيعي (المحاضرة 4) ← الانحدار (المحاضرة 5)</div></div></div><p class='exn' style='margin:.3em 0 0'>ألفا في لحظتين: على العينة الاستطلاعية لتنقيح الأداة، ثم على العينة النهائية لاعتماد النتائج.</p></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>خريطة ذهنية</div><h3>محتوى المحاضرة</h3><div class='bd'><svg viewBox='0 0 800 300' style='width:100%;max-height:62vh;direction:rtl;font-family:inherit'><line x1='400' y1='150' x2='150' y2='55' stroke='#38bdf8' stroke-width='3' opacity='.6'/><line x1='400' y1='150' x2='650' y2='55' stroke='#a78bfa' stroke-width='3' opacity='.6'/><line x1='400' y1='150' x2='150' y2='235' stroke='#4ade80' stroke-width='3' opacity='.6'/><line x1='400' y1='150' x2='650' y2='235' stroke='#fbbf24' stroke-width='3' opacity='.6'/><rect x='300' y='118' width='200' height='64' rx='32' fill='#1e3a8a' stroke='#7dd3fc' stroke-width='2'/><text x='400' y='146' text-anchor='middle' fill='#fff' font-size='17' font-weight='700'>الثبات والصدق</text><text x='400' y='168' text-anchor='middle' fill='#7dd3fc' font-size='13'>صلاحية أداة القياس</text><rect x='10' y='8.0' width='280' height='94' rx='12' fill='#0f172a' stroke='#38bdf8' stroke-width='2'/><text x='150' y='30.0' text-anchor='middle' fill='#38bdf8' font-size='15' font-weight='700'>المحور 1: الثبات</text><text x='150' y='52.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>أنواع الثبات</text><text x='150' y='72.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>ألفا كرونباخ وسلّم تفسيره</text><text x='150' y='92.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>هل نحذف عبارة؟</text><rect x='510' y='8.0' width='280' height='94' rx='12' fill='#0f172a' stroke='#a78bfa' stroke-width='2'/><text x='650' y='30.0' text-anchor='middle' fill='#a78bfa' font-size='15' font-weight='700'>المحور 2: الصدق</text><text x='650' y='52.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>المحكّمون والرضا العام</text><text x='650' y='72.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>الاتساق الداخلي ونقده</text><text x='650' y='92.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>التحليل العاملي: المحاضرة 3</text><rect x='10' y='188.0' width='280' height='94' rx='12' fill='#0f172a' stroke='#4ade80' stroke-width='2'/><text x='150' y='210.0' text-anchor='middle' fill='#4ade80' font-size='15' font-weight='700'>المحور 3: عرض النتائج</text><text x='150' y='232.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>جدول المذكرة</text><text x='150' y='252.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>فقرة نموذجية</text><text x='150' y='272.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>أخطاء تُرفض في المناقشة</text><rect x='510' y='198.0' width='280' height='74' rx='12' fill='#0f172a' stroke='#fbbf24' stroke-width='2'/><text x='650' y='220.0' text-anchor='middle' fill='#fbbf24' font-size='15' font-weight='700'>دراسة حالة</text><text x='650' y='242.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>محور جودة الخدمة Q1 إلى Q4</text><text x='650' y='262.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>188 زبوناً</text></svg></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>مقدمة</div><h3>لماذا نختبر أداة القياس؟</h3><div class='bd'><p><b>مثال الميزان:</b> تزن نفسك ثلاث مرات متتالية:</p><div class='grid2' style='direction:ltr'><div class='card'>⚖️ ميزان جيد<br><bdi>70 – 70 – 71</bdi><br><b style='color:#16a34a'>نتائج متقاربة = ثابت</b></div><div class='card'>⚖️ ميزان معطّل<br><bdi>64 – 77 – 69</bdi><br><b style='color:#dc2626'>نتائج متذبذبة = غير ثابت</b></div></div><p>الاستبيان «ميزان» نقيس به الرضا. إذا تذبذبت إجابات الزبون على عبارات تقيس الشيء نفسه، فالأداة غير ثابتة ولا نثق بنتائجها.</p><p class='exn'>لهذا نختبر الأداة <b>قبل</b> تحليل نتائجها: هل تعطي نتائج مستقرة (الثبات)؟ وهل تقيس فعلاً ما نريد (الصدق)؟</p></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>مقدمة</div><h3>الثبات: هل تتفق عبارات المحور؟</h3><div class='bd'><p>نسأل الزبون <b>مرة واحدة</b> عن جودة الخدمة بـ <b>4 عبارات</b> (إجابات حقيقية من الملف):</p><table style='direction:ltr;margin:auto;text-align:center'><tr><th>الزبون</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th></tr><tr><td><bdi>6</bdi></td><td><bdi>5</bdi></td><td><bdi>4</bdi></td><td><bdi>5</bdi></td><td><bdi>5</bdi></td></tr><tr><td><bdi>1</bdi></td><td><bdi>4</bdi></td><td><bdi>5</bdi></td><td><bdi>4</bdi></td><td><bdi>4</bdi></td></tr><tr><td><bdi>5</bdi></td><td><bdi>2</bdi></td><td><bdi>3</bdi></td><td><bdi>2</bdi></td><td><bdi>2</bdi></td></tr><tr><td><bdi>7</bdi></td><td><bdi>3</bdi></td><td><bdi>2</bdi></td><td><bdi>1</bdi></td><td><bdi>2</bdi></td></tr></table><p style='margin:.2em 0;font-size:.85em'>الزبونان 6 و1 راضيان في كل العبارات، والزبون 5 غير راضٍ في كلها: <b>متّسقة</b>. الزبون 7 أقل اتساقاً.</p><p class='exn'><b>الثبات (الاتساق الداخلي):</b> هل تعطي عبارات المحور الواحد إجابات متّسقة؟ نقيسه في SPSS بمعامل <b>ألفا كرونباخ</b> (سنحسبه لاحقاً).</p></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>مقدمة</div><h3>الصدق: هل نقيس ما نريد؟</h3><div class='bd'><p style='margin:.2em 0'>لا نعرف رأي الزبون الحقيقي، فنجمع <b>أدلة</b>:</p><div class='card' style='padding:.4em;margin:.3em 0'>👨‍🏫 <b>1. المحكّمون:</b> خبراء يؤكدون أن العبارات تخص جودة الخدمة.</div><div class='card' style='padding:.4em;margin:.3em 0'>🔗 <b>2. سؤال الرضا العام:</b> من يقيّم الجودة عالياً يجب أن يكون أكثر رضا. متوسط الرضا (من 5):<div style='display:flex;align-items:center;gap:.3em;margin:.15em 0;font-size:.8em'><b style='width:7.5em'>جودة منخفضة <small>(<bdi>47</bdi>)</small></b><div style='flex:1;background:#e2e8f0;border-radius:5px;direction:ltr'><div style='width:48%;background:#dc2626;color:#fff;border-radius:5px;padding:0 .3em;font-weight:700'><bdi>2.4</bdi></div></div></div><div style='display:flex;align-items:center;gap:.3em;margin:.15em 0;font-size:.8em'><b style='width:7.5em'>جودة متوسطة <small>(<bdi>72</bdi>)</small></b><div style='flex:1;background:#e2e8f0;border-radius:5px;direction:ltr'><div style='width:62%;background:#f59e0b;color:#fff;border-radius:5px;padding:0 .3em;font-weight:700'><bdi>3.08</bdi></div></div></div><div style='display:flex;align-items:center;gap:.3em;margin:.15em 0;font-size:.8em'><b style='width:7.5em'>جودة عالية <small>(<bdi>69</bdi>)</small></b><div style='flex:1;background:#e2e8f0;border-radius:5px;direction:ltr'><div style='width:77%;background:#16a34a;color:#fff;border-radius:5px;padding:0 .3em;font-weight:700'><bdi>3.87</bdi></div></div></div></div><p class='exn' style='margin:.2em 0'>الرضا يرتفع مع الجودة: دليل صدق. (التحليل العاملي في المحاضرة 3)</p></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>الثبات</div><h3>أنواع الثبات</h3><div class='bd'><p style='margin:.2em 0'>أربع طرق لاختبار الثبات، نستعمل في مذكرات الماستر غالباً الطريقة الثالثة:</p><div class='card' style='padding:.4em;margin:.25em 0'>🔁 <b>1. إعادة الاختبار:</b> نوزّع الاستبيان نفسه على العينة نفسها مرتين بينهما أسبوعان. صعبة التطبيق.</div><div class='card' style='padding:.4em;margin:.25em 0'>📄 <b>2. الصورتان المتكافئتان:</b> نعدّ نسختين مختلفتين من الاستبيان. مكلفة.</div><div class='card' style='padding:.4em;margin:.25em 0;border:2px solid #16a34a'>✅ <b>3. الاتساق الداخلي:</b> توزيع <b>واحد</b>، ونقيس اتفاق عبارات المحور (ألفا كرونباخ). الأكثر استعمالاً في SPSS.</div><div class='card' style='padding:.4em;margin:.25em 0'>👥 <b>4. ثبات المصحّحين:</b> أستاذان يصحّحان ورقة الامتحان نفسها: إذا أعطيا العلامة نفسها تقريباً فالتصحيح ثابت. يُستعمل في المقابلات والملاحظة.</div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>الثبات</div><h3>ألفا كرونباخ في SPSS</h3><div class='bd'><p style='margin:.2em 0'>رقم بين 0 و1: كلما اقترب من 1 كانت عبارات المحور أكثر اتساقاً.</p><div class='card' style='padding:.4em;margin:.25em 0;direction:ltr;text-align:left;font-size:.85em'><bdi>Analyze → Scale → Reliability Analysis → Q1 Q2 Q3 Q4 → Model: Alpha</bdi></div><div style='direction:ltr;margin:.3em auto;text-align:center'><table style='margin:auto'><tr><th colspan=2>Reliability Statistics</th></tr><tr><th>Cronbach's Alpha</th><th>N of Items</th></tr><tr><td style='font-weight:700;color:#16a34a'>.881</td><td>4</td></tr></table></div><div style='direction:ltr;display:flex;font-size:.7em;text-align:center;margin:.3em 0'><div style='flex:1;background:#7f1d1d;color:#fff;padding:.2em 0;'><bdi>&lt;0.5</bdi><br>مرفوض</div><div style='flex:1;background:#dc2626;color:#fff;padding:.2em 0;'><bdi>0.5</bdi><br>ضعيف</div><div style='flex:1;background:#f97316;color:#fff;padding:.2em 0;'><bdi>0.6</bdi><br>مشكوك</div><div style='flex:1;background:#eab308;color:#fff;padding:.2em 0;'><bdi>0.7</bdi><br>مقبول</div><div style='flex:1;background:#84cc16;color:#fff;padding:.2em 0;outline:3px solid #1e3a8a;font-weight:700'><bdi>0.8</bdi><br>جيد</div><div style='flex:1;background:#16a34a;color:#fff;padding:.2em 0;'><bdi>0.9</bdi><br>ممتاز</div></div><p class='exn' style='margin:.2em 0'>محور جودة الخدمة عند 188 زبوناً: <bdi>α = 0.881</bdi>، أي ثبات <b>جيد</b> (سلّم George &amp; Mallery).</p></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>الثبات</div><h3>هل نحذف عبارة؟</h3><div class='bd'><p style='margin:.2em 0'>في نافذة Reliability نضغط <bdi>Statistics</bdi> ونختار <bdi>Scale if item deleted</bdi>:</p><table style='margin:auto;direction:ltr;font-size:.85em'><tr><th colspan=3 style='padding:.08em .5em;line-height:1.2'>Item-Total Statistics</th></tr><tr><th style='padding:.08em .5em;line-height:1.2'></th><th style='padding:.08em .5em;line-height:1.2'>Corrected Item-Total Correlation</th><th style='padding:.08em .5em;line-height:1.2'>Cronbach's Alpha if Item Deleted</th></tr><tr><td style='padding:.08em .5em;line-height:1.2'>Q1</td><td style='padding:.08em .5em;line-height:1.2'>.729</td><td style='padding:.08em .5em;line-height:1.2'>.853</td></tr><tr><td style='padding:.08em .5em;line-height:1.2'>Q2</td><td style='padding:.08em .5em;line-height:1.2'>.746</td><td style='padding:.08em .5em;line-height:1.2'>.847</td></tr><tr><td style='padding:.08em .5em;line-height:1.2'>Q3</td><td style='padding:.08em .5em;line-height:1.2'>.734</td><td style='padding:.08em .5em;line-height:1.2'>.851</td></tr><tr><td style='padding:.08em .5em;line-height:1.2'>Q4</td><td style='padding:.08em .5em;line-height:1.2'>.763</td><td style='padding:.08em .5em;line-height:1.2'>.839</td></tr></table><div class='grid2'><div class='card' style='padding:.4em;margin:.25em 0'><b>العمود الأول (الارتباط المصحَّح):</b> معامل الارتباط بين العبارة ومجموع العبارات الثلاث الأخرى. فوق 0.30 مقبول، وكل عباراتنا فوق 0.72 ✔</div><div class='card' style='padding:.4em;margin:.25em 0'><b>العمود الثاني:</b> قيمة ألفا لو حذفنا العبارة. كلها أقل من <bdi>0.881</bdi>، فالحذف يُضعف الثبات ✔</div></div><p class='exn' style='margin:.2em 0'>النتيجة: نحتفظ بالعبارات الأربع.</p></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>الصدق</div><h3>صدق الاتساق الداخلي: انتبه!</h3><div class='bd'><p style='margin:.2em 0'>طريقة شائعة في المذكرات: نحسب ارتباط كل عبارة بـ<b>مجموع المحور</b>.</p><div class='card' style='padding:.4em;margin:.25em 0'>🧮 <b>المشكلة بمثال:</b> مجموع المحور = <bdi>Q1 + Q2 + Q3 + Q4</bdi>. العبارة Q1 موجودة داخل هذا المجموع، فهي تُقارَن <b>بجزء من نفسها</b>، فيظهر الارتباط أكبر من حقيقته.</div><div style='display:flex;gap:.4em;text-align:center'><div class='card' style='flex:1;padding:.4em'>Q1 مع <bdi>(Q1+Q2+Q3+Q4)</bdi><br><b style='color:#dc2626;font-size:1.3em'>0.854</b><br><small>مضخَّم ✘</small></div><div class='card' style='flex:1;padding:.4em'>Q1 مع <bdi>(Q2+Q3+Q4)</bdi><br><b style='color:#16a34a;font-size:1.3em'>0.729</b><br><small>الصحيح ✔</small></div></div><p class='exn' style='margin:.2em 0'>القاعدة: استعمل الارتباط <b>المصحَّح</b> (العمود الأول في جدول الشريحة السابقة)، واعلم أنه يقيس <b>اتساق</b> العبارات ولا يكفي وحده دليلاً على الصدق.</p></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>عرض النتائج</div><h3>كيف نكتب النتائج في المذكرة؟</h3><div class='bd'><p style='margin:.2em 0'><b>1. الجدول:</b></p><table style='margin:auto;font-size:.85em'><tr><th>المحور</th><th>عدد العبارات</th><th>حجم العينة</th></tr><tr><td><bdi>جودة الخدمة</bdi></td><td><bdi>4</bdi></td><td><bdi>188</bdi></td></tr><tr><th>ألفا كرونباخ</th><th>الارتباط المصحَّح</th><th>الحكم</th></tr><tr><td><bdi>0.881</bdi></td><td><bdi>0.729 – 0.763</bdi></td><td><bdi>ثبات جيد</bdi></td></tr></table><p style='margin:.3em 0'><b>2. الفقرة:</b></p><div class='card' style='padding:.4em;margin:.2em 0;line-height:1.5;font-size:.9em'>«بلغ معامل ألفا كرونباخ لمحور جودة الخدمة <bdi>0.881</bdi> (<bdi>n = 188</bdi>)، وهو مستوى ثبات جيد. وتراوحت معاملات الارتباط المصحَّح بين <bdi>0.729</bdi> و<bdi>0.763</bdi>، ولا يؤدي حذف أي عبارة إلى رفع قيمة ألفا، لذا احتُفظ بالعبارات الأربع.»</div><p class='exn' style='margin:.2em 0'>اذكر دائماً: اسم المحور، عدد العبارات، حجم العينة، القيمة، وحكمها.</p></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>أخطاء شائعة</div><h3>أخطاء شائعة في المذكرات (1)</h3><div class='bd'><div class='card' style='padding:.35em .5em;margin:.25em 0;font-size:.85em;line-height:1.45'><b style='color:#fca5a5'>✘ 1. حساب ألفا واحد للاستبيان كله</b><br>❓ <b>لماذا خطأ؟</b> الاستبيان يقيس أشياء مختلفة (الجودة، الأسعار، الرضا...)، وألفا يفترض أن العبارات تقيس شيئاً واحداً.<br><span style='color:#86efac'>✔ <b>الصواب:</b> ألفا لكل محور على حدة.</span></div><div class='card' style='padding:.35em .5em;margin:.25em 0;font-size:.85em;line-height:1.45'><b style='color:#fca5a5'>✘ 2. الاكتفاء بألفا على العينة الاستطلاعية (مثلاً 30 فرداً)</b><br>❓ <b>لماذا خطأ؟</b> الثبات يتغير من عينة لأخرى، والعينة الاستطلاعية دورها تنقيح الأداة فقط.<br><span style='color:#86efac'>✔ <b>الصواب:</b> ألفا في لحظتين: ① على العينة الاستطلاعية لتنقيح الأداة، ② على العينة النهائية (عندنا 188 زبوناً) لاعتماد النتائج.</span></div><div class='card' style='padding:.35em .5em;margin:.25em 0;font-size:.85em;line-height:1.45'><b style='color:#fca5a5'>✘ 3. حذف عبارة من المحور فقط لأن ألفا يرتفع قليلاً</b><br>❓ <b>لماذا خطأ؟</b> العبارة وُضعت لتقيس جانباً من المحور، وحذفها يُنقص المحتوى.<br><span style='color:#86efac'>✔ <b>الصواب:</b> لا نحذف إلا لسبب واضح ونذكره. وفي دراستنا لا حاجة: كل قيم «ألفا لو حُذفت» أقل من 0.881.</span></div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>أخطاء شائعة</div><h3>أخطاء شائعة في المذكرات (2)</h3><div class='bd'><div class='card' style='padding:.35em .5em;margin:.25em 0;font-size:.85em;line-height:1.45'><b style='color:#fca5a5'>✘ 4. كتابة ثبات أداة باحث آخر بدل حساب ثبات أداتك</b><br>❓ <b>لماذا خطأ؟</b> الطالب ينقل «ألفا = 0.90» من دراسة سابقة، لكن تلك القيمة على عينة أخرى في بلد آخر.<br><span style='color:#86efac'>✔ <b>الصواب:</b> احسب ألفا بنفسك على بياناتك.</span></div><div class='card' style='padding:.35em .5em;margin:.25em 0;font-size:.85em;line-height:1.45'><b style='color:#fca5a5'>✘ 5. كتابة «الصدق الذاتي = جذر ألفا»</b><br>❓ <b>لماذا خطأ؟</b> بعض المذكرات تحسب <bdi>√0.881 = 0.939</bdi> وتقول: إذن الأداة صادقة. لكن هذا الرقم مأخوذ من الثبات نفسه، فلم يأتِ بأي دليل جديد على أن العبارات تقيس جودة الخدمة.<br><span style='color:#86efac'>✔ <b>الصواب:</b> الصدق نثبته بالأدلة: المحكّمون، والعلاقة بسؤال الرضا العام (الشريحة 5).</span></div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>خلاصة</div><h3>خلاصة المحاضرة</h3><div class='bd'><div class='card' style='padding:.35em .5em;margin:.2em 0;font-size:.88em'>⚖️ <b>الثبات:</b> هل تتّسق عبارات المحور فيما بينها؟ نقيسه بألفا كرونباخ لكل محور. محورنا: <bdi>α = 0.881</bdi> جيد.</div><div class='card' style='padding:.35em .5em;margin:.2em 0;font-size:.88em'>🎯 <b>الصدق:</b> هل تقيس العبارات ما نريد فعلاً؟ نجمع أدلة: المحكّمون، والعلاقة بسؤال الرضا العام.</div><div class='card' style='padding:.35em .5em;margin:.2em 0;font-size:.88em'>🧮 <b>الارتباط المصحَّح:</b> العبارة مع مجموع العبارات الأخرى فقط. عندنا 0.729 إلى 0.763، ولا نحذف أي عبارة.</div><div class='card' style='padding:.35em .5em;margin:.2em 0;font-size:.88em'>📝 <b>في المذكرة:</b> جدول + فقرة، مع تجنّب الأخطاء الخمسة.</div><div class='card' style='padding:.35em .5em;margin:.2em 0;font-size:.88em;border-color:#fbbf24'>⏱️ <b>القاعدة:</b> ألفا على العينة الاستطلاعية لتنقيح الأداة، ثم ألفا على العينة النهائية بعد التحليل العاملي لاعتماد النتائج.</div><p class='exn' style='margin:.2em 0'>في المحاضرة 3 نرى أن <b>التحليل العاملي</b> يسبق ألفا على العينة النهائية.</p></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>كويز</div><h3>اختبر فهمك (QCM)</h3><div class='bd'><div style='font-size:.8em'><div style='margin:.25em 0;font-size:.82em'><b>1. ألفا لمحورَي الأسعار والجودة معاً:</b><div style='display:flex;gap:.3em;flex-wrap:wrap;margin-top:.15em'><span class='qo' data-ok='0' onclick='qa(this)'>نحسب ألفا واحداً لهما</span><span class='qo' data-ok='1' onclick='qa(this)'>نحسب ألفا لكل محور</span><span class='qo' data-ok='0' onclick='qa(this)'>لا نحتاج ألفا</span></div></div><div style='margin:.25em 0;font-size:.82em'><b>2. ألفا = 0.65 حكمه:</b><div style='display:flex;gap:.3em;flex-wrap:wrap;margin-top:.15em'><span class='qo' data-ok='0' onclick='qa(this)'>ممتاز</span><span class='qo' data-ok='0' onclick='qa(this)'>جيد</span><span class='qo' data-ok='1' onclick='qa(this)'>مشكوك فيه</span></div></div><div style='margin:.25em 0;font-size:.82em'><b>3. ألفا المحور 0.881 وألفا لو حُذفت Q2 = 0.847:</b><div style='display:flex;gap:.3em;flex-wrap:wrap;margin-top:.15em'><span class='qo' data-ok='0' onclick='qa(this)'>نحذف Q2</span><span class='qo' data-ok='1' onclick='qa(this)'>نحتفظ بـ Q2</span><span class='qo' data-ok='0' onclick='qa(this)'>نحذف كل العبارات</span></div></div><div style='margin:.25em 0;font-size:.82em'><b>4. «√α = 0.939 إذن الأداة صادقة»:</b><div style='display:flex;gap:.3em;flex-wrap:wrap;margin-top:.15em'><span class='qo' data-ok='0' onclick='qa(this)'>صحيح</span><span class='qo' data-ok='1' onclick='qa(this)'>خطأ: الصدق يحتاج أدلة</span><span class='qo' data-ok='0' onclick='qa(this)'>صحيح إذا تجاوز 0.9</span></div></div><div style='margin:.25em 0;font-size:.82em'><b>5. ميزان يعطي 75 كغ دائماً والوزن الحقيقي 70:</b><div style='display:flex;gap:.3em;flex-wrap:wrap;margin-top:.15em'><span class='qo' data-ok='0' onclick='qa(this)'>ثابت وصادق</span><span class='qo' data-ok='0' onclick='qa(this)'>غير ثابت</span><span class='qo' data-ok='1' onclick='qa(this)'>ثابت وغير صادق</span></div></div></div><p class='exn' style='margin:.2em 0'>الأخضر = إجابة صحيحة، الأحمر = خطأ.</p></div></div></div>
+<div class="ctl r"><button data-a="x" title="إغلاق">✕</button><button data-a="p" title="السابق"><i class="fa-solid fa-chevron-right"></i></button></div>
+<div class="ctl l"><button data-a="n" title="التالي"><i class="fa-solid fa-chevron-left"></i></button><button data-a="f" title="ملء الشاشة">⛶</button><button data-a="s" class="sy" title="متابعة الأستاذ"><i class="fa-solid fa-link"></i></button></div>
+<div class="cnt"></div><div class="rot"><div style="font-size:54px">📱↻</div><p>أدر الهاتف إلى الوضع الأفقي لمتابعة العرض</p><button data-a="x" style="width:auto;padding:0 18px;margin-top:14px">إغلاق</button></div></div>
+<script>(function(){var d=document.getElementById('dk'),t=d.querySelector('.trk'),n=t.children.length,i=0,h;
+var U='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec',LEC='lec2',prof=sessionStorage.getItem('dk-prof'),fol=true,pt,pl,tap=0,tt;
+function lab(){d.querySelectorAll('.pbtn span').forEach(function(x){x.textContent=prof?'إلغاء شاشة الأستاذ':'تفعيل شاشة الأستاذ'});d.querySelector('.cnt').textContent=(i+1)+' / '+n+(prof?'  ● وضع الأستاذ':(fol?'  ● متابعة الأستاذ':'  ○ تصفح حر'));var b=d.querySelector('.sy');if(b)b.style.background=prof?'#7c3aed':(fol?'#16a34a':'rgba(255,255,255,.15)');}
+window.addEventListener('resize',function(){fit(t.children[i])});document.addEventListener('click',function(){setTimeout(function(){fit(t.children[i])},30)});window.qa=function(e){var g=e.parentNode.children;if(e.dataset.ok=='1'){for(var x=0;x<g.length;x++)g[x].classList.remove('ko');e.classList.add('ok')}else e.classList.add('ko')};function fit(el){if(!el)return;el.style.fontSize='';var f=100;while(el.scrollHeight>el.clientHeight+2&&f>55){f-=4;el.style.fontSize=f+'%';}}function go(k,man){i=Math.max(0,Math.min(n-1,k));for(var j=0;j<n;j++)t.children[j].classList.toggle('cur',j==i);fit(t.children[i]);if(man&&!prof)fol=false;if(prof){clearTimeout(pt);pt=setTimeout(function(){fetch(U,{method:'POST',body:new URLSearchParams({action:'slide',lec:LEC,i:i,key:prof})}).then(function(r){return r.text()}).then(function(x){if(x.indexOf('BAD_KEY')>-1){prof=null;sessionStorage.removeItem('dk-prof');alert('رمز الأستاذ غير صحيح');lab();}}).catch(function(){});},80);}lab();}
+var bz=0;function poll(){if(bz||prof||!fol||!d.classList.contains('on'))return;bz=1;setTimeout(function(){bz=0},6000);fetch(U+'?action=slide&lec='+LEC+'&t='+Date.now()).then(function(r){return r.text()}).then(function(x){var k=parseInt(x,10);bz=0;if(!isNaN(k)&&k!==i&&fol)go(k);}).catch(function(){bz=0});}
+setInterval(poll,1000);
+function show(){d.classList.add('show');clearTimeout(h);h=setTimeout(function(){d.classList.remove('show')},3000);}
+window.openDeck=function(){d.classList.add('on');document.body.style.overflow='hidden';go(i);var r=d.requestFullscreen||d.webkitRequestFullscreen;if(r){try{var p=r.call(d);if(p&&p.then)p.then(function(){if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('landscape').catch(function(){});}).catch(function(){});}catch(e){}}};
+function close(){d.classList.remove('on','show');document.body.style.overflow='';if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen();}
+d.addEventListener('click',function(e){var c=e.target.closest('[data-ex]');if(c){var sl=c.closest('.sl');sl.querySelectorAll('[data-ex]').forEach(function(x){x.classList.toggle('sel',x===c)});sl.querySelectorAll('[data-exb]').forEach(function(x){x.classList.toggle('on',x.dataset.exb===c.dataset.ex)});return;}var b=e.target.closest('button');if(b){var a=b.dataset.a;if(a=='n')go(i+1,1);else if(a=='p')go(i-1,1);else if(a=='prof'){if(prof){if(confirm('إلغاء وضع الأستاذ؟')){prof=null;sessionStorage.removeItem('dk-prof');lab();}}else{var k=prompt('أدخل الرمز السري للأستاذ');if(k){fetch(U,{method:'POST',body:new URLSearchParams({action:'checkkey',key:k})}).then(function(r){return r.text()}).then(function(x){if(x.indexOf('OK')===0){prof=k;sessionStorage.setItem('dk-prof',k);go(i);alert('تم تفعيل شاشة الأستاذ');}else alert('الرمز غير صحيح');}).catch(function(){alert('تعذّر الاتصال')});}}}else if(a=='s'){if(!prof){fol=!fol;lab();poll();}}else if(a=='x')close();else if(a=='f'){var r=d.requestFullscreen||d.webkitRequestFullscreen;if(r)r.call(d);}show();return;}show();});
+d.querySelector('.cnt').addEventListener('click',function(e){e.stopPropagation();tap++;clearTimeout(tt);tt=setTimeout(function(){tap=0},1500);if(tap>=5){tap=0;if(prof){if(confirm('الخروج من وضع الأستاذ؟')){prof=null;sessionStorage.removeItem('dk-prof');lab();}}else{var k=prompt('رمز الأستاذ');if(k){fetch(U,{method:'POST',body:new URLSearchParams({action:'checkkey',key:k})}).then(function(r){return r.text()}).then(function(x){if(x.indexOf('OK')===0){prof=k;sessionStorage.setItem('dk-prof',k);go(i);}else alert('رمز الأستاذ غير صحيح');}).catch(function(){alert('تعذّر الاتصال')});}}}});
+var sx=null,sy;d.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+d.addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){go(dx>0?i+1:i-1,1);}});
+document.addEventListener('keydown',function(e){if(!d.classList.contains('on'))return;if(e.key=='ArrowLeft')go(i+1,1);else if(e.key=='ArrowRight')go(i-1,1);else if(e.key=='Escape')close();});})();</script><script id="mon-js">(function(){
+// جدول مراقبة التسجيلات (شاشة الأستاذ فقط)
+var U='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec',LECN='المحاضرة 2: الثبات والصدق',$=function(x){return document.getElementById(x)};
+var d=$('dk');if(!d)return;
+var css=document.createElement('style');css.textContent='#mon{position:fixed;inset:0;z-index:99999;background:rgba(2,6,23,.92);display:none;direction:rtl;font-family:inherit;color:#e2e8f0;overflow:auto;padding:14px}#mon.on{display:block}#mon .mb{max-width:1100px;margin:0 auto;background:#0f172a;border:1px solid #334155;border-radius:14px;padding:12px}#mon h4{margin:0;font-size:18px;color:#fff}#mon .mh{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:8px}#mon .chip{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:700;margin:2px}#mon button{border:0!important;border-radius:8px!important;padding:6px 12px!important;width:auto!important;height:auto!important;min-width:0!important;font-size:13px!important;line-height:1.4!important;display:inline-block!important;position:static!important;font-weight:700;cursor:pointer;font-family:inherit}#mon table{width:100%;border-collapse:collapse;font-size:13px}#mon th{position:sticky;top:0;background:#1e293b;color:#7dd3fc;padding:6px;border-bottom:1px solid #334155;text-align:center}#mon td{padding:5px 6px;border-bottom:1px solid #1e293b;text-align:center}#mon td.nm{text-align:right;cursor:pointer}#mon td.nm:hover{color:#fbbf24;text-decoration:underline}#mon tr.lt td{background:rgba(220,38,38,.08)}#mon input{background:#1e293b;border:1px solid #334155;color:#fff;border-radius:8px;padding:5px 8px;font-family:inherit}.monbtn{margin-top:.4em;background:#0ea5e9!important;color:#fff!important}';document.head.appendChild(css);
+var w=document.createElement('div');w.id='mon';w.innerHTML='<div class="mb"><div class="mh"><h4>📋 مراقبة التسجيلات ومتابعة الطلبة: '+LECN+'</h4><div><input id="mon-q" placeholder="بحث بالاسم أو الرقم"> <button id="mon-st" style="background:#16a34a;color:#fff">🎓 متابعة طالب</button> <button id="mon-r" style="background:#334155;color:#fff">⟳ تحديث</button> <button id="mon-x" style="background:#dc2626;color:#fff">✕ إغلاق</button></div></div><div id="mon-s" style="margin-bottom:8px"></div><div id="mon-t">…</div><div id="mon-u" style="font-size:11px;color:#64748b;margin-top:6px"></div></div>';
+d.appendChild(w);
+['click','touchstart','touchend','mousedown'].forEach(function(ev){w.addEventListener(ev,function(e){e.stopPropagation()},{passive:true});});
+var tm=null,last=null,bz=0;
+function esc(t){var e=document.createElement('span');e.textContent=t==null?'':String(t);return e.innerHTML;}
+function avg(m){var s=0,n=0;m.forEach(function(x){var v=parseFloat(String(x.v).replace(',','.'));if(!isNaN(v)){s+=v;n++;}});return n?(Math.round(s/n*100)/100):null;}
+function draw(){var o=last;if(!o)return;var q=($('mon-q').value||'').trim().toLowerCase(),T=o.kind==='T';
+ var all=o.rows.filter(function(r){return r.st==='حاضر'});var rows=all.filter(function(r){return !q||(r.nom+' '+r.prenom+' '+r.bac+' '+r.g).toLowerCase().indexOf(q)>=0});
+ $('mon-s').innerHTML='<span class="chip" style="background:#16a34a">الحاضرون: '+all.length+'</span>';
+ var h='<table><tr><th>#</th><th>وقت التسجيل</th><th>اللقب والاسم</th><th>رقم البكالوريا</th><th>الفوج</th>'+(T?'<th>محاضرات مسجَّلة</th><th>غيابات المحاضرات</th>':'')+'<th>'+(T?'تطبيقات':'محاضرات')+' مسجَّلة سابقاً</th><th>'+(T?'غيابات التطبيق':'الغيابات')+'</th>'+(T?'<th>علامات التقييمات /20</th><th>المعدل</th>':'')+'</tr>';
+ rows.forEach(function(r,i){var pr=r.st==='حاضر',prev=r.h==null?'–':Math.max(0,r.h-(pr?1:0));var a=avg(r.m||[]);
+  h+='<tr class="'+(pr?'':'lt')+'"><td>'+(i+1)+'</td><td dir="ltr">'+esc(String(r.t).slice(5).replace('-','/'))+'</td><td class="nm" data-b="'+esc(r.bac||'')+'" title="متابعة الطالب"><bdi dir="ltr">'+esc((r.nom+' '+r.prenom).trim())+'</bdi></td><td dir="ltr">'+esc(r.bac||'–')+'</td><td>'+esc(r.g)+'</td>'+(T?'<td><b>'+(r.lh==null?'–':r.lh)+'</b></td><td style="color:'+(r.la?'#fca5a5':'#94a3b8')+'"><b>'+(r.la==null?'–':r.la)+'</b></td>':'')+'<td><b>'+prev+'</b></td><td style="color:'+(r.a?'#fca5a5':'#94a3b8')+'"><b>'+(r.a==null?'–':r.a)+'</b></td>'+(T?'<td>'+((r.m||[]).map(function(x){return '<span class="chip" style="background:#1e3a8a">ت'+x.n+': '+esc(x.v)+'</span>'}).join(' ')||'–')+'</td><td><b>'+(a==null?'–':a)+'</b></td>':'')+'</tr>';});
+ if(!rows.length)h+='<tr><td colspan="'+(T?11:7)+'" style="color:#94a3b8;padding:14px">لا يوجد حاضرون مسجَّلون بعد</td></tr>';
+ $('mon-t').innerHTML=h+'</table>';
+ $('mon-t').querySelectorAll('td.nm').forEach(function(td){td.onclick=function(){var b=td.getAttribute('data-b');if(b&&window.stuOpen)window.stuOpen(b);};});}
+function load(){var k=sessionStorage.getItem('dk-prof');if(!k||bz)return;bz=1;setTimeout(function(){bz=0},20000);fetch(U,{method:'POST',body:new URLSearchParams({action:'monitor',key:k,lecture:LECN})}).then(function(r){return r.text()}).then(function(x){bz=0;if(x.indexOf('BAD_KEY')===0){$('mon-t').textContent='رمز الأستاذ غير صحيح.';return;}last=JSON.parse(x);draw();$('mon-u').textContent='آخر تحديث: '+new Date().toLocaleTimeString('fr-FR')+' (يتحدّث تلقائياً كل 5 ثوانٍ)';}).catch(function(){bz=0;$('mon-u').textContent='تعذّر الاتصال، أعد المحاولة.';});}
+function open(){w.classList.add('on');load();clearInterval(tm);tm=setInterval(load,5000);}
+function close(){w.classList.remove('on');clearInterval(tm);}
+$('mon-x').onclick=close;$('mon-st').onclick=function(){if(window.stuOpen)window.stuOpen('');};$('mon-r').onclick=load;$('mon-q').oninput=draw;
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&w.classList.contains('on'))close();},true);
+window.monOpen=open;window.monLoad=function(){if(w.classList.contains('on'))load();};
+// زر في الشريحة الأولى بجانب زر شاشة الأستاذ، يظهر في وضع الأستاذ فقط
+d.querySelectorAll('.pbtn').forEach(function(p){var b=document.createElement('button');b.type='button';b.className='pbtn monbtn';b.textContent='📋 مراقبة التسجيلات ومتابعة الطلبة';b.style.display='none';b.onclick=function(e){e.stopPropagation();open();};p.parentNode.insertBefore(b,p.nextSibling);p.parentNode.insertBefore(document.createTextNode(' '),b);});
+setInterval(function(){var on=!!sessionStorage.getItem('dk-prof');d.querySelectorAll('.monbtn').forEach(function(b){b.style.display=on?'':'none'});if(!on&&w.classList.contains('on'))close();},700);
+})();
+</script><script id="stu-js">(function(){
+// (1) قائمة حضور الحصة في الشريحة الأولى  (2) متابعة طالب برقم البكالوريا مع التعديل المباشر — شاشة الأستاذ فقط
+var U='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec',LECN='المحاضرة 2: الثبات والصدق',$=function(x){return document.getElementById(x)};
+var d=$('dk');if(!d)return;
+function K(){return sessionStorage.getItem('dk-prof')}
+function esc(t){var e=document.createElement('span');e.textContent=t==null?'':String(t);return e.innerHTML;}
+function post(o){o.key=K();return fetch(U,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text()});}
+var css=document.createElement('style');css.textContent=
+'#mon-in{display:none;direction:rtl;margin:.6em auto 0;max-width:980px;background:#0f172a;border:1px solid #334155;border-radius:12px;padding:.5em .7em;font-size:13px;text-align:right;color:#e2e8f0}#mon-in.on{display:block}#mon-in .ih{display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px}#mon-in .ih b{color:#7dd3fc;font-size:14px}#mon-in .iw{max-height:30vh;overflow:auto}#mon-in table{width:100%;border-collapse:collapse}#mon-in th{position:sticky;top:0;background:#1e293b;color:#7dd3fc;padding:4px;font-size:12px;text-align:center}#mon-in td{padding:3px 5px;border-bottom:1px solid #1e293b;text-align:center;font-size:12.5px}#mon-in td.nm{text-align:right}#mon-in td.nm:hover{color:#fbbf24;cursor:pointer;text-decoration:underline}'+
+'#stu{position:fixed;inset:0;z-index:99999;background:rgba(2,6,23,.94);display:none;direction:rtl;color:#e2e8f0;overflow:auto;padding:14px;font-family:inherit}#stu.on{display:block}#stu .mb{max-width:1100px;margin:0 auto;background:#0f172a;border:1px solid #334155;border-radius:14px;padding:12px}#stu h4{margin:0;font-size:18px;color:#fff}#stu .mh{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:10px}#stu input,#stu select{background:#1e293b;border:1px solid #334155;color:#fff;border-radius:8px;padding:5px 8px;font-family:inherit;font-size:14px}#stu .nb{width:4.2em;text-align:center}#stu select{padding:3px 4px}#stu button,#mon-in button{border:0!important;border-radius:8px!important;padding:6px 12px!important;width:auto!important;height:auto!important;min-width:0!important;font-size:13px!important;line-height:1.4!important;display:inline-block!important;position:static!important;font-weight:700;cursor:pointer;font-family:inherit}#stu table{border-collapse:collapse;font-size:13px;margin:4px 0;width:100%}#stu th{background:#1e293b;color:#7dd3fc;padding:5px;border:1px solid #334155;text-align:center;font-weight:700}#stu td{padding:4px;border:1px solid #1e293b;text-align:center}#stu .sec{margin-top:12px;font-weight:700;color:#fbbf24}#stu .kp{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}#stu .kp div{background:#1e293b;border-radius:10px;padding:6px 12px;text-align:center;min-width:120px}#stu .kp b{display:block;font-size:20px;color:#fff}#stu .kp small{color:#94a3b8;font-size:11px}#stu .kp .avg{background:#1e3a8a}#stu .kp .avg b{font-size:24px;color:#fde68a}#stu .dt{display:block;font-size:10px;color:#64748b;font-weight:400}#stu .H{color:#4ade80;font-weight:700}#stu .G{color:#f87171;font-weight:700}#stu .ok{color:#4ade80}#stu .er{color:#f87171}#stu .cand{display:block;width:100%;text-align:right;background:#1e293b;color:#fff;margin:3px 0}#stu tr.sv td{background:rgba(22,163,74,.15)}.stubtn{margin-top:.4em;background:#16a34a!important;color:#fff!important}';
+document.head.appendChild(css);
+// ---------- (1) قائمة الحضور في الشريحة الأولى ----------
+var s1=null,box=null,tm=null,bz=0;
+if(s1){box=document.createElement('div');box.id='mon-in';box.innerHTML='<div class="ih"><b>📋 الحاضرون في '+esc(LECN)+': <span id="mi-n">…</span></b><span><button type="button" id="mi-s" style="background:#16a34a;color:#fff">🎓 متابعة طالب</button> <button type="button" id="mi-r" style="background:#334155;color:#fff">⟳</button></span></div><div class="iw" id="mi-t">…</div><div id="mi-u" style="font-size:10.5px;color:#64748b;margin-top:3px"></div>';s1.appendChild(box);
+ ['click','touchstart','touchend','mousedown','wheel'].forEach(function(ev){box.addEventListener(ev,function(e){e.stopPropagation()},{passive:true});});}
+function drawIn(o){var rows=(o.rows||[]).filter(function(r){return r.st==='حاضر'});$('mi-n').textContent=rows.length;
+ var h='<table><tr><th>#</th><th>الوقت</th><th>اللقب والاسم</th><th>رقم البكالوريا</th><th>الفوج</th></tr>';
+ rows.forEach(function(r,i){h+='<tr><td>'+(rows.length-i)+'</td><td dir="ltr">'+esc(String(r.t).slice(11))+'</td><td class="nm" data-b="'+esc(r.bac)+'"><bdi dir="ltr">'+esc((r.nom+' '+r.prenom).trim())+'</bdi></td><td dir="ltr">'+esc(r.bac||'–')+'</td><td>'+esc(r.g)+'</td></tr>';});
+ if(!rows.length)h+='<tr><td colspan="5" style="color:#94a3b8;padding:10px">لا يوجد حاضرون مسجَّلون بعد</td></tr>';
+ $('mi-t').innerHTML=h+'</table>';
+ $('mi-t').querySelectorAll('td.nm').forEach(function(td){td.onclick=function(){if(td.getAttribute('data-b'))stuOpen(td.getAttribute('data-b'));};});}
+function loadIn(){if(!K()||bz||!box)return;bz=1;setTimeout(function(){bz=0},20000);
+ post({action:'monitor',lecture:LECN}).then(function(x){bz=0;if(x.indexOf('BAD_KEY')===0){$('mi-t').textContent='رمز الأستاذ غير صحيح.';return;}drawIn(JSON.parse(x));$('mi-u').textContent='آخر تحديث: '+new Date().toLocaleTimeString('fr-FR')+' (كل 5 ثوانٍ)';}).catch(function(){bz=0;$('mi-u').textContent='تعذّر الاتصال، أعد المحاولة.';});}
+if(box){$('mi-r').onclick=loadIn;$('mi-s').onclick=function(){stuOpen('')};}
+// ---------- (2) متابعة طالب ----------
+var w=document.createElement('div');w.id='stu';w.innerHTML='<div class="mb"><div class="mh"><h4>🎓 متابعة الطلبة</h4><div><input id="st-q" placeholder="رقم البكالوريا أو رقم التسجيل أو الاسم" style="width:16em"> <button id="st-go" style="background:#0ea5e9;color:#fff">بحث</button> <button id="st-x" style="background:#dc2626;color:#fff">✕ إغلاق</button></div></div><div id="st-m" style="min-height:1.2em;font-size:13px"></div><div id="st-b"></div></div>';
+d.appendChild(w);
+['click','touchstart','touchend','mousedown','wheel','keydown'].forEach(function(ev){w.addEventListener(ev,function(e){e.stopPropagation()},{passive:true});});
+var cur=null,st=null,sbz=0;
+function msg(t,c){$('st-m').innerHTML='<span class="'+(c||'')+'">'+t+'</span>';}
+function attSel(f,x){return '<select data-f="'+f+'" data-n="'+x.n+'" class="'+(x.v==='ح'?'H':x.v==='غ'?'G':'')+'"><option value=""'+(x.v===''?' selected':'')+'>—</option><option value="ح"'+(x.v==='ح'?' selected':'')+'>ح</option><option value="غ"'+(x.v==='غ'?' selected':'')+'>غ</option></select>';}
+function num(f,n,v,max){return '<input class="nb" inputmode="decimal" data-f="'+f+'" data-n="'+n+'" data-max="'+max+'" value="'+esc(v)+'" placeholder="–">';}
+function draw(o){
+ if(!o.found){var c=o.cands||[];$('st-b').innerHTML=c.length?'<div class="sec">نتائج البحث ('+c.length+'):</div>'+c.map(function(x){return '<button class="cand" data-b="'+esc(x.bac)+'"><bdi dir="ltr">'+esc(x.nom+' '+x.prenom)+'</bdi> — '+esc(x.bac)+' — '+esc(x.g)+'</button>'}).join(''):'';
+  msg(c.length?'اختر الطالب:':'لم يُعثر على طالب بهذا الرقم أو الاسم.',c.length?'':'er');
+  $('st-b').querySelectorAll('.cand').forEach(function(b){b.onclick=function(){load(b.getAttribute('data-b'))}});return;}
+ cur=o.bac;var F=o.fin||{},T=o.tp,h='';
+ h+='<div style="font-size:17px;font-weight:700;color:#fff"><bdi dir="ltr">'+esc(o.nom+' '+o.prenom)+'</bdi> <span style="font-size:13px;color:#94a3b8">— رقم البكالوريا '+esc(o.bac)+' — '+esc(o.g)+'</span></div>';
+ h+='<div class="kp"><div><small>علامة حضور المحاضرة (0,5 لكل حضور)<br>🔒 محجوبة عن الطلبة</small><b>'+esc(F.lec||'–')+'</b></div>'+(T?'<div><small>حضور التطبيق /3<br>(مقارنة بأعلى حضور في الفوج)</small><b>'+esc(F.tpAtt||'–')+'</b></div><div><small>معدل التقييم المستمر /7</small><b>'+esc(F.weekly||'–')+'</b></div><div><small>الامتحان النهائي /10</small><b>'+num('exam',0,F.exam,10)+'</b></div><div class="avg"><small>العلامة النهائية للتطبيق /20<br>(حضور 3 + تقييم 7 + امتحان 10)</small><b>'+esc(F.avg||'–')+'</b></div>':'')+'</div>';
+ h+='<div class="sec">المحاضرات</div><table><tr>'+o.lec.map(function(x){return '<th>م'+x.n+'<span class="dt">'+esc(x.d)+'</span></th>'}).join('')+'</tr><tr>'+o.lec.map(function(x){return '<td>'+attSel('lec',x)+'</td>'}).join('')+'</tr></table>';
+ if(T){h+='<div class="sec">التطبيق: الحضور وعلامة التقييم (من 0 إلى 7)</div><table><tr><th></th>'+o.tpa.map(function(x){return '<th>ت'+x.n+'<span class="dt">'+esc(x.d)+'</span></th>'}).join('')+'</tr><tr><th>الحضور</th>'+o.tpa.map(function(x){return '<td>'+attSel('tpa',x)+'</td>'}).join('')+'</tr><tr><th>التقييم /7</th>'+o.tpm.map(function(x){return '<td>'+num('tpm',x.n,x.v,7)+'</td>'}).join('')+'</tr></table>';}
+ else h+='<div style="color:#94a3b8;font-size:12px;margin-top:6px">تطبيق هذا التخصص عند أستاذ آخر.</div>';
+ h+='<div class="sec">سجلّ التسجيلات ('+o.log.length+')</div><table><tr><th>الوقت</th><th>الحصة</th><th>الحالة</th></tr>'+(o.log.map(function(x){return '<tr><td dir="ltr">'+esc(x.t)+'</td><td>'+esc(x.s)+'</td><td class="'+(x.st==='حاضر'?'H':'G')+'">'+esc(x.st)+'</td></tr>'}).join('')||'<tr><td colspan="3" style="color:#94a3b8">لا توجد تسجيلات</td></tr>')+'</table>';
+ h+='<div class="sec">نتائج الاختبارات ('+o.qz.length+')</div><table><tr><th>الوقت</th><th>الاختبار</th><th>النقطة</th></tr>'+(o.qz.map(function(x){return '<tr><td dir="ltr">'+esc(x.t)+'</td><td>'+esc(x.s)+'</td><td><b>'+esc(x.sc)+' / '+esc(x.tot)+'</b></td></tr>'}).join('')||'<tr><td colspan="3" style="color:#94a3b8">لا توجد نتائج</td></tr>')+'</table>';
+ $('st-b').innerHTML=h;
+ $('st-b').querySelectorAll('select').forEach(function(el){el.onchange=function(){save(el,el.value)}});
+ $('st-b').querySelectorAll('input.nb').forEach(function(el){el.onkeydown=function(e){if(e.key==='Enter')el.blur()};el.onchange=function(){var v=el.value.trim().replace(',','.'),mx=+el.getAttribute('data-max');if(v!==''&&(isNaN(+v)||+v<0||+v>mx)){msg('القيمة يجب أن تكون بين 0 و'+mx+'.','er');el.focus();return;}save(el,v)}});}
+function save(el,v){el.disabled=true;msg('جارٍ الحفظ…');
+ post({action:'setStudent',bac:cur,field:el.getAttribute('data-f'),n:el.getAttribute('data-n'),value:v}).then(function(x){if(x.indexOf('BAD_KEY')===0){msg('رمز الأستاذ غير صحيح.','er');return;}var o=JSON.parse(x);if(o.err){msg('لم يُحفظ: قيمة غير مقبولة.','er');el.disabled=false;return;}draw(o);msg('✓ حُفظ في ورقة الفوج وأُعيد حساب العلامات ('+new Date().toLocaleTimeString('fr-FR')+')','ok');loadIn();if(window.monLoad)window.monLoad();}).catch(function(){el.disabled=false;msg('تعذّر الحفظ، تحقق من الاتصال.','er');});}
+function load(q,quiet){if(!K())return;q=String(q||'').trim();if(!q)return;if(!quiet)msg('جارٍ البحث…');sbz=1;
+ post({action:'student',q:q}).then(function(x){sbz=0;if(x.indexOf('BAD_KEY')===0){msg('رمز الأستاذ غير صحيح.','er');return;}var o=JSON.parse(x);if(quiet&&(!o.found||(document.activeElement&&w.contains(document.activeElement)&&document.activeElement.tagName!=='BUTTON')))return;draw(o);if(!quiet)msg(o.found?'':$('st-m').innerHTML);}).catch(function(){sbz=0;if(!quiet)msg('تعذّر الاتصال، أعد المحاولة.','er');});}
+function stuOpen(b){w.classList.add('on');if(b){$('st-q').value=b;load(b);}else $('st-q').focus();clearInterval(st);st=setInterval(function(){if(cur&&!sbz)load(cur,1)},10000);}
+function stuClose(){w.classList.remove('on');clearInterval(st);}
+$('st-x').onclick=stuClose;$('st-go').onclick=function(){cur=null;load($('st-q').value)};$('st-q').onkeydown=function(e){if(e.key==='Enter'){cur=null;load($('st-q').value)}};
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&w.classList.contains('on'))stuClose();},true);
+window.stuOpen=stuOpen;
+[].forEach(function(p){var b=document.createElement('button');b.type='button';b.className='pbtn stubtn';b.textContent='🎓 متابعة الطلبة';b.style.display='none';b.onclick=function(e){e.stopPropagation();stuOpen('');};var a=p.parentNode.querySelector('.monbtn')||p;a.parentNode.insertBefore(b,a.nextSibling);a.parentNode.insertBefore(document.createTextNode(' '),b);});
+var was=false;
+setInterval(function(){var on=!!K();d.querySelectorAll('.stubtn').forEach(function(b){b.style.display=on?'':'none'});if(box)box.classList.toggle('on',on);
+ if(on&&!was){loadIn();clearInterval(tm);tm=setInterval(loadIn,5000);}if(!on&&was){clearInterval(tm);stuClose();}was=on;},700);
+})();
+</script></body>
+</html>

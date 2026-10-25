@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حصة التطبيق 1: تطهير البيانات في SPSS 25 | د. بوصفصاف فريد</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        sky: {50:'#f2f6fb',100:'#e3ebf5',200:'#c3d3e8',300:'#95b1d6',400:'#6189bd',500:'#3d6aa3',600:'#2c5288',700:'#234270',800:'#1e375c',900:'#1b2f4d',950:'#0f1c30'},
+                        amber: {50:'#fbf8f1',100:'#f5eedc',200:'#eadbb5',300:'#dcc283',400:'#cda85a',500:'#b98f3e',600:'#9c7531',700:'#7d5c29',800:'#674b26',900:'#573f23',950:'#312211'},
+                        emerald: {50:'#f2f8f5',100:'#e0efe6',200:'#c2dfcd',300:'#96c6aa',400:'#66a682',500:'#458a65',600:'#336f50',700:'#2a5942',800:'#244837',900:'#1f3c2f',950:'#0f211a'},
+                        rose: {50:'#fbf4f4',100:'#f6e5e5',200:'#eecfcf',300:'#e0abab',400:'#cc7f7f',500:'#b55a5a',600:'#9c4444',700:'#823838',800:'#6c3131',900:'#5c2d2d',950:'#321414'},
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                            900: '#0f172a',
+                        },
+                        spss: {
+                            blue: '#006699',
+                            accent: '#e67e22',
+                            bg: '#f4f7f9'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Cairo & Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cairo', sans-serif;
+            letter-spacing: 0;
+        }
+        .math-block {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.03) 0%, rgba(44, 82, 136, 0.04) 100%);
+            border-right: 4px solid #2c5288;
+        }
+        .dark .math-block {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(97, 137, 189, 0.08) 100%);
+            border-right-color: #6189bd;
+        }
+        .spss-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            background-color: #f2f6fb;
+            color: #1e375c;
+            border: 1px solid #c3d3e8;
+        }
+        .dark .spss-badge {
+            background-color: #1b2f4d;
+            color: #c3d3e8;
+            border-color: #2c5288;
+        }
+        .arrow-sep {
+            color: #94a3b8;
+            font-size: 0.75rem;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2c5288;
+            border-radius: 3px;
+        }
+    </style>
+<style>body.att-locked #main-content-wrapper > section:not(#mod-attendance){display:none!important}body.att-locked #quick-nav-hide{}</style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col antialiased">
+
+    <!-- READING PROGRESS BAR -->
+    <div class="fixed top-0 left-0 right-0 h-1.5 bg-slate-200 dark:bg-slate-800 z-50">
+        <div id="progress-bar" class="h-full bg-sky-700 w-0 transition-all duration-150"></div>
+    </div>
+
+    <!-- STICKY HEADER -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+            
+            <!-- Brand Title -->
+            <div class="flex items-center gap-2 min-w-0 flex-1">
+                <div class="hidden sm:flex shrink-0 w-10 h-10 rounded-xl bg-sky-800 items-center justify-center text-white shadow-sm">
+                    <i class="fa-solid fa-chart-line text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-tight">SPSS 25 | مقياس برمجيات إحصائية <span class="whitespace-nowrap font-semibold text-slate-600 dark:text-slate-300">(الأستاذ: بوصفصاف فريد)</span></h1>
+                    <p class="text-xs text-sky-600 dark:text-sky-400 font-medium">حصة التطبيق 1: تطهير البيانات</p>
+                </div>
+            </div>
+
+            <!-- Header Controls: Font Adjuster & Dark Mode -->
+            <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <!-- Home: back to course lectures -->
+                <a id="btn-home" href="../index.html" title="العودة إلى الصفحة الرئيسية للمحاضرات" aria-label="العودة إلى الصفحة الرئيسية للمحاضرات" class="w-9 h-9 flex items-center justify-center rounded-lg bg-sky-800 text-white border border-sky-900 hover:bg-sky-700 hover:scale-105 transition shadow-sm">
+                    <i class="fa-solid fa-house"></i>
+                </a>
+                <!-- Font Size Controls -->
+                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1 border border-slate-200 dark:border-slate-700">
+                    <button id="btn-font-dec" title="تصغير الخط" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-sky-600 transition">
+                        <i class="fa-solid fa-minus text-xs"></i>
+                    </button>
+                    <button id="btn-font-reset" title="إعادة ضبط الخط" class="px-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-sky-600">
+                        <i class="fa-solid fa-font"></i>
+                    </button>
+                    <button id="btn-font-inc" title="تكبير الخط" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-sky-600 transition">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Dark Mode Toggle Button -->
+                <button id="btn-theme-toggle" title="تبديل المظهر" class="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-amber-400 border border-slate-200 dark:border-slate-700 hover:scale-105 transition">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+
+                <!-- Quick Accordion Toggle All -->
+                <button id="btn-expand-all" title="توسيع/طيل كل المحاور" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 text-xs font-bold hover:bg-sky-100 transition">
+                    <i class="fa-solid fa-angles-down"></i>
+                    <span>توسيع الكل</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SEARCH & FILTER FLOATING STRIP -->
+    <div class="bg-slate-100 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 py-2 px-4 sticky top-[61px] z-30">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div class="relative w-full sm:w-72">
+                <input type="text" id="content-search" placeholder="ابحث في المحاضرة (مثال: NMISS, Z, الالتواء)..." class="w-full pl-3 pr-9 py-1.5 text-xs sm:text-sm rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-slate-400 text-xs"></i>
+            </div>
+            <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 text-xs custom-scrollbar">
+                <span class="text-slate-500 dark:text-slate-400 whitespace-nowrap font-medium"><i class="fa-solid fa-filter ml-1"></i>انتقال سريع:</span>
+                <button onclick="scrollToModule('mod-attendance')" class="px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-800 font-bold whitespace-nowrap transition">الحضور</button>
+                <button onclick="scrollToModule('mod-intro')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">التقديم</button>
+                <button onclick="scrollToModule('mod-1')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">التمرين 1</button>
+                <button onclick="scrollToModule('mod-2')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">التمرين 2</button>
+                <button onclick="scrollToModule('mod-3')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">التمرين 3</button>
+                <button onclick="scrollToModule('mod-4')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">التمرين 4</button>
+                <button onclick="scrollToModule('mod-5')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">التمرين 5</button>
+                <button onclick="scrollToModule('mod-6')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">العمل المنزلي</button>
+                <button onclick="scrollToModule('mod-quiz')" class="px-2.5 py-1 rounded-full bg-sky-50 dark:bg-sky-950/60 text-sky-800 dark:text-sky-200 border border-sky-200 dark:border-sky-800 font-bold whitespace-nowrap transition">اختبار</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main id="main-content-wrapper" class="flex-grow max-w-6xl w-full mx-auto px-4 py-6 sm:py-10 space-y-8 text-base">
+
+        <!-- CREDITS (TOP) -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm px-4 py-3 text-sm text-center">
+            <span><i class="fa-solid fa-user-tie text-sky-600 dark:text-sky-400 ml-1.5"></i>تقديم و إعداد: <strong class="text-slate-900 dark:text-white">د. بوصفصاف فريد</strong></span>
+            <span class="hidden sm:inline text-slate-300 dark:text-slate-600">|</span>
+            <span><i class="fa-solid fa-robot text-sky-600 dark:text-sky-400 ml-1.5"></i>التصميم على الويب: <strong class="text-slate-900 dark:text-white">الذكاء الاصطناعي</strong></span>
+        </div>
+
+        <!-- HERO SECTION -->
+        <section class="relative overflow-hidden rounded-3xl bg-sky-950 text-white p-6 sm:p-10 shadow-md border border-sky-900">
+
+            <div class="relative z-10 space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30 text-xs font-bold tracking-wide">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>مقياس برمجيات إحصائية • حصة التطبيق 1 • ماستر 2</span>
+                </div>
+
+                <h1 class="text-2xl sm:text-4xl font-extrabold leading-tight text-white">
+                    حصة التطبيق 1: تطهير البيانات <span class="block mt-2 text-sky-200 font-bold">تمارين محلولة على ملف البنك في SPSS 25</span>
+                </h1>
+
+                <p class="text-slate-300 text-sm sm:text-lg leading-relaxed max-w-3xl">
+                    خمسة تمارين متدرجة تكمّل المحاضرة 1: الغياب على مستوى العبارة، ونمط الغياب، والقيم الشاذة، وشكل التوزيع، ومراجعة نقدية لترتيب خطوات التطهير.
+                </p>
+
+                <!-- Academic Meta Info Badges -->
+                <div class="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs sm:text-sm">
+                    <div class="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center gap-3">
+                        <i class="fa-solid fa-book-bookmark text-sky-300 text-lg"></i>
+                        <div>
+                            <span class="block text-slate-400 text-[10px] sm:text-xs">الموسم الجامعي</span>
+                            <span class="font-bold text-white">2026 - 2027</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center gap-3">
+                        <i class="fa-solid fa-laptop-code text-sky-300 text-lg"></i>
+                        <div>
+                            <span class="block text-slate-400 text-[10px] sm:text-xs">البرنامج المعالج</span>
+                            <span class="font-bold text-white">IBM SPSS 25</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center gap-3">
+                        <i class="fa-solid fa-microscope text-sky-300 text-lg"></i>
+                        <div>
+                            <span class="block text-slate-400 text-[10px] sm:text-xs">المستوى</span>
+                            <span class="font-bold text-white">ماستر 2 علوم التسيير</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center gap-3">
+                        <i class="fa-solid fa-shield-halved text-sky-300 text-lg"></i>
+                        <div>
+                            <span class="block text-slate-400 text-[10px] sm:text-xs">الهدف الجوهري</span>
+                            <span class="font-bold text-white">بيانات نظيفة وقرارات مبرَّرة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ATTENDANCE (BACKUP) -->
+        <section id="mod-attendance" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border-2 border-amber-400 dark:border-amber-600 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-amber-50 dark:bg-amber-950/30 border-b border-amber-200 dark:border-amber-800 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center"><i class="fa-solid fa-user-check text-sm"></i></span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">تسجيل الحضور (إجباري)</h2>
+                        <span class="text-xs text-amber-700 dark:text-amber-400 font-semibold" dir="ltr">Attendance – Mandatory</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-attendance', 'icon-attendance')" class="text-slate-400 hover:text-amber-600 transition">
+                    <i id="icon-attendance" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-attendance" class="p-5 sm:p-6 space-y-4">
+                <p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">تسجيل الحضور <strong>خطوة إجبارية</strong> قبل الاطلاع على محتوى الحصة: املأ النموذج أدناه بمعلوماتك الصحيحة ثم اضغط <strong>إرسال</strong>.</p>
+                <div id="att-lock-note" class="p-3 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs sm:text-sm text-slate-700 dark:text-slate-300"><i class="fa-solid fa-lock ml-1 text-amber-600"></i> محتوى الحصة محجوب. املأ النموذج أدناه ثم اضغط <strong>إرسال</strong> ليظهر المحتوى تلقائياً.</div>
+                <div id="att-frame-wrap" class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
+                    <form id="att-form" class="grid sm:grid-cols-2 gap-3 p-4" autocomplete="on"><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">اللقب<input name="nom" required  class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"></label><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">الاسم<input name="prenom" required  class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"></label><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">الفوج<input name="groupe" required  class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"></label><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">رمز الحصة (يعلنه الأستاذ)<input name="code" required dir="ltr" autocomplete="off" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"></label><div class="sm:col-span-2"><button type="submit" id="att-btn" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold">إرسال</button> <span id="att-msg" class="text-sm mr-2"></span></div></form>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 00: INTRO -->
+        <section id="mod-intro" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">00</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">تقديم الحصة: الأهداف والملف</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold" dir="ltr">Practical Session 1: Data Cleaning in SPSS 25</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-intro', 'icon-intro')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-intro" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-intro" class="p-5 sm:p-6 space-y-6">
+<div class="space-y-3"><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">هذه الحصة تطبيق مباشر للمحاضرة 1 على ملف البنك نفسه (200 زبون و11 متغيراً). في المحاضرة عالجنا الدخل المفقود والزبون 87 في متغير الإيداع، أما هنا فيكتشف الطالب بنفسه <strong>مشكلات أخرى</strong> في الملف نفسه: غياب الإجابات على عبارات ليكرت، ونمط غياب الدخل، والقيم الشاذة في الدخل، وشكل التوزيع، ثم يراجع نقدياً ترتيب خطوات التطهير.</p><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-bullseye text-sky-600 dark:text-sky-400"></i> أهداف الحصة</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5"><ul class="list-disc pr-4 space-y-1"><li>تشخيص القيم المفقودة على مستوى العبارة والحالة.</li><li>اختبار عشوائية الغياب بالمقارنات الإحصائية.</li><li>كشف القيم الشاذة بطريقتين: Z ومخطط الصندوق.</li><li>قراءة الالتواء والتفلطح واتخاذ قرار التحويل.</li><li>تبرير قرارات التطهير في المذكرة.</li></ul></div></div><div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60 space-y-2">
+<h4 class="font-bold text-sm text-sky-800 dark:text-sky-300 flex items-center gap-2"><i class="fa-solid fa-clipboard-list text-sky-600 dark:text-sky-400"></i> قبل البدء</h4>
+<div class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed space-y-1.5"><ul class="list-disc pr-4 space-y-1"><li>المدة: ساعة ونصف.</li><li>الملف: Bank_Customer_Satisfaction.xlsx (زر التحميل أدناه).</li><li>استورد الملف وأضف التسميات كما في الخطوتين 1 و2 من دراسة الحالة في المحاضرة 1.</li><li>حاول حل كل تمرين قبل فتح الحل.</li></ul></div></div></div><a id="dataset-download" href="Bank_Customer_Satisfaction.xlsx" download="Bank_Customer_Satisfaction.xlsx" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow transition"><i class="fa-solid fa-file-excel"></i><span>تحميل ملف البيانات (Excel)</span></a></div>
+            </div>
+        </section>
+
+        <!-- MODULE 1 -->
+        <section id="mod-1" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">01</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">التمرين 1: الغياب في عبارات ليكرت</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold" dir="ltr">Item-level vs Case-level Missingness</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-1', 'icon-mod-1')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-1" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-mod-1" class="p-5 sm:p-6 space-y-6">
+<div class="space-y-3"><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">في المحاضرة اعتمد تحليل الثبات على 188 زبوناً فقط من أصل 200، لأن SPSS يحذف كل حالة تنقصها إجابة واحدة. فكم حالة نخسر بالضبط، ولماذا؟</p><div class="space-y-2"><h4 class="font-bold text-sm text-slate-900 dark:text-white">المطلوب:</h4><ol class="list-decimal pr-5 text-sm text-slate-700 dark:text-slate-300 space-y-1"><li>احسب لكل زبون عدد العبارات غير المجاب عنها من Q1 إلى Q4، واعرض توزيع هذا العدد.</li><li>حدد أرقام الزبائن الذين ينقصهم جواب واحد على الأقل.</li><li>قارن حجم العينة عند بناء المحور بـ MEAN.3 مقارنة بالحذف الإجمالي (Listwise).</li></ol></div><div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold"><span class="spss-badge">Transform</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Compute Variable</span></div><details class="group rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50/60 dark:bg-emerald-950/30"><summary class="cursor-pointer select-none p-3 font-bold text-sm text-emerald-800 dark:text-emerald-300 flex items-center gap-2"><i class="fa-solid fa-key"></i> عرض الحل</summary><div class="p-4 pt-0 text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300 space-y-2"><p>نستعمل الدالة NMISS في Compute Variable، ثم جدول التكرارات. ويصل إلى النتيجة نفسها المسار <bdi dir="ltr" class="font-mono">Transform -&gt; Count Values within Cases</bdi> باختيار <bdi dir="ltr" class="font-mono">System- or user-missing</bdi> في Define Values.</p><pre dir="ltr" class="p-3 rounded-lg bg-slate-900 text-slate-100 text-xs overflow-x-auto text-left">COMPUTE Q_Miss = NMISS(Q1, Q2, Q3, Q4).
+EXECUTE.
+FREQUENCIES VARIABLES=Q_Miss.
+TEMPORARY.
+SELECT IF (Q_Miss > 0).
+LIST VARIABLES=Customer_ID Q1 TO Q4.</pre><div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700"><table class="w-full text-xs text-right">
+<thead class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700"><tr><th class="p-2.5">عدد الإجابات المفقودة</th><th class="p-2.5">عدد الزبائن</th></tr></thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-slate-700 dark:text-slate-300"><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">0</td><td class="p-2.5">188</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">1</td><td class="p-2.5">9</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">2</td><td class="p-2.5">3</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">3 أو 4</td><td class="p-2.5">0</td></tr></tbody></table></div><p>الزبائن المعنيون (12): 14، 22، 54، 68، 73، 79، 85، 115، 116، 156، 158، 195. ثلاثة منهم ينقصهم جوابان: 14 (Q3 وQ4)، و156 (Q2 وQ4)، و158 (Q2 وQ3).</p><p>بالحذف الإجمالي يبقى 188 زبوناً. أما <bdi dir="ltr" class="font-mono">MEAN.3(Q1, Q2, Q3, Q4)</bdi> فيحسب المتوسط لكل من أجاب عن 3 عبارات على الأقل، فيصبح <bdi dir="ltr" class="font-mono">N = 197</bdi> (المتوسط 3.270 والانحراف المعياري 0.881)، ولا يُستبعد إلا الزبائن الثلاثة الذين ينقصهم جوابان.</p><p class="font-bold">الخلاصة: الغياب على مستوى العبارة ضعيف (2% على الأكثر لكل عبارة)، لكنه يتراكم على مستوى الحالة إلى 6%. ولذلك يجب أن يقرر الباحث مسبقاً قاعدة بناء المحور، ويذكرها في المذكرة.</p></div></details></div>
+            </div>
+        </section>
+
+        <!-- MODULE 2 -->
+        <section id="mod-2" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">02</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">التمرين 2: تعميق تشخيص نمط غياب الدخل</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold" dir="ltr">Testing the Missingness Mechanism</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-2', 'icon-mod-2')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-2" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-mod-2" class="p-5 sm:p-6 space-y-6">
+<div class="space-y-3"><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">في المحاضرة قارنا الإيداع بين مفقودي الدخل والباقين فقط. وسّع التشخيص إلى متغيرات أخرى لتقوية الحكم على نمط الغياب.</p><div class="space-y-2"><h4 class="font-bold text-sm text-slate-900 dark:text-white">المطلوب:</h4><ol class="list-decimal pr-5 text-sm text-slate-700 dark:text-slate-300 space-y-1"><li>أنشئ المتغير المؤشر Inc_Miss (1 = الدخل مفقود).</li><li>اختبر علاقته بالجنس وبالوكالة باختبار كاي مربع.</li><li>قارن السن والرضا العام بين المجموعتين باختبار t للعينات المستقلة.</li><li>ما حكمك على نمط الغياب، وما حدود هذا الحكم؟</li></ol></div><div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold"><span class="spss-badge">Analyze</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Descriptive Statistics</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Crosstabs</span></div><details class="group rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50/60 dark:bg-emerald-950/30"><summary class="cursor-pointer select-none p-3 font-bold text-sm text-emerald-800 dark:text-emerald-300 flex items-center gap-2"><i class="fa-solid fa-key"></i> عرض الحل</summary><div class="p-4 pt-0 text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300 space-y-2"><pre dir="ltr" class="p-3 rounded-lg bg-slate-900 text-slate-100 text-xs overflow-x-auto text-left">COMPUTE Inc_Miss = MISSING(Monthly_Income).
+EXECUTE.
+CROSSTABS /TABLES=Inc_Miss BY Gender Agency
+  /STATISTICS=CHISQ /CELLS=COUNT EXPECTED ROW.
+T-TEST GROUPS=Inc_Miss(1 0) /VARIABLES=Age Satisfaction.</pre><div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700"><table class="w-full text-xs text-right">
+<thead class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700"><tr><th class="p-2.5">المتغير</th><th class="p-2.5">الاختبار</th><th class="p-2.5">النتيجة</th><th class="p-2.5">الحكم</th></tr></thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-slate-700 dark:text-slate-300"><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">الجنس</td><td class="p-2.5">كاي مربع</td><td class="p-2.5"><bdi dir="ltr" class="font-mono">χ²(1) = 1.914, p = .167</bdi></td><td class="p-2.5">غير دال</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">الوكالة</td><td class="p-2.5">كاي مربع</td><td class="p-2.5"><bdi dir="ltr" class="font-mono">χ²(3) = 1.848, p = .604</bdi></td><td class="p-2.5">غير دال (تنبيه: تكرارات متوقعة أقل من 5)</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">السن</td><td class="p-2.5">t مستقلة</td><td class="p-2.5"><bdi dir="ltr" class="font-mono">t(198) = −0.127, p = .899</bdi></td><td class="p-2.5">غير دال (41.00 مقابل 41.33 سنة)</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">الرضا العام</td><td class="p-2.5">t مستقلة</td><td class="p-2.5"><bdi dir="ltr" class="font-mono">t(198) = 0.595, p = .552</bdi></td><td class="p-2.5">غير دال (3.36 مقابل 3.19)</td></tr></tbody></table></div><p>توزيع الغياب حسب الجنس: 5 ذكور من 107 مقابل 9 إناث من 93. وحسب الوكالة: 3 و2 و4 و5 حالات على التوالي.</p><p class="font-bold">الحكم: لا يرتبط الغياب بأي متغير ملاحظ، وهذا يتوافق مع نمط MCAR. لكن هذه الاختبارات لا تستبعد نمط MNAR، لأن الغياب قد يتعلق بقيمة الدخل نفسها. والتكرارات المتوقعة في جدول الوكالة صغيرة (أدناها 2.73)، فيُفضَّل قراءة اختبار فيشر أو عدم الإفراط في تفسير هذه النتيجة. الاختبار الشامل الأدق هو اختبار Little's MCAR في وحدة Missing Value Analysis إن كانت متاحة في رخصة SPSS.</p></div></details></div>
+            </div>
+        </section>
+
+        <!-- MODULE 3 -->
+        <section id="mod-3" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">03</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">التمرين 3: القيم الشاذة في الدخل الشهري</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold" dir="ltr">Z-Scores vs Boxplot (Tukey Fences)</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-3', 'icon-mod-3')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-3" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-mod-3" class="p-5 sm:p-6 space-y-6">
+<div class="space-y-3"><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">في المحاضرة كشفنا القيم الشاذة في الإيداع. طبّق الطريقتين على الدخل الشهري، ثم قارن بينهما.</p><div class="space-y-2"><h4 class="font-bold text-sm text-slate-900 dark:text-white">المطلوب:</h4><ol class="list-decimal pr-5 text-sm text-slate-700 dark:text-slate-300 space-y-1"><li>احسب الدرجة المعيارية Z للدخل واستخرج الزبائن الذين تتجاوز قيمتهم المطلقة 3.</li><li>ارسم مخطط الصندوق عبر Explore مع تحديد Customer_ID كمعرّف للحالات.</li><li>هل تتفق الطريقتان؟ وما الإجراء الأول قبل أي معالجة؟</li></ol></div><div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold"><span class="spss-badge">Analyze</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Descriptive Statistics</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Explore</span></div><details class="group rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50/60 dark:bg-emerald-950/30"><summary class="cursor-pointer select-none p-3 font-bold text-sm text-emerald-800 dark:text-emerald-300 flex items-center gap-2"><i class="fa-solid fa-key"></i> عرض الحل</summary><div class="p-4 pt-0 text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300 space-y-2"><pre dir="ltr" class="p-3 rounded-lg bg-slate-900 text-slate-100 text-xs overflow-x-auto text-left">DESCRIPTIVES VARIABLES=Monthly_Income /SAVE.
+SORT CASES BY ZMonthly_Income (D).
+EXAMINE VARIABLES=Monthly_Income /ID=Customer_ID
+  /PLOT=BOXPLOT /STATISTICS=DESCRIPTIVES EXTREME(5).</pre><div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700"><table class="w-full text-xs text-right">
+<thead class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700"><tr><th class="p-2.5">الزبون</th><th class="p-2.5">الدخل (دج)</th><th class="p-2.5">Z</th></tr></thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-slate-700 dark:text-slate-300"><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">25</td><td class="p-2.5">180,000</td><td class="p-2.5">+4.43</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">74</td><td class="p-2.5">180,000</td><td class="p-2.5">+4.43</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">127</td><td class="p-2.5">148,000</td><td class="p-2.5">+3.16</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">14</td><td class="p-2.5">133,500</td><td class="p-2.5">+2.59 (دون الحد)</td></tr></tbody></table></div><p>بالطريقة الأولى (|Z| أكبر من 3) نجد ثلاثة زبائن: 25 و74 و127. وفي مخطط الصندوق (حدود توكي، Tukey) يظهر الزبونان 25 و74 بنجمة، أي قيمتان متطرفتان تبعدان أكثر من 3 أمثال المدى الربيعي، وتظهر قيم أخرى أعلى من 130,000 دج بدائرة.</p><p>الطريقتان تتفقان على أخطر حالتين، لكن مخطط الصندوق أكثر حساسية في توزيع ملتوٍ، لأنه لا يعتمد على المتوسط والانحراف المعياري اللذين تضخمهما القيم الشاذة نفسها.</p><p class="font-bold">الإجراء الأول: الرجوع إلى الاستبيان الورقي للتأكد من أن 180,000 دج ليست خطأ إدخال. فإن صحّت القيمة فهي حالة حقيقية نادرة، تعالج بالتقليم أو التحويل ولا تُحذف آلياً.</p></div></details></div>
+            </div>
+        </section>
+
+        <!-- MODULE 4 -->
+        <section id="mod-4" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">04</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">التمرين 4: الالتواء والتفلطح</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold" dir="ltr">Distribution Shape: Skewness &amp; Kurtosis</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-4', 'icon-mod-4')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-4" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-mod-4" class="p-5 sm:p-6 space-y-6">
+<div class="space-y-3"><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">القيم الشاذة عرض من أعراض شكل التوزيع. احسب مؤشرات الشكل للمتغيرات الكمية الثلاثة.</p><div class="space-y-2"><h4 class="font-bold text-sm text-slate-900 dark:text-white">المطلوب:</h4><ol class="list-decimal pr-5 text-sm text-slate-700 dark:text-slate-300 space-y-1"><li>احسب الالتواء (Skewness) والتفلطح (Kurtosis) وخطأيهما المعياريين للسن والدخل والإيداع.</li><li>احسب النسبة Z = المؤشر ÷ خطؤه المعياري، واحكم على كل متغير.</li><li>أي متغير يحتاج إلى تحويل لوغاريتمي قبل التحليلات المعلمية؟</li></ol></div><div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold"><span class="spss-badge">Analyze</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Descriptive Statistics</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Descriptives</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Options</span></div><details class="group rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50/60 dark:bg-emerald-950/30"><summary class="cursor-pointer select-none p-3 font-bold text-sm text-emerald-800 dark:text-emerald-300 flex items-center gap-2"><i class="fa-solid fa-key"></i> عرض الحل</summary><div class="p-4 pt-0 text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300 space-y-2"><pre dir="ltr" class="p-3 rounded-lg bg-slate-900 text-slate-100 text-xs overflow-x-auto text-left">DESCRIPTIVES VARIABLES=Age Monthly_Income Deposit_Amount
+  /STATISTICS=MEAN STDDEV SKEWNESS KURTOSIS.</pre><div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700"><table class="w-full text-xs text-right">
+<thead class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700"><tr><th class="p-2.5">المتغير</th><th class="p-2.5">N</th><th class="p-2.5">الالتواء (الخطأ)</th><th class="p-2.5">Z الالتواء</th><th class="p-2.5">التفلطح (الخطأ)</th><th class="p-2.5">Z التفلطح</th></tr></thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-slate-700 dark:text-slate-300"><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">السن</td><td class="p-2.5">200</td><td class="p-2.5">0.251 (0.172)</td><td class="p-2.5">1.46</td><td class="p-2.5">−0.056 (0.342)</td><td class="p-2.5">−0.16</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">الدخل</td><td class="p-2.5">186</td><td class="p-2.5">1.390 (0.178)</td><td class="p-2.5"><strong>7.80</strong></td><td class="p-2.5">3.584 (0.355)</td><td class="p-2.5"><strong>10.11</strong></td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">الإيداع</td><td class="p-2.5">200</td><td class="p-2.5">0.660 (0.172)</td><td class="p-2.5"><strong>3.84</strong></td><td class="p-2.5">0.095 (0.342)</td><td class="p-2.5">0.28</td></tr></tbody></table></div><p>السن قريب من التماثل. الإيداع ملتوٍ نحو اليمين التواءً معتدلاً، وسببه الأساسي الزبون 87. أما الدخل فملتوٍ بقوة ومدبب (تفلطح 3.58)، وهي الصورة النموذجية لمتغيرات الدخل.</p><p class="font-bold">قاعدة القرار: تُعدّ |Z| أكبر من 1.96 دالة عند 0.05 في العينات الصغيرة والمتوسطة. وفي العينات الكبيرة يُستأنس بالقيم المطلقة: الالتواء بين −1 و+1 والتفلطح بين −2 و+2 مقبولان عملياً. والدخل يتجاوز الحدين، فيُحوَّل بـ LG10 قبل الانحدار أو المقارنات المعلمية.</p></div></details></div>
+            </div>
+        </section>
+
+        <!-- MODULE 5 -->
+        <section id="mod-5" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">05</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">التمرين 5: مراجعة نقدية لترتيب خطوات التطهير</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold" dir="ltr">Order of Cleaning Steps: Mean vs Median Imputation</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-5', 'icon-mod-5')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-5" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-mod-5" class="p-5 sm:p-6 space-y-6">
+<div class="space-y-3"><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">في المحاضرة 1 عوّضنا الدخل المفقود بالمتوسط الحسابي في الخطوة 5، ثم كشفنا القيم الشاذة في الخطوة 6 على الإيداع فقط. وبعد نتائج التمرين 3 نطرح سؤالاً نقدياً حول هذا الترتيب.</p><div class="space-y-2"><h4 class="font-bold text-sm text-slate-900 dark:text-white">المطلوب:</h4><ol class="list-decimal pr-5 text-sm text-slate-700 dark:text-slate-300 space-y-1"><li>ما أثر الزبائن 25 و74 و127 على المتوسط الذي استُعمل في التعويض؟</li><li>عوّض الدخل بالوسيط بدلاً من المتوسط، وقارن المتوسط والانحراف المعياري.</li><li>اقترح الترتيب الصحيح لخطوات التطهير.</li></ol></div><div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold"><span class="spss-badge">Transform</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Replace Missing Values</span><span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span><span class="spss-badge">Median of nearby points / Series mean</span></div><details class="group rounded-xl border border-emerald-300 dark:border-emerald-800 bg-emerald-50/60 dark:bg-emerald-950/30"><summary class="cursor-pointer select-none p-3 font-bold text-sm text-emerald-800 dark:text-emerald-300 flex items-center gap-2"><i class="fa-solid fa-key"></i> عرض الحل</summary><div class="p-4 pt-0 text-xs sm:text-sm leading-relaxed text-slate-700 dark:text-slate-300 space-y-2"><pre dir="ltr" class="p-3 rounded-lg bg-slate-900 text-slate-100 text-xs overflow-x-auto text-left">RMV /Inc_Median = MEDIAN(Monthly_Income, ALL).
+DESCRIPTIVES VARIABLES=Monthly_Income_1 Inc_Median.</pre><p class="text-[11px] text-slate-500">ملاحظة: في نافذة Replace Missing Values نختار Median of nearby points ثم Span of nearby points = All، فيصبح التعويض بوسيط السلسلة كلها.</p><div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700"><table class="w-full text-xs text-right">
+<thead class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700"><tr><th class="p-2.5">طريقة التعويض</th><th class="p-2.5">القيمة المعوَّض بها</th><th class="p-2.5">المتوسط بعد التعويض</th><th class="p-2.5">الانحراف المعياري</th></tr></thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-700 text-slate-700 dark:text-slate-300"><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">المتوسط (المحاضرة 1)</td><td class="p-2.5">68,276.88</td><td class="p-2.5">68,276.88</td><td class="p-2.5">24,293.59</td></tr><tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-2.5">الوسيط</td><td class="p-2.5">65,000.00</td><td class="p-2.5">68,047.50</td><td class="p-2.5">24,308.04</td></tr></tbody></table></div><p>المتوسط أعلى من الوسيط بنحو 3,277 دج بسبب القيم الشاذة في الطرف الأعلى، فعوّضنا 14 زبوناً بقيمة مرتفعة نسبياً. والوسيط لا يتأثر بالقيم المتطرفة، فهو أنسب في توزيع ملتوٍ كالدخل.</p><p class="font-bold">الترتيب المقترح: (1) التحقق من أخطاء الإدخال، (2) تشخيص الغياب ونمطه، (3) كشف القيم الشاذة ومعالجتها، (4) التعويض بطريقة تناسب شكل التوزيع (الوسيط أو EM)، (5) فحص الشكل والتحويل عند الحاجة. التطهير عملية متكررة، وكل قرار فيه يُوثَّق ويُبرَّر.</p></div></details></div>
+            </div>
+        </section>
+
+        <!-- MODULE 6 -->
+        <section id="mod-6" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">06</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">العمل المنزلي</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold" dir="ltr">Homework</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-6', 'icon-mod-6')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-6" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-mod-6" class="p-5 sm:p-6 space-y-6">
+<div class="space-y-3"><p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">أنجز التمارين نفسها على مستوى كل وكالة على حدة، باستعمال Data ثم Split File مع تفعيل Compare groups حسب Agency، ثم حرّر فقرة من 8 إلى 10 أسطر بعنوان «إجراءات تطهير البيانات» كما ستظهر في مذكرة الماستر، تذكر فيها: حجم الغياب ونمطه، والقيم الشاذة وطريقة معالجتها، والتحويلات المطبقة، وحجم العينة النهائي لكل تحليل.</p><div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border-r-4 border-amber-500 text-amber-900 dark:text-amber-200 space-y-2">
+<div class="flex items-center gap-2 font-bold text-sm sm:text-base"><i class="fa-solid fa-star text-amber-600 dark:text-amber-400"></i><span>معيار التقييم</span></div>
+<div class="text-xs sm:text-sm leading-relaxed text-amber-800 dark:text-amber-300 space-y-1.5"><p>دقة الأرقام (40%)، وصحة القرارات المنهجية وتبريرها (40%)، وجودة التحرير الأكاديمي (20%).</p></div></div></div>
+            </div>
+        </section>
+
+        <!-- MODULE 6: INTERACTIVE TOOLS & QUIZ -->
+        <section id="mod-quiz" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">07</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">المحور السابع: دليل القوائم السريع واختبار التقييم الذاتي</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold">Quick Menu Finder & Self-Assessment Quiz</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-5 sm:p-6 space-y-8">
+                
+                <!-- Quick SPSS Menu Lookup -->
+                <div class="space-y-3">
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-sky-500"></i> دليل اختصارات مسارات SPSS 25:
+                    </h3>
+
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+                        <table class="w-full text-xs text-right">
+                            <thead class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700">
+                                <tr>
+                                    <th class="p-3">الإجراء الإحصائي</th>
+                                    <th class="p-3">المسار في برنامج SPSS 25</th>
+                                    <th class="p-3">الهدف المنهجي</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-3 font-bold text-slate-900 dark:text-white">عدد المفقودات لكل حالة</td><td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Transform -> Compute Variable (NMISS)</td><td class="p-3 text-slate-500 dark:text-slate-400">التمرين 1</td></tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-3 font-bold text-slate-900 dark:text-white">جداول التقاطع وكاي مربع</td><td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Analyze -> Descriptive Statistics -> Crosstabs</td><td class="p-3 text-slate-500 dark:text-slate-400">التمرين 2</td></tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-3 font-bold text-slate-900 dark:text-white">اختبار t للعينات المستقلة</td><td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Analyze -> Compare Means -> Independent-Samples T Test</td><td class="p-3 text-slate-500 dark:text-slate-400">التمرين 2</td></tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-3 font-bold text-slate-900 dark:text-white">الدرجات المعيارية</td><td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Analyze -> Descriptive Statistics -> Descriptives (Save)</td><td class="p-3 text-slate-500 dark:text-slate-400">التمرين 3</td></tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-3 font-bold text-slate-900 dark:text-white">مخطط الصندوق</td><td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Analyze -> Descriptive Statistics -> Explore</td><td class="p-3 text-slate-500 dark:text-slate-400">التمرين 3</td></tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-3 font-bold text-slate-900 dark:text-white">الالتواء والتفلطح</td><td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Descriptives -> Options -> Skewness, Kurtosis</td><td class="p-3 text-slate-500 dark:text-slate-400">التمرين 4</td></tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40"><td class="p-3 font-bold text-slate-900 dark:text-white">التعويض بالوسيط</td><td class="p-3 font-mono text-sky-600 dark:text-sky-400" dir="ltr" style="text-align:right">Transform -> Replace Missing Values</td><td class="p-3 text-slate-500 dark:text-slate-400">التمرين 5</td></tr>
+</tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Self Assessment Quiz Engine -->
+                <div class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <i class="fa-solid fa-circle-question text-sky-500"></i> اختبار التقييم الذاتي (6 أسئلة):
+                        </h3>
+                        <span id="quiz-score-badge" class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200">
+                            النتيجة: 0 / 6
+                        </span>
+                    </div>
+
+                    <!-- Quiz Container -->
+                    <div id="quiz-container" class="space-y-4">
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                        <span>أجاب زبون عن Q1 وQ2 وQ4 فقط. ما قيمة MEAN.3(Q1, Q2, Q3, Q4) له؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(1, 0)" id="q-1-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                قيمة مفقودة
+                            </button>
+                        
+                            <button onclick="answerQuiz(1, 1)" id="q-1-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                متوسط العبارات الثلاث المجاب عنها
+                            </button>
+                        
+                            <button onclick="answerQuiz(1, 2)" id="q-1-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                مجموع العبارات الثلاث
+                            </button>
+                        
+                            <button onclick="answerQuiz(1, 3)" id="q-1-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                صفر
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-1-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                        <span>اختبار كاي مربع بين Inc_Miss والجنس غير دال. ماذا نستنتج؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(2, 0)" id="q-2-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                الغياب من نوع MNAR بالتأكيد
+                            </button>
+                        
+                            <button onclick="answerQuiz(2, 1)" id="q-2-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لا يرتبط الغياب بالجنس، وهذا يتوافق مع MCAR دون أن يثبته
+                            </button>
+                        
+                            <button onclick="answerQuiz(2, 2)" id="q-2-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                يجب حذف الدخل
+                            </button>
+                        
+                            <button onclick="answerQuiz(2, 3)" id="q-2-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                الدخل يتبع التوزيع الطبيعي
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-2-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                        <span>لماذا يُعدّ مخطط الصندوق أنسب من Z في متغير ملتوٍ كالدخل؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(3, 0)" id="q-3-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لأنه يعتمد على المتوسط
+                            </button>
+                        
+                            <button onclick="answerQuiz(3, 1)" id="q-3-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لأنه يعتمد على الربيعيات التي لا تتأثر بالقيم الشاذة
+                            </button>
+                        
+                            <button onclick="answerQuiz(3, 2)" id="q-3-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لأنه لا يحتاج إلى بيانات كاملة
+                            </button>
+                        
+                            <button onclick="answerQuiz(3, 3)" id="q-3-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لأنه يحذف القيم الشاذة آلياً
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-3-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                        <span>بلغ التواء الدخل 1.390 بخطأ معياري 0.178. ما القرار الأنسب؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(4, 0)" id="q-4-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                التوزيع متماثل
+                            </button>
+                        
+                            <button onclick="answerQuiz(4, 1)" id="q-4-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                التواء دال نحو اليمين، ويُنظر في التحويل اللوغاريتمي
+                            </button>
+                        
+                            <button onclick="answerQuiz(4, 2)" id="q-4-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                التواء نحو اليسار
+                            </button>
+                        
+                            <button onclick="answerQuiz(4, 3)" id="q-4-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                حذف المتغير
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-4-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
+                        <span>في توزيع ملتوٍ فيه قيم شاذة، أي قيمة أنسب لتعويض المفقود؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(5, 0)" id="q-5-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                المتوسط الحسابي
+                            </button>
+                        
+                            <button onclick="answerQuiz(5, 1)" id="q-5-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                الوسيط
+                            </button>
+                        
+                            <button onclick="answerQuiz(5, 2)" id="q-5-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                أعلى قيمة
+                            </button>
+                        
+                            <button onclick="answerQuiz(5, 3)" id="q-5-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                الصفر
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-5-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">6</span>
+                        <span>ما الإجراء الأول عند اكتشاف دخل شهري قدره 180,000 دج بدرجة Z = 4.43؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(6, 0)" id="q-6-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                حذف الحالة فوراً
+                            </button>
+                        
+                            <button onclick="answerQuiz(6, 1)" id="q-6-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                التحقق من الاستبيان الأصلي لاستبعاد خطأ الإدخال
+                            </button>
+                        
+                            <button onclick="answerQuiz(6, 2)" id="q-6-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                تعويضها بالمتوسط
+                            </button>
+                        
+                            <button onclick="answerQuiz(6, 3)" id="q-6-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                تجاهلها
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-6-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FLOATING SCROLL TO TOP & BOTTOM MOBILE BAR -->
+    <div class="fixed bottom-5 left-5 z-40 flex flex-col gap-2">
+        <button id="btn-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-11 h-11 rounded-full bg-sky-600 text-white shadow-lg flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:bg-sky-700 hover:scale-110">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-12 bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-3">
+            <div class="flex items-start justify-center gap-2 text-white text-sm">
+                <i class="fa-solid fa-graduation-cap text-sky-400 mt-1"></i>
+                <div class="space-y-0.5">
+                    <span class="block font-bold">جامعة عبد الحميد مهري قسنطينة 2، كلية العلوم الاقتصادية، التجارية وعلوم التسيير</span>
+                    <span class="block text-slate-300 font-semibold">قسم علوم التسيير</span>
+                </div>
+            </div>
+            <p class="max-w-2xl mx-auto text-slate-400 leading-relaxed">
+                مصممة خصيصاً لطلبة دراسات الماستر والباحثين للأغراض الأكاديمية والتدريبية على بيئة IBM SPSS 25.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-6 text-sm text-slate-300 pt-1">
+                <span><i class="fa-solid fa-user-tie text-sky-400 ml-1.5"></i>تقديم و إعداد: <strong class="text-white">د. بوصفصاف فريد</strong></span>
+                <span><i class="fa-solid fa-robot text-sky-400 ml-1.5"></i>التصميم على الويب: <strong class="text-white">الذكاء الاصطناعي</strong></span>
+            </div>
+            <div class="text-[11px] text-slate-500 pt-2">
+                &copy; 2026 - 2027 • حصة التطبيق 1: تطهير البيانات.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MATHJAX JS FOR LATEX RENDERING -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- INTERACTIVE SCRIPT LOGIC -->
+    <script>
+        // State variables
+        let currentFontScale = 100;
+        let quizAnswers = {};
+
+        // Case Study Step Data
+        const caseSteps = {
+  "1": {
+    "title": "الخطوة 1: فحص اتجاه العبارات وتحديد عينة التحليل",
+    "path": "Analyze -> Descriptive Statistics -> Frequencies",
+    "code": "FREQUENCIES VARIABLES=Q1 Q2 Q3 Q4\n  /STATISTICS=MEAN STDDEV MIN MAX\n  /ORDER=ANALYSIS.",
+    "desc": "قبل أي معامل نتأكد من أمرين: أن كل العبارات مصاغة في الاتجاه نفسه، وإلا وجب عكس ترميز السالبة، وكم حالة كاملة سيعتمد عليها التحليل. يحذف SPSS في تحليل الثبات كل حالة تنقصها عبارة واحدة (Listwise).",
+    "expected": "العبارات الأربع موجبة الصياغة فلا حاجة إلى عكس الترميز. القيم المفقودة: Q1 = 4، Q2 = 4، Q3 = 3، Q4 = 4، فتبقى <strong>188 حالة كاملة</strong> من أصل 200. المتوسطات متقاربة: 3.24 و3.30 و3.26 و3.31."
+  },
+  "2": {
+    "title": "الخطوة 2: حساب معامل ألفا كرونباخ",
+    "path": "Analyze -> Scale -> Reliability Analysis",
+    "code": "RELIABILITY\n  /VARIABLES=Q1 Q2 Q3 Q4\n  /SCALE('Service_Quality') ALL\n  /MODEL=ALPHA\n  /STATISTICS=DESCRIPTIVE SCALE CORR\n  /SUMMARY=TOTAL MEANS.",
+    "desc": "نختار النموذج Alpha، ونفعّل من Statistics الخيارات Item وScale وScale if item deleted وInter-Item Correlations، ثم نقرأ جدول Reliability Statistics.",
+    "expected": "ألفا كرونباخ = <strong>0.881</strong>، وألفا المعياري = 0.882، وعدد العبارات 4، و<bdi dir=\"ltr\" class=\"font-mono\">N = 188</bdi>. الحكم: ثبات جيد وفق سلّم George &amp; Mallery."
+  },
+  "3": {
+    "title": "الخطوة 3: قراءة مصفوفة الارتباط بين العبارات",
+    "path": "Output -> Inter-Item Correlation Matrix",
+    "code": "* تُعرض تلقائياً بعد تفعيل Inter-Item Correlations\n* في الخطوة 2.",
+    "desc": "يجب أن تكون كل الارتباطات موجبة. ويوصي Clark &amp; Watson (1995) بأن يقع متوسطها بين 0.15 و0.50 للمفاهيم الواسعة، فالمتوسط الأعلى يعني أن العبارات تقيس جانباً ضيقاً من المفهوم أو أنها متقاربة الصياغة.",
+    "expected": "الارتباطات بين 0.626 و0.674، ومتوسطها <strong>0.651</strong>. كلها موجبة ومعتبرة، لكن ارتفاع المتوسط يشير إلى محور ضيق المجال. هذه نقطة تُناقش في حدود الدراسة: هل تغطي العبارات الأربع كل أبعاد جودة الخدمة، مثل نموذج SERVQUAL بأبعاده الخمسة؟"
+  },
+  "4": {
+    "title": "الخطوة 4: تشخيص كل عبارة (Item-Total Statistics)",
+    "path": "Output -> Item-Total Statistics",
+    "code": "* Corrected Item-Total Correlation  >= 0.30\n* Cronbach's Alpha if Item Deleted  <  Alpha",
+    "desc": "نقرأ لكل عبارة الارتباط المصحح، أي ارتباطها بمجموع العبارات الأخرى، وقيمة ألفا لو حُذفت. تكون العبارة سليمة إذا تجاوز ارتباطها 0.30 وكان حذفها يُنقص ألفا.",
+    "expected": "الارتباطات المصححة: Q1 = 0.729، Q2 = 0.746، Q3 = 0.734، Q4 = 0.763. وألفا عند الحذف: Q1 = 0.853، Q2 = 0.847، Q3 = 0.851، Q4 = 0.839. كل القيم أقل من 0.881، فلا تُحذف أي عبارة."
+  },
+  "5": {
+    "title": "الخطوة 5: التأكيد بالتجزئة النصفية",
+    "path": "Analyze -> Scale -> Reliability Analysis -> Model: Split-half",
+    "code": "RELIABILITY\n  /VARIABLES=Q1 Q2 Q3 Q4\n  /SCALE('Service_Quality') ALL\n  /MODEL=SPLIT.",
+    "desc": "يضع SPSS العبارتين الأوليين (Q1 وQ2) في النصف الأول والأخريين (Q3 وQ4) في الثاني، بحسب ترتيب إدخالهما. نقرأ الارتباط بين النصفين ثم معامل سبيرمان-براون (Equal Length) ومعامل غوتمان.",
+    "expected": "ألفا النصف الأول = 0.777، وألفا النصف الثاني = 0.797. الارتباط بين النصفين = 0.788. سبيرمان-براون = <strong>0.882</strong>، وغوتمان = <strong>0.882</strong>. النتيجة متطابقة تقريباً مع ألفا، فالثبات مؤكد بطريقتين."
+  },
+  "6": {
+    "title": "الخطوة 6: الصدق الاتساقي الداخلي (عبارة مع محور)",
+    "path": "Transform -> Compute Variable  |  Analyze -> Correlate -> Bivariate",
+    "code": "COMPUTE SQ_Total = SUM.4(Q1 TO Q4).\nEXECUTE.\nCORRELATIONS\n  /VARIABLES=Q1 Q2 Q3 Q4 SQ_Total\n  /PRINT=TWOTAIL NOSIG\n  /MISSING=PAIRWISE.",
+    "desc": "نحسب الدرجة الكلية للمحور، ثم معامل بيرسون بين كل عبارة وهذه الدرجة. وللمقارنة النقدية نضع بجانبه الارتباط المصحح من الخطوة 4.",
+    "expected": "ارتباط بيرسون الخام: Q1 = 0.854، Q2 = 0.855، Q3 = 0.856، Q4 = 0.871 (كلها دالة عند <bdi dir=\"ltr\" class=\"font-mono\">p &lt; .001</bdi>). أما المصحح فبين 0.729 و0.763. الفرق، أي نحو 0.12، هو مقدار التضخم الناتج عن وجود العبارة داخل المجموع، ولهذا نعرض المعاملين معاً."
+  },
+  "7": {
+    "title": "الخطوة 7: الصدق البنائي بالتحليل العاملي الاستكشافي",
+    "path": "Analyze -> Dimension Reduction -> Factor",
+    "code": "FACTOR\n  /VARIABLES Q1 Q2 Q3 Q4\n  /MISSING LISTWISE\n  /PRINT INITIAL KMO EXTRACTION\n  /CRITERIA MINEIGEN(1)\n  /EXTRACTION PC\n  /ROTATION NOROTATE.",
+    "desc": "نتحقق أولاً من صلاحية البيانات للتحليل العاملي (KMO وبارتليت)، ثم من عدد العوامل المستخرجة، ثم من تشبع كل عبارة.",
+    "expected": "<bdi dir=\"ltr\" class=\"font-mono\">KMO = 0.840</bdi> (جيد جداً)، واختبار بارتليت <bdi dir=\"ltr\" class=\"font-mono\">χ²(6) = 384.93, p &lt; .001</bdi>. استُخرج <strong>عامل واحد</strong> بجذر كامن 2.953 يفسر 73.84% من التباين، والجذر الثاني 0.375. التشبعات: Q1 = 0.849، Q2 = 0.861، Q3 = 0.853، Q4 = 0.873. القيمتان التقريبيتان من هذه التشبعات: <bdi dir=\"ltr\" class=\"font-mono\">AVE ≈ 0.74</bdi> و<bdi dir=\"ltr\" class=\"font-mono\">CR ≈ 0.92</bdi>. تشبعات المكونات الرئيسية أعلى عادة من تشبعات CFA، فتؤكَّد هاتان القيمتان في AMOS."
+  },
+  "8": {
+    "title": "الخطوة 8: الصدق المرتبط بالمحك ثم تحرير النتائج",
+    "path": "Transform -> Compute Variable  |  Analyze -> Correlate -> Bivariate",
+    "code": "COMPUTE SQ_Mean = MEAN.4(Q1 TO Q4).\nEXECUTE.\nCORRELATIONS\n  /VARIABLES=SQ_Mean Satisfaction\n  /PRINT=TWOTAIL NOSIG.",
+    "desc": "تتوقع النظرية أن ترتبط جودة الخدمة إيجابياً بالرضا العام، فيُستعمل متغير Satisfaction محكاً خارجياً تلازمياً. وحدّ هذا الدليل أن المحك عبارة واحدة، ولذلك يُعرض دليلاً مكمّلاً لا دليلاً وحيداً.",
+    "expected": "<bdi dir=\"ltr\" class=\"font-mono\">r = 0.639, p &lt; .001, N = 188</bdi>: ارتباط موجب وقوي يدعم الصدق التلازمي. الخلاصة: المحور ثابت (0.881)، أحادي البعد، وتدعمه ثلاثة أدلة صدق. والفقرة النموذجية لتحرير هذه النتائج موجودة في المحور الثالث."
+  }
+};
+
+        // Quiz Questions Data
+        const quizQuestions = [
+  {
+    "id": 1,
+    "q": "أجاب زبون عن Q1 وQ2 وQ4 فقط. ما قيمة MEAN.3(Q1, Q2, Q3, Q4) له؟",
+    "options": [
+      "قيمة مفقودة",
+      "متوسط العبارات الثلاث المجاب عنها",
+      "مجموع العبارات الثلاث",
+      "صفر"
+    ],
+    "correct": 1,
+    "explain": "MEAN.3 يحسب المتوسط إذا توفرت 3 قيم على الأقل، فيعتمد على العبارات الثلاث المتاحة."
+  },
+  {
+    "id": 2,
+    "q": "اختبار كاي مربع بين Inc_Miss والجنس غير دال. ماذا نستنتج؟",
+    "options": [
+      "الغياب من نوع MNAR بالتأكيد",
+      "لا يرتبط الغياب بالجنس، وهذا يتوافق مع MCAR دون أن يثبته",
+      "يجب حذف الدخل",
+      "الدخل يتبع التوزيع الطبيعي"
+    ],
+    "correct": 1,
+    "explain": "عدم الدلالة يعني غياب العلاقة مع المتغير الملاحظ، لكنه لا يستبعد MNAR المرتبط بالقيمة غير الملاحظة نفسها."
+  },
+  {
+    "id": 3,
+    "q": "لماذا يُعدّ مخطط الصندوق أنسب من Z في متغير ملتوٍ كالدخل؟",
+    "options": [
+      "لأنه يعتمد على المتوسط",
+      "لأنه يعتمد على الربيعيات التي لا تتأثر بالقيم الشاذة",
+      "لأنه لا يحتاج إلى بيانات كاملة",
+      "لأنه يحذف القيم الشاذة آلياً"
+    ],
+    "correct": 1,
+    "explain": "Z تعتمد على المتوسط والانحراف المعياري اللذين تضخمهما القيم الشاذة، أما حدود توكي فتُبنى على الربيعيات."
+  },
+  {
+    "id": 4,
+    "q": "بلغ التواء الدخل 1.390 بخطأ معياري 0.178. ما القرار الأنسب؟",
+    "options": [
+      "التوزيع متماثل",
+      "التواء دال نحو اليمين، ويُنظر في التحويل اللوغاريتمي",
+      "التواء نحو اليسار",
+      "حذف المتغير"
+    ],
+    "correct": 1,
+    "explain": "Z = 1.390 / 0.178 = 7.80، فهو التواء موجب قوي يعالج عادة بـ LG10."
+  },
+  {
+    "id": 5,
+    "q": "في توزيع ملتوٍ فيه قيم شاذة، أي قيمة أنسب لتعويض المفقود؟",
+    "options": [
+      "المتوسط الحسابي",
+      "الوسيط",
+      "أعلى قيمة",
+      "الصفر"
+    ],
+    "correct": 1,
+    "explain": "الوسيط لا يتأثر بالقيم المتطرفة، بينما يسحبها المتوسط نحو الطرف الأعلى (68,276.88 مقابل 65,000)."
+  },
+  {
+    "id": 6,
+    "q": "ما الإجراء الأول عند اكتشاف دخل شهري قدره 180,000 دج بدرجة Z = 4.43؟",
+    "options": [
+      "حذف الحالة فوراً",
+      "التحقق من الاستبيان الأصلي لاستبعاد خطأ الإدخال",
+      "تعويضها بالمتوسط",
+      "تجاهلها"
+    ],
+    "correct": 1,
+    "explain": "قبل أي معالجة نتأكد أن القيمة ليست خطأ إدخال، فإن كانت حقيقية عولجت بالتقليم أو التحويل."
+  }
+];
+
+        function safe(fn){ try { fn(); } catch (err) { console.error(err); } }
+        function initPage() {
+            safe(() => initTheme());
+            safe(() => initScrollProgress());
+            safe(() => showCaseStep(1));
+            safe(() => renderQuiz());
+
+            // Font size listeners
+            safe(() => document.getElementById('btn-font-inc').addEventListener('click', () => adjustFontSize(10)));
+            safe(() => document.getElementById('btn-font-dec').addEventListener('click', () => adjustFontSize(-10)));
+            safe(() => document.getElementById('btn-font-reset').addEventListener('click', () => resetFontSize()));
+
+            // Theme toggle listener
+            safe(() => document.getElementById('btn-theme-toggle').addEventListener('click', toggleTheme));
+
+            // Search filter listener
+            safe(() => document.getElementById('content-search').addEventListener('input', handleContentSearch));
+
+            // Expand all listener
+            safe(() => document.getElementById('btn-expand-all').addEventListener('click', toggleExpandAll));
+        }
+        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initPage); } else { initPage(); }
+
+        // Theme management
+        function initTheme() {
+            const isDark = localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-sun';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-moon';
+            }
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                document.getElementById('theme-icon').className = 'fa-solid fa-moon';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-sun';
+            }
+        }
+
+        // Reading Progress Bar & Scroll Top Visibility
+        function initScrollProgress() {
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progress-bar').style.width = scrolled + '%';
+
+                const btnTop = document.getElementById('btn-back-to-top');
+                if (winScroll > 300) {
+                    btnTop.classList.remove('opacity-0', 'pointer-events-none');
+                } else {
+                    btnTop.classList.add('opacity-0', 'pointer-events-none');
+                }
+            });
+        }
+
+        // Dynamic Font Sizer
+        function adjustFontSize(delta) {
+            currentFontScale = Math.min(Math.max(currentFontScale + delta, 80), 140);
+            document.getElementById('main-content-wrapper').style.fontSize = `${currentFontScale}%`;
+        }
+
+        function resetFontSize() {
+            currentFontScale = 100;
+            document.getElementById('main-content-wrapper').style.fontSize = '100%';
+        }
+
+        // Accordion Toggle Logic
+        function toggleAccordion(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            if (!content || !icon) return;
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.className = 'fa-solid fa-chevron-up text-lg';
+            } else {
+                content.classList.add('hidden');
+                icon.className = 'fa-solid fa-chevron-down text-lg';
+            }
+        }
+
+        function toggleExpandAll() {
+            const allContents = document.querySelectorAll('[id^="content-"]');
+            const btn = document.getElementById('btn-expand-all');
+            const isExpanding = btn.innerText.includes('توسيع');
+
+            allContents.forEach(c => {
+                if (isExpanding) {
+                    c.classList.remove('hidden');
+                } else {
+                    c.classList.add('hidden');
+                }
+            });
+
+            btn.innerHTML = isExpanding ? 
+                '<i class="fa-solid fa-angles-up"></i><span>طي الكل</span>' : 
+                '<i class="fa-solid fa-angles-down"></i><span>توسيع الكل</span>';
+        }
+
+        // Smooth Scroll Helper
+        function scrollToModule(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                // Ensure accordion is open
+                const content = el.querySelector('[id^="content-"]');
+                if (content && content.classList.contains('hidden')) {
+                    content.classList.remove('hidden');
+                }
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Live Content Search Filter
+        function handleContentSearch(e) {
+            const query = e.target.value.trim().toLowerCase();
+            const cards = document.querySelectorAll('.module-card');
+
+            cards.forEach(card => {
+                if (!query) {
+                    card.style.display = 'block';
+                    return;
+                }
+                const text = card.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'block';
+                    // Auto open matching card accordion
+                    const content = card.querySelector('[id^="content-"]');
+                    if (content) content.classList.remove('hidden');
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Case Study Step Switcher
+        function showCaseStep(step) {
+            const data = caseSteps[step];
+            if (!data || !document.getElementById('case-step-content')) return; // this TP page has no case-study panel
+
+            // Update active button state
+            for (let i = 1; i <= Object.keys(caseSteps).length; i++) {
+                const btn = document.getElementById(`case-btn-${i}`);
+                if (i === step) {
+                    btn.className = 'case-step-btn px-3 py-2 rounded-lg bg-sky-600 text-white shadow font-bold transition';
+                } else {
+                    btn.className = 'case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition';
+                }
+            }
+
+            // Render content
+            const contentBox = document.getElementById('case-step-content');
+            contentBox.innerHTML = `
+                <div class="space-y-2">
+                    <div class="text-white font-bold text-sm">${data.title}</div>
+                    <div class="inline-block px-2.5 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700 font-mono text-xs">
+                        <i class="fa-solid fa-code ml-1"></i> ${data.path}
+                    </div>
+                    <div dir="ltr" class="p-2 rounded bg-black/40 font-mono text-slate-200 text-xs text-left border border-white/5 whitespace-pre-wrap overflow-x-auto">${data.code}</div>
+                    <p class="text-slate-300 text-xs leading-relaxed pt-1">
+                        ${data.desc}
+                    </p>
+                    <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-100 text-xs leading-relaxed">
+                        <i class="fa-solid fa-circle-check text-emerald-400 ml-1"></i><strong class="text-emerald-300">النتيجة المتوقعة: </strong>${data.expected}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Quiz Engine Rendering & Interaction
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            if (!container) return;
+
+            container.innerHTML = quizQuestions.map((q, idx) => `
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">${idx + 1}</span>
+                        <span>${q.q}</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        ${q.options.map((opt, oIdx) => `
+                            <button onclick="answerQuiz(${q.id}, ${oIdx})" id="q-${q.id}-opt-${oIdx}" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <div id="q-${q.id}-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            `).join('');
+        }
+
+        function answerQuiz(qId, optIdx) {
+            const question = quizQuestions.find(q => q.id === qId);
+            if (!question) return;
+
+            quizAnswers[qId] = optIdx;
+
+            const isCorrect = optIdx === question.correct;
+            const feedbackEl = document.getElementById(`q-${qId}-feedback`);
+
+            // Disable option buttons for this question
+            question.options.forEach((_, oIdx) => {
+                const btn = document.getElementById(`q-${qId}-opt-${oIdx}`);
+                btn.disabled = true;
+                if (oIdx === question.correct) {
+                    btn.className = 'p-2.5 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-500 font-bold text-emerald-900 dark:text-emerald-200 text-right';
+                } else if (oIdx === optIdx && !isCorrect) {
+                    btn.className = 'p-2.5 rounded-lg bg-rose-100 dark:bg-rose-950/80 border border-rose-500 font-bold text-rose-900 dark:text-rose-200 text-right';
+                } else {
+                    btn.className = 'p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 text-slate-400 text-right opacity-60';
+                }
+            });
+
+            // Show Feedback
+            feedbackEl.classList.remove('hidden');
+            if (isCorrect) {
+                feedbackEl.className = 'p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs';
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 ml-1"></i> <strong>إجابة صحيحة!</strong> ${question.explain}`;
+            } else {
+                feedbackEl.className = 'p-3 rounded-lg bg-rose-50 dark:bg-rose-950/50 border border-rose-300 dark:border-rose-800 text-rose-900 dark:text-rose-200 text-xs';
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600 ml-1"></i> <strong>إجابة خاطئة.</strong> ${question.explain}`;
+            }
+
+            // Update Total Score
+            let correctCount = 0;
+            quizQuestions.forEach(q => {
+                if (quizAnswers[q.id] === q.correct) correctCount++;
+            });
+            document.getElementById('quiz-score-badge').innerText = `النتيجة: ${correctCount} / ${quizQuestions.length}`;
+        }
+    </script>
+<script>
+(function(){
+  var KEY='tp1-attendance-v2';
+  function unlock(){document.body.classList.remove('att-locked');var w=document.getElementById('att-frame-wrap');if(w){w.style.display='none';}var n=document.getElementById('att-lock-note');if(n){n.innerHTML='<i class="fa-solid fa-circle-check ml-1 text-emerald-600"></i> تم إرسال تسجيل حضورك بنجاح. محتوى الحصة متاح الآن أدناه.';n.className='p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-xs sm:text-sm text-emerald-800 dark:text-emerald-300';}}
+  try{ if(localStorage.getItem(KEY)==='1'){unlock();return;} }catch(e){}
+  document.body.classList.add('att-locked');
+  var fm=document.getElementById('att-form'); if(!fm){unlock();return;}
+  fm.addEventListener('submit',function(ev){ev.preventDefault();var m=document.getElementById('att-msg'),b=document.getElementById('att-btn');var d=new FormData(fm);
+    d.append('lecture','التطبيق 1: تطهير البيانات');b.disabled=true;m.textContent='جارٍ الإرسال…';m.className='text-sm mr-2 text-slate-500';
+    fetch('https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec',{method:'POST',body:new URLSearchParams(d)}).then(function(r){return r.text();}).then(function(x){x=String(x).trim();if(x==='BAD_CODE'){b.disabled=false;m.textContent='رمز الحصة غير صحيح.';m.className='text-sm mr-2 text-red-600';return;}if(x!=='OK'&&x!=='DUPLICATE'){throw new Error(x);}try{localStorage.setItem(KEY,'1');}catch(e){} unlock(); var t=document.getElementById('mod-intro')||document.querySelector('#main-content-wrapper > section:not(#mod-attendance)'); if(t) setTimeout(function(){t.scrollIntoView({behavior:'smooth'});},1200);}).catch(function(){b.disabled=false;m.textContent='تعذّر الإرسال، تحقق من الاتصال وأعد المحاولة.';m.className='text-sm mr-2 text-red-600';});});
+})();
+</script>
+</body>
+</html>

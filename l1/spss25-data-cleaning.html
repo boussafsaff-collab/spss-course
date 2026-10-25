@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محاضرة برمجيات إحصائية: فلسفة تطهير البيانات في SPSS 25</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        sky: {50:'#f2f6fb',100:'#e3ebf5',200:'#c3d3e8',300:'#95b1d6',400:'#6189bd',500:'#3d6aa3',600:'#2c5288',700:'#234270',800:'#1e375c',900:'#1b2f4d',950:'#0f1c30'},
+                        amber: {50:'#fbf8f1',100:'#f5eedc',200:'#eadbb5',300:'#dcc283',400:'#cda85a',500:'#b98f3e',600:'#9c7531',700:'#7d5c29',800:'#674b26',900:'#573f23',950:'#312211'},
+                        emerald: {50:'#f2f8f5',100:'#e0efe6',200:'#c2dfcd',300:'#96c6aa',400:'#66a682',500:'#458a65',600:'#336f50',700:'#2a5942',800:'#244837',900:'#1f3c2f',950:'#0f211a'},
+                        rose: {50:'#fbf4f4',100:'#f6e5e5',200:'#eecfcf',300:'#e0abab',400:'#cc7f7f',500:'#b55a5a',600:'#9c4444',700:'#823838',800:'#6c3131',900:'#5c2d2d',950:'#321414'},
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#0c4a6e',
+                            900: '#0f172a',
+                        },
+                        spss: {
+                            blue: '#006699',
+                            accent: '#e67e22',
+                            bg: '#f4f7f9'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        tajawal: ['Tajawal', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts: Cairo & Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cairo', sans-serif;
+            letter-spacing: 0;
+        }
+        .math-block {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.03) 0%, rgba(44, 82, 136, 0.04) 100%);
+            border-right: 4px solid #2c5288;
+        }
+        .dark .math-block {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(97, 137, 189, 0.08) 100%);
+            border-right-color: #6189bd;
+        }
+        .spss-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            padding: 0.25rem 0.625rem;
+            border-radius: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            background-color: #f2f6fb;
+            color: #1e375c;
+            border: 1px solid #c3d3e8;
+        }
+        .dark .spss-badge {
+            background-color: #1b2f4d;
+            color: #c3d3e8;
+            border-color: #2c5288;
+        }
+        .arrow-sep {
+            color: #94a3b8;
+            font-size: 0.75rem;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #2c5288;
+            border-radius: 3px;
+        }
+    </style>
+<style>body.att-locked #main-content-wrapper > section:not(#mod-attendance){display:none!important}body.att-locked #quick-nav-hide{}</style>
+<style id="dk-css">
+#dk{position:fixed;inset:0;z-index:9999;background:#0b1e33;color:#fff;display:none;direction:rtl;font-family:inherit;overflow:hidden;touch-action:pan-y}
+#dk.on{display:block}#dk .trk{height:100%}
+#dk .sl{display:none;height:100%;box-sizing:border-box;padding:9vh 7vw 5vh;flex-direction:column;justify-content:center;overflow:auto;animation:dkf .3s}#dk .sl.cur{display:flex}@keyframes dkf{from{opacity:0}to{opacity:1}}
+#dk .tag{color:#38bdf8;font-weight:700;font-size:clamp(12px,2.2vh,18px)}#dk h3{font-size:clamp(20px,6vh,44px);font-weight:800;margin:.3em 0 .6em}
+#dk .bd{font-size:clamp(13px,3.6vh,24px);line-height:1.6}#dk ul,#dk ol{padding-right:1.2em;list-style:disc}#dk ol{list-style:decimal}#dk li{margin:.2em 0}
+#dk .big{font-size:1.4em;font-weight:800;color:#fbbf24}#dk .hint{color:#94a3b8;font-size:.75em;margin-top:1em}
+#dk .grid2,#dk .grid3{display:grid;gap:2vw}#dk .grid2{grid-template-columns:1fr 1fr}#dk .grid3{grid-template-columns:1fr 1fr 1fr}
+#dk .card{background:#12304f;border:1px solid #1e4a73;border-radius:14px;padding:1.6vh 1.6vw}#dk .card.warn{border-color:#f59e0b}
+#dk .path,#dk .code{direction:ltr;text-align:left;font-family:monospace;background:#020617;color:#7dd3fc;border-radius:8px;padding:.3em .6em;margin:.4em 0;display:inline-block}
+#dk .exc{cursor:pointer;transition:transform .15s}#dk .exc.sel{outline:2px solid #38bdf8;transform:translateY(-2px)}#dk .qm{display:inline-flex;align-items:center;justify-content:center;width:1.3em;height:1.3em;border-radius:50%;background:#38bdf8;color:#0b1e33;font-weight:800;font-size:.8em;cursor:pointer;margin-right:.3em;vertical-align:middle}#dk .qm.sel{background:#fbbf24}#dk .menu{direction:ltr;display:flex;flex-direction:column;align-items:flex-start;gap:.2em;font-family:monospace;font-size:.85em}#dk .menu span{background:#e2e8f0;color:#0f172a;padding:.1em .6em;border-radius:4px}#dk .menu span.hl{background:#fbbf24}#dk .menu i{color:#94a3b8;font-style:normal;padding-left:1em}#dk .spo{background:#fff;color:#0f172a;border-radius:10px;padding:1.2vh 1.4vw;direction:ltr;font-size:.85em}#dk .spt{text-align:center;font-weight:700}#dk .spo table{margin:.4em auto;border-collapse:collapse}#dk .spo td{border-top:1px solid #cbd5e1;padding:.15em .8em}#dk .spo .mrow td{background:#fee2e2;color:#991b1b;font-weight:700}#dk .rd{direction:rtl;text-align:center;background:#f1f5f9;border-radius:8px;padding:.3em}#dk .strip{position:relative;width:20em;height:3.2em;flex:0 0 auto;direction:ltr;border-bottom:2px solid #64748b;margin-bottom:1.2em}#dk .dot{position:absolute;bottom:.3em;transform:translateX(-50%);background:#38bdf8;border:2px solid #0b1e33;border-radius:50%;width:.8em;height:.8em}#dk .dot.od{width:auto;height:auto;border-radius:999px;font-size:.7em;padding:0 .4em;color:#fff;font-weight:700}#dk .cl{position:absolute;top:-.4em;transform:translateX(-50%);font-size:.6em;color:#7dd3fc;white-space:nowrap}#dk .dot.od{background:#ef4444;color:#fff}#dk .ax{position:absolute;top:100%;left:0;right:0;display:flex;justify-content:space-between;font-size:.55em;color:#94a3b8}#dk .bell{flex:0 0 auto}#dk .zf{direction:ltr;font-family:monospace;background:#020617;color:#7dd3fc;border-radius:8px;padding:.4em .8em;flex:0 0 auto;line-height:1.8}#dk .zf b{color:#f87171}#dk .exc .path{font-size:.62em!important;padding:.15em .5em!important;margin:.25em 0!important}#dk .exbox .ext{font-size:.72em}#dk .exc{padding:.5em .8em!important}#dk .sl .ext{font-size:.78em}#dk .hdr{position:absolute;top:.9em;left:0;right:0;text-align:center;font-size:.72em;color:#94a3b8;pointer-events:none;padding:0 4.5em}#dk .hdr1{font-size:.8em;line-height:1.6;color:#cbd5e1}#dk .hdr1 span{color:#7dd3fc}#dk .sl{position:relative}#dk button.pbtn{width:auto;height:auto;padding:.5em 1.2em;font-size:.85em;background:#7c3aed;border-radius:999px}#dk .tap{color:#7dd3fc}#dk .exbox{display:none;margin-top:1.4vh;background:#0f2a45;border-right:4px solid #38bdf8;border-radius:10px;padding:1.2vh 1.4vw;font-size:.85em}#dk .exbox.on{display:flex;gap:2vw;align-items:center;animation:dkf .3s}#dk .ext{border-collapse:collapse;font-size:1em;flex:0 0 auto}#dk .exbox .ext td,#dk .exbox .ext th{padding:0 .6em;line-height:1.35}#dk .ext{order:2}#dk .ext ~ .exn,#dk .exbox>b{}#dk .ext td,#dk .ext th{border:1px solid #1e4a73;padding:.15em .8em;text-align:center}#dk .ext th{background:#12304f}#dk .ext td.na{color:#fca5a5;font-weight:700}#dk .exn{color:#fde68a;margin:0}#dk .warnt{color:#fca5a5}#dk small{color:#cbd5e1}
+#dk .ctl{position:absolute;top:10px;display:flex;gap:8px;opacity:0;pointer-events:none;transition:opacity .25s}#dk.show .ctl{opacity:1;pointer-events:auto}
+#dk .ctl.r{right:10px}#dk .ctl.l{left:10px}#dk button{background:rgba(255,255,255,.15);color:#fff;border:0;border-radius:999px;width:42px;height:42px;font-size:22px;line-height:1}
+#dk .cnt{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);text-align:center;color:#64748b;font-size:12px;padding:4px 10px;z-index:3;white-space:nowrap}
+#dk .rot{display:none;position:absolute;inset:0;background:#0b1e33;z-index:5;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px;font-size:20px}
+@media (orientation:portrait) and (max-width:900px){#dk .rot{display:flex}}
+</style></head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col antialiased">
+
+    <!-- READING PROGRESS BAR -->
+    <div class="fixed top-0 left-0 right-0 h-1.5 bg-slate-200 dark:bg-slate-800 z-50">
+        <div id="progress-bar" class="h-full bg-sky-700 w-0 transition-all duration-150"></div>
+    </div>
+
+    <!-- STICKY HEADER -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors duration-300">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+            
+            <!-- Brand Title -->
+            <div class="flex items-center gap-2 min-w-0 flex-1">
+                <div class="hidden sm:flex shrink-0 w-10 h-10 rounded-xl bg-sky-800 items-center justify-center text-white shadow-sm">
+                    <i class="fa-solid fa-chart-line text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white leading-tight">SPSS 25 | مقياس برمجيات إحصائية <span class="whitespace-nowrap font-semibold text-slate-600 dark:text-slate-300">(الأستاذ: بوصفصاف فريد)</span></h1>
+                    <p class="text-xs text-sky-600 dark:text-sky-400 font-medium">فلسفة تطهير البيانات (Data Cleaning)</p>
+                </div>
+            </div>
+
+            <!-- Header Controls: Font Adjuster & Dark Mode -->
+            <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
+                <!-- Home: back to course lectures -->
+                <a id="btn-home" href="../index.html" title="العودة إلى الصفحة الرئيسية للمحاضرات" aria-label="العودة إلى الصفحة الرئيسية للمحاضرات" class="w-9 h-9 flex items-center justify-center rounded-lg bg-sky-800 text-white border border-sky-900 hover:bg-sky-700 hover:scale-105 transition shadow-sm">
+                    <i class="fa-solid fa-house"></i>
+                </a>
+                <!-- Font Size Controls -->
+                <div class="flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg p-1 border border-slate-200 dark:border-slate-700">
+                    <button id="btn-font-dec" title="تصغير الخط" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-sky-600 transition">
+                        <i class="fa-solid fa-minus text-xs"></i>
+                    </button>
+                    <button id="btn-font-reset" title="إعادة ضبط الخط" class="px-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-sky-600">
+                        <i class="fa-solid fa-font"></i>
+                    </button>
+                    <button id="btn-font-inc" title="تكبير الخط" class="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-700 hover:text-sky-600 transition">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                    </button>
+                </div>
+
+                <!-- Dark Mode Toggle Button -->
+                <button id="btn-theme-toggle" title="تبديل المظهر" class="w-9 h-9 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-amber-400 border border-slate-200 dark:border-slate-700 hover:scale-105 transition">
+                    <i id="theme-icon" class="fa-solid fa-moon"></i>
+                </button>
+
+                <!-- Quick Accordion Toggle All -->
+                <button id="btn-expand-all" title="توسيع/طيل كل المحاور" class="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 text-xs font-bold hover:bg-sky-100 transition">
+                    <i class="fa-solid fa-angles-down"></i>
+                    <span>توسيع الكل</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- SEARCH & FILTER FLOATING STRIP -->
+    <div class="bg-slate-100 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 py-2 px-4 sticky top-[61px] z-30">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <div class="relative w-full sm:w-72">
+                <input type="text" id="content-search" placeholder="ابحث في المحاضرة (مثال: Z-Score, MCAR, دمج)..." class="w-full pl-3 pr-9 py-1.5 text-xs sm:text-sm rounded-lg bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <i class="fa-solid fa-magnifying-glass absolute right-3 top-2.5 text-slate-400 text-xs"></i>
+            </div>
+            <div class="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 text-xs custom-scrollbar">
+                <span class="text-slate-500 dark:text-slate-400 whitespace-nowrap font-medium"><i class="fa-solid fa-filter ml-1"></i>انتقال سريع:</span>
+                <button onclick="scrollToModule('mod-attendance')" class="px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-950/60 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-800 font-bold whitespace-nowrap transition">الحضور</button>
+                <button onclick="scrollToModule('mod-intro')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">المقدمة</button>
+                <button onclick="scrollToModule('mod-1')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">المفقودة</button>
+                <button onclick="scrollToModule('mod-2')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">الشاذة</button>
+                <button onclick="scrollToModule('mod-3')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">الدمج</button>
+                <button onclick="scrollToModule('mod-4')" class="px-2.5 py-1 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 hover:border-sky-500 whitespace-nowrap transition">التحويل</button>
+                <button onclick="scrollToModule('mod-case')" class="px-2.5 py-1 rounded-full bg-sky-50 dark:bg-sky-950/60 text-sky-800 dark:text-sky-200 border border-sky-200 dark:border-sky-800 font-bold whitespace-nowrap transition">دراسة حالة</button>
+                <button onclick="scrollToModule('mod-quiz')" class="px-2.5 py-1 rounded-full bg-sky-50 dark:bg-sky-950/60 text-sky-800 dark:text-sky-200 border border-sky-200 dark:border-sky-800 font-bold whitespace-nowrap transition">اختبار</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <main id="main-content-wrapper" class="flex-grow max-w-6xl w-full mx-auto px-4 py-6 sm:py-10 space-y-8 text-base">
+
+        <!-- CREDITS (TOP) -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-6 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm px-4 py-3 text-sm text-center">
+            <span><i class="fa-solid fa-user-tie text-sky-600 dark:text-sky-400 ml-1.5"></i>تقديم و إعداد: <strong class="text-slate-900 dark:text-white">د. بوصفصاف فريد</strong></span>
+            <span class="hidden sm:inline text-slate-300 dark:text-slate-600">|</span>
+            <span><i class="fa-solid fa-robot text-sky-600 dark:text-sky-400 ml-1.5"></i>التصميم على الويب: <strong class="text-slate-900 dark:text-white">الذكاء الاصطناعي</strong></span>
+        </div>
+
+        <!-- HERO SECTION -->
+        <section class="relative overflow-hidden rounded-3xl bg-sky-950 text-white p-6 sm:p-10 shadow-md border border-sky-900">
+
+            <div class="relative z-10 space-y-4">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/20 text-sky-300 border border-sky-400/30 text-xs font-bold tracking-wide">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>مقرر البرمجيات الإحصائية المتقدمة • مستوى الماستر</span>
+                </div>
+
+                <h1 class="text-2xl sm:text-4xl font-extrabold leading-tight text-white">
+                    محاضرة برمجيات إحصائية: <span class="block mt-2 text-sky-200 font-bold">فلسفة تطهير البيانات (Data Cleaning) في SPSS 25</span>
+                </h1>
+
+                <p class="text-slate-300 text-sm sm:text-lg leading-relaxed max-w-3xl">
+                    دليل شامل لمعالجة القيم المفقودة، هندسة القيم الشاذة المتطرفة، دمج الملفات العمودي والأفقي، وتوليف المتغيرات الكامنة للباحثين والأكاديميين.
+                </p>
+
+                <!-- Academic Meta Info Badges -->
+                <div class="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs sm:text-sm">
+                    <div class="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center gap-3">
+                        <i class="fa-solid fa-book-bookmark text-sky-300 text-lg"></i>
+                        <div>
+                            <span class="block text-slate-400 text-[10px] sm:text-xs">الموسم الجامعي</span>
+                            <span class="font-bold text-white">2026 - 2027</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center gap-3">
+                        <i class="fa-solid fa-laptop-code text-sky-300 text-lg"></i>
+                        <div>
+                            <span class="block text-slate-400 text-[10px] sm:text-xs">البرنامج المعالج</span>
+                            <span class="font-bold text-white">IBM SPSS 25</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center gap-3">
+                        <i class="fa-solid fa-microscope text-sky-300 text-lg"></i>
+                        <div>
+                            <span class="block text-slate-400 text-[10px] sm:text-xs">مجال التطبيق</span>
+                            <span class="font-bold text-white">البحث الأكاديمي والمالي</span>
+                        </div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10 flex items-center gap-3">
+                        <i class="fa-solid fa-shield-halved text-sky-300 text-lg"></i>
+                        <div>
+                            <span class="block text-slate-400 text-[10px] sm:text-xs">الهدف الجوهري</span>
+                            <span class="font-bold text-white">المصداقية وقابلية التعميم</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ATTENDANCE -->
+        <section id="mod-attendance" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border-2 border-amber-400 dark:border-amber-600 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-amber-50 dark:bg-amber-950/30 border-b border-amber-200 dark:border-amber-800 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-amber-600 text-white flex items-center justify-center"><i class="fa-solid fa-user-check text-sm"></i></span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">تسجيل الحضور (إجباري)</h2>
+                        <span class="text-xs text-amber-700 dark:text-amber-400 font-semibold" dir="ltr">Attendance – Mandatory</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-attendance', 'icon-attendance')" class="text-slate-400 hover:text-amber-600 transition">
+                    <i id="icon-attendance" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+            <div id="content-attendance" class="p-5 sm:p-6 space-y-4">
+                <p class="text-sm leading-relaxed text-slate-700 dark:text-slate-300">تسجيل الحضور <strong>خطوة إجبارية</strong> قبل الاطلاع على محتوى الحصة: املأ النموذج أدناه بمعلوماتك الصحيحة ثم اضغط <strong>إرسال</strong>.</p>
+                <div id="att-lock-note" class="p-3 rounded-lg bg-slate-100 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 text-xs sm:text-sm text-slate-700 dark:text-slate-300"><i class="fa-solid fa-lock ml-1 text-amber-600"></i> محتوى الحصة محجوب. املأ النموذج أدناه ثم اضغط <strong>إرسال</strong> ليظهر المحتوى تلقائياً.</div>
+                <div id="att-frame-wrap" class="rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
+                    <form id="att-form" class="grid sm:grid-cols-2 gap-3 p-4" autocomplete="on"><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">اللقب<input name="nom" required  class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"></label><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">الاسم<input name="prenom" required  class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"></label><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">الفوج<input name="groupe" required  class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"></label><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">رمز الحصة (يعلنه الأستاذ)<input name="code" required dir="ltr" autocomplete="off" class="w-full px-3 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 text-slate-900 dark:text-white"></label><div class="sm:col-span-2"><button type="submit" id="att-btn" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold">إرسال</button> <span id="att-msg" class="text-sm mr-2"></span></div></form>
+                </div>
+            </div>
+        </section>
+
+        <!-- STRATEGIC INTRODUCTION -->
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section id="mod-slides" class="module-card rounded-2xl border border-sky-300 dark:border-sky-800 bg-sky-50 dark:bg-sky-950/40 p-5 text-center"><p class="mb-3 text-slate-800 dark:text-slate-200 font-bold">ابدأ بالشرائح المبسطة قبل قراءة التفاصيل</p><button type="button" onclick="openDeck()" class="px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold"><i class="fa-solid fa-display ml-2"></i>عرض الشرائح</button><p class="mt-2 text-xs text-slate-500">على الهاتف: أدر الشاشة أفقياً</p></section>
+<section id="mod-intro" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">00</span>
+                    <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">مقدمة إستراتيجية: فلسفة تطهير البيانات (Data Cleaning)</h2>
+                </div>
+                <button onclick="toggleAccordion('content-intro', 'icon-intro')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-intro" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+
+            <div id="content-intro" class="p-5 sm:p-6 space-y-4">
+                <p class="leading-relaxed">
+                    في دراسات الماستر والبلورة البحثية، يواجه الباحث مشكلة أساسية: <strong>جمع البيانات عبر الاستمارات أو التقارير المالية لا يعني أنها جاهزة للتحليل الإحصائي المباشر</strong>. تعاني البيانات الواقعية مما يسمى بـ <span class="text-rose-600 dark:text-rose-400 font-bold">"التلوث الإحصائي"</span>.
+                </p>
+
+                <!-- Warning Callout Box -->
+                <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/40 border-r-4 border-amber-500 text-amber-900 dark:text-amber-200 space-y-2">
+                    <div class="flex items-center gap-2 font-bold text-sm sm:text-base">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-600 dark:text-amber-400 text-lg"></i>
+                        <span>تحذير منهجية البحث: خُطورة التحليل المباشر للبيانات الملوثة</span>
+                    </div>
+                    <p class="text-xs sm:text-sm leading-relaxed text-amber-800 dark:text-amber-300">
+                        إن تطبيق اختبارات معلمية (Parametric Tests) مثل <strong>الانحدار الخطي المتعدد (Multiple Linear Regression)</strong> أو <strong>تحليل التباين (Analysis of Variance - ANOVA)</strong> على بيانات تحتوي على قيم شاذة أو فجوات مفقودة يؤدي حتماً إلى:
+                    </p>
+                    <ul class="list-disc list-inside text-xs sm:text-sm space-y-1 pr-2 font-medium">
+                        <li>تحيز المعاملات المعنوية (Biased Coefficients).</li>
+                        <li>رفع خطأ المعاينة من النوع الأول (Type I Error).</li>
+                    </ul>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60">
+                        <h4 class="font-bold text-sky-700 dark:text-sky-400 mb-1 flex items-center gap-2">
+                            <i class="fa-solid fa-check-circle text-emerald-500"></i> المصداقية (Validity)
+                        </h4>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                            ضمان قياس الأدوات والمُتغيرات لما وُضعت لقياسه فعلياً، وحماية المخرجات من الارتشاح الناجم عن الضوضاء الإحصائية.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700/60">
+                        <h4 class="font-bold text-sky-700 dark:text-sky-400 mb-1 flex items-center gap-2">
+                            <i class="fa-solid fa-globe text-sky-500"></i> القابلية للتعميم (Generalizability)
+                        </h4>
+                        <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                            تمكين النتائج المُستخلصة من العينة من التعبير الصادق عن المجتمع الإحصائي المدروس دون تشويه.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 1: MISSING VALUES -->
+        <section id="mod-1" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">01</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">المحور الأول: التشخيص والتعامل المتقدم مع القيم المفقودة (Missing Values)</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold">Mechanisms, Deletion & Advanced Imputation</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-1', 'icon-mod-1')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-1" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+
+            <div id="content-mod-1" class="p-5 sm:p-6 space-y-6">
+                
+                <!-- Part A: Mechanisms -->
+                <div class="space-y-3">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3 flex items-center gap-2">
+                        <span>أ. الأنماط الإحصائية للقيم المفقودة (Mechanisms of Missing Data)</span>
+                    </h3>
+                    <p class="text-sm leading-relaxed">
+                        قبل معالجة أي قيمة مفقودة، يجب على الباحث تفكيك ميكانيزمات غياب البيانات عبر ثلاثة أنواع رئيسية:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- MCAR -->
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">MCAR</span>
+                            <span class="block text-right text-[11px] font-mono text-slate-500 dark:text-slate-400 mt-1" dir="ltr">MCAR: Missing Completely At Random</span>
+                            <h4 class="font-bold text-sm text-slate-900 dark:text-white mt-1">المفقود العشوائي تماماً</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                                غياب البيانات لا علاقة له بقيم المتغير نفسه ولا بقيم المتغيرات الأخرى (مثال: سقوط صفحة من الاستبيان بالخطأ). هنا الحذف لا يسبب تحيزاً.
+                            </p>
+                        </div>
+
+                        <!-- MAR -->
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">MAR</span>
+                            <span class="block text-right text-[11px] font-mono text-slate-500 dark:text-slate-400 mt-1" dir="ltr">MAR: Missing At Random</span>
+                            <h4 class="font-bold text-sm text-slate-900 dark:text-white mt-1">المفقود العشوائي</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                                غياب البيانات يعتمد على متغير آخر ملحوظ وليس على المتغير نفسه (مثال: الإناث يرفضن الإفصاح عن الوزن، فالغياب مرتبط بمتغير الجنس).
+                            </p>
+                        </div>
+
+                        <!-- MNAR -->
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700">
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300">MNAR</span>
+                            <span class="block text-right text-[11px] font-mono text-slate-500 dark:text-slate-400 mt-1" dir="ltr">MNAR: Missing Not At Random</span>
+                            <h4 class="font-bold text-sm text-slate-900 dark:text-white mt-1">المفقود غير العشوائي</h4>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">
+                                غياب القيمة مرتبط بذات المتغير (مثال: أصحاب الدخل المرتفع جداً أو المنخفض جداً يرفضون الإجابة عن سؤال الدخل). أخطر الأنواع ويتطلب نمذجة متتقدمة.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Part B: Solutions in SPSS 25 -->
+                <div class="space-y-4 pt-2 border-t border-slate-200 dark:border-slate-700">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">
+                        ب. الحلول البرمجية والمعادلات المطبقة في SPSS 25
+                    </h3>
+
+                    <!-- Deletion vs Imputation Tabbed Cards -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        
+                        <!-- Deletion Section -->
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 space-y-3">
+                            <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-trash-can text-rose-500"></i> أولاً: تقنيات الحذف (Deletion)
+                            </h4>
+                            
+                            <div class="space-y-2 text-xs sm:text-sm">
+                                <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                                    <span class="font-bold text-rose-600 dark:text-rose-400">1. الحذف الإجمالي (Listwise Deletion):</span>
+                                    <p class="text-slate-600 dark:text-slate-300 mt-0.5">يحذف SPSS الحالة كاملة بمجرد غياب سؤال واحد في النموذج.</p>
+                                    <span class="inline-block mt-1 text-[11px] font-semibold text-rose-700 dark:text-rose-300 bg-rose-50 dark:bg-rose-950/50 px-2 py-0.5 rounded">عيوبه: خسارة كبيرة في حجم العينة وتراجع القوة الإحصائية للاختبارات.</span>
+                                </div>
+
+                                <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+                                    <span class="font-bold text-amber-600 dark:text-amber-400">2. الحذف الثنائي (Pairwise Deletion):</span>
+                                    <p class="text-slate-600 dark:text-slate-300 mt-0.5">يحذف الحالة فقط في التحليلات التي تطلب هذا المتغير بعينه، ويبقي عليها في المتغيرات الأخرى.</p>
+                                    <span class="inline-block mt-1 text-[11px] font-semibold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 px-2 py-0.5 rounded">عيوبه: تذبذب حجم العينة N بين الجداول الإحصائية مما يربك القارئ.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Imputation Section -->
+                        <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-700 space-y-3">
+                            <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-calculator text-sky-500"></i> ثانياً: التعويض الإحصائي المتقدم (Imputation)
+                            </h4>
+
+                            <div class="space-y-3 text-xs sm:text-sm">
+                                <!-- Mean Imputation -->
+                                <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 space-y-2">
+                                    <span class="font-bold text-sky-600 dark:text-sky-400">1. التعويض بالمتوسط الحسابي (Mean Imputation):</span>
+                                    <p class="text-slate-600 dark:text-slate-300">يستبدل القيمة المفقودة بالمتوسط الحسابي للمتغير بناءً على الحالات الصالحة.</p>
+                                    
+                                    <!-- Formula Block -->
+                                    <div class="math-block p-2.5 rounded-lg text-center font-mono text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200">
+                                        $$ X_{\text{missing}} = \bar{X} = \frac{\sum_{i=1}^{n} X_i}{n} $$
+                                    </div>
+                                    <p class="text-[11px] text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 p-1.5 rounded font-medium">
+                                        <i class="fa-solid fa-circle-exclamation ml-1"></i> <strong>تحذير منهجي:</strong> تقلل هذه الطريقة من التباين الحقيقي (Variance) وتضخم حجم الارتباط بشكل وهمي، فلا ينصح بها في العينات الصغيرة.
+                                    </p>
+                                </div>
+
+                                <!-- EM & Multiple Imputation -->
+                                <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 space-y-1">
+                                    <span class="font-bold text-sky-600 dark:text-sky-400">2. التعويض بالتوقع الأقصى (Expectation-Maximization - EM):</span>
+                                    <p class="text-slate-600 dark:text-slate-300 text-xs">خوارزمية تكرارية تتنبأ بالقيمة المفقودة بناءً على مصفوفة الارتباط للمتغيرات المتاحة.</p>
+                                </div>
+
+                                <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 space-y-1">
+                                    <span class="font-bold text-sky-600 dark:text-sky-400">3. التعويض المتقدم عبر النمذجة (Multiple Imputation):</span>
+                                    <p class="text-slate-600 dark:text-slate-300 text-xs">يولد خوارزميات محاكاة متعددة (سلاسل ماركوف Markov Chains) لتوليد قيم بديلة متكررة تتفادى تحيز التباين.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Part C: Procedural SPSS Pathways -->
+                <div class="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-700">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">
+                        ج. التطبيق الإجرائي في بيئة IBM SPSS 25
+                    </h3>
+
+                    <div class="space-y-3">
+                        <!-- Step 1 Card -->
+                        <div class="p-4 rounded-xl bg-sky-50/60 dark:bg-slate-900/80 border border-sky-200 dark:border-sky-900/50 space-y-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">1</span>
+                                <h4 class="font-bold text-sm text-slate-900 dark:text-white">لمعاينة حجم المفقود ونسبته في العينة:</h4>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold">
+                                <span class="spss-badge"><i class="fa-solid fa-chart-pie"></i> Analyze</span>
+                                <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                <span class="spss-badge">Descriptive Statistics</span>
+                                <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                <span class="spss-badge dark:bg-sky-500">Frequencies</span>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-300">
+                                نقوم بنقل المتغير (مثل <code class="px-1 bg-slate-200 dark:bg-slate-700 rounded text-sky-700 dark:text-sky-300 font-mono">[Company_Size]</code>) وتفعيل خيار <code class="px-1 bg-slate-200 dark:bg-slate-700 rounded">Display frequency tables</code>. من جدول المخرجات نقرأ السطر <span class="font-bold text-rose-600">Missing</span> لمعرفة عدد الخلايا الفارغة.
+                            </p>
+                        </div>
+
+                        <!-- Step 2 Card -->
+                        <div class="p-4 rounded-xl bg-sky-50/60 dark:bg-slate-900/80 border border-sky-200 dark:border-sky-900/50 space-y-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">2</span>
+                                <h4 class="font-bold text-sm text-slate-900 dark:text-white">لتطبيق التعويض بالمتوسط الحسابي (Series Mean):</h4>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold">
+                                <span class="spss-badge"><i class="fa-solid fa-wand-magic-sparkles"></i> Transform</span>
+                                <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                <span class="spss-badge bg-sky-600 text-white dark:bg-sky-500">Replace Missing Values</span>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-300">
+                                نقوم بنقل المتغير واختيار الطريقة كـ <code class="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-700 rounded font-mono text-sky-700 dark:text-sky-300">Series mean</code> ليقوم البرنامج بتوليد متغير جديد معوض بالكامل، مثال: <code class="font-mono text-sky-600 dark:text-sky-400 font-bold">(Monthly_Income_1 = SMEAN(Monthly_Income))</code>.
+                            </p>
+                        </div>
+
+                        <!-- Step 3 Card -->
+                        <div class="p-4 rounded-xl bg-sky-50/60 dark:bg-slate-900/80 border border-sky-200 dark:border-sky-900/50 space-y-2">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs font-bold flex items-center justify-center">3</span>
+                                <h4 class="font-bold text-sm text-slate-900 dark:text-white">لتطبيق التعويض المتقدم (Multiple Imputation):</h4>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-1.5 text-xs sm:text-sm font-semibold">
+                                <span class="spss-badge"><i class="fa-solid fa-diagram-project"></i> Analyze</span>
+                                <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                <span class="spss-badge">Multiple Imputation</span>
+                                <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                <span class="spss-badge bg-sky-600 text-white dark:bg-sky-500">Impute Missing Data Values</span>
+                            </div>
+                            
+                            <!-- Key Rule Badge -->
+                            <div class="p-3 bg-sky-100/70 dark:bg-sky-950/80 rounded-lg text-sky-900 dark:text-sky-200 text-xs font-bold flex items-center gap-2 border border-sky-300 dark:border-sky-800">
+                                <i class="fa-solid fa-key text-sky-600 dark:text-sky-400 text-base"></i>
+                                <span>قاعدة حاسمة: يجب إدخال متغيرين على الأقل في خانة Variables in Model لكي يتمكن SPSS من بناء نموذج التنبؤ واستخلاص مصفوفة الارتباط والقيود المنهجية (Constraints).</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MODULE 2: OUTLIERS -->
+        <section id="mod-2" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">02</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">المحور الثاني: هندسة القيم الشاذة والمتطرفة (Outliers)</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold">Theoretical Roots, Detection & Decision Matrix</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-2', 'icon-mod-2')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-2" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+
+            <div id="content-mod-2" class="p-5 sm:p-6 space-y-6">
+                
+                <!-- Theoretical Impact -->
+                <div class="space-y-3">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">
+                        أ. الجذور النظرية والأثر الإحصائي للقيم الشاذة
+                    </h3>
+                    <p class="text-sm leading-relaxed">
+                        القيم الشاذة هي المشاهدات التي تبتعد بمسافة تباينية هائلة عن مركز توزيع البيانات. وجود قيمة واحدة شاذة كفيل بنقل المتوسط الحسابي بعيداً عن حقيقة العينة، كما أنها ترفع الانحراف المعياري وتجعل التوزيع ملتوياً (Skewed)، مما ينتهك شرط الاعتدالية (Normality Assumption) الأساسي للاختبارات المعلمية.
+                    </p>
+                </div>
+
+                <!-- Detection Methods Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-slate-200 dark:border-slate-700">
+                    
+                    <!-- Method 1: Boxplot -->
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-chart-column text-sky-500"></i> 1. الكشف البياني (Boxplot)
+                            </h4>
+                            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-200">مخطط الصندوق</span>
+                        </div>
+
+                        <div class="space-y-2 text-xs">
+                            <p class="text-slate-600 dark:text-slate-300">
+                                يُسحب المتغير الكمي (مثل <code class="text-sky-600 font-mono">[Deposit_Amount]</code>) إلى المحور العمودي.
+                            </p>
+                            
+                            <div class="p-2.5 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1.5">
+                                <div class="font-bold text-slate-800 dark:text-slate-200">المسار البرمجي في SPSS:</div>
+                                <div class="flex flex-wrap items-center gap-1 text-[11px]">
+                                    <span class="spss-badge">Graphs</span>
+                                    <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                    <span class="spss-badge">Chart Builder</span>
+                                    <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                    <span class="spss-badge">Simple Boxplot</span>
+                                </div>
+                            </div>
+
+                            <div class="p-2.5 bg-amber-50/80 dark:bg-amber-950/40 rounded border border-amber-200 dark:border-amber-900/50 space-y-1">
+                                <div class="font-bold text-amber-900 dark:text-amber-300">قواعد القراءة في الشاشة:</div>
+                                <ul class="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300">
+                                    <li>الرمز <code class="font-bold text-rose-600">(o)</code>: يعبر عن قيم خارجة عن الحدود الطبيعية لشاربي الصندوق (Whiskers).</li>
+                                    <li>الرمز <code class="font-bold text-rose-600">(*)</code>: يعبر عن قيم متطرفة جداً متباعدة للغاية.</li>
+                                    <li>يُكتب رقم السطر بجوار الرمز مباشرةً لتسهيل العودة للمستجيب.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Method 2: Z-Score -->
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                                <i class="fa-solid fa-sliders text-sky-500"></i> 2. الكشف الإحصائي (Z-Scores)
+                            </h4>
+                            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-200">الدرجات المعيارية</span>
+                        </div>
+
+                        <div class="space-y-2 text-xs">
+                            <p class="text-slate-600 dark:text-slate-300">
+                                يتم تحويل القيم الخام إلى قيم معيارية تتبع التوزيع الطبيعي القياسي (متوسط 0 وانحراف معياري 1).
+                            </p>
+
+                            <!-- Formula Block -->
+                            <div class="math-block p-2.5 rounded-lg text-center font-mono text-xs sm:text-sm font-bold text-slate-800 dark:text-slate-200">
+                                $$ Z = \frac{X - \mu}{\sigma} $$
+                            </div>
+
+                            <div class="p-2.5 rounded bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 space-y-1">
+                                <div class="font-bold text-slate-800 dark:text-slate-200">المسار البرمجي في SPSS:</div>
+                                <div class="flex flex-wrap items-center gap-1 text-[11px]">
+                                    <span class="spss-badge">Analyze</span>
+                                    <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                    <span class="spss-badge">Descriptive Statistics</span>
+                                    <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                    <span class="spss-badge">Descriptives</span>
+                                </div>
+                                <div class="mt-1 text-slate-600 dark:text-slate-300 font-semibold text-[11px]">
+                                    <i class="fa-solid fa-square-check text-emerald-500 ml-1"></i>الخطوة المفتاحية: تفعيل خيار <span class="underline underline-offset-2">Save standardized values as variables</span>.
+                                </div>
+                            </div>
+
+                            <div class="p-2 bg-rose-50 dark:bg-rose-950/40 rounded border border-rose-200 dark:border-rose-900/50 text-rose-900 dark:text-rose-200 font-bold text-[11px]">
+                                <i class="fa-solid fa-scale-balanced ml-1"></i> قاعدة القرار: أي حالة تتجاوز قيمتها المطلقة 3 (أي $|Z| > 3$) تعتبر شاذة رسمياً وتتطلب معالجة منهجية.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Strategic Decision Matrix -->
+                <div class="p-4 rounded-xl bg-slate-900 text-white border border-slate-700 space-y-3 shadow-md">
+                    <h4 class="font-bold text-amber-400 flex items-center gap-2 text-sm sm:text-base">
+                        <i class="fa-solid fa-sitemap"></i> ب. اتخاذ القرار الاستراتيجي بشأن القيم الشاذة
+                    </h4>
+                    <p class="text-xs sm:text-sm text-slate-300">
+                        لا يجوز للطالب حذف القيمة الشاذة فوراً وبشكل عشوائي! يُتبع المخطط التالي:
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs pt-1">
+                        <div class="p-3 rounded-lg bg-white/10 backdrop-blur border border-white/10 space-y-1">
+                            <span class="font-bold text-amber-300 block">1. خطأ إدخال (Data Entry Error)</span>
+                            <p class="text-slate-200">مثل كتابة العمر 250 بدلاً من 25. التصرف: تُصحح فوراً بالرجوع للاستبيان الأصلي أو استبعادها.</p>
+                        </div>
+                        <div class="p-3 rounded-lg bg-white/10 backdrop-blur border border-white/10 space-y-1">
+                            <span class="font-bold text-sky-300 block">2. قيمة صحيحة واقعياً (Genuine Outlier)</span>
+                            <p class="text-slate-200">تعكس واقع العينة. التصرف: تلطيف البيانات عبر تحويل اللوغاريتم <code class="font-mono text-sky-200">Log10</code> أو الانتقال للاختبارات اللامعلمية.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MODULE 3: MERGING FILES -->
+        <section id="mod-3" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">03</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">المحور الثالث: دمج الملفات وإعادة الهيكلة المتقدمة (Merging Files)</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold">Vertical Merging (Cases) vs Horizontal Merging (Variables)</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-3', 'icon-mod-3')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-3" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+
+            <div id="content-mod-3" class="p-5 sm:p-6 space-y-4">
+                <p class="text-sm leading-relaxed">
+                    في البحوث المشتركة أو دراسات المقارنة والبيانات الطولية (Longitudinal Data)، يتطلب العمل دمج قواعد بيانات متعددة بأسلوب علمي رصين:
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    <!-- Vertical Merging -->
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2 text-sm sm:text-base">
+                                <i class="fa-solid fa-arrows-up-down text-sky-500"></i> أ. الدمج العمودي (Add Cases)
+                            </h3>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300">إضافة حالات</span>
+                        </div>
+
+                        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            <strong>المفهوم:</strong> دمج ملفين منفصلين لهما نفس المتغيرات تماماً (نفس الأعمدة) ولكن لعينات مختلفة (أشخاص مختلفون أو شركات مختلفة).
+                        </p>
+
+                        <div class="p-2.5 rounded bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/50 text-xs space-y-1">
+                            <span class="font-bold text-amber-900 dark:text-amber-300">الشروط البيداغوجية:</span>
+                            <p class="text-amber-800 dark:text-amber-200">يجب أن تتطابق أسماء المتغيرات وأنواعها (Numeric, String) في الملفين لتلتحم تلقائياً.</p>
+                        </div>
+
+                        <div class="pt-1">
+                            <span class="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1">المسار البرمجي:</span>
+                            <div class="flex flex-wrap items-center gap-1 text-[11px]">
+                                <span class="spss-badge">Data</span>
+                                <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                <span class="spss-badge">Merge Files</span>
+                                <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                <span class="spss-badge bg-sky-600 text-white">Add Cases</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Horizontal Merging -->
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-bold text-slate-900 dark:text-white flex items-center gap-2 text-sm sm:text-base">
+                                <i class="fa-solid fa-arrows-left-right text-sky-500"></i> ب. الدمج الأفقي (Add Variables)
+                            </h3>
+                            <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300">إضافة متغيرات</span>
+                        </div>
+
+                        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            <strong>المفهوم:</strong> دمج ملفين لنفس العينة تماماً (نفس الأشخاص) ولكن بمتغيرات جديدة (أعمدة جديدة، مثل دمج استبيان الرضا مع القوائم المالية لنفس الشركات).
+                        </p>
+
+                        <div class="p-2.5 rounded bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-900/50 text-xs space-y-1">
+                            <span class="font-bold text-sky-900 dark:text-sky-300">الشرط الحاسم:</span>
+                            <p class="text-sky-800 dark:text-sky-200">وجود متغير معرف فريد ومطابق (<code class="font-mono bg-sky-100 dark:bg-sky-900 px-1 rounded">Key Variable</code>) مثل "رقم الشركة ID" لربط الأسطر ببعضها.</p>
+                        </div>
+
+                        <div class="pt-1">
+                            <span class="text-[11px] font-bold text-slate-700 dark:text-slate-300 block mb-1">المسار البرمجي:</span>
+                            <div class="flex flex-wrap items-center gap-1 text-[11px]">
+                                <span class="spss-badge">Data</span>
+                                <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                <span class="spss-badge">Merge Files</span>
+                                <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                <span class="spss-badge bg-sky-600 text-white">Add Variables</span>
+                            </div>
+                            <span class="inline-block mt-1 text-[10px] font-semibold text-sky-700 dark:text-sky-300">تفعيل خيار: Match cases on key variables</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 4: DATA TRANSFORMATION -->
+        <section id="mod-4" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">04</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">المحور الرابع: التلاعب الإحصائي وتحويل المتغيرات (Data Transformation)</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold">Smart Recoding & Latent Scale Synthesis</span>
+                    </div>
+                </div>
+                <button onclick="toggleAccordion('content-mod-4', 'icon-mod-4')" class="text-slate-400 hover:text-sky-600 transition">
+                    <i id="icon-mod-4" class="fa-solid fa-chevron-up text-lg"></i>
+                </button>
+            </div>
+
+            <div id="content-mod-4" class="p-5 sm:p-6 space-y-6">
+                
+                <!-- Smart Recoding -->
+                <div class="space-y-3">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">
+                        أ. إعادة الترميز الذكي (Recoding)
+                    </h3>
+                    <p class="text-sm leading-relaxed">
+                        تحويل المتغيرات من كمية مستمرة إلى فئات رتبية (مثل تحويل السن بـ السنين إلى فئات: شباب، كهول، شيوخ).
+                    </p>
+
+                    <!-- Golden Rule Box -->
+                    <div class="p-4 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50 flex items-start gap-3">
+                        <i class="fa-solid fa-crown text-amber-500 text-xl mt-1"></i>
+                        <div class="space-y-1 text-xs sm:text-sm">
+                            <span class="font-bold text-rose-900 dark:text-rose-200">القاعدة الذهبية بيداغوجياً:</span>
+                            <p class="text-rose-800 dark:text-rose-300">
+                                يُمنع منعاً باتاً استخدام خيار <code class="bg-rose-200 dark:bg-rose-900 px-1 rounded font-bold">Into Same Variables</code> لأنه يسحق ويطمس البيانات الخام الأصلية. نلزم الطلبة دائماً برباط المسار:
+                            </p>
+                            <div class="flex flex-wrap items-center gap-1 pt-1 font-semibold">
+                                <span class="spss-badge">Transform</span>
+                                <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                <span class="spss-badge">Recode into Different Variables</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scale Synthesis -->
+                <div class="space-y-3 pt-2 border-t border-slate-200 dark:border-slate-700">
+                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white border-r-4 border-sky-500 pr-3">
+                        ب. توليف المحاور وتجميع استبيانات ليكرت (Compute Variable)
+                    </h3>
+                    <p class="text-sm leading-relaxed">
+                        عند استخدام استبيان ليكرت (Likert Scale)، يتم توليف أسئلة المحور لحساب المتغير الكامن المعتمد في نموذج الانحدار.
+                    </p>
+
+                    <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">المسار الإجرائي:</span>
+                            <div class="flex items-center gap-1 text-xs">
+                                <span class="spss-badge">Transform</span>
+                                <span class="arrow-sep"><i class="fa-solid fa-chevron-left"></i></span>
+                                <span class="spss-badge bg-sky-600 text-white">Compute Variable</span>
+                            </div>
+                        </div>
+
+                        <!-- Professional Formula Box -->
+                        <div class="p-3 bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 space-y-2">
+                            <div class="text-xs font-bold text-sky-700 dark:text-sky-300">المعادلة البرمجية الاحترافية (Conditional Mean Function):</div>
+                            <div class="font-mono text-xs sm:text-sm bg-slate-900 text-sky-300 p-3 rounded-lg dir-ltr text-left overflow-x-auto">
+                                Target Variable: Service_Quality<br>
+                                Numeric Expression: MEAN.3(Q1, Q2, Q3, Q4)
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                <i class="fa-solid fa-lightbulb text-sky-500 ml-1"></i>
+                                الشرح: نستخدم دالة المتوسط المشروط بعدد إجابات أدنى (مثل <code class="font-mono font-bold text-sky-600 dark:text-sky-400">MEAN.3</code>) لضمان الحساب العادل والدقيق للمحور حتى في حال وجود فجوات مفقودة طفيفة دون إلغاء المبحوث.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MODULE 5: APPLIED CASE STUDY -->
+        <section id="mod-case" class="module-card bg-slate-900 text-white rounded-2xl border border-slate-700 shadow-md overflow-hidden">
+            <div class="p-5 sm:p-6 border-b border-slate-700/80 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-white/10 text-sky-200 flex items-center justify-center text-sm"><i class="fa-solid fa-briefcase"></i></span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-white">دراسة حالة تطبيقية مدمجة (Case Study)</h2>
+                        <span class="text-xs text-amber-400 font-medium">سيناريو بحثي واقعي لخريطة الطريق الإحصائية</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-5 sm:p-6 space-y-6">
+                
+                <!-- Scenario Box -->
+                <div class="p-4 rounded-xl bg-white/5 border border-white/10 space-y-2 text-sm">
+                    <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-400/20 text-amber-300 border border-amber-400/30">السيناريو البحثي التطبيقي</span>
+                    <p class="text-slate-200 leading-relaxed">
+                        باحث يدرس أثر <strong>جودة الخدمة</strong> على <strong>رضا الزبائن</strong> في <strong>4 وكالات بنكية جزائرية</strong> من خلال عينة من <strong>200 زبون</strong>. أثناء تفحص البيانات، وجد أن متغير <code class="text-sky-300 font-mono">[الدخل الشهري Monthly_Income]</code> يحتوي على قيم مفقودة عند 14 زبوناً (أغلبهم من ذوي الدخل المرتفع)، وأن الزبون <strong>رقم 87</strong> سجّل متوسط إيداع شهري <code class="text-amber-300 font-mono">[Deposit_Amount]</code> قدره 46,000 دج، وهو مرتفع جداً مقارنة بمتوسط العينة (حوالي 17,900 دج). كما أن 12 زبوناً تركوا عبارة أو عبارتين دون إجابة في محور جودة الخدمة (<bdi dir="ltr" class="font-mono text-sky-300">Q1 – Q4</bdi>).
+                    </p>
+                    <div class="text-xs font-bold text-amber-300 pt-1">
+                        المطلوب من الطالب: تحميل ملف البيانات، فحص المفقود وتعويضه، استخراج الدرجة المعيارية للزبون 87 للحكم على شذوذه، ثم بناء محور جودة الخدمة وتجهيز الملف للتحليل النهائي.
+                    </div>
+                    <a id="dataset-download" href="Bank_Customer_Satisfaction.xlsx" download="Bank_Customer_Satisfaction.xlsx" class="inline-flex items-center gap-2 mt-2 px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-bold shadow transition">
+                        <i class="fa-solid fa-file-excel"></i>
+                        <span>تحميل ملف البيانات (Excel)</span>
+                    </a>
+                    <p class="text-[11px] text-slate-400 pt-1"><i class="fa-solid fa-circle-info ml-1"></i>يُحمَّل الملف مباشرة من هذا الموقع، دون الحاجة إلى تسجيل الدخول.</p>
+                </div>
+
+                <!-- Interactive Roadmap Steps -->
+                <div class="space-y-3">
+                    <h4 class="font-bold text-sm text-sky-400 flex items-center gap-2">
+                        <i class="fa-solid fa-map-location-dot"></i> محاكاة حل دراسة الحالة (تفاعلي):
+                    </h4>
+
+                    <!-- Step Buttons -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-bold">
+                        <button onclick="showCaseStep(1)" id="case-btn-1" class="case-step-btn px-3 py-2 rounded-lg bg-sky-600 text-white shadow transition">الخطوة 1: الاستيراد</button>
+                        <button onclick="showCaseStep(2)" id="case-btn-2" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 2: إعداد المتغيرات</button>
+                        <button onclick="showCaseStep(3)" id="case-btn-3" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 3: فحص المفقود</button>
+                        <button onclick="showCaseStep(4)" id="case-btn-4" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 4: نمط الغياب</button>
+                        <button onclick="showCaseStep(5)" id="case-btn-5" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 5: التعويض</button>
+                        <button onclick="showCaseStep(6)" id="case-btn-6" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 6: كشف الشاذ</button>
+                        <button onclick="showCaseStep(7)" id="case-btn-7" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 7: معالجة الزبون 87</button>
+                        <button onclick="showCaseStep(8)" id="case-btn-8" class="case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition">الخطوة 8: الثبات والمحور</button>
+                    </div>
+
+                    <!-- Dynamic Case Step Content -->
+                    <div id="case-step-content" class="p-4 rounded-xl bg-slate-900/90 border border-slate-700 min-h-[220px] text-xs sm:text-sm space-y-2">
+                <div class="space-y-2">
+                    <div class="text-white font-bold text-sm">الخطوة 1: استيراد ملف Excel إلى SPSS 25</div>
+                    <div class="inline-block px-2.5 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700 font-mono text-xs">
+                        <i class="fa-solid fa-code ml-1"></i> File -&gt; Import Data -&gt; Excel
+                    </div>
+                    <div dir="ltr" class="p-2 rounded bg-black/40 font-mono text-slate-200 text-xs text-left border border-white/5 whitespace-pre-wrap overflow-x-auto">GET DATA /TYPE=XLSX
+  /FILE='Bank_Customer_Satisfaction.xlsx'
+  /SHEET=name 'Data' /CELLRANGE=FULL /READNAMES=ON.
+EXECUTE.</div>
+                    <p class="text-slate-300 text-xs leading-relaxed pt-1">
+                        في نافذة الاستيراد اختر الورقة Data، وتأكد من تفعيل الخيار Read variable names from the first row of data حتى تُقرأ أسماء المتغيرات من السطر الأول. الورقة الثانية Codebook للقراءة فقط ولا تُستورد.
+                    </p>
+                    <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-100 text-xs leading-relaxed">
+                        <i class="fa-solid fa-circle-check text-emerald-400 ml-1"></i><strong class="text-emerald-300">النتيجة المتوقعة: </strong>يظهر في Data View ملف من <bdi dir="ltr" class="font-mono">200</bdi> سطر و<bdi dir="ltr" class="font-mono">11</bdi> متغيراً، والخلايا الفارغة تظهر كنقطة (.) أي قيمة مفقودة نظامية System Missing.
+                    </div>
+                </div>
+            </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MODULE 6: INTERACTIVE TOOLS & QUIZ -->
+        <section id="mod-quiz" class="module-card bg-white dark:bg-slate-800/90 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm overflow-hidden transition">
+            <div class="p-5 sm:p-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-bold text-sm">05</span>
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">المحور الخامس: دليل القوائم السريع واختبار التقييم الذاتي</h2>
+                        <span class="text-xs text-sky-600 dark:text-sky-400 font-semibold">Quick Menu Finder & Self-Assessment Quiz</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-5 sm:p-6 space-y-8">
+                
+                <!-- Quick SPSS Menu Lookup -->
+                <div class="space-y-3">
+                    <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-sky-500"></i> دليل اختصارات مسارات SPSS 25:
+                    </h3>
+
+                    <div class="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+                        <table class="w-full text-xs text-right">
+                            <thead class="bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700">
+                                <tr>
+                                    <th class="p-3">الإجراء الإحصائي</th>
+                                    <th class="p-3">المسار في برنامج SPSS 25</th>
+                                    <th class="p-3">الهدف المنهجي</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-700">
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">فحص التكرارات والمفقود</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400">Analyze -> Descriptive Statistics -> Frequencies</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">معرفة نسبة الخلايا الفارغة</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">تعويض بالمتوسط الحسابي</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400">Transform -> Replace Missing Values</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">استبدال المفقود بـ Series Mean</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">حساب الدرجات المعيارية Z</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400">Analyze -> Descriptive Statistics -> Descriptives</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">حفظ Z-Scores للكشف عن القيم > 3</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">مخطط الصندوق Boxplot</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400">Graphs -> Chart Builder -> Boxplot</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">كشف القيم الشاذة المتطرفة بيانيا</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">الدمج الأفقي للملفات</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400">Data -> Merge Files -> Add Variables</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">إضافة أبعاد جديدة باستخدام ID</td>
+                                </tr>
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/40">
+                                    <td class="p-3 font-bold text-slate-900 dark:text-white">توليف الاستبيان المشروط</td>
+                                    <td class="p-3 font-mono text-sky-600 dark:text-sky-400">Transform -> Compute Variable</td>
+                                    <td class="p-3 text-slate-500 dark:text-slate-400">حساب دالة MEAN.3 للمحاور</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Self Assessment Quiz Engine -->
+                <div class="space-y-4 pt-4 border-t border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                            <i class="fa-solid fa-circle-question text-sky-500"></i> اختبار التقييم الذاتي (5 أسئلة):
+                        </h3>
+                        <span id="quiz-score-badge" class="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200">
+                            النتيجة: 0 / 5
+                        </span>
+                    </div>
+
+                    <!-- Quiz Container -->
+                    <div id="quiz-container" class="space-y-4">
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                        <span>ما هو النمط الإحصائي للقيم المفقودة الذي يعتمد فيه غياب القيمة على متغير آخر ملحوظ كالجنس؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(1, 0)" id="q-1-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                MCAR: Missing Completely At Random (مفقود عشوائي تماماً)
+                            </button>
+                        
+                            <button onclick="answerQuiz(1, 1)" id="q-1-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                MAR: Missing At Random (مفقود عشوائي)
+                            </button>
+                        
+                            <button onclick="answerQuiz(1, 2)" id="q-1-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                MNAR: Missing Not At Random (مفقود غير عشوائي)
+                            </button>
+                        
+                            <button onclick="answerQuiz(1, 3)" id="q-1-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                Listwise
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-1-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                        <span>وفقاً للقاعدة الإحصائية، تعتبر الحالة قيمة شاذة متطرفة رسمياً إذا تجاوزت الدرجة المعيارية Z القياسية الحد المطلق:</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(2, 0)" id="q-2-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                |Z| &gt; 1.5
+                            </button>
+                        
+                            <button onclick="answerQuiz(2, 1)" id="q-2-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                |Z| &gt; 2.0
+                            </button>
+                        
+                            <button onclick="answerQuiz(2, 2)" id="q-2-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                |Z| &gt; 3.0
+                            </button>
+                        
+                            <button onclick="answerQuiz(2, 3)" id="q-2-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                |Z| &gt; 5.0
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-2-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                        <span>لماذا يحظر منهجياً استخدام خيار Recode into Same Variables عند إعادة الترميز؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(3, 0)" id="q-3-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لأنه يرفع خطأ المعاينة
+                            </button>
+                        
+                            <button onclick="answerQuiz(3, 1)" id="q-3-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لأنه يسحق البيانات الخام الأصلية ويستبدلها
+                            </button>
+                        
+                            <button onclick="answerQuiz(3, 2)" id="q-3-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لأنه يتطلب حاسوباً فائقا
+                            </button>
+                        
+                            <button onclick="answerQuiz(3, 3)" id="q-3-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                لأنه يحذف الحالات المفقودة
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-3-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                        <span>ما هو الشرط الحاسِم للدمج الأفقي للملفات (Add Variables) لربط المتغيرات الجديدة بالحالات الصحيحة؟</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(4, 0)" id="q-4-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                تطابق عدد الأعمدة
+                            </button>
+                        
+                            <button onclick="answerQuiz(4, 1)" id="q-4-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                وجود متغير معرف فريد ومطابق Key Variable
+                            </button>
+                        
+                            <button onclick="answerQuiz(4, 2)" id="q-4-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                أن تكون البيانات نصية String
+                            </button>
+                        
+                            <button onclick="answerQuiz(4, 3)" id="q-4-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                حذف كافة القيم المفقودة أوالا
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-4-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">5</span>
+                        <span>تضمن الدالة MEAN.3(Q1, Q2, Q3, Q4) حُسباناً عادلاً للمحور بشرط:</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        
+                            <button onclick="answerQuiz(5, 0)" id="q-5-opt-0" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                الإجابة عن الأسئلة الأربعة بالكامل
+                            </button>
+                        
+                            <button onclick="answerQuiz(5, 1)" id="q-5-opt-1" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                وجود 3 إجابات صالحة على الأقل للمبحوث
+                            </button>
+                        
+                            <button onclick="answerQuiz(5, 2)" id="q-5-opt-2" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                ألا تزيد الدرجة عن 3
+                            </button>
+                        
+                            <button onclick="answerQuiz(5, 3)" id="q-5-opt-3" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                أن تكون الإجابة بنعم أو لا
+                            </button>
+                        
+                    </div>
+
+                    <div id="q-5-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FLOATING SCROLL TO TOP & BOTTOM MOBILE BAR -->
+    <div class="fixed bottom-5 left-5 z-40 flex flex-col gap-2">
+        <button id="btn-back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="w-11 h-11 rounded-full bg-sky-600 text-white shadow-lg flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 hover:bg-sky-700 hover:scale-110">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="mt-12 bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 text-center space-y-3">
+            <div class="flex items-start justify-center gap-2 text-white text-sm">
+                <i class="fa-solid fa-graduation-cap text-sky-400 mt-1"></i>
+                <div class="space-y-0.5">
+                    <span class="block font-bold">جامعة عبد الحميد مهري قسنطينة 2، كلية العلوم الاقتصادية، التجارية وعلوم التسيير</span>
+                    <span class="block text-slate-300 font-semibold">قسم علوم التسيير</span>
+                </div>
+            </div>
+            <p class="max-w-2xl mx-auto text-slate-400 leading-relaxed">
+                مصممة خصيصاً لطلبة دراسات الماستر والباحثين للأغراض الأكاديمية والتدريبية على بيئة IBM SPSS 25.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-6 text-sm text-slate-300 pt-1">
+                <span><i class="fa-solid fa-user-tie text-sky-400 ml-1.5"></i>تقديم و إعداد: <strong class="text-white">د. بوصفصاف فريد</strong></span>
+                <span><i class="fa-solid fa-robot text-sky-400 ml-1.5"></i>التصميم على الويب: <strong class="text-white">الذكاء الاصطناعي</strong></span>
+            </div>
+            <div class="text-[11px] text-slate-500 pt-2">
+                &copy; 2026 - 2027 • فلسفة تطهير البيانات وتصميم الصفحة التعليمية التفاعلية.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MATHJAX JS FOR LATEX RENDERING -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- INTERACTIVE SCRIPT LOGIC -->
+    <script>
+        // State variables
+        let currentFontScale = 100;
+        let quizAnswers = {};
+
+        // Case Study Step Data
+        const caseSteps = {
+            "1": {
+                "title": "الخطوة 1: استيراد ملف Excel إلى SPSS 25",
+                "path": "File -> Import Data -> Excel",
+                "code": "GET DATA /TYPE=XLSX\n  /FILE='Bank_Customer_Satisfaction.xlsx'\n  /SHEET=name 'Data' /CELLRANGE=FULL /READNAMES=ON.\nEXECUTE.",
+                "desc": "في نافذة الاستيراد اختر الورقة Data، وتأكد من تفعيل الخيار Read variable names from the first row of data حتى تُقرأ أسماء المتغيرات من السطر الأول. الورقة الثانية Codebook للقراءة فقط ولا تُستورد.",
+                "expected": "يظهر في Data View ملف من <bdi dir='ltr' class='font-mono'>200</bdi> سطر و<bdi dir='ltr' class='font-mono'>11</bdi> متغيراً، والخلايا الفارغة تظهر كنقطة (.) أي قيمة مفقودة نظامية System Missing."
+            },
+            "2": {
+                "title": "الخطوة 2: إعداد المتغيرات في Variable View",
+                "path": "Variable View -> Values / Measure",
+                "code": "VALUE LABELS Gender 1 'ذكر' 2 'أنثى'\n  /Agency 1 'الوكالة 1' 2 'الوكالة 2' 3 'الوكالة 3' 4 'الوكالة 4'.\nVARIABLE LEVEL Gender Agency (NOMINAL)\n  /Q1 Q2 Q3 Q4 Satisfaction (ORDINAL)\n  /Age Monthly_Income Deposit_Amount (SCALE).\nFREQUENCIES VARIABLES=Gender.",
+                "desc": "نضيف التسميات Value Labels للمتغيرين الاسميين (الجنس والوكالة)، ونضبط مستوى القياس Measure لكل متغير. عبارات ليكرت ترتيبية، أما المحور الذي سنبنيه منها لاحقاً فيُعامل كمتغير كمي.",
+                "expected": "يُظهر جدول تكرارات الجنس <bdi dir='ltr' class='font-mono'>107</bdi> ذكور و<bdi dir='ltr' class='font-mono'>93</bdi> إناث، بمجموع <bdi dir='ltr' class='font-mono'>200</bdi> دون قيم مفقودة."
+            },
+            "3": {
+                "title": "الخطوة 3: فحص نسبة البيانات المفقودة",
+                "path": "Analyze -> Descriptive Statistics -> Frequencies",
+                "code": "FREQUENCIES VARIABLES=Monthly_Income\n  /FORMAT=NOTABLE /STATISTICS=MEAN STDDEV.",
+                "desc": "نلغي عرض جدول التكرارات الطويل (Display frequency tables) ونطلب المتوسط والانحراف المعياري من زر Statistics، فنحصل على جدول ملخص يبيّن عدد القيم الصالحة والمفقودة.",
+                "expected": "Valid = <bdi dir='ltr' class='font-mono'>186</bdi> و Missing = <bdi dir='ltr' class='font-mono'>14</bdi>، أي <bdi dir='ltr' class='font-mono'>7%</bdi> من العينة. المتوسط = <bdi dir='ltr' class='font-mono'>68,276.88</bdi> دج والانحراف المعياري = <bdi dir='ltr' class='font-mono'>25,196.04</bdi> دج. النسبة أقل من 10%، فالتعويض مقبول."
+            },
+            "4": {
+                "title": "الخطوة 4: تشخيص نمط الغياب (MCAR أم MAR أم MNAR؟)",
+                "path": "Transform -> Compute Variable ثم Analyze -> Compare Means -> Independent-Samples T Test",
+                "code": "COMPUTE Inc_Miss = MISSING(Monthly_Income).\nEXECUTE.\nT-TEST GROUPS=Inc_Miss(1 0) /VARIABLES=Deposit_Amount.",
+                "desc": "ننشئ متغيراً مؤشراً يأخذ 1 إذا كان الدخل مفقوداً و0 إذا كان موجوداً، ثم نقارن مبلغ الإيداع بين المجموعتين. الفرق غير الدال يعني أن الغياب لا يرتبط بمتغير الإيداع الملاحظ، لكنه لا ينفي نمط MNAR، لأن هذا النمط يتعلق بقيمة الدخل نفسها وهي غير ملاحظة ولا يمكن اختبارها من البيانات. يُستدل عليه من حساسية السؤال، ويُذكر في المذكرة كحد من حدود الدراسة.",
+                "expected": "متوسط الإيداع = <bdi dir='ltr' class='font-mono'>20,764.29</bdi> دج عند مفقودي الدخل مقابل <bdi dir='ltr' class='font-mono'>17,655.38</bdi> دج عند الباقين. اختبار Levene: <bdi dir='ltr' class='font-mono'>F = 0.284, p = 0.595</bdi>، فنقرأ سطر تساوي التباينات: <bdi dir='ltr' class='font-mono'>t(198) = 1.442, p = 0.151</bdi>، أي فرق غير دال."
+            },
+            "5": {
+                "title": "الخطوة 5: التعويض بالمتوسط الحسابي",
+                "path": "Transform -> Replace Missing Values",
+                "code": "RMV /Monthly_Income_1=SMEAN(Monthly_Income).\nDESCRIPTIVES VARIABLES=Monthly_Income Monthly_Income_1.",
+                "desc": "يُنشئ البرنامج متغيراً جديداً Monthly_Income_1 عُوّضت فيه القيم المفقودة بالمتوسط، ويبقى المتغير الأصلي دون تغيير. لاحظ أن الانحراف المعياري ينخفض، وهذا هو ثمن التعويض بالمتوسط. ومع احتمال نمط MNAR تبقى طريقة EM أدق إن كانت وحدة Missing Values متاحة في رخصة SPSS.",
+                "expected": "Monthly_Income_1: <bdi dir='ltr' class='font-mono'>N = 200</bdi>، والمتوسط نفسه <bdi dir='ltr' class='font-mono'>68,276.88</bdi> دج، بينما ينخفض الانحراف المعياري من <bdi dir='ltr' class='font-mono'>25,196.04</bdi> إلى <bdi dir='ltr' class='font-mono'>24,293.59</bdi> دج."
+            },
+            "6": {
+                "title": "الخطوة 6: كشف القيم الشاذة بالدرجة المعيارية Z",
+                "path": "Analyze -> Descriptive Statistics -> Descriptives (Save standardized values as variables)",
+                "code": "DESCRIPTIVES VARIABLES=Deposit_Amount /SAVE.\nSORT CASES BY ZDeposit_Amount (D).",
+                "desc": "نفعّل الخيار Save standardized values as variables فيُنشئ البرنامج المتغير ZDeposit_Amount، ثم نرتّب الحالات تنازلياً لرؤية أعلى الدرجات مباشرة في Data View.",
+                "expected": "المتوسط = <bdi dir='ltr' class='font-mono'>17,873.00</bdi> دج والانحراف المعياري = <bdi dir='ltr' class='font-mono'>7,800.30</bdi> دج. الزبون 87 وحده يتجاوز الحد الحرج: <bdi dir='ltr' class='font-mono'>Z = +3.61</bdi> (إيداع <bdi dir='ltr' class='font-mono'>46,000</bdi> دج)."
+            },
+            "7": {
+                "title": "الخطوة 7: معالجة الزبون 87 (التحويل اللوغاريتمي أم التقليم؟)",
+                "path": "Transform -> Compute Variable",
+                "code": "COMPUTE Log_Deposit = LG10(Deposit_Amount).\nDESCRIPTIVES VARIABLES=Log_Deposit /SAVE.\nCOMPUTE Deposit_W = Deposit_Amount.\nIF (Customer_ID = 87) Deposit_W = 40408.\nEXECUTE.\nDESCRIPTIVES VARIABLES=Deposit_W /SAVE.",
+                "desc": "نجرّب حلين. التحويل اللوغاريتمي يضغط القيم الكبيرة لكنه يمدّ القيم الصغيرة، فيُصلح الزبون 87 ويُنشئ شذوذاً جديداً في الطرف الأدنى. أما التقليم (Winsorizing) فيستبدل قيمة الزبون 87 فقط بالحد الأقصى المقبول، أي المتوسط + 3 انحرافات معيارية محسوباً من بقية الزبائن الـ 199. لذلك نعتمد التقليم هنا، ونبرّر القرار في المذكرة.",
+                "expected": "بعد Log10 تصبح درجة الزبون 87 <bdi dir='ltr' class='font-mono'>Z = +2.22</bdi>، لكن الزبونين 65 و97 (إيداع <bdi dir='ltr' class='font-mono'>3,000</bdi> دج) يصبحان <bdi dir='ltr' class='font-mono'>Z = -3.58</bdi>. بعد التقليم إلى <bdi dir='ltr' class='font-mono'>40,408</bdi> دج تصبح أعلى درجة مطلقة <bdi dir='ltr' class='font-mono'>|Z| = 2.93</bdi>، فلا تبقى أي قيمة شاذة."
+            },
+            "8": {
+                "title": "الخطوة 8: الثبات ثم بناء محور جودة الخدمة والتحقق النهائي",
+                "path": "Analyze -> Scale -> Reliability Analysis ثم Transform -> Compute Variable",
+                "code": "RELIABILITY /VARIABLES=Q1 Q2 Q3 Q4\n  /MODEL=ALPHA /SUMMARY=TOTAL.\nCOMPUTE Service_Quality = MEAN.3(Q1, Q2, Q3, Q4).\nEXECUTE.\nDESCRIPTIVES VARIABLES=Service_Quality Monthly_Income_1 Deposit_W.",
+                "desc": "نتحقق من ثبات العبارات الأربع قبل جمعها في محور واحد. يحسب SPSS ألفا كرونباخ على الزبائن الذين أجابوا عن العبارات الأربع كلها فقط. ثم نبني المحور بالدالة MEAN.3 التي تقبل غياب عبارة واحدة على الأكثر، ونختم بجدول وصفي للمتغيرات المطهرة.",
+                "expected": "ألفا كرونباخ = <bdi dir='ltr' class='font-mono'>0.881</bdi> على <bdi dir='ltr' class='font-mono'>N = 188</bdi>، وكل قيم Cronbach's Alpha if Item Deleted أقل منها (<bdi dir='ltr' class='font-mono'>0.839 – 0.853</bdi>)، فنحتفظ بالعبارات الأربع. Service_Quality: <bdi dir='ltr' class='font-mono'>N = 197</bdi> والمتوسط = <bdi dir='ltr' class='font-mono'>3.27</bdi> والانحراف المعياري = <bdi dir='ltr' class='font-mono'>0.88</bdi>، وتبقى 3 حالات مفقودة. البيانات الآن جاهزة لاختبار أثر جودة الخدمة على الرضا."
+            }
+        };
+
+        // Quiz Questions Data
+        const quizQuestions = [
+            {
+                id: 1,
+                q: "ما هو النمط الإحصائي للقيم المفقودة الذي يعتمد فيه غياب القيمة على متغير آخر ملحوظ كالجنس؟",
+                options: ["MCAR: Missing Completely At Random (مفقود عشوائي تماماً)", "MAR: Missing At Random (مفقود عشوائي)", "MNAR: Missing Not At Random (مفقود غير عشوائي)", "Listwise"],
+                correct: 1,
+                explain: "المفقود العشوائي (MAR: Missing At Random) يكون فيه غياب القيمة مرتبطة بمتغير أخر متاح في الدراسة (مثل امتناع الإناث عن الإفصاح عن الوزن)."
+            },
+            {
+                id: 2,
+                q: "وفقاً للقاعدة الإحصائية، تعتبر الحالة قيمة شاذة متطرفة رسمياً إذا تجاوزت الدرجة المعيارية Z القياسية الحد المطلق:",
+                options: ["|Z| > 1.5", "|Z| > 2.0", "|Z| > 3.0", "|Z| > 5.0"],
+                correct: 2,
+                explain: "القيمة المطلقة للدرجة المعيارية التي تتجاوز 3 (|Z| > 3) تبعد عن مركز التوزيع بأكثر من 3 انحرافات معيارية وتعتبر شاذة."
+            },
+            {
+                id: 3,
+                q: "لماذا يحظر منهجياً استخدام خيار Recode into Same Variables عند إعادة الترميز؟",
+                options: ["لأنه يرفع خطأ المعاينة", "لأنه يسحق البيانات الخام الأصلية ويستبدلها", "لأنه يتطلب حاسوباً فائقا", "لأنه يحذف الحالات المفقودة"],
+                correct: 1,
+                explain: "خيار Into Same Variables يعيد كتابة القيمة على نفس المتغير الأصلي مما يفقد الباحث بياناته الخام إلى الأبد."
+            },
+            {
+                id: 4,
+                q: "ما هو الشرط الحاسِم للدمج الأفقي للملفات (Add Variables) لربط المتغيرات الجديدة بالحالات الصحيحة؟",
+                options: ["تطابق عدد الأعمدة", "وجود متغير معرف فريد ومطابق Key Variable", "أن تكون البيانات نصية String", "حذف كافة القيم المفقودة أوالا"],
+                correct: 1,
+                explain: "يتطلب الدمج الأفقي وجود متغير ID فريد في كلا الملفين لربط أسطر الشركات أو الأشخاص ببعضها بصورة دقيقة."
+            },
+            {
+                id: 5,
+                q: "تضمن الدالة MEAN.3(Q1, Q2, Q3, Q4) حُسباناً عادلاً للمحور بشرط:",
+                options: ["الإجابة عن الأسئلة الأربعة بالكامل", "وجود 3 إجابات صالحة على الأقل للمبحوث", "ألا تزيد الدرجة عن 3", "أن تكون الإجابة بنعم أو لا"],
+                correct: 1,
+                explain: "الدالة المشروطة MEAN.3 تحسب المتوسط فقط إذا توفرت 3 إجابات صالحة على الأقل من بين الأربعة المتوفرة."
+            }
+        ];
+
+        function safe(fn){ try { fn(); } catch (err) { console.error(err); } }
+        function initPage() {
+            safe(() => initTheme());
+            safe(() => initScrollProgress());
+            safe(() => showCaseStep(1));
+            safe(() => renderQuiz());
+
+            // Font size listeners
+            safe(() => document.getElementById('btn-font-inc').addEventListener('click', () => adjustFontSize(10)));
+            safe(() => document.getElementById('btn-font-dec').addEventListener('click', () => adjustFontSize(-10)));
+            safe(() => document.getElementById('btn-font-reset').addEventListener('click', () => resetFontSize()));
+
+            // Theme toggle listener
+            safe(() => document.getElementById('btn-theme-toggle').addEventListener('click', toggleTheme));
+
+            // Search filter listener
+            safe(() => document.getElementById('content-search').addEventListener('input', handleContentSearch));
+
+            // Expand all listener
+            safe(() => document.getElementById('btn-expand-all').addEventListener('click', toggleExpandAll));
+        }
+        if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initPage); } else { initPage(); }
+
+        // Theme management
+        function initTheme() {
+            const isDark = localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-sun';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-moon';
+            }
+        }
+
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                document.getElementById('theme-icon').className = 'fa-solid fa-moon';
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                document.getElementById('theme-icon').className = 'fa-solid fa-sun';
+            }
+        }
+
+        // Reading Progress Bar & Scroll Top Visibility
+        function initScrollProgress() {
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('progress-bar').style.width = scrolled + '%';
+
+                const btnTop = document.getElementById('btn-back-to-top');
+                if (winScroll > 300) {
+                    btnTop.classList.remove('opacity-0', 'pointer-events-none');
+                } else {
+                    btnTop.classList.add('opacity-0', 'pointer-events-none');
+                }
+            });
+        }
+
+        // Dynamic Font Sizer
+        function adjustFontSize(delta) {
+            currentFontScale = Math.min(Math.max(currentFontScale + delta, 80), 140);
+            document.getElementById('main-content-wrapper').style.fontSize = `${currentFontScale}%`;
+        }
+
+        function resetFontSize() {
+            currentFontScale = 100;
+            document.getElementById('main-content-wrapper').style.fontSize = '100%';
+        }
+
+        // Accordion Toggle Logic
+        function toggleAccordion(contentId, iconId) {
+            const content = document.getElementById(contentId);
+            const icon = document.getElementById(iconId);
+            if (!content || !icon) return;
+
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.className = 'fa-solid fa-chevron-up text-lg';
+            } else {
+                content.classList.add('hidden');
+                icon.className = 'fa-solid fa-chevron-down text-lg';
+            }
+        }
+
+        function toggleExpandAll() {
+            const allContents = document.querySelectorAll('[id^="content-"]');
+            const btn = document.getElementById('btn-expand-all');
+            const isExpanding = btn.innerText.includes('توسيع');
+
+            allContents.forEach(c => {
+                if (isExpanding) {
+                    c.classList.remove('hidden');
+                } else {
+                    c.classList.add('hidden');
+                }
+            });
+
+            btn.innerHTML = isExpanding ? 
+                '<i class="fa-solid fa-angles-up"></i><span>طي الكل</span>' : 
+                '<i class="fa-solid fa-angles-down"></i><span>توسيع الكل</span>';
+        }
+
+        // Smooth Scroll Helper
+        function scrollToModule(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                // Ensure accordion is open
+                const content = el.querySelector('[id^="content-"]');
+                if (content && content.classList.contains('hidden')) {
+                    content.classList.remove('hidden');
+                }
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Live Content Search Filter
+        function handleContentSearch(e) {
+            const query = e.target.value.trim().toLowerCase();
+            const cards = document.querySelectorAll('.module-card');
+
+            cards.forEach(card => {
+                if (!query) {
+                    card.style.display = 'block';
+                    return;
+                }
+                const text = card.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    card.style.display = 'block';
+                    // Auto open matching card accordion
+                    const content = card.querySelector('[id^="content-"]');
+                    if (content) content.classList.remove('hidden');
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Case Study Step Switcher
+        function showCaseStep(step) {
+            const data = caseSteps[step];
+            if (!data) return;
+
+            // Update active button state
+            for (let i = 1; i <= Object.keys(caseSteps).length; i++) {
+                const btn = document.getElementById(`case-btn-${i}`);
+                if (i === step) {
+                    btn.className = 'case-step-btn px-3 py-2 rounded-lg bg-sky-600 text-white shadow font-bold transition';
+                } else {
+                    btn.className = 'case-step-btn px-3 py-2 rounded-lg bg-white/10 text-slate-300 hover:bg-white/20 transition';
+                }
+            }
+
+            // Render content
+            const contentBox = document.getElementById('case-step-content');
+            contentBox.innerHTML = `
+                <div class="space-y-2">
+                    <div class="text-white font-bold text-sm">${data.title}</div>
+                    <div class="inline-block px-2.5 py-1 rounded bg-slate-800 text-sky-300 border border-slate-700 font-mono text-xs">
+                        <i class="fa-solid fa-code ml-1"></i> ${data.path}
+                    </div>
+                    <div dir="ltr" class="p-2 rounded bg-black/40 font-mono text-slate-200 text-xs text-left border border-white/5 whitespace-pre-wrap overflow-x-auto">${data.code}</div>
+                    <p class="text-slate-300 text-xs leading-relaxed pt-1">
+                        ${data.desc}
+                    </p>
+                    <div class="p-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-100 text-xs leading-relaxed">
+                        <i class="fa-solid fa-circle-check text-emerald-400 ml-1"></i><strong class="text-emerald-300">النتيجة المتوقعة: </strong>${data.expected}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Quiz Engine Rendering & Interaction
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            if (!container) return;
+
+            container.innerHTML = quizQuestions.map((q, idx) => `
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-700 space-y-3">
+                    <div class="font-bold text-sm text-slate-900 dark:text-white flex items-start gap-2">
+                        <span class="w-6 h-6 rounded-full bg-sky-600 text-white text-xs flex items-center justify-center flex-shrink-0 mt-0.5">${idx + 1}</span>
+                        <span>${q.q}</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                        ${q.options.map((opt, oIdx) => `
+                            <button onclick="answerQuiz(${q.id}, ${oIdx})" id="q-${q.id}-opt-${oIdx}" class="p-2.5 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-right hover:border-sky-500 hover:bg-sky-50/50 dark:hover:bg-slate-700/50 transition">
+                                ${opt}
+                            </button>
+                        `).join('')}
+                    </div>
+
+                    <div id="q-${q.id}-feedback" class="hidden p-3 rounded-lg text-xs leading-relaxed"></div>
+                </div>
+            `).join('');
+        }
+
+        function answerQuiz(qId, optIdx) {
+            const question = quizQuestions.find(q => q.id === qId);
+            if (!question) return;
+
+            quizAnswers[qId] = optIdx;
+
+            const isCorrect = optIdx === question.correct;
+            const feedbackEl = document.getElementById(`q-${qId}-feedback`);
+
+            // Disable option buttons for this question
+            question.options.forEach((_, oIdx) => {
+                const btn = document.getElementById(`q-${qId}-opt-${oIdx}`);
+                btn.disabled = true;
+                if (oIdx === question.correct) {
+                    btn.className = 'p-2.5 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-500 font-bold text-emerald-900 dark:text-emerald-200 text-right';
+                } else if (oIdx === optIdx && !isCorrect) {
+                    btn.className = 'p-2.5 rounded-lg bg-rose-100 dark:bg-rose-950/80 border border-rose-500 font-bold text-rose-900 dark:text-rose-200 text-right';
+                } else {
+                    btn.className = 'p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 text-slate-400 text-right opacity-60';
+                }
+            });
+
+            // Show Feedback
+            feedbackEl.classList.remove('hidden');
+            if (isCorrect) {
+                feedbackEl.className = 'p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-300 dark:border-emerald-800 text-emerald-900 dark:text-emerald-200 text-xs';
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600 ml-1"></i> <strong>إجابة صحيحة!</strong> ${question.explain}`;
+            } else {
+                feedbackEl.className = 'p-3 rounded-lg bg-rose-50 dark:bg-rose-950/50 border border-rose-300 dark:border-rose-800 text-rose-900 dark:text-rose-200 text-xs';
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-600 ml-1"></i> <strong>إجابة خاطئة.</strong> ${question.explain}`;
+            }
+
+            // Update Total Score
+            let correctCount = 0;
+            quizQuestions.forEach(q => {
+                if (quizAnswers[q.id] === q.correct) correctCount++;
+            });
+            document.getElementById('quiz-score-badge').innerText = `النتيجة: ${correctCount} / ${quizQuestions.length}`;
+        }
+    </script>
+<script>
+(function(){
+  var KEY='lec1-attendance-v2';
+  function unlock(){document.body.classList.remove('att-locked');var w=document.getElementById('att-frame-wrap');if(w){w.style.display='none';}var n=document.getElementById('att-lock-note');if(n){n.innerHTML='<i class="fa-solid fa-circle-check ml-1 text-emerald-600"></i> تم إرسال تسجيل حضورك بنجاح. محتوى الحصة متاح الآن أدناه.';n.className='p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-xs sm:text-sm text-emerald-800 dark:text-emerald-300';}}
+  try{ if(localStorage.getItem(KEY)==='1'){unlock();return;} }catch(e){}
+  document.body.classList.add('att-locked');
+  var fm=document.getElementById('att-form'); if(!fm){unlock();return;}
+  fm.addEventListener('submit',function(ev){ev.preventDefault();var m=document.getElementById('att-msg'),b=document.getElementById('att-btn');var d=new FormData(fm);
+    d.append('lecture','المحاضرة 1: تطهير البيانات');b.disabled=true;m.textContent='جارٍ الإرسال…';m.className='text-sm mr-2 text-slate-500';
+    fetch('https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec',{method:'POST',body:new URLSearchParams(d)}).then(function(r){return r.text();}).then(function(x){x=String(x).trim();if(x==='BAD_CODE'){b.disabled=false;m.textContent='رمز الحصة غير صحيح.';m.className='text-sm mr-2 text-red-600';return;}if(x!=='OK'&&x!=='DUPLICATE'){throw new Error(x);}try{localStorage.setItem(KEY,'1');}catch(e){} unlock(); var t=document.getElementById('mod-intro')||document.querySelector('#main-content-wrapper > section:not(#mod-attendance)'); if(t) setTimeout(function(){t.scrollIntoView({behavior:'smooth'});},1200);}).catch(function(){b.disabled=false;m.textContent='تعذّر الإرسال، تحقق من الاتصال وأعد المحاولة.';m.className='text-sm mr-2 text-red-600';});});
+})();
+</script>
+<div id="dk"><div class="trk"><div class='sl'><div class='hdr hdr1'>جامعة عبد الحميد مهري<br>كلية العلوم الاقتصادية والتجارية وعلوم التسيير<br>قسم علوم التسيير<br><span>من إعداد وتقديم: الأستاذ بوصفصاف فريد</span></div><div class='tag'>محاضرة 1</div><h3>تطهير البيانات في SPSS 25</h3><div class='bd'><p class='big'>Data Cleaning</p><p>ماستر 2</p><p><button type='button' class='pbtn' data-a='prof'><i class='fa-solid fa-chalkboard-user'></i> <span>تفعيل شاشة الأستاذ</span></button></p><p class='hint'>اسحب يميناً أو يساراً للتنقل، والمس الشاشة لإظهار الأزرار</p></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>خريطة ذهنية</div><h3>محتوى المحاضرة</h3><div class='bd'><svg viewBox='0 0 800 300' style='width:100%;max-height:62vh;direction:rtl;font-family:inherit'><line x1='400' y1='150' x2='150' y2='55' stroke='#38bdf8' stroke-width='3' opacity='.6'/><line x1='400' y1='150' x2='650' y2='55' stroke='#f87171' stroke-width='3' opacity='.6'/><line x1='400' y1='150' x2='150' y2='235' stroke='#4ade80' stroke-width='3' opacity='.6'/><line x1='400' y1='150' x2='650' y2='235' stroke='#fbbf24' stroke-width='3' opacity='.6'/><rect x='300' y='118' width='200' height='64' rx='32' fill='#1e3a8a' stroke='#7dd3fc' stroke-width='2'/><text x='400' y='146' text-anchor='middle' fill='#fff' font-size='17' font-weight='700'>تطهير البيانات</text><text x='400' y='168' text-anchor='middle' fill='#7dd3fc' font-size='13'>SPSS 25</text><rect x='10' y='8.0' width='280' height='94' rx='12' fill='#0f172a' stroke='#38bdf8' stroke-width='2'/><text x='150' y='30.0' text-anchor='middle' fill='#38bdf8' font-size='15' font-weight='700'>المحور 1: القيم المفقودة</text><text x='150' y='52.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>أنماطها MCAR / MAR / MNAR</text><text x='150' y='72.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>الحذف أم التعويض</text><text x='150' y='92.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>قياس حجم المفقود</text><rect x='510' y='8.0' width='280' height='94' rx='12' fill='#0f172a' stroke='#f87171' stroke-width='2'/><text x='650' y='30.0' text-anchor='middle' fill='#f87171' font-size='15' font-weight='700'>المحور 2: القيم الشاذة</text><text x='650' y='52.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>تعريفها وأثرها</text><text x='650' y='72.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>الكشف بيانياً وإحصائياً</text><text x='650' y='92.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>القرار: تصحيح أو تحويل</text><rect x='10' y='198.0' width='280' height='74' rx='12' fill='#0f172a' stroke='#4ade80' stroke-width='2'/><text x='150' y='220.0' text-anchor='middle' fill='#4ade80' font-size='15' font-weight='700'>المحور 3: دمج الملفات</text><text x='150' y='242.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>Add Cases (صفوف)</text><text x='150' y='262.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>Add Variables (أعمدة)</text><rect x='510' y='198.0' width='280' height='74' rx='12' fill='#0f172a' stroke='#fbbf24' stroke-width='2'/><text x='650' y='220.0' text-anchor='middle' fill='#fbbf24' font-size='15' font-weight='700'>المحور 4: تحويل المتغيرات</text><text x='650' y='242.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>Recode إلى فئات</text><text x='650' y='262.0' text-anchor='middle' fill='#e2e8f0' font-size='13'>بناء محور بـ MEAN.n</text></svg></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>لماذا؟</div><h3>البيانات المجمعة ليست جاهزة للتحليل</h3><div class='bd'><ul><li>البيانات الواقعية تعاني من «التلوث الإحصائي»: قيم مفقودة وقيم شاذة.</li><li>تطبيق الانحدار أو ANOVA عليها مباشرة يؤدي إلى:<ul><li>تحيّز المعاملات (Biased Coefficients)</li><li>ارتفاع خطأ النوع الأول (Type I Error)</li></ul></li></ul></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>الهدف</div><h3>ما يحققه التطهير</h3><div class='bd'><div class='grid2'><div class='card'><b>المصداقية Validity</b><br>المتغيرات تقيس فعلاً ما وُضعت لقياسه.</div><div class='card'><b>التعميم Generalizability</b><br>نتائج العينة تعبّر بصدق عن المجتمع.</div></div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>المحور 1</div><h3>أنماط القيم المفقودة</h3><div class='bd'><div class='grid3'><div class='card exc' data-ex='mcar'><b>MCAR</b><br>عشوائي تماماً.<br><small class='tap'>👆 انقر لمثال</small></div><div class='card exc' data-ex='mar'><b>MAR</b><br>مرتبط بمتغير آخر ملحوظ.<br><small class='tap'>👆 انقر لمثال</small></div><div class='card exc warn' data-ex='mnar'><b>MNAR</b><br>مرتبط بالمتغير نفسه.<br><small class='tap'>👆 انقر لمثال</small></div></div><div class='exbox' data-exb='mcar'><div><b>مثال MCAR:</b> سقطت ورقة من بعض الاستمارات أثناء الجمع بالصدفة، فضاع سؤال الرضا عند مبحوثين لا يجمعهم شيء.<p class='exn'>الغياب لا يرتبط بالجنس ولا بالرضا، فحذف الحالتين لا يحرّف النتائج.</p></div><table class='ext'><tr><th>المبحوث</th><th>الجنس</th><th>الرضا</th></tr><tr><td>1</td><td>ذكر</td><td>4</td></tr><tr><td>2</td><td>أنثى</td><td class='na'>فارغ</td></tr><tr><td>3</td><td>ذكر</td><td>3</td></tr><tr><td>4</td><td>ذكر</td><td class='na'>فارغ</td></tr><tr><td>5</td><td>أنثى</td><td>5</td></tr></table></div><div class='exbox' data-exb='mar'><div><b>مثال MAR:</b> كثير من الإناث لا يصرّحن بالوزن، بينما يصرّح به الذكور.<p class='exn'>الغياب مرتبط بمتغير ملحوظ هو الجنس، فنعوّض اعتماداً عليه (مثل EM).</p></div><table class='ext'><tr><th>المبحوث</th><th>الجنس</th><th>الوزن</th></tr><tr><td>1</td><td>ذكر</td><td>78</td></tr><tr><td>2</td><td>أنثى</td><td class='na'>فارغ</td></tr><tr><td>3</td><td>أنثى</td><td class='na'>فارغ</td></tr><tr><td>4</td><td>ذكر</td><td>85</td></tr><tr><td>5</td><td>أنثى</td><td>60</td></tr></table></div><div class='exbox' data-exb='mnar'><div><b>مثال MNAR:</b> أصحاب الدخل المرتفع يرفضون الإفصاح عن دخلهم، فالغياب سببه قيمة الدخل نفسها.<p class='exn'>لو حسبنا المتوسط بالحالات المتوفرة لقلّلنا الدخل الحقيقي. هذا أخطر الأنماط.</p></div><table class='ext'><tr><th>المبحوث</th><th>المهنة</th><th>الدخل (دج)</th></tr><tr><td>1</td><td>موظف</td><td>45,000</td></tr><tr><td>2</td><td>تاجر</td><td class='na'>فارغ</td></tr><tr><td>3</td><td>أستاذ</td><td>60,000</td></tr><tr><td>4</td><td>طبيب</td><td class='na'>فارغ</td></tr><tr><td>5</td><td>عامل</td><td>32,000</td></tr></table></div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>المحور 1</div><h3>الحذف أم التعويض؟</h3><div class='bd'><div class='grid2'><div class='card'><b>الحذف</b><ul><li>Listwise: يحذف الحالة كاملة، فتنقص العينة. <span class='qm' data-ex='lw' title='شرح'>?</span></li><li>Pairwise: يحذف في التحليل المعني فقط، فيتذبذب N. <span class='qm' data-ex='pw' title='شرح'>?</span></li></ul></div><div class='card'><b>التعويض Imputation</b><ul><li>المتوسط: بسيط لكنه يقلل التباين. <span class='qm' data-ex='mean' title='شرح'>?</span></li><li>EM: تكراري عبر مصفوفة الارتباط. <span class='qm' data-ex='em' title='شرح'>?</span></li><li>Multiple Imputation: الأدق. <span class='qm' data-ex='mi' title='شرح'>?</span></li></ul></div></div><div class='exbox' data-exb='lw'><div><b>Listwise:</b> يستبعد SPSS المبحوث من كل التحليل بمجرد أن تغيب عنده إجابة واحدة من المتغيرات المطلوبة. مثال: 200 مبحوث، غاب عند 30 منهم سؤال واحد، فيُحسب الانحدار على 170 فقط.<p class='exn'>مناسب حين يكون المفقود قليلاً (أقل من 5% تقريباً) ومن نوع MCAR. وهو الخيار الافتراضي في أغلب إجراءات SPSS.</p></div></div><div class='exbox' data-exb='pw'><div><b>Pairwise:</b> يُستبعد المبحوث فقط من الحسابات التي تحتاج المتغير الغائب عنده، ويبقى في غيرها. مثال: في مصفوفة الارتباط قد يُحسب ارتباط Q1 وQ2 على 195 حالة، وارتباط Q3 وQ4 على 188.<p class='exn'>يحافظ على أكبر قدر من البيانات، لكن اختلاف N بين الخلايا يربك القارئ وقد يعطي مصفوفة غير متسقة. يُختار من Options في Correlations.</p></div></div><div class='exbox' data-exb='mean'><div><b>المتوسط:</b> تُستبدل كل قيمة مفقودة بمتوسط المتغير المحسوب من الحالات الصالحة. مثال: متوسط الدخل 40,000 دج، فيأخذ كل من لم يصرّح بدخله 40,000 دج.<p class='exn'>المسار: Transform › Replace Missing Values › Series mean. عيبه أن القيم المتطابقة تقلص التباين وتضعف الارتباطات، فلا يُنصح به إلا إذا كان المفقود قليلاً جداً.</p></div></div><div class='exbox' data-exb='em'><div><b>EM:</b> خوارزمية Expectation-Maximization تقدّر القيمة المفقودة من علاقتها بالمتغيرات الأخرى، ثم تعيد التقدير مرات حتى تستقر النتائج. مثال: يُقدَّر دخل المبحوث من عمره ومهنته وأقدميته.<p class='exn'>المسار: Analyze › Missing Value Analysis، مع تفعيل EM وحفظ البيانات المكتملة. تعطي أيضاً اختبار Little MCAR للحكم على نمط الغياب. مناسبة لنمطي MCAR و MAR.</p></div></div><div class='exbox' data-exb='mi'><div><b>Multiple Imputation:</b> تُنشئ عدة نسخ من البيانات (5 مثلاً)، في كل نسخة قيم تعويض مختلفة قليلاً تعكس عدم اليقين. يُجرى التحليل على كل نسخة ثم تُدمج النتائج في نتيجة واحدة.<p class='exn'>المسار: Analyze › Multiple Imputation › Impute Missing Data Values. هي الطريقة الأدق لأنها لا تقلص التباين، وتُفضّل حين يكون المفقود كثيراً أو من نوع MAR.</p></div></div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>المحور 1</div><h3>كيف نعرف حجم المفقود؟</h3><div class='bd'><div class='grid2' style='align-items:center'><div><p>نطلب من SPSS عدّ الإجابات في متغير <b>الدخل الشهري</b> لـ 200 زبون:</p><div class='menu'><span>Analyze</span><i>▾</i><span>Descriptive Statistics</span><i>▾</i><span class='hl'>Frequencies</span></div><p class='exn'>فيعطينا جدولاً صغيراً نقرؤه هكذا:</p></div><div class='spo'><div class='spt'>Statistics<br><small>Monthly_Income</small></div><table><tr><td rowspan='2'>N</td><td>Valid</td><td>186</td></tr><tr class='mrow'><td>Missing</td><td>14</td></tr></table><div class='rd'>186 أجابوا، و <b>14</b> لم يجيبوا<br>نسبة المفقود: <bdi dir='ltr'>14 ÷ 200 = <b>7%</b></bdi></div></div></div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>المحور 2</div><h3>القيم الشاذة Outliers</h3><div class='bd'><ul><li>مشاهدة بعيدة جداً عن مركز التوزيع. <span class='qm' data-ex='o1'>?</span></li><li>قيمة واحدة تكفي لتحريك المتوسط ورفع الانحراف المعياري. <span class='qm' data-ex='o2'>?</span></li><li>تجعل التوزيع ملتوياً فتنتهك شرط الاعتدالية. <span class='qm' data-ex='o3'>?</span></li></ul><div class='exbox' data-exb='o1'><div><b>مثال:</b> إيداعات ستة زبائن بآلاف الدينارات. خمسة منها متقاربة بين 15 و20، والزبون 87 أودع 46 بعيداً عن الجميع.<p class='exn'>النقطة الحمراء بعيدة عن بقية النقاط: هذه هي القيمة الشاذة.</p></div><div class='strip'><span class='dot' style='left:12.5%'></span><span class='dot' style='left:17.5%'></span><span class='dot' style='left:20.0%'></span><span class='dot' style='left:22.5%'></span><span class='dot' style='left:25.0%'></span><span class='dot od' style='left:90.0%'>46</span><span class='cl' style='left:21%'>15 إلى 20</span><div class='ax'><span>10</span><span>30</span><span>50</span></div></div></div><div class='exbox' data-exb='o2'><div><b>مثال:</b> نحسب المؤشرات بدون الزبون 87 ثم معه:<p class='exn'>زبون واحد رفع المتوسط إلى 22.5، وهو أعلى من إيداع كل الزبائن الخمسة الآخرين! بينما بقي الوسيط تقريباً كما هو.</p></div><table class='ext'><tr><th></th><th>بدونه</th><th>معه</th></tr><tr><td>المتوسط</td><td>17.8</td><td class='na'>22.5</td></tr><tr><td>الانحراف المعياري</td><td>1.9</td><td class='na'>11.6</td></tr><tr><td>الوسيط</td><td>18</td><td>18.5</td></tr></table></div><div class='exbox' data-exb='o3'><div><b>مثال:</b> التوزيع المعتدل متناظر حول المتوسط مثل الجرس. القيمة الشاذة تسحب طرفاً واحداً بعيداً فيظهر «ذيل» طويل.<p class='exn'>الأزرق المتقطع معتدل، والأصفر ملتوٍ نحو اليمين. الاختبارات المعلمية مثل اختبار t و ANOVA تفترض الشكل الأزرق.</p></div><div class='bell'><svg viewBox='0 0 200 70' width='200'><path d='M5,65 C40,65 50,8 70,8 C90,8 100,60 195,64' fill='none' stroke='#fbbf24' stroke-width='3'/><path d='M5,65 C45,65 55,8 100,8 C145,8 155,65 195,65' fill='none' stroke='#38bdf8' stroke-width='2' stroke-dasharray='4 3'/></svg></div></div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>المحور 2</div><h3>كيف نكتشف القيمة الشاذة؟</h3><div class='bd'><div class='grid2'><div class='card exc' data-ex='bx'><b>بيانياً: Boxplot</b><br><small class='tap'>👆 انقر لمثال</small></div><div class='card exc' data-ex='zs'><b>إحصائياً: Z-Score</b><br><small class='tap'>👆 انقر لمثال</small></div></div><div class='exbox' data-exb='bx'><div><b>مثال:</b> مخطط الصندوق لإيداعات الـ 200 زبون. الصندوق يضم نصف الزبائن في الوسط، والخط داخله هو الوسيط، والشاربان يمتدان إلى آخر قيمة طبيعية.<p class='exn'>الدائرة الحمراء (o) خارج الشارب ومعها رقم السطر 87، فهي قيمة شاذة. لو كانت نجمة (*) لكانت متطرفة جداً.</p></div><svg viewBox='0 0 150 120' width='170' direction='ltr' style='direction:ltr;background:#fff;border-radius:8px;flex:0 0 auto'><line x1='30' y1='10' x2='30' y2='110' stroke='#94a3b8'/><text x='26' y='113' font-size='7' text-anchor='end' fill='#475569'>0k</text><text x='26' y='93' font-size='7' text-anchor='end' fill='#475569'>10k</text><text x='26' y='73' font-size='7' text-anchor='end' fill='#475569'>20k</text><text x='26' y='53' font-size='7' text-anchor='end' fill='#475569'>30k</text><text x='26' y='33' font-size='7' text-anchor='end' fill='#475569'>40k</text><text x='26' y='13' font-size='7' text-anchor='end' fill='#475569'>50k</text><line x1='75' y1='104.0' x2='75' y2='40.4' stroke='#0f172a'/><line x1='65' y1='104.0' x2='85' y2='104.0' stroke='#0f172a'/><line x1='65' y1='40.4' x2='85' y2='40.4' stroke='#0f172a'/><rect x='55' y='63.7' width='40' height='22.1' fill='#bae6fd' stroke='#0f172a'/><line x1='55' y1='76.6' x2='95' y2='76.6' stroke='#0f172a' stroke-width='2'/><circle cx='75' cy='18.0' r='4' fill='none' stroke='#dc2626' stroke-width='2'/><text x='83' y='21.0' font-size='9' fill='#dc2626' font-weight='700'>87</text></svg></div><div class='exbox' data-exb='zs'><div><b>مثال:</b> <b>ما هي Z؟</b> هي عدد «الخطوات» التي تبعدها القيمة عن المتوسط، وطول الخطوة الواحدة هو الانحراف المعياري. متوسط الإيداع 17,873 دج، وطول الخطوة 7,800 دج. <div class='strip' style='direction:ltr;display:flex;gap:2px;margin:.4em 0;font-size:.8em'><span style='flex:1;text-align:center;padding:.2em;border-radius:4px;background:#334155'>المتوسط 0</span><span style='flex:1;text-align:center;padding:.2em;border-radius:4px;background:#1e3a8a'>+1</span><span style='flex:1;text-align:center;padding:.2em;border-radius:4px;background:#1e40af'>+2</span><span style='flex:1;text-align:center;padding:.2em;border-radius:4px;background:#7c2d12'>+3 حدّ الشذوذ</span><span style='flex:1;text-align:center;padding:.2em;border-radius:4px;background:#dc2626'>87 ← 3.61</span></div>الإيداع 46,000 يبعد عن المتوسط 28,127 دج، أي نحو 3.6 خطوات:<p class='exn'>القاعدة: إذا تجاوزت القيمة 3 خطوات (|Z| &gt; 3) نعتبرها شاذة. لا يحسبها الطالب يدوياً، فـ SPSS ينشئ عموداً جديداً فيه Z لكل زبون.</p></div><div class='zf'>Z = (46,000 − 17,873) ÷ 7,800<br>Z = <b>3.61</b></div></div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>المحور 2</div><h3>ماذا أفعل بالقيمة الشاذة؟</h3><div class='bd'><p class='big'>لا تحذفها فوراً! اسأل أولاً: هل هي خطأ أم حقيقة؟</p><div class='grid2'><div class='card exc' data-ex='er'><b>خطأ إدخال</b><br>مثل عمر 250 بدل 25.<br><small class='tap'>👆 انقر لمثال</small></div><div class='card exc' data-ex='rl'><b>قيمة حقيقية</b><br>زبون غني فعلاً، إيداعه صحيح.<br><small class='tap'>👆 انقر لمثال</small></div></div><div class='exbox' data-exb='er'><div><p class='exn'>(مثال افتراضي) نعود إلى الاستبيان الورقي فنجد 25، فنصحح الخلية. وإن تعذّر التحقق نتركها فارغة.</p></div><table class='ext'><tr><th>الزبون</th><th>العمر في SPSS</th><th>العمر في الاستبيان</th></tr><tr><td>41</td><td class='na'>250</td><td>25 ✔</td></tr></table></div><div class='exbox' data-exb='rl'><div><p class='exn'>قبل التحويل كان إيداع 87 يساوي نحو 3 أضعاف الوسيط. بعد Log10 صار 4.66 مقابل 4.22، فاقترب من البقية دون حذفه. والبديل: اختبار لامعلمي لا يتأثر بالقيم الشاذة (سنراه لاحقاً).</p></div><table class='ext' style='direction:ltr'><tr><th>الزبون</th><th>الإيداع</th><th>Log10</th></tr><tr><td>65</td><td>3,000</td><td>3.48</td></tr><tr><td>الوسيط</td><td>16,700</td><td>4.22</td></tr><tr><td style='color:#f87171'>87</td><td style='color:#f87171'>46,000</td><td style='color:#4ade80'>4.66</td></tr></table></div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>المحور 3</div><h3>دمج الملفات</h3><div class='bd'><div class='grid2'><div class='card exc' data-ex='ac'><b>دمج عمودي Add Cases</b><br>نفس المتغيرات، عينات مختلفة.<div class='path'>Data › Merge Files › Add Cases</div><small class='tap'>👆 انقر لمثال</small></div><div class='card exc' data-ex='av'><b>دمج أفقي Add Variables</b><br>نفس العينة، متغيرات جديدة. يشترط متغيراً مفتاحياً مثل ID.<div class='path'>Data › Merge Files › Add Variables</div><small class='tap'>👆 انقر لمثال</small></div></div><div class='exbox' data-exb='ac' style='flex-direction:column'><div style='display:flex;gap:.5em;align-items:flex-start;flex-wrap:wrap;justify-content:center;direction:ltr'><div style='text-align:center'><small>الوكالة 1</small><table class='ext' style='direction:ltr'><tr><th>Customer_ID</th><th>Age</th></tr><tr><td>4</td><td>49</td></tr><tr><td>8</td><td>26</td></tr></table></div><b style='font-size:1.4em;align-self:center'>+</b><div style='text-align:center'><small>الوكالة 2</small><table class='ext' style='direction:ltr'><tr><th>Customer_ID</th><th>Age</th></tr><tr><td>5</td><td>44</td></tr><tr><td>9</td><td>45</td></tr></table></div><b style='font-size:1.4em;align-self:center'>=</b><div style='text-align:center'><small>ملف واحد: صفوف أكثر</small><table class='ext' style='direction:ltr'><tr><th>Customer_ID</th><th>Age</th></tr><tr><td>4</td><td>49</td></tr><tr><td>8</td><td>26</td></tr><tr><td>5</td><td>44</td></tr><tr><td>9</td><td>45</td></tr></table></div></div><p class='exn'>كل وكالة أدخلت زبائنها في ملف. ندمجها فتُضاف الصفوف تحت بعضها. شرط: أسماء المتغيرات متطابقة.</p></div><div class='exbox' data-exb='av' style='flex-direction:column'><div style='display:flex;gap:.5em;align-items:flex-start;flex-wrap:wrap;justify-content:center;direction:ltr'><div style='text-align:center'><small>ملف البيانات الشخصية</small><table class='ext' style='direction:ltr'><tr><th>Customer_ID</th><th>Age</th></tr><tr><td>1</td><td>47</td></tr><tr><td>2</td><td>42</td></tr><tr><td>3</td><td>37</td></tr></table></div><b style='font-size:1.4em;align-self:center'>+</b><div style='text-align:center'><small>ملف الاستبيان</small><table class='ext' style='direction:ltr'><tr><th>Customer_ID</th><th>Satisfaction</th></tr><tr><td>1</td><td>5</td></tr><tr><td>2</td><td>3</td></tr><tr><td>3</td><td>4</td></tr></table></div><b style='font-size:1.4em;align-self:center'>=</b><div style='text-align:center'><small>أعمدة أكثر، نفس الزبائن</small><table class='ext' style='direction:ltr'><tr><th>Customer_ID</th><th>Age</th><th>Satisfaction</th></tr><tr><td>1</td><td>47</td><td style="color:#4ade80">5</td></tr><tr><td>2</td><td>42</td><td style="color:#4ade80">3</td></tr><tr><td>3</td><td>37</td><td style="color:#4ade80">4</td></tr></table></div></div><p class='exn'>SPSS يطابق كل زبون عبر Customer_ID فيضيف عمود الرضا بجانب عمره.</p></div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>المحور 4</div><h3>إعادة الترميز Recode</h3><div class='bd'><p>تحويل متغير كمي إلى فئات. مثال: السن (من 22 إلى 68 سنة) إلى ثلاث فئات.</p><div class='path'>Transform › Recode into Different Variables</div><div style='display:flex;gap:1em;justify-content:center;align-items:flex-start;flex-wrap:wrap'><div><small>1. نحدد القاعدة</small><table class='ext'><tr><th>القيم القديمة</th><th>القيمة الجديدة</th></tr><tr><td>22 – 35</td><td>1 = شباب</td></tr><tr><td>36 – 55</td><td>2 = كهول</td></tr><tr><td>56 – 68</td><td>3 = شيوخ</td></tr></table></div><div><small>2. يظهر عمود جديد بجانب الأصلي</small><table class='ext'><tr><th>الزبون</th><th>Age</th><th>Age_Cat (جديد)</th></tr><tr><td>7</td><td>26</td><td style='color:#4ade80'>1 (شباب)</td></tr><tr><td>8</td><td>26</td><td style='color:#4ade80'>1 (شباب)</td></tr><tr><td>1</td><td>47</td><td style='color:#4ade80'>2 (كهول)</td></tr><tr><td>43</td><td>57</td><td style='color:#4ade80'>3 (شيوخ)</td></tr><tr><td>44</td><td>56</td><td style='color:#4ade80'>3 (شيوخ)</td></tr></table></div><div><small class='warnt'>✗ Into Same Variables</small><table class='ext'><tr><th>الزبون</th><th>Age</th></tr><tr><td>7</td><td><s style='color:#f87171'>26</s> ← 1</td></tr></table><small>ضاع العمر الأصلي!</small></div></div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>المحور 4</div><h3>بناء محور ليكرت</h3><div class='bd'><p>نجمع عبارات المحور الأربع في درجة واحدة هي متوسطها.</p><div class='path'>Transform › Compute Variable</div><div class='code' style='direction:ltr'>Service_Quality = MEAN.3(Q1, Q2, Q3, Q4)</div><table class='ext' style='direction:ltr'><tr><th>ID</th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>أجاب على</th><th>Service_Quality</th></tr><tr><td>1</td><td>4</td><td>5</td><td>4</td><td>4</td><td><bdi dir='rtl'>4 من 4</bdi></td><td style='color:#4ade80'>4.25</td></tr><tr><td>22</td><td>4</td><td>3</td><td>3</td><td class='na'>فارغ</td><td><bdi dir='rtl'>3 من 4</bdi></td><td style='color:#4ade80'>3.33</td></tr><tr><td>14</td><td>3</td><td>3</td><td class='na'>فارغ</td><td class='na'>فارغ</td><td><bdi dir='rtl'>2 من 4</bdi></td><td class='na'>فارغ</td></tr></table><p class='exn'>الرقم 3 يعني: احسب المتوسط فقط إذا أجاب على 3 عبارات على الأقل. من ترك عبارة واحدة نحتفظ به، ومن ترك عبارتين يبقى فارغاً لأن متوسطه غير موثوق.</p></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>دراسة حالة</div><h3>200 زبون في 4 وكالات بنكية</h3><div class='bd'><p>ثلاث مشكلات في ملف واحد. ناقشوا الحل قبل النقر:</p><div class='grid3' style='display:grid;grid-template-columns:repeat(3,1fr);gap:.6em'><div class='card exc' data-ex='c1'><b>① 14 دخلاً مفقوداً</b><br>أغلبهم من ذوي الدخل المرتفع.<br><small class='tap'>👆 انقر للحل</small></div><div class='card exc' data-ex='c2'><b>② الزبون 87</b><br>أودع 46,000 دج مقابل متوسط 17,873 دج.<br><small class='tap'>👆 انقر للحل</small></div><div class='card exc' data-ex='c3'><b>③ 12 زبوناً تركوا عبارات</b><br>في محور الجودة Q1 إلى Q4.<br><small class='tap'>👆 انقر للحل</small></div></div><div class='exbox' data-exb='c1'><div><b>الحل:</b> <span class='exn'>النسبة <bdi>7%</bdi> (186 صالحة). النمط ليس عشوائياً (MNAR محتمل)، فالتعويض بالمتوسط يخفي المشكلة. نستعمل Multiple Imputation مستعينين بمتغيرات مرتبطة بالدخل كالإيداع، ونذكر هذا القيد في التقرير.</span></div></div><div class='exbox' data-exb='c2'><div><b>الحل:</b> <span class='exn'>Z = 3.61 أكبر من 3، ودائرة o في Boxplot. ليس خطأ إدخال، فنحتفظ به ونحوّل المتغير بـ Log10.</span></div></div><div class='exbox' data-exb='c3'><div><b>الحل:</b> <span class='exn'>MEAN.3: الـ 9 الذين تركوا عبارة واحدة نحسب لهم الدرجة، والـ 3 الذين تركوا عبارتين يبقون فارغين.</span></div></div></div></div><div class='sl'><div class='hdr'>برمجيات إحصائية (SPSS)، د. بوصفصاف فريد</div><div class='tag'>الخلاصة</div><h3>خريطة الطريق</h3><div class='bd'><div style='display:flex;gap:.4em;align-items:stretch;flex-wrap:wrap;justify-content:center'><div class='card' style='flex:1;min-width:6em;text-align:center'><div style='font-size:1.6em'>📥</div><small>1. استورد وعرّف المتغيرات</small></div><b style='align-self:center;color:#7dd3fc'>←</b><div class='card' style='flex:1;min-width:6em;text-align:center'><div style='font-size:1.6em'>🔍</div><small>2. شخّص المفقود وعالجه</small></div><b style='align-self:center;color:#7dd3fc'>←</b><div class='card' style='flex:1;min-width:6em;text-align:center'><div style='font-size:1.6em'>📦</div><small>3. اكشف الشاذ وقرّر</small></div><b style='align-self:center;color:#7dd3fc'>←</b><div class='card' style='flex:1;min-width:6em;text-align:center'><div style='font-size:1.6em'>🔗</div><small>4. ادمج وأعد الترميز</small></div><b style='align-self:center;color:#7dd3fc'>←</b><div class='card' style='flex:1;min-width:6em;text-align:center'><div style='font-size:1.6em'>Σ</div><small>5. ابنِ المحاور بـ MEAN.n</small></div></div><p class='hint'>أغلق العرض وتابع التفاصيل والاختبار في الصفحة.</p></div></div></div>
+<div class="ctl r"><button data-a="x" title="إغلاق">✕</button><button data-a="p" title="السابق"><i class="fa-solid fa-chevron-right"></i></button></div>
+<div class="ctl l"><button data-a="n" title="التالي"><i class="fa-solid fa-chevron-left"></i></button><button data-a="f" title="ملء الشاشة">⛶</button><button data-a="s" class="sy" title="متابعة الأستاذ"><i class="fa-solid fa-link"></i></button></div>
+<div class="cnt"></div><div class="rot"><div style="font-size:54px">📱↻</div><p>أدر الهاتف إلى الوضع الأفقي لمتابعة العرض</p><button data-a="x" style="width:auto;padding:0 18px;margin-top:14px">إغلاق</button></div></div>
+<script>(function(){var d=document.getElementById('dk'),t=d.querySelector('.trk'),n=t.children.length,i=0,h;
+var U='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec',LEC='lec1',prof=localStorage.getItem('dk-prof'),fol=true,pt,pl,tap=0,tt;
+function lab(){d.querySelectorAll('.pbtn span').forEach(function(x){x.textContent=prof?'إلغاء شاشة الأستاذ':'تفعيل شاشة الأستاذ'});d.querySelector('.cnt').textContent=(i+1)+' / '+n+(prof?'  ● وضع الأستاذ':(fol?'  ● متابعة الأستاذ':'  ○ تصفح حر'));var b=d.querySelector('.sy');if(b)b.style.background=prof?'#7c3aed':(fol?'#16a34a':'rgba(255,255,255,.15)');}
+function go(k,man){i=Math.max(0,Math.min(n-1,k));for(var j=0;j<n;j++)t.children[j].classList.toggle('cur',j==i);if(man&&!prof)fol=false;if(prof){clearTimeout(pt);pt=setTimeout(function(){fetch(U,{method:'POST',body:new URLSearchParams({action:'slide',lec:LEC,i:i,key:prof})}).then(function(r){return r.text()}).then(function(x){if(x.indexOf('BAD_KEY')>-1){prof=null;localStorage.removeItem('dk-prof');alert('رمز الأستاذ غير صحيح');lab();}}).catch(function(){});},80);}lab();}
+var bz=0;function poll(){if(bz||prof||!fol||!d.classList.contains('on'))return;bz=1;setTimeout(function(){bz=0},6000);fetch(U+'?action=slide&lec='+LEC+'&t='+Date.now()).then(function(r){return r.text()}).then(function(x){var k=parseInt(x,10);bz=0;if(!isNaN(k)&&k!==i&&fol)go(k);}).catch(function(){bz=0});}
+setInterval(poll,1000);
+function show(){d.classList.add('show');clearTimeout(h);h=setTimeout(function(){d.classList.remove('show')},3000);}
+window.openDeck=function(){d.classList.add('on');document.body.style.overflow='hidden';go(i);var r=d.requestFullscreen||d.webkitRequestFullscreen;if(r){try{var p=r.call(d);if(p&&p.then)p.then(function(){if(screen.orientation&&screen.orientation.lock)screen.orientation.lock('landscape').catch(function(){});}).catch(function(){});}catch(e){}}};
+function close(){d.classList.remove('on','show');document.body.style.overflow='';if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen();}
+d.addEventListener('click',function(e){var c=e.target.closest('[data-ex]');if(c){var sl=c.closest('.sl');sl.querySelectorAll('[data-ex]').forEach(function(x){x.classList.toggle('sel',x===c)});sl.querySelectorAll('[data-exb]').forEach(function(x){x.classList.toggle('on',x.dataset.exb===c.dataset.ex)});return;}var b=e.target.closest('button');if(b){var a=b.dataset.a;if(a=='n')go(i+1,1);else if(a=='p')go(i-1,1);else if(a=='prof'){if(prof){if(confirm('إلغاء وضع الأستاذ؟')){prof=null;localStorage.removeItem('dk-prof');lab();}}else{var k=prompt('أدخل الرمز السري للأستاذ');if(k){fetch(U,{method:'POST',body:new URLSearchParams({action:'checkkey',key:k})}).then(function(r){return r.text()}).then(function(x){if(x.indexOf('OK')===0){prof=k;localStorage.setItem('dk-prof',k);go(i);alert('تم تفعيل شاشة الأستاذ');}else alert('الرمز غير صحيح');}).catch(function(){alert('تعذّر الاتصال')});}}}else if(a=='s'){if(!prof){fol=!fol;lab();poll();}}else if(a=='x')close();else if(a=='f'){var r=d.requestFullscreen||d.webkitRequestFullscreen;if(r)r.call(d);}show();return;}show();});
+d.querySelector('.cnt').addEventListener('click',function(e){e.stopPropagation();tap++;clearTimeout(tt);tt=setTimeout(function(){tap=0},1500);if(tap>=5){tap=0;if(prof){if(confirm('الخروج من وضع الأستاذ؟')){prof=null;localStorage.removeItem('dk-prof');lab();}}else{var k=prompt('رمز الأستاذ');if(k){prof=k;localStorage.setItem('dk-prof',k);go(i);}}}});
+var sx=null,sy;d.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+d.addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){go(dx>0?i+1:i-1,1);}});
+document.addEventListener('keydown',function(e){if(!d.classList.contains('on'))return;if(e.key=='ArrowLeft')go(i+1,1);else if(e.key=='ArrowRight')go(i-1,1);else if(e.key=='Escape')close();});})();</script></body>
+</html>
