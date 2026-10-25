@@ -3,6 +3,7 @@
    - بطاقة الدخول/تسجيل الحضور، شاشات الانتظار والملخص (#tq-go, #tq-wait, #qz-login, #qz-wait, #qz-end)، وشريط أدوات الشرائح (#dk).
    - الخروج: يوقف المتابعة/الاستطلاع، يمسح حالة الجلسة المحلية لهذه الصفحة فقط (البكالوريا ورمز الحصة) ثم يعيد الصفحة إلى حالة الدخول.
      لا يرسل أي طلب إلى الخادم، فلا يُلغى أي حضور مسجَّل.
+   - update50: التصفح الحر: تضع الصفحة window.SNAV_FREE = السبب (review_attended | review_past | after15) فيظهر شريط «تصفح حر» في الشرائح وتنبيه في بطاقة الدخول.
    - مفاتيح الحالة: تُكتشف تلقائياً من سكربتات الصفحة (lecN/tpN-login|attendance-vN) أو من data-keys="k1,k2" في وسم السكربت. */
 (function(){
 'use strict';
@@ -46,7 +47,14 @@ css.textContent=[
 '#snav-dlg .r{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}#snav-dlg button{flex:1 1 140px;font:inherit;font-weight:800;font-size:15px;border:0;border-radius:12px;padding:11px 14px;color:#fff;cursor:pointer;width:auto;height:auto;line-height:1.35}',
 '#snav-dlg button.y{background:#be123c}#snav-dlg button.y.h{background:#075985}#snav-dlg button.n{background:#334155}',
 '#snav-toast{margin-top:10px;padding:10px 12px;border-radius:10px;background:#ecfdf5;border:1px solid #6ee7b7;color:#065f46;font-size:14px;font-weight:700;direction:rtl}',
-'.dark #snav-toast{background:rgba(6,78,59,.45);border-color:#047857;color:#a7f3d0}'
+'.dark #snav-toast{background:rgba(6,78,59,.45);border-color:#047857;color:#a7f3d0}',
+/* update50: التصفح الحر */
+'#snav-fb{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);z-index:45;pointer-events:none;direction:rtl;background:rgba(5,150,105,.92);color:#fff;font-weight:800;font-size:13px;line-height:1.4;padding:5px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.35);white-space:nowrap;max-width:92%;overflow:hidden;text-overflow:ellipsis;font-family:inherit}',
+'#snav-fb small{font-weight:600;opacity:.9;font-size:12px}#dk:has(> .nav) #snav-fb{bottom:calc(68px + env(safe-area-inset-bottom))}',
+'@media (max-width:639px){#snav-fb small{display:none}}',
+'#snav-fbn{margin-top:10px;padding:10px 12px;border-radius:10px;background:#ecfdf5;border:1.5px solid #10b981;color:#065f46;font-size:14px;font-weight:700;line-height:1.7;direction:rtl}',
+'.dark #snav-fbn,html.dark #snav-fbn{background:rgba(6,78,59,.45);border-color:#059669;color:#a7f3d0}',
+'#dk.snav-free .fl{display:none!important}#dk.snav-free .sy{display:none!important}'
 ].join('\n');
 document.head.appendChild(css);
 // ===== التأكيد =====
@@ -102,10 +110,21 @@ function mount(){
    return b;};
   host.appendChild(bi('exit'));host.appendChild(bi('home'));}
  refresh();}
-function refresh(){var s=hasState();Array.prototype.forEach.call(document.querySelectorAll('[data-snav-exit]'),function(b){b.hidden=!s;});
+// ===== update50: التصفح الحر (يحدده الخادم: دخول ثانٍ، أو بعد تاريخ الحصة، أو بعد الساعة 15:00 يوم الحصة) =====
+var FBR={review_attended:'دخول ثانٍ: حضورك مسجَّل مسبقاً',review_past:'مراجعة بعد تاريخ الحصة',after15:'بعد الساعة 15:00 من يوم الحصة'};
+function freeR(){var r=window.SNAV_FREE;if(!r||ssGet('dk-prof'))return '';return String(r);}
+function fbPaint(){var r=freeR(),d=dk(),why=FBR[r]||'';
+ if(d){d.classList.toggle('snav-free',!!r);var b=$('snav-fb');
+  if(r&&!b){b=document.createElement('div');b.id='snav-fb';b.setAttribute('role','status');d.appendChild(b);}
+  if(b){if(!r)b.remove();else{var h='🔓 تصفح حر: تنقّل بين الشرائح بحرية'+(why?' <small>('+why+')</small>':'');if(b.innerHTML!==h)b.innerHTML=h;}}}
+ var note=$('att-lock-note'),n=$('snav-fbn');
+ if(r&&note&&note.parentNode&&!document.body.classList.contains('att-locked')){if(!n){n=document.createElement('div');n.id='snav-fbn';n.setAttribute('data-fb',r);note.parentNode.insertBefore(n,note.nextSibling);}
+  var t='🔓 التصفح الحر مفعَّل'+(why?' ('+why+')':'')+': افتح الشرائح وتنقّل بينها بحرية بالسابق والتالي، دون متابعة شاشة الأستاذ ودون انتظار.';if(n.textContent!==t){n.textContent=t;n.setAttribute('data-fb',r);}}
+ else if(n&&!r)n.remove();}
+function refresh(){fbPaint();var s=hasState();Array.prototype.forEach.call(document.querySelectorAll('[data-snav-exit]'),function(b){b.hidden=!s;});
  Array.prototype.forEach.call(document.querySelectorAll('[data-snav-i="exit"]'),function(b){b.style.display=s?'':'none';});}
 mount();setInterval(function(){if(!window.__snavOut)refresh();},800);
-window.snav={exit:exitNow,keys:KEYS,mount:mount,hasState:hasState};
+window.snav={exit:exitNow,keys:KEYS,mount:mount,hasState:hasState,refresh:refresh,free:function(r){window.SNAV_FREE=r||'';refresh();}};
 // ===== رسالة بعد الخروج =====
 if(ssGet('snav-out')){try{sessionStorage.removeItem('snav-out')}catch(e){}
  var t=document.createElement('div');t.id='snav-toast';t.setAttribute('role','status');t.textContent='🚪 تم الخروج من الحصة على هذا الجهاز. حضورك المسجَّل محفوظ، ويمكنك الدخول من جديد.';

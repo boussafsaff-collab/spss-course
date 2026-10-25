@@ -944,10 +944,10 @@ var addrTimer=null;
 var dkW=null,dkTxt=null;
 function isProf(){try{return !!sessionStorage.getItem('dk-prof')}catch(e){return false}}
 // لا فتح تلقائي للشرائح: عند إشارة الأستاذ (go=1) يصبح الزر «الدخول ومتابعة الأستاذ» ويضغطه الطالب
-function deckWait(w){var b=$('deck-btn');if(!b)return;if(dkTxt===null)dkTxt=b.innerHTML;var prof=isProf();if(prof)w=false;dkW=w;b.disabled=w;
- var L=window.TP3QZ.last,h=w?'⏳ انتظر إشارة الأستاذ لبدء الشرائح':((!prof&&!(L&&L.end===1)&&folOK())?'🎓 الدخول ومتابعة الأستاذ':dkTxt);if(b.innerHTML!==h)b.innerHTML=h;}
+function deckWait(w){var b=$('deck-btn');if(!b)return;if(dkTxt===null)dkTxt=b.innerHTML;var prof=isProf(),fr=isFree();if(prof||fr)w=false;dkW=w;b.disabled=w;
+ var L=window.TP3QZ.last,h=w?'⏳ انتظر إشارة الأستاذ لبدء الشرائح':fr?'🔓 فتح الشرائح (تصفح حر)':((!prof&&!(L&&L.end===1)&&folOK())?'🎓 الدخول ومتابعة الأستاذ':dkTxt);if(b.innerHTML!==h)b.innerHTML=h;}
 window.TP3QZ.deckWait=deckWait;
-window.TP3QZ.addrStart=function(){if(addrTimer)return;addrTimer=1;var f=function(){getCfg(function(o,ok){if(ok){showAddr(o&&o.addr||'');var ww=!(o&&o.go===1);deckWait(ww);}else if(dkW===null)deckWait(false);addrTimer=setTimeout(f,dkW?8000:45000);});};deckWait(true);f();};
+window.TP3QZ.addrStart=function(){if(addrTimer)return;addrTimer=1;var f=function(){getCfg(function(o,ok){if(ok){showAddr(o&&o.addr||'');var ww=!(o&&o.go===1);deckWait(ww);}else if(dkW===null)deckWait(false);if(!isFree())addrTimer=setTimeout(f,dkW?8000:45000);});};deckWait(true);f();};
 // ===== التقييم عند الطالب =====
 var ov=$('tqz'),st=null,tick=null,wd=null,lt=0,gp=null,SCR=['tq-wait','tq-box','tq-end','tq-go'],F=null,LG=null;
 function show(id){SCR.forEach(function(x){$(x).classList.toggle('on',x===id)});ov.classList.toggle('on',!!id);document.documentElement.style.overflow=id?'hidden':'';document.body.style.overflow=id?'hidden':'';if(id)ov.scrollTop=0;}
@@ -956,13 +956,20 @@ function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math
 function status(bac,cb){fetch(U+'?action=qzstatus&quiz='+encodeURIComponent(QN)+'&mat='+encodeURIComponent(bac)+'&t='+Date.now()).then(function(r){return r.text()}).then(function(x){cb(String(x).trim());}).catch(function(){cb('');});}
 function fin(bac,sc,tot){ls(KF+bac,{s:sc,t:tot,d:today()});}
 function dmyT(){var d=new Date();return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();}
-function isRv(lg){return lg.mode==='L'||lg.md==='review_past'||(lg.md==='review_attended'&&!!lg.dt&&lg.dt!==dmyT());}
+function isRv(lg){return lg.mode==='L'||lg.md==='review_past'||lg.md==='review_late'||(lg.md==='review_attended'&&!!lg.dt&&lg.dt!==dmyT());}
+// update50: التصفح الحر (من الخادم): دخول ثانٍ، أو بعد تاريخ الحصة، أو بعد الساعة 15:00 يوم الحصة — لا قفل ولا انتظار ولا استطلاع لشريحة الأستاذ
+function fbOf(lg){if(!lg)return '';if(lg.fb==='1')return lg.fbr||'after15';if(lg.md==='review_late')return 'after15';if(lg.md==='review_attended'||lg.md==='review_past')return lg.md;if(lg.mode==='L')return 'review_past';return '';}
+function isFree(){return !isProf()&&!!fbOf(LG);}
+var FBW={review_attended:'دخول ثانٍ: حضورك مسجَّل مسبقاً',review_past:'مراجعة بعد تاريخ الحصة',after15:'بعد الساعة 15:00 من يوم الحصة'};
+function freeApply(){if(!isFree())return;window.SNAV_FREE=fbOf(LG);clearTimeout(fol.T);fol.T=null;if(fol.on){fol.on=false;var D=window.dkCtl;if(D)D.lock(false);}clearTimeout(gwT);deckWait(false);if($('tq-go').classList.contains('on'))goUI(window.TP3QZ.last);try{window.snav&&snav.refresh();}catch(e){}}
+window.TP3QZ.freeApply=freeApply;window.TP3QZ.isFree=isFree;
 function finNote(sc,tot){var n=$('att-lock-note');if(!n||sc===undefined||sc===null||sc==='')return;var p=document.createElement('div');p.style.marginTop='6px';p.id='att-done';p.textContent='✅ أدّيت هذا التقييم (تقييم المكتسبات، المحاضرة 2): نتيجتك \u2066'+sc+' / '+tot+'\u2069';n.appendChild(p);}
 window.tp3QzAfter=function(lg){
  if(!ov||!lg||!lg.bac)return;
  if(isProf())return;
  LG=lg;F={bac:lg.bac,matricule:lg.bac,nom:lg.nom||'',prenom:lg.prenom||'',grp:lg.grp||'',sp:lg.sp||''};F.groupe=(F.sp?F.sp+' - ':'')+(F.grp?'فوج '+F.grp:'');
  if(lg.dn&&lg.sc!==''&&lg.sc!=null&&!ls(KF+lg.bac))fin(lg.bac,lg.sc,lg.tt);
+ freeApply();
  if(isRv(lg)){if(lg.fresh)sumShow('late');return;}   // دخول للمراجعة فقط (بعد تاريخ الحصة): الملخص فقط، دون تقييم
  // update48: لا تقييم في صفحة الحصة؛ التقييمات في فضاء «التقييم المستمر». الحضور كما هو.
  ls(KS,null);ls(KP,null);
@@ -1007,7 +1014,7 @@ function sumShow(mode){sumMode=mode;who($('tq-wname'));
  var qa=$('tq-qa'),qd=$('tq-qd'),sk=$('tq-skip');qa.hidden=!(mode==='load'||mode==='quiz');qd.hidden=true;sk.hidden=(mode==='load'||mode==='quiz');
  if(mode==='load'){var bt=$('tq-start');bt.disabled=true;bt.className='pr';$('tq-wmsg').textContent='… جارٍ التحقق من حالة التقييم';}
  if(mode==='done'||mode==='back'){var fz=ls(KF+F.bac);if(fz&&fz.s!==''&&fz.s!=null){qd.hidden=false;qd.innerHTML='✅ أدّيت هذا التقييم: '+bdi(fz.s+' / '+fz.t);}}
-  if(mode==='late'){var fz2=ls(KF+F.bac),ra=LG&&LG.md==='review_attended';qd.hidden=false;qd.innerHTML='<b id="tq-review">🔒 دخول للمراجعة فقط</b>: '+(ra?'حضورك مسجَّل مسبقاً ولن يُسجَّل مرة أخرى':'انقضى تاريخ حصة التطبيق'+(LG&&LG.dt?' ('+bdi(LG.dt)+')':'')+'، ولا يُحتسب هذا الدخول حضوراً')+'، ولا يمكن إجراء التقييم.'+(fz2&&fz2.s!==''&&fz2.s!=null?'<br>✅ أدّيت هذا التقييم: '+bdi(fz2.s+' / '+fz2.t):'');}
+  if(mode==='late'){var fz2=ls(KF+F.bac),ra=LG&&LG.md==='review_attended';qd.hidden=false;qd.innerHTML=LG&&LG.md==='review_late'?'<b id="tq-review" data-md="review_late">⏰ دخول للمراجعة فقط</b>: انتهى وقت تسجيل الحضور (15:00)، تُعدّ غائباً في هذه الحصة، ويمكنك تصفّح المحتوى للمراجعة فقط. ولا يمكن إجراء التقييم من هذه الصفحة.':'<b id="tq-review">🔒 دخول للمراجعة فقط</b>: '+(ra?'حضورك مسجَّل مسبقاً ولن يُسجَّل مرة أخرى':'انقضى تاريخ حصة التطبيق'+(LG&&LG.dt?' ('+bdi(LG.dt)+')':'')+'، ولا يُحتسب هذا الدخول حضوراً')+'، ولا يمكن إجراء التقييم.'+(fz2&&fz2.s!==''&&fz2.s!=null?'<br>✅ أدّيت هذا التقييم: '+bdi(fz2.s+' / '+fz2.t):'');}
  if(mode==='noqz'){qd.hidden=false;qd.textContent='📝 التقييمات تُجرى الآن فردياً في صفحة «التقييم المستمر» حين يفتحها الأستاذ.';}
  sk.textContent=mode==='late'?'متابعة إلى محتوى الصفحة ←':mode==='back'?'→ رجوع':'متابعة ←';
  sk.onclick=function(){if(mode==='late'){show(null);return;}goWait();};
@@ -1023,14 +1030,15 @@ function sumShow(mode){sumMode=mode;who($('tq-wname'));
 var gwT=null;
 function goWait(){clearInterval(gp);who($('tq-gname'));var fz=F&&ls(KF+F.bac),g=$('tq-gsc');g.innerHTML=fz&&fz.s!==''&&fz.s!=null?'📝 نتيجة تقييم الحصة: '+bdi(fz.s+' / '+fz.t):'';
  show('tq-go');goUI(window.TP3QZ.last);gwTick();}
-function goUI(c){var on=!!(c&&c.go===1);$('tq-enter').hidden=!on;$('tq-gw').textContent=on?'✅ فتح الأستاذ حصة التطبيق: اضغط الزر للدخول.':'⏳ في انتظار أن يفتح الأستاذ حصة التطبيق';$('tq-gw').style.color=on?'#86efac':'';if(on)deckWait(false);}
-function gwTick(){clearTimeout(gwT);if(!$('tq-go').classList.contains('on'))return;getCfg(function(c,ok){if(ok)goUI(c);if($('tq-go').classList.contains('on'))gwT=setTimeout(gwTick,5000+Math.floor(Math.random()*800));});}
+var GE0=null,GM0=null;
+function goUI(c){var fr=isFree(),on=fr||!!(c&&c.go===1),en=$('tq-enter'),gm=$('tq-gmsg');if(GE0===null){GE0=en.innerHTML;GM0=gm?gm.textContent:'';}en.hidden=!on;en.innerHTML=fr?'🔓 فتح الشرائح (تصفح حر)':GE0;if(gm)gm.textContent=fr?'الشرائح لا تتبع شاشة الأستاذ: تنقّل بينها بحرية بزرَّي السابق والتالي.':GM0;$('tq-gw').textContent=fr?'🔓 التصفح الحر مفعَّل ('+(FBW[fbOf(LG)]||'')+'): اضغط الزر لفتح الشرائح.':on?'✅ فتح الأستاذ حصة التطبيق: اضغط الزر للدخول.':'⏳ في انتظار أن يفتح الأستاذ حصة التطبيق';$('tq-gw').style.color=on?'#86efac':'';if(on)deckWait(false);}
+function gwTick(){clearTimeout(gwT);if(isFree())return;if(!$('tq-go').classList.contains('on'))return;getCfg(function(c,ok){if(ok)goUI(c);if($('tq-go').classList.contains('on'))gwT=setTimeout(gwTick,5000+Math.floor(Math.random()*800));});}
 $('tq-enter').onclick=function(){clearTimeout(gwT);show(null);deckWait(false);if(window.openDeck)openDeck();};
 $('tq-gclose').onclick=function(){clearTimeout(gwT);show(null);var t=$('mod-slides');if(t)setTimeout(function(){t.scrollIntoView({behavior:'smooth'})},200);};
 $('tq-gsum').onclick=function(){clearTimeout(gwT);sumShow('back');};
 window.TP3QZ.goWait=function(){if(F)goWait();};
 // ===== وضع المتابعة عند الطالب: الشريحة يحددها الأستاذ (cfg.si) حتى «إنهاء الحصة» (cfg.end=1) =====
-function folOK(){return !isProf()&&!!LG&&LG.mode==='P'&&(!LG.day||LG.day===today());}
+function folOK(){return !isProf()&&!isFree()&&!!LG&&LG.mode==='P'&&(!LG.day||LG.day===today());}
 var fol={on:false,T:null};
 function folApply(c){var D=window.dkCtl;if(!D)return;if(st&&!st.done)return;   // أثناء التقييم: لا متابعة للأستاذ
  if(c&&c.end===1){if(fol.on){fol.on=false;D.lock(false);deckWait(dkW);}return;}
@@ -1194,13 +1202,16 @@ window.tp3ProfOn=function(){var P=$('tp3-prof');if(!P)return;try{key=sessionStor
   function esc(t){var e=document.createElement('span');e.textContent=t;return e.innerHTML;}
   (function(){if(document.getElementById('rv46-css'))return;var s=document.createElement('style');s.id='rv46-css';s.textContent='.att-rev{background:#fffbeb;border:2px solid #f59e0b;color:#78350f;line-height:1.7}.dark .att-rev,html.dark .att-rev{background:#3b2405;border-color:#d97706;color:#fde68a}.att-rev b.rv46{font-size:1.08em}';document.head.appendChild(s);})();
   function dmyT(){var d=new Date();return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();}
-  function rvTxt(st){var dn=st.dn?'<div style="margin-top:6px" id="att-done">✅ أدّيت هذا التقييم'+(st.sc!==''&&st.sc!=null?': <bdi dir="ltr">'+esc(st.sc+' / '+st.tt)+'</bdi>':'')+'، ولا يمكن إعادته.</div>':'';if(st.md==='review_past'||st.mode==='L')return '<b class="rv46" id="att-review" data-md="review_past">🔒 دخول للمراجعة فقط</b><br>انقضى تاريخ حصة التطبيق'+(st.dt?' (<bdi dir="ltr">'+esc(st.dt)+'</bdi>)':'')+'؛ هذا الدخول للمراجعة فقط ولا يُحتسب حضوراً، ولا يمكن إجراء التقييم.'+dn;if(st.md==='review_attended')return '<b class="rv46" id="att-review" data-md="review_attended">🔒 دخول للمراجعة فقط</b><br>حضورك مسجَّل مسبقاً في هذه الحصة'+(st.hh?' (الساعة <bdi dir="ltr">'+esc(st.hh)+'</bdi>)':'')+'؛ لن يُسجَّل مرة أخرى.'+dn;return '';}
+  function rvTxt(st){var dn=st.dn?'<div style="margin-top:6px" id="att-done">✅ أدّيت هذا التقييم'+(st.sc!==''&&st.sc!=null?': <bdi dir="ltr">'+esc(st.sc+' / '+st.tt)+'</bdi>':'')+'، ولا يمكن إعادته.</div>':'';if(st.md==='review_late')return '<b class="rv46" id="att-review" data-md="review_late">⏰ دخول للمراجعة فقط</b><br>انتهى وقت تسجيل الحضور (15:00)، تُعدّ غائباً في هذه الحصة، ويمكنك تصفّح المحتوى للمراجعة فقط.'+dn;if(st.md==='review_past'||st.mode==='L')return '<b class="rv46" id="att-review" data-md="review_past">🔒 دخول للمراجعة فقط</b><br>انقضى تاريخ حصة التطبيق'+(st.dt?' (<bdi dir="ltr">'+esc(st.dt)+'</bdi>)':'')+'؛ هذا الدخول للمراجعة فقط ولا يُحتسب حضوراً، ولا يمكن إجراء التقييم.'+dn;if(st.md==='review_attended')return '<b class="rv46" id="att-review" data-md="review_attended">🔒 دخول للمراجعة فقط</b><br>حضورك مسجَّل مسبقاً في هذه الحصة'+(st.hh?' (الساعة <bdi dir="ltr">'+esc(st.hh)+'</bdi>)':'')+'؛ لن يُسجَّل مرة أخرى.'+dn;return '';}
   function noSlides(){var b=$('deck-btn');if(b){b.disabled=true;b.onclick=null;b.removeAttribute('onclick');b.innerHTML='<i class="fa-solid fa-lock ml-2"></i>عرض الشرائح غير متاح';}var s=$('mod-slides');if(s){var p=s.querySelector('p');if(p)p.textContent='الشرائح متاحة يوم حصة التطبيق فقط';}window.openDeck=function(){};}
-  function paint(st){var who=st.nom?' <bdi dir="ltr">'+esc((st.nom+' '+st.prenom).trim())+'</bdi>'+(st.grp?' (الفوج '+esc(st.grp)+')':''):'';var rv=rvTxt(st);
-    if(st.mode==='L'){noSlides();note(rv+'<div style="margin-top:4px">'+who+' يمكنك الاطلاع على محتوى الحصة أدناه دون الشرائح.</div>','rev');}
+  function fbOf(st){if(st.fb==='1')return st.fbr||'after15';if(st.md==='review_late')return 'after15';if(st.md==='review_attended'||st.md==='review_past')return st.md;if(st.mode==='L')return 'review_past';return '';}
+  function setFree(st){window.SNAV_FREE=fbOf(st);try{if(window.SNAV_FREE&&window.TP3QZ&&TP3QZ.freeApply)TP3QZ.freeApply();if(window.snav)snav.refresh();}catch(e){}}
+  function paint(st){setFree(st);var who=st.nom?' <bdi dir="ltr">'+esc((st.nom+' '+st.prenom).trim())+'</bdi>'+(st.grp?' (الفوج '+esc(st.grp)+')':''):'';var rv=rvTxt(st);
+    if(st.mode==='L'&&fbOf(st))note(rv+'<div style="margin-top:4px">'+who+' محتوى الحصة والشرائح متاحة أدناه للمراجعة في وضع التصفح الحر.</div>','rev');
+    else if(st.mode==='L'){noSlides();note(rv+'<div style="margin-top:4px">'+who+' يمكنك الاطلاع على محتوى الحصة أدناه دون الشرائح.</div>','rev');}
     else if(rv)note(rv+'<div style="margin-top:4px">'+who+' محتوى الحصة متاح أدناه للمراجعة.</div>','rev');
     else note('<i class="fa-solid fa-circle-check ml-1 text-emerald-600"></i> تم تسجيل حضورك في حصة التطبيق'+who+(st.hh?' (الساعة '+esc(st.hh)+')':'')+'. محتوى الحصة متاح الآن أدناه.','ok');}
-  function recheck(sv){if(!sv||!/^\d{6,9}$/.test(String(sv.bac||'')))return;try{fetch(U,{method:'POST',body:new URLSearchParams({bac:sv.bac,code:sv.code||'',lecture:LECN,dry:'1'})}).then(function(r){return r.text()}).then(function(x){var p=String(x).trim().split('|');if(p[0]==='OK')p.splice(1,0,'');else if(p[0]!=='DUPLICATE')return;var md=p[8]||'',dn=p[9]==='1';if(md!=='review_attended'&&md!=='review_past')return;if(md===sv.md&&dn===!!sv.dn)return;sv.md=md;sv.dn=dn;sv.sc=p[10]||'';sv.tt=p[11]||'';if(p[1])sv.hh=p[1];if(p[6]==='L')sv.mode='L';if(p[7])sv.dt=p[7];try{localStorage.setItem(KEY,JSON.stringify(sv))}catch(e){}paint(sv);try{window.lqRefresh&&window.lqRefresh();}catch(e){}}).catch(function(){});}catch(e){}}
+  function recheck(sv){if(!sv||!/^\d{6,9}$/.test(String(sv.bac||'')))return;try{fetch(U,{method:'POST',body:new URLSearchParams({bac:sv.bac,code:sv.code||'',lecture:LECN,dry:'1'})}).then(function(r){return r.text()}).then(function(x){var p=String(x).trim().split('|');if(p[0]==='OK')p.splice(1,0,'');else if(p[0]!=='DUPLICATE')return;var md=p[8]||'',dn=p[9]==='1',fb=p[12]==='1'?'1':'',fbr=p[13]||'',ch=false;if(fb&&(sv.fb!==fb||sv.fbr!==fbr)){sv.fb=fb;sv.fbr=fbr;ch=true;}if((md==='review_attended'||md==='review_past'||md==='review_late')&&!(md===sv.md&&dn===!!sv.dn)){sv.md=md;sv.dn=dn;sv.sc=p[10]||'';sv.tt=p[11]||'';if(p[1])sv.hh=p[1];if(p[6]==='L')sv.mode='L';if(p[7])sv.dt=p[7];ch=true;}if(!ch)return;try{localStorage.setItem(KEY,JSON.stringify(sv))}catch(e){}paint(sv);try{window.lqRefresh&&window.lqRefresh();}catch(e){}}).catch(function(){});}catch(e){}}
   function unlock(st){document.body.classList.remove('att-locked');var w=$('att-frame-wrap');if(w)w.style.display='none';
     var who=st.nom?' <bdi dir="ltr">'+esc((st.nom+' '+st.prenom).trim())+'</bdi>'+(st.grp?' (الفوج '+esc(st.grp)+')':''):'';
 paint(st);
@@ -1226,7 +1237,7 @@ paint(st);
       if(p[0]==='NO_ROSTER'){bad('قوائم الطلبة غير مهيّأة بعد. أبلغ الأستاذ.');return;}
       if(p[0]==='OK')p.splice(1,0,'');else if(p[0]!=='DUPLICATE'){bad('الخادم مشغول، أعد المحاولة.');return;}
       // p: الحالة، الساعة، اللقب، الاسم، التخصص، الفوج، P/L، التاريخ
-      var st={bac:bac,hh:p[1]||'',nom:p[2]||'',prenom:p[3]||'',sp:p[4]||'',grp:p[5]||'',mode:p[6]==='L'?'L':'P',dt:p[7]||'',md:p[8]||'',dn:p[9]==='1',sc:p[10]||'',tt:p[11]||'',code:code,day:(function(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)})(new Date())};
+      var st={bac:bac,hh:p[1]||'',nom:p[2]||'',prenom:p[3]||'',sp:p[4]||'',grp:p[5]||'',mode:p[6]==='L'?'L':'P',dt:p[7]||'',md:p[8]||'',dn:p[9]==='1',sc:p[10]||'',tt:p[11]||'',fb:p[12]==='1'?'1':'',fbr:p[13]||'',code:code,day:(function(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)})(new Date())};
       try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}
       st.fresh=1;unlock(st);try{window.lqRefresh&&window.lqRefresh();}catch(e){}var t=$('mod-intro');if(t)setTimeout(function(){t.scrollIntoView({behavior:'smooth'});},1200);
     }).catch(function(){bad('تعذّر الاتصال، تحقق من الإنترنت وأعد المحاولة.');});});
