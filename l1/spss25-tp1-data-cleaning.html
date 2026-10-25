@@ -1098,5 +1098,6 @@ DESCRIPTIVES VARIABLES=Monthly_Income_1 Inc_Median.</pre><p class="text-[11px] t
     fetch('https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec',{method:'POST',body:new URLSearchParams(d)}).then(function(r){return r.text();}).then(function(x){x=String(x).trim();if(x==='BAD_CODE'){b.disabled=false;m.textContent='رمز الحصة غير صحيح.';m.className='text-sm mr-2 text-red-600';return;}var q=x.split('|'),rv=null;if(q[0]==='REVIEW_PAST')rv={md:'review_past',dt:q[1]||''};else if(q[0]==='DUPLICATE')rv={md:'review_attended',hh:q[1]||''};else if(x!=='OK'){throw new Error(x);}try{localStorage.setItem(KEY,'1');localStorage.setItem(KEY+'-rv',JSON.stringify(rv));}catch(e){} unlock(rv); var t=document.getElementById('mod-intro')||document.querySelector('#main-content-wrapper > section:not(#mod-attendance)'); if(t) setTimeout(function(){t.scrollIntoView({behavior:'smooth'});},1200);}).catch(function(){b.disabled=false;m.textContent='تعذّر الإرسال، تحقق من الاتصال وأعد المحاولة.';m.className='text-sm mr-2 text-red-600';});});
 })();
 </script>
+<script src="../assets/session-nav.js" defer></script>
 </body>
 </html>

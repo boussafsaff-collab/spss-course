@@ -123,7 +123,8 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 <button class="btn" id="back" type="button"><i class="fa-solid fa-list"></i>العودة إلى قائمة التقييمات</button>
 </div>
 
-<a href="../index.html" class="btn" id="home" style="margin-top:4px;"><i class="fa-solid fa-house"></i>العودة إلى صفحة المقياس</a>
+<a href="../" class="btn" id="home" style="margin-top:4px;">🏠 العودة إلى الصفحة الرئيسية</a>
+<a href="teacher/" class="btn lt" id="tlogin" style="margin-top:10px;border:1.5px dashed #94a3b8;font-size:15px;min-height:46px;">👨‍🏫 دخول الأستاذ (فتح، غلق، إلغاء)</a>
 <p class="foot"><i class="fa-solid fa-building-columns" style="color:#94a3b8;margin-left:6px;"></i>جامعة قسنطينة 2، د. بوصفصاف فريد</p>
 </div>
 <script>
@@ -145,7 +146,7 @@ function fnum(x){x=Number(x);return isNaN(x)?'':String(Math.round(x*100)/100);}
 function dur(s){s=Math.round(s);if(s>=60&&s%60===0)return (s/60)+' دقائق';if(s>=60)return Math.floor(s/60)+' د '+(s%60)+' ث';return s+' ثانية';}
 var bac=(LS.get('as_bac')||'').replace(/\D/g,''), who=null, items=[], Q=null, timers=[];
 function show(id){['list','quiz','result'].forEach(function(k){$(k).classList.toggle('hide',k!==id);});
-  $('home').classList.toggle('hide',id==='quiz');$('info').classList.toggle('hide',id!=='list');
+  $('home').classList.toggle('hide',id==='quiz');$('tlogin').classList.toggle('hide',id==='quiz');$('info').classList.toggle('hide',id!=='list');
   $('login').classList.toggle('hide',id!=='list'||!!who);$('whoc').classList.toggle('hide',id==='result'||!who);}
 function render(){
   ['lec','tp'].forEach(function(cat){

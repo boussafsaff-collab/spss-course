@@ -1576,5 +1576,6 @@ d.addEventListener('click',function(e){var c=e.target.closest('[data-ex]');if(c)
 d.querySelector('.cnt').addEventListener('click',function(e){e.stopPropagation();tap++;clearTimeout(tt);tt=setTimeout(function(){tap=0},1500);if(tap>=5){tap=0;if(prof){if(confirm('الخروج من وضع الأستاذ؟')){prof=null;localStorage.removeItem('dk-prof');lab();}}else{var k=prompt('رمز الأستاذ');if(k){prof=k;localStorage.setItem('dk-prof',k);go(i);}}}});
 var sx=null,sy;d.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
 d.addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)){go(dx>0?i+1:i-1,1);}});
-document.addEventListener('keydown',function(e){if(!d.classList.contains('on'))return;if(e.key=='ArrowLeft')go(i+1,1);else if(e.key=='ArrowRight')go(i-1,1);else if(e.key=='Escape')close();});})();</script></body>
+document.addEventListener('keydown',function(e){if(!d.classList.contains('on'))return;if(e.key=='ArrowLeft')go(i+1,1);else if(e.key=='ArrowRight')go(i-1,1);else if(e.key=='Escape')close();});})();</script><script src="../assets/session-nav.js" defer></script>
+</body>
 </html>
