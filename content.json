@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "source": "static",
+  "updated": "",
+  "items": [
+    {"type": "lecture", "number": 1, "title": "فلسفة تطهير البيانات (Data Cleaning) في SPSS 25", "date": "", "path": "l1/spss25-data-cleaning.html", "visible": true},
+    {"type": "lecture", "number": 2, "title": "ثبات وصدق أدوات الدراسة: معامل ألفا كرونباخ والصدق الاتساقي الداخلي", "date": "", "path": "l2/spss25-reliability-validity.html", "visible": true},
+    {"type": "lecture", "number": 3, "title": "التحليل العاملي الاستكشافي (EFA): اختزال البيانات واختبار KMO وتدوير المحاور Varimax", "date": "", "path": "l3/spss25-efa.html", "visible": true},
+    {"type": "tp", "number": 1, "title": "تطهير البيانات في SPSS 25", "date": "", "path": "l1/spss25-tp1-data-cleaning.html", "visible": true},
+    {"type": "tp", "number": 2, "title": "الثبات والصدق في SPSS 25", "date": "", "path": "l2/spss25-tp2-reliability-validity.html", "visible": true},
+    {"type": "tp", "number": 3, "title": "التحليل العاملي الاستكشافي (EFA) في SPSS 27", "date": "", "path": "l3/spss25-efa-tp.html", "visible": true}
+  ]
+}
