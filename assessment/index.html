@@ -4,34 +4,297 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>التقييم المستمر، برمجيات إحصائية SPSS، د. بوصفصاف فريد</title>
-<meta name="description" content="فضاء التقييم المستمر لمقياس برمجيات إحصائية SPSS (قريباً).">
+<meta name="description" content="فضاء التقييم المستمر لمقياس برمجيات إحصائية SPSS: تقييمات المحاضرات والتطبيقات بشكل فردي.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>html,body{margin:0;background:#e9eef5;}body{padding:clamp(6px,2vw,24px) clamp(4px,1.5vw,16px);}a:hover{filter:brightness(1.06);}</style>
+<style>
+html,body{margin:0;background:#e9eef5;}
+body{padding:clamp(6px,2vw,24px) clamp(4px,1.5vw,16px);}
+*{box-sizing:border-box;}
+.w{font-family:'Cairo','Segoe UI','Noto Sans Arabic',Tahoma,sans-serif;background:#f4f7fb;color:#1e293b;border-radius:22px;padding:clamp(8px,2.5vw,22px);max-width:760px;margin:0 auto;line-height:1.8;text-align:right;}
+.hd{position:relative;overflow:hidden;background:linear-gradient(135deg,#0b1e33 0%,#14365c 55%,#1d4f86 100%);background-color:#0b1e33;color:#fff;border-radius:20px;padding:clamp(16px,5vw,30px) clamp(14px,4vw,30px);margin:0 0 14px;box-shadow:0 14px 34px rgba(11,30,51,.28);}
+.hd:before{content:"";position:absolute;top:-70px;left:-70px;width:220px;height:220px;border-radius:50%;background:rgba(233,196,106,.10);}
+.hd .r{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:14px;}
+.hd .ic{flex:0 0 auto;width:clamp(48px,13vw,66px);height:clamp(48px,13vw,66px);border-radius:18px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:clamp(22px,6.5vw,30px);color:#e9c46a;}
+.pill{display:inline-flex;align-items:center;background:rgba(233,196,106,.16);border:1px solid rgba(233,196,106,.45);color:#f6e3b4;border-radius:999px;padding:3px 12px;font-size:13px;font-weight:700;}
+h1{margin:8px 0 0;font-size:clamp(22px,6.5vw,34px);font-weight:800;color:#fff;line-height:1.35;}
+.card{background:#fff;border:1px solid #e3e9f2;border-radius:18px;padding:clamp(12px,4vw,24px);margin:0 0 14px;box-shadow:0 1px 2px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.06);}
+h2{margin:0 0 8px;font-size:clamp(18px,5.2vw,22px);font-weight:800;color:#0f2744;}
+h3{margin:4px 0 10px;font-size:16px;font-weight:800;color:#14365c;display:flex;align-items:center;gap:8px;}
+.note{background:linear-gradient(135deg,#fffaf0,#fdf3dc);border:1px solid #f1d9a0;border-right:5px solid #d4a73c;border-radius:16px;padding:12px 14px;margin:0 0 14px;color:#3f3416;font-size:14.5px;}
+label{display:block;font-weight:700;color:#334155;margin:0 0 6px;font-size:15px;}
+input[type=text],input[type=password],input[type=tel],select,textarea{width:100%;font:inherit;font-size:17px;padding:10px 12px;border:1.5px solid #cbd5e1;border-radius:12px;background:#fff;color:#0f172a;min-height:48px;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-shadow:0 0 0 3px rgba(29,79,134,.15);}
+.btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:50px;border:0;border-radius:14px;padding:9px 14px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;background:#0f2744;color:#fff;box-shadow:0 8px 20px rgba(15,23,42,.16);text-decoration:none;}
+.btn:disabled{opacity:.55;cursor:default;}
+.btn.go{background:#16a34a;}.btn.lt{background:#e2e8f0;color:#0f2744;box-shadow:none;}.btn.red{background:#dc2626;}
+.row{display:flex;gap:8px;flex-wrap:wrap;}.row>*{flex:1 1 120px;}
+.err{color:#b91c1c;font-weight:700;font-size:14.5px;margin:8px 0 0;min-height:1em;}
+.who{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.who b{font-size:17px;color:#0f2744;}.who span{color:#475569;font-size:14px;}
+.lnk{background:none;border:0;color:#1d4f86;font:inherit;font-weight:700;text-decoration:underline;cursor:pointer;padding:4px;}
+.it{border:1px solid #e3e9f2;border-radius:16px;padding:12px;margin:0 0 10px;background:#fbfdff;}
+.it .t{font-weight:800;color:#0f2744;font-size:16px;line-height:1.5;}
+.it .s{color:#475569;font-size:14px;line-height:1.6;margin:2px 0 6px;}
+.it .m{color:#64748b;font-size:13px;display:flex;flex-wrap:wrap;gap:4px 12px;margin:0 0 8px;}
+.bdg{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:800;white-space:nowrap;}
+.b-open{background:#dcfce7;color:#166534;}.b-closed{background:#e2e8f0;color:#475569;}.b-done{background:#dbeafe;color:#1e40af;}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.qhd{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 8px;}
+.clock{font-weight:800;font-size:20px;color:#0f2744;background:#eef2f7;border-radius:12px;padding:2px 12px;min-width:84px;text-align:center;direction:ltr;}
+.clock.warn{background:#fee2e2;color:#b91c1c;}
+.bar{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin:0 0 12px;}.bar i{display:block;height:100%;background:#1d4f86;width:100%;transition:width .2s linear;}
+.bar i.warn{background:#dc2626;}
+.qt{font-size:17px;font-weight:700;color:#0f172a;margin:0 0 10px;line-height:1.7;}
+.op{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:right;font:inherit;font-size:16px;padding:10px 12px;margin:0 0 8px;border:1.5px solid #cbd5e1;border-radius:12px;background:#fff;color:#0f172a;cursor:pointer;min-height:48px;line-height:1.6;}
+.op .L{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:#eef2f7;display:flex;align-items:center;justify-content:center;font-weight:800;color:#14365c;}
+.op.on{border-color:#1d4f86;background:#eff6ff;}.op.on .L{background:#1d4f86;color:#fff;}
+.op bdi{unicode-bidi:plaintext;}
+.dots{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}
+.dots button{width:36px;height:36px;border-radius:10px;border:1.5px solid #cbd5e1;background:#fff;font:inherit;font-weight:800;color:#334155;cursor:pointer;}
+.dots button.a{background:#dbeafe;border-color:#93c5fd;}.dots button.c{border-color:#0f2744;box-shadow:0 0 0 2px #0f2744 inset;}
+.res{text-align:center;}.res .sc{font-size:clamp(34px,11vw,46px);font-weight:800;color:#0f2744;direction:ltr;}
+.det{letter-spacing:3px;font-size:18px;direction:ltr;}
+.hide{display:none!important;}
+.foot{text-align:center;font-size:13px;color:#64748b;margin:12px 0 2px;}
+@media (max-width:330px){body{padding:4px 2px;}.w{border-radius:14px;padding:6px;}.card{border-radius:14px;padding:10px;}.op{font-size:15px;padding:8px;}.qt{font-size:16px;}.btn{font-size:15px;}}
+</style>
 </head>
 <body>
-<div dir="rtl" style="font-family:'Cairo','Segoe UI','Noto Sans Arabic',Tahoma,sans-serif;background:#f4f7fb;color:#1e293b;border-radius:22px;padding:clamp(10px,2.5vw,22px);max-width:760px;margin:0 auto;line-height:1.8;box-sizing:border-box;text-align:right;">
-<div style="position:relative;overflow:hidden;background:linear-gradient(135deg,#0b1e33 0%,#14365c 55%,#1d4f86 100%);background-color:#0b1e33;color:#fff;border-radius:20px;padding:clamp(20px,5vw,32px) clamp(16px,4vw,32px);margin:0 0 16px;box-shadow:0 14px 34px rgba(11,30,51,.28);">
-<div style="position:absolute;top:-70px;left:-70px;width:220px;height:220px;border-radius:50%;background:rgba(233,196,106,.10);"></div>
-<div style="position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:16px;">
-<div style="flex:0 0 auto;width:clamp(54px,13vw,68px);height:clamp(54px,13vw,68px);border-radius:18px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:clamp(24px,6.5vw,30px);color:#e9c46a;"><i class="fa-solid fa-clipboard-check"></i></div>
-<div style="flex:1 1 220px;min-width:0;">
-<span style="display:inline-flex;align-items:center;background:rgba(233,196,106,.16);border:1px solid rgba(233,196,106,.45);color:#f6e3b4;border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700;">برمجيات إحصائية <bdi dir="ltr" style="margin-right:5px;">SPSS</bdi></span>
-<h1 style="margin:10px 0 0;font-size:clamp(24px,6.5vw,34px);font-weight:800;color:#fff;line-height:1.35;">التقييم المستمر</h1>
+<div class="w" dir="rtl">
+<div class="hd"><div class="r">
+<div class="ic"><i class="fa-solid fa-clipboard-check"></i></div>
+<div style="flex:1 1 200px;min-width:0;">
+<span class="pill">برمجيات إحصائية <bdi dir="ltr" style="margin-right:5px;">SPSS</bdi></span>
+<h1>التقييم المستمر</h1>
 </div></div></div>
-<div style="background:#fff;border:1px solid #e3e9f2;border-radius:18px;padding:clamp(18px,4.5vw,28px);margin:0 0 16px;box-shadow:0 1px 2px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.06);text-align:center;">
-<div style="width:64px;height:64px;margin:0 auto 10px;border-radius:50%;background:#d1fae5;color:#065f46;display:flex;align-items:center;justify-content:center;font-size:28px;"><i class="fa-solid fa-hourglass-half"></i></div>
-<h2 style="margin:0 0 8px;font-size:clamp(22px,6vw,28px);font-weight:800;color:#0f2744;">قريباً</h2>
-<p style="margin:0 auto 10px;max-width:560px;font-size:15.5px;color:#334155;">نعمل على تجهيز هذا الفضاء، وسيُتاح قريباً بإذن الله.</p>
-<p style="margin:0 auto;max-width:560px;font-size:15px;color:#475569;">سيمكّن هذا الفضاء الطلبة المتأخرين من إجراء التقييمات التي فاتتهم بشكل فردي.</p>
+
+<!-- الدخول -->
+<div class="card" id="login">
+<h2><i class="fa-solid fa-id-card" style="color:#1d4f86;margin-left:8px;"></i>الدخول برقم البكالوريا</h2>
+<form id="lf" autocomplete="off">
+<label for="bac">رقم البكالوريا</label>
+<input type="tel" id="bac" inputmode="numeric" dir="ltr" placeholder="مثال: 12345678" maxlength="14">
+<div class="err" id="lerr"></div>
+<button class="btn" id="lbtn" type="submit"><i class="fa-solid fa-right-to-bracket"></i>دخول</button>
+</form>
 </div>
-<div style="background:linear-gradient(135deg,#fffaf0,#fdf3dc);border:1px solid #f1d9a0;border-right:5px solid #d4a73c;border-radius:18px;padding:clamp(14px,4vw,18px);margin:0 0 16px;color:#3f3416;font-size:14.5px;">
-<i class="fa-solid fa-circle-info" style="color:#b7862a;margin-left:8px;"></i>إلى حين إتاحته، تُجرى التقييمات داخل صفحات المحاضرات والتطبيقات أثناء الحصة. احتفظ برابط صفحة المقياس، فكل الجديد يُنشر فيها.
+
+<div class="card hide" id="whoc">
+<div class="who"><i class="fa-solid fa-user-graduate" style="color:#1d4f86;font-size:22px;"></i>
+<div style="flex:1;min-width:0;"><b id="wname"></b><br><span id="wgrp"></span></div>
+<button class="lnk" id="out" type="button">تغيير الرقم</button></div>
 </div>
-<a href="../index.html" style="display:flex;align-items:center;justify-content:center;gap:10px;min-height:52px;background:#0f2744;color:#fff;text-decoration:none;font-weight:800;font-size:16px;border-radius:14px;padding:10px 16px;box-shadow:0 8px 20px rgba(15,23,42,.18);"><i class="fa-solid fa-house"></i>العودة إلى صفحة المقياس</a>
-<p style="text-align:center;font-size:13px;color:#64748b;margin:14px 0 2px;"><i class="fa-solid fa-building-columns" style="color:#94a3b8;margin-left:6px;"></i>جامعة قسنطينة 2، د. بوصفصاف فريد</p>
+
+<div class="note" id="info"><i class="fa-solid fa-circle-info" style="color:#b7862a;margin-left:8px;"></i>كل تقييم فردي ومحاولة واحدة فقط، ويُجرى حين يفتحه الأستاذ. يبدأ العدّاد عند الضغط على «ابدأ التقييم» ولا يتوقف إن أغلقت الصفحة، وتُرسل الإجابات تلقائياً عند انتهاء الوقت.</div>
+
+<!-- القائمة -->
+<div id="list">
+<div class="card"><h3><i class="fa-solid fa-chalkboard-user"></i>تقييمات المحاضرات</h3><div id="L-lec"><p class="s" style="color:#64748b;">جارٍ التحميل…</p></div></div>
+<div class="card"><h3><i class="fa-solid fa-laptop-code"></i>تقييمات التطبيق</h3><div id="L-tp"><p class="s" style="color:#64748b;">جارٍ التحميل…</p></div></div>
+<button class="btn lt" id="rf" type="button" style="margin:0 0 14px;"><i class="fa-solid fa-rotate"></i>تحديث القائمة</button>
 </div>
+
+<!-- التقييم -->
+<div class="card hide" id="quiz">
+<div class="qhd"><div style="min-width:0;flex:1;"><div id="qtitle" style="font-weight:800;color:#0f2744;line-height:1.5;"></div><div id="qpos" style="color:#64748b;font-size:14px;"></div></div><div class="clock" id="clock">--:--</div></div>
+<div class="bar"><i id="barf"></i></div>
+<div class="qt" id="qtext"></div>
+<div id="opts"></div>
+<div class="dots hide" id="dots"></div>
+<div class="row" id="navall" style="margin-top:6px;">
+<button class="btn lt" id="prev" type="button"><i class="fa-solid fa-arrow-right"></i>السابق</button>
+<button class="btn lt" id="next" type="button">التالي<i class="fa-solid fa-arrow-left"></i></button>
+</div>
+<button class="btn go" id="nextper" type="button" style="margin-top:6px;">السؤال التالي<i class="fa-solid fa-arrow-left"></i></button>
+<button class="btn" id="fin" type="button" style="margin-top:10px;"><i class="fa-solid fa-paper-plane"></i>إنهاء وإرسال الإجابات</button>
+<div class="err" id="qerr"></div>
+</div>
+
+<!-- النتيجة -->
+<div class="card hide res" id="result">
+<div id="rico" style="width:64px;height:64px;margin:0 auto 8px;border-radius:50%;background:#dcfce7;color:#166534;display:flex;align-items:center;justify-content:center;font-size:28px;"><i class="fa-solid fa-check"></i></div>
+<h2 id="rh">تم إرسال إجاباتك</h2>
+<div class="sc" id="rsc"></div>
+<div class="det" id="rdet"></div>
+<p id="rmsg" style="color:#475569;margin:6px 0 12px;"></p>
+<button class="btn" id="back" type="button"><i class="fa-solid fa-list"></i>العودة إلى قائمة التقييمات</button>
+</div>
+
+<a href="../index.html" class="btn" id="home" style="margin-top:4px;"><i class="fa-solid fa-house"></i>العودة إلى صفحة المقياس</a>
+<p class="foot"><i class="fa-solid fa-building-columns" style="color:#94a3b8;margin-left:6px;"></i>جامعة قسنطينة 2، د. بوصفصاف فريد</p>
+</div>
+<script>
+(function(){
+'use strict';
+var API='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec';
+var $=function(id){return document.getElementById(id);};
+var LS={get:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},set:function(k,v){try{localStorage.setItem(k,v);}catch(e){}},del:function(k){try{localStorage.removeItem(k);}catch(e){}}};
+var ERR={UNKNOWN_BAC:'رقم البكالوريا غير موجود في القوائم. تحقق منه أو راجع الأستاذ.',NO_ROSTER:'القوائم غير متاحة حالياً، أعد المحاولة لاحقاً.',CLOSED:'هذا التقييم مغلق حالياً. انتظر أن يفتحه الأستاذ.',DONE:'أنجزت هذا التقييم من قبل (محاولة واحدة فقط).',NO_BANK:'أسئلة هذا التقييم غير جاهزة بعد.',BUSY:'الخادم مشغول، أعد المحاولة بعد ثوانٍ.',BAD_ID:'تقييم غير معروف، حدّث الصفحة.',NET:'تعذّر الاتصال بالخادم. تحقق من الإنترنت وأعد المحاولة.'};
+function msg(e){return ERR[e]||ERR.NET;}
+function call(o,get){
+  var u=API, opt;
+  if(get){u+='?'+new URLSearchParams(o).toString()+'&t='+Date.now();opt={cache:'no-store'};}
+  else opt={method:'POST',body:new URLSearchParams(o)};
+  return fetch(u,opt).then(function(r){return r.text();}).then(function(t){try{return JSON.parse(t);}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});
+}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function fnum(x){x=Number(x);return isNaN(x)?'':String(Math.round(x*100)/100);}
+function dur(s){s=Math.round(s);if(s>=60&&s%60===0)return (s/60)+' دقائق';if(s>=60)return Math.floor(s/60)+' د '+(s%60)+' ث';return s+' ثانية';}
+var bac=(LS.get('as_bac')||'').replace(/\D/g,''), who=null, items=[], Q=null, timers=[];
+function show(id){['list','quiz','result'].forEach(function(k){$(k).classList.toggle('hide',k!==id);});
+  $('home').classList.toggle('hide',id==='quiz');$('info').classList.toggle('hide',id!=='list');
+  $('login').classList.toggle('hide',id!=='list'||!!who);$('whoc').classList.toggle('hide',id==='result'||!who);}
+function render(){
+  ['lec','tp'].forEach(function(cat){
+    var h='', arr=items.filter(function(i){return i.cat===cat;});
+    if(!arr.length) h='<p class="s" style="color:#64748b;">لا توجد تقييمات بعد.</p>';
+    arr.forEach(function(i){
+      var st=i.done?'<span class="bdg b-done"><i class="fa-solid fa-check"></i>أُنجز</span>':(i.open?'<span class="bdg b-open"><i class="fa-solid fa-lock-open"></i>مفتوح</span>':'<span class="bdg b-closed"><i class="fa-solid fa-lock"></i>مغلق</span>');
+      var m=[];
+      if(i.n) m.push('<span><i class="fa-regular fa-circle-question"></i> '+i.n+' أسئلة</span>');
+      if(i.mode==='all') m.push('<span><i class="fa-regular fa-clock"></i> '+dur(i.sec)+' للتقييم كله</span>');
+      else if(i.per) m.push('<span><i class="fa-regular fa-clock"></i> '+i.per+' ثوانٍ لكل سؤال</span>');
+      else if(i.sec) m.push('<span><i class="fa-regular fa-clock"></i> مدة محددة لكل سؤال</span>');
+      var b='';
+      if(i.done) b='<div style="font-weight:800;color:#1e40af;">علامتك: <bdi dir="ltr">'+fnum(i.done.s)+' / '+fnum(i.done.tot)+'</bdi></div>';
+      else if(!who) b='';
+      else if(!i.ready) b='<div class="s">الأسئلة غير جاهزة بعد.</div>';
+      else if(LS.get(skey(i.id))) b='<button class="btn go" type="button" data-go="'+esc(i.id)+'"><i class="fa-solid fa-play"></i>متابعة التقييم</button>';
+      else if(i.open) b='<button class="btn go" type="button" data-go="'+esc(i.id)+'"><i class="fa-solid fa-play"></i>ابدأ التقييم</button>';
+      else b='<div class="s" style="margin:0;">مغلق حالياً، يفتحه الأستاذ في الوقت المحدد.</div>';
+      h+='<div class="it" data-id="'+esc(i.id)+'"><div class="top"><div class="t">'+esc(i.title)+'</div>'+st+'</div><div class="s">'+esc(i.topic)+'</div><div class="m">'+m.join('')+'</div>'+b+'</div>';
+    });
+    $('L-'+cat).innerHTML=h;
+  });
+}
+function load(){
+  var o={action:'aslist'}; if(bac) o.sbac=bac;
+  return call(o,true).then(function(r){
+    if(!r.ok){ if(r.err==='UNKNOWN_BAC'||r.err==='NO_ROSTER'){who=null;LS.del('as_bac');$('lerr').textContent=msg(r.err);bac='';return load();}
+      $('L-lec').innerHTML=$('L-tp').innerHTML='<p class="err">'+msg(r.err)+'</p>';return;}
+    items=r.items||[]; who=r.who||null;
+    if(who){$('wname').textContent=who.nom+' '+who.prenom;$('wgrp').textContent=who.sp+' – الفوج '+who.grp;}
+    show('list'); render();
+    if(who){var p=items.filter(function(i){return !i.done&&LS.get(skey(i.id));})[0]; if(p) begin(p.id,null);}  // استئناف تلقائي بعد إعادة التحميل
+    items.forEach(function(i){if(i.done)LS.del(skey(i.id));});
+  });
+}
+$('lf').addEventListener('submit',function(ev){ev.preventDefault();
+  var v=$('bac').value.replace(/\D/g,'');
+  if(!/^\d{5,14}$/.test(v)){$('lerr').textContent='اكتب رقم البكالوريا (أرقام فقط).';return;}
+  $('lerr').textContent='';$('lbtn').disabled=true;bac=v;
+  call({action:'aslist',sbac:v},true).then(function(r){$('lbtn').disabled=false;
+    if(!r.ok){$('lerr').textContent=msg(r.err);bac='';return;}
+    LS.set('as_bac',v);items=r.items;who=r.who;$('wname').textContent=who.nom+' '+who.prenom;$('wgrp').textContent=who.sp+' – الفوج '+who.grp;show('list');render();});
+});
+$('out').addEventListener('click',function(){who=null;bac='';LS.del('as_bac');$('bac').value='';show('list');render();});
+$('rf').addEventListener('click',function(){$('rf').disabled=true;load().then(function(){$('rf').disabled=false;});});
+$('back').addEventListener('click',function(){load();});
+document.addEventListener('click',function(ev){var b=ev.target.closest&&ev.target.closest('[data-go]');if(b)begin(b.getAttribute('data-go'),b);});
+
+/* ===== التقييم: الوقت محسوب دائماً من ساعة البدء (لا عدّاد يتوقف) ===== */
+function skey(id){return 'as_q_'+id+'_'+bac;}
+function save(){if(Q)LS.set(skey(Q.id),JSON.stringify({sig:Q.sig,t0:Q.t0,qi:Q.qi,qt0:Q.qt0,ans:Q.ans,cur:Q.cur,w:Q.w}));}
+function begin(id,btn){
+  if(btn)btn.disabled=true;
+  call({action:'asstart',sbac:bac,id:id}).then(function(r){
+    if(btn)btn.disabled=false;
+    if(!r.ok){if(r.err!=='NET'){LS.del(skey(id));if(btn)alert(msg(r.err));load();}else alert(msg(r.err));return;}
+    var now=Date.now(), sig=r.qs.map(function(q){return q.id;}).join(',')+'|'+(r.vid||'');
+    Q={id:r.id,title:r.title,topic:r.topic,mode:r.mode,total:r.total,qs:r.qs,vid:r.vid,sig:sig,t0:now-r.el*1000,qi:0,qt0:0,ans:{},cur:0,w:0,sent:false};
+    var old=null; try{old=JSON.parse(LS.get(skey(id))||'null');}catch(e){}
+    if(old&&old.sig===sig&&Math.abs(old.t0-Q.t0)<120000){Q.t0=Math.min(old.t0,Q.t0);Q.qi=old.qi||0;Q.qt0=old.qt0||0;Q.ans=old.ans||{};Q.cur=old.cur||0;Q.w=old.w||0;}
+    if(Q.mode==='per'&&!Q.qt0){ // استئناف بلا حالة محلية: السؤال الحالي من الوقت المنقضي
+      var el=(now-Q.t0)/1000, i=0, acc=0; while(i<Q.qs.length&&acc+Q.qs[i].d<=el){acc+=Q.qs[i].d;i++;}
+      Q.qi=i;Q.qt0=Q.t0+acc*1000;}
+    save(); $('qtitle').textContent=Q.title; show('quiz'); draw(); arm();
+  });
+}
+function letter(k){return 'أبجد'.charAt(k);}
+function draw(){
+  if(!Q)return; var per=Q.mode==='per', i=per?Q.qi:Q.cur;
+  if(i>=Q.qs.length)return;
+  var q=Q.qs[i];
+  $('qpos').textContent='السؤال '+(i+1)+' من '+Q.qs.length;
+  $('qtext').innerHTML='<bdi>'+esc(q.t)+'</bdi>';
+  var h=''; q.o.forEach(function(o,k){var on=Q.ans[q.id]==='abcd'.charAt(k);h+='<button type="button" class="op'+(on?' on':'')+'" data-k="'+k+'"><span class="L">'+letter(k)+'</span><bdi>'+esc(o)+'</bdi></button>';});
+  $('opts').innerHTML=h;
+  $('navall').classList.toggle('hide',per);$('dots').classList.toggle('hide',per);$('nextper').classList.toggle('hide',!per);
+  $('fin').classList.toggle('hide',per&&i<Q.qs.length-1);
+  if(per)$('nextper').classList.toggle('hide',i>=Q.qs.length-1);
+  if(!per){$('prev').disabled=i===0;$('next').disabled=i>=Q.qs.length-1;
+    var d='';Q.qs.forEach(function(x,j){d+='<button type="button" data-j="'+j+'" class="'+(Q.ans[x.id]?'a ':'')+(j===i?'c':'')+'">'+(j+1)+'</button>';});$('dots').innerHTML=d;}
+}
+$('opts').addEventListener('click',function(ev){var b=ev.target.closest('.op');if(!b||!Q||Q.sent)return;var per=Q.mode==='per',i=per?Q.qi:Q.cur;Q.ans[Q.qs[i].id]='abcd'.charAt(+b.getAttribute('data-k'));save();draw();});
+$('dots').addEventListener('click',function(ev){var b=ev.target.closest('[data-j]');if(!b||!Q)return;Q.cur=+b.getAttribute('data-j');save();draw();});
+$('prev').addEventListener('click',function(){if(Q&&Q.cur>0){Q.cur--;save();draw();}});
+$('next').addEventListener('click',function(){if(Q&&Q.cur<Q.qs.length-1){Q.cur++;save();draw();}});
+$('nextper').addEventListener('click',function(){if(!Q||Q.sent)return;if(Q.qi<Q.qs.length-1){Q.qi++;Q.qt0=Date.now();save();draw();}});
+$('fin').addEventListener('click',function(){if(!Q||Q.sent)return;
+  var miss=Q.qs.filter(function(q){return !Q.ans[q.id];}).length;
+  if(Q.mode==='all'&&!confirm(miss?('لم تُجب عن '+miss+' سؤال. هل تريد الإرسال الآن؟'):'هل تريد إرسال إجاباتك الآن؟'))return;
+  finish('أنهى الطالب الاختبار');});
+var lastTick=0;
+function clear(){timers.forEach(function(t){clearInterval(t);});timers=[];}
+function arm(){clear();lastTick=Date.now();timers.push(setInterval(tick,200));timers.push(setInterval(function(){if(Q&&!Q.sent&&Date.now()-lastTick>1500)arm();},1000));tick();}
+function wake(){if(Q&&!Q.sent){arm();}}
+document.addEventListener('visibilitychange',function(){if(document.hidden){if(Q&&!Q.sent){Q.w++;save();}}else wake();});
+window.addEventListener('pageshow',wake);window.addEventListener('focus',wake);
+function mmss(s){s=Math.max(0,Math.ceil(s));var m=Math.floor(s/60),x=s%60;return (m<10?'0':'')+m+':'+(x<10?'0':'')+x;}
+function tick(){
+  lastTick=Date.now(); if(!Q||Q.sent)return;
+  var now=Date.now(), left=Q.total-(now-Q.t0)/1000;
+  if(Q.mode==='per'){
+    var moved=false;
+    while(Q.qi<Q.qs.length&&(now-Q.qt0)/1000>=Q.qs[Q.qi].d){Q.qt0+=Q.qs[Q.qi].d*1000;Q.qi++;moved=true;}
+    if(moved){save();}
+    if(Q.qi>=Q.qs.length||left<=-2){finish('انتهى الوقت');return;}
+    if(moved)draw();
+    var d=Q.qs[Q.qi].d, ql=d-(now-Q.qt0)/1000;
+    $('clock').textContent=mmss(ql);$('clock').classList.toggle('warn',ql<=3);
+    $('barf').style.width=Math.max(0,ql/d*100)+'%';$('barf').classList.toggle('warn',ql<=3);
+  } else {
+    if(left<=0){finish('انتهى الوقت');return;}
+    $('clock').textContent=mmss(left);$('clock').classList.toggle('warn',left<=60);
+    $('barf').style.width=Math.max(0,left/Q.total*100)+'%';$('barf').classList.toggle('warn',left<=60);
+  }
+}
+function finish(reason){
+  if(!Q||Q.sent)return; Q.sent=true; clear(); save();
+  $('fin').disabled=true;$('nextper').disabled=true;$('qerr').textContent='جارٍ إرسال الإجابات…';
+  $('clock').textContent='00:00';
+  var o={action:'assubmit',sbac:bac,id:Q.id,reason:reason,warnings:Q.w,dur:Math.round((Date.now()-Q.t0)/1000)};
+  if(Q.vid) o.ans=Q.qs.map(function(q){return Q.ans[q.id]||'-';}).join(',');
+  else o.answers=Q.qs.map(function(q){return q.id+'='+(Q.ans[q.id]||'-');}).join(';');
+  send(o,0);
+}
+function send(o,n){
+  call(o).then(function(r){
+    if(r.ok||r.err==='DONE'){LS.del(skey(o.id));result(r);return;}
+    if(r.err==='NET'||r.err==='BUSY'){
+      if(n<4){setTimeout(function(){send(o,n+1);},1500*(n+1));return;}
+      $('qerr').innerHTML=msg(r.err)+'<br><button class="btn" type="button" id="retry" style="margin-top:8px;"><i class="fa-solid fa-rotate"></i>إعادة الإرسال</button>';
+      $('retry').onclick=function(){$('qerr').textContent='جارٍ إرسال الإجابات…';send(o,0);};return;}
+    LS.del(skey(o.id)); result(r);
+  });
+}
+function result(r){
+  var good=r.ok||r.err==='DONE';
+  $('rico').style.background=good?'#dcfce7':'#fee2e2';$('rico').style.color=good?'#166534':'#b91c1c';
+  $('rico').innerHTML=good?'<i class="fa-solid fa-check"></i>':'<i class="fa-solid fa-xmark"></i>';
+  $('rh').textContent=r.ok?'تم إرسال إجاباتك':(r.err==='DONE'?'أنجزت هذا التقييم من قبل':'لم تُقبل الإجابات');
+  $('rsc').textContent=good&&r.s!=null?fnum(r.s)+' / '+fnum(r.tot):'';
+  $('rdet').textContent=r.det||'';
+  $('rmsg').textContent=r.ok?'سُجّلت علامتك. بالتوفيق!':(r.err==='DONE'?'تُحتسب المحاولة الأولى فقط.':msg(r.err));
+  $('qerr').textContent='';$('fin').disabled=false;$('nextper').disabled=false;
+  Q=null; show('result');
+}
+if(bac)$('bac').value=bac;
+load();
+})();
+</script>
 </body>
 </html>

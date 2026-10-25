@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>لوحة الأستاذ، التقييم المستمر، SPSS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+html,body{margin:0;background:#e9eef5;}
+body{padding:clamp(6px,2vw,24px) clamp(4px,1.5vw,16px);}
+*{box-sizing:border-box;}
+.w{font-family:'Cairo','Segoe UI','Noto Sans Arabic',Tahoma,sans-serif;background:#f4f7fb;color:#1e293b;border-radius:22px;padding:clamp(8px,2.5vw,22px);max-width:760px;margin:0 auto;line-height:1.8;text-align:right;}
+.hd{position:relative;overflow:hidden;background:linear-gradient(135deg,#0b1e33 0%,#14365c 55%,#1d4f86 100%);background-color:#0b1e33;color:#fff;border-radius:20px;padding:clamp(16px,5vw,30px) clamp(14px,4vw,30px);margin:0 0 14px;box-shadow:0 14px 34px rgba(11,30,51,.28);}
+.hd:before{content:"";position:absolute;top:-70px;left:-70px;width:220px;height:220px;border-radius:50%;background:rgba(233,196,106,.10);}
+.hd .r{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:14px;}
+.hd .ic{flex:0 0 auto;width:clamp(48px,13vw,66px);height:clamp(48px,13vw,66px);border-radius:18px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;font-size:clamp(22px,6.5vw,30px);color:#e9c46a;}
+.pill{display:inline-flex;align-items:center;background:rgba(233,196,106,.16);border:1px solid rgba(233,196,106,.45);color:#f6e3b4;border-radius:999px;padding:3px 12px;font-size:13px;font-weight:700;}
+h1{margin:8px 0 0;font-size:clamp(22px,6.5vw,34px);font-weight:800;color:#fff;line-height:1.35;}
+.card{background:#fff;border:1px solid #e3e9f2;border-radius:18px;padding:clamp(12px,4vw,24px);margin:0 0 14px;box-shadow:0 1px 2px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.06);}
+h2{margin:0 0 8px;font-size:clamp(18px,5.2vw,22px);font-weight:800;color:#0f2744;}
+h3{margin:4px 0 10px;font-size:16px;font-weight:800;color:#14365c;display:flex;align-items:center;gap:8px;}
+.note{background:linear-gradient(135deg,#fffaf0,#fdf3dc);border:1px solid #f1d9a0;border-right:5px solid #d4a73c;border-radius:16px;padding:12px 14px;margin:0 0 14px;color:#3f3416;font-size:14.5px;}
+label{display:block;font-weight:700;color:#334155;margin:0 0 6px;font-size:15px;}
+input[type=text],input[type=password],input[type=tel],select,textarea{width:100%;font:inherit;font-size:17px;padding:10px 12px;border:1.5px solid #cbd5e1;border-radius:12px;background:#fff;color:#0f172a;min-height:48px;}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-shadow:0 0 0 3px rgba(29,79,134,.15);}
+.btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;min-height:50px;border:0;border-radius:14px;padding:9px 14px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;background:#0f2744;color:#fff;box-shadow:0 8px 20px rgba(15,23,42,.16);text-decoration:none;}
+.btn:disabled{opacity:.55;cursor:default;}
+.btn.go{background:#16a34a;}.btn.lt{background:#e2e8f0;color:#0f2744;box-shadow:none;}.btn.red{background:#dc2626;}
+.row{display:flex;gap:8px;flex-wrap:wrap;}.row>*{flex:1 1 120px;}
+.err{color:#b91c1c;font-weight:700;font-size:14.5px;margin:8px 0 0;min-height:1em;}
+.who{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.who b{font-size:17px;color:#0f2744;}.who span{color:#475569;font-size:14px;}
+.lnk{background:none;border:0;color:#1d4f86;font:inherit;font-weight:700;text-decoration:underline;cursor:pointer;padding:4px;}
+.it{border:1px solid #e3e9f2;border-radius:16px;padding:12px;margin:0 0 10px;background:#fbfdff;}
+.it .t{font-weight:800;color:#0f2744;font-size:16px;line-height:1.5;}
+.it .s{color:#475569;font-size:14px;line-height:1.6;margin:2px 0 6px;}
+.it .m{color:#64748b;font-size:13px;display:flex;flex-wrap:wrap;gap:4px 12px;margin:0 0 8px;}
+.bdg{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:800;white-space:nowrap;}
+.b-open{background:#dcfce7;color:#166534;}.b-closed{background:#e2e8f0;color:#475569;}.b-done{background:#dbeafe;color:#1e40af;}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.qhd{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 8px;}
+.clock{font-weight:800;font-size:20px;color:#0f2744;background:#eef2f7;border-radius:12px;padding:2px 12px;min-width:84px;text-align:center;direction:ltr;}
+.clock.warn{background:#fee2e2;color:#b91c1c;}
+.bar{height:8px;background:#e2e8f0;border-radius:99px;overflow:hidden;margin:0 0 12px;}.bar i{display:block;height:100%;background:#1d4f86;width:100%;transition:width .2s linear;}
+.bar i.warn{background:#dc2626;}
+.qt{font-size:17px;font-weight:700;color:#0f172a;margin:0 0 10px;line-height:1.7;}
+.op{display:flex;align-items:flex-start;gap:10px;width:100%;text-align:right;font:inherit;font-size:16px;padding:10px 12px;margin:0 0 8px;border:1.5px solid #cbd5e1;border-radius:12px;background:#fff;color:#0f172a;cursor:pointer;min-height:48px;line-height:1.6;}
+.op .L{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:#eef2f7;display:flex;align-items:center;justify-content:center;font-weight:800;color:#14365c;}
+.op.on{border-color:#1d4f86;background:#eff6ff;}.op.on .L{background:#1d4f86;color:#fff;}
+.op bdi{unicode-bidi:plaintext;}
+.dots{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}
+.dots button{width:36px;height:36px;border-radius:10px;border:1.5px solid #cbd5e1;background:#fff;font:inherit;font-weight:800;color:#334155;cursor:pointer;}
+.dots button.a{background:#dbeafe;border-color:#93c5fd;}.dots button.c{border-color:#0f2744;box-shadow:0 0 0 2px #0f2744 inset;}
+.res{text-align:center;}.res .sc{font-size:clamp(34px,11vw,46px);font-weight:800;color:#0f2744;direction:ltr;}
+.det{letter-spacing:3px;font-size:18px;direction:ltr;}
+.hide{display:none!important;}
+.foot{text-align:center;font-size:13px;color:#64748b;margin:12px 0 2px;}
+@media (max-width:330px){body{padding:4px 2px;}.w{border-radius:14px;padding:6px;}.card{border-radius:14px;padding:10px;}.op{font-size:15px;padding:8px;}.qt{font-size:16px;}.btn{font-size:15px;}}
+.tg{min-height:44px;font-size:15px;}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:15px;margin:8px 0;}.kv b{color:#0f2744;}
+</style>
+</head>
+<body>
+<div class="w" dir="rtl">
+<div class="hd"><div class="r">
+<div class="ic"><i class="fa-solid fa-user-tie"></i></div>
+<div style="flex:1 1 200px;min-width:0;">
+<span class="pill">التقييم المستمر</span>
+<h1>لوحة الأستاذ</h1>
+</div></div></div>
+
+<div class="card" id="kc">
+<h2><i class="fa-solid fa-key" style="color:#1d4f86;margin-left:8px;"></i>رمز الأستاذ</h2>
+<form id="kf" autocomplete="off">
+<label for="key">الرمز (المسجّل في ورقة «الإعدادات»)</label>
+<input type="password" id="key" dir="ltr" autocomplete="off">
+<div class="err" id="kerr"></div>
+<button class="btn" id="kbtn" type="submit"><i class="fa-solid fa-unlock"></i>دخول</button>
+</form>
+</div>
+
+<div id="panel" class="hide">
+<div class="card">
+<h3><i class="fa-solid fa-toggle-on"></i>فتح التقييمات وإغلاقها</h3>
+<div id="items"><p class="s">جارٍ التحميل…</p></div>
+<div class="row"><button class="btn lt" id="rf" type="button"><i class="fa-solid fa-rotate"></i>تحديث</button>
+<button class="btn lt" id="lo" type="button"><i class="fa-solid fa-right-from-bracket"></i>خروج</button></div>
+<div class="err" id="perr"></div>
+</div>
+
+<div class="card">
+<h3><i class="fa-solid fa-user-xmark"></i>إلغاء نتيجة طالب (للسماح بالإعادة)</h3>
+<label for="cid">التقييم</label>
+<select id="cid"></select>
+<label for="cbac" style="margin-top:8px;">رقم البكالوريا</label>
+<input type="tel" id="cbac" inputmode="numeric" dir="ltr">
+<button class="btn lt" id="cfind" type="button" style="margin-top:10px;"><i class="fa-solid fa-magnifying-glass"></i>عرض النتيجة</button>
+<div id="cres" class="hide" style="margin-top:10px;border:1px solid #e3e9f2;border-radius:14px;padding:10px;background:#fbfdff;">
+<div class="kv" id="ckv"></div>
+<label for="cwhy">سبب الإلغاء (يُحفظ في السجل)</label>
+<input type="text" id="cwhy" placeholder="مثال: انقطاع الإنترنت أثناء التقييم">
+<button class="btn red" id="cgo" type="button" style="margin-top:10px;"><i class="fa-solid fa-trash-can"></i>إلغاء النتيجة والسماح بالإعادة</button>
+</div>
+<div class="err" id="cerr"></div>
+<p class="s" style="color:#64748b;font-size:13.5px;margin:10px 0 0;">تُنسخ النتيجة الملغاة كاملة (مع وقتها والعلامة) إلى ورقة «سجل إلغاء التقييمات» قبل حذفها، وتُفرَّغ خانتها في قائمة الفوج. يعيد الطالب التقييم بأسئلة جديدة حين يكون مفتوحاً.</p>
+</div>
+</div>
+
+<a href="../index.html" class="btn" style="margin-top:4px;"><i class="fa-solid fa-clipboard-check"></i>صفحة التقييم المستمر (الطلبة)</a>
+<p class="foot"><i class="fa-solid fa-building-columns" style="color:#94a3b8;margin-left:6px;"></i>جامعة قسنطينة 2، د. بوصفصاف فريد</p>
+</div>
+<script>
+(function(){
+'use strict';
+var API='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec';
+var $=function(id){return document.getElementById(id);};
+var SS={get:function(k){try{return sessionStorage.getItem(k);}catch(e){return null;}},set:function(k,v){try{sessionStorage.setItem(k,v);}catch(e){}},del:function(k){try{sessionStorage.removeItem(k);}catch(e){}}};
+var ERR={BAD_KEY:'الرمز غير صحيح.',BAD_ID:'تقييم غير معروف.',NONE:'لا توجد نتيجة لهذا الرقم في هذا التقييم.',UNKNOWN_BAC:'اكتب رقم بكالوريا صحيحاً.',BUSY:'الخادم مشغول، أعد المحاولة.',NET:'تعذّر الاتصال بالخادم.'};
+function msg(e){return ERR[e]||ERR.NET;}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function fnum(x){x=Number(x);return isNaN(x)?'':String(Math.round(x*100)/100);}
+var key=SS.get('as_tkey')||'', items=[], tm=null;
+function call(o){o.key=key;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{return JSON.parse(t);}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
+function render(){
+  var h='';
+  items.forEach(function(i){
+    var st=i.open?'<span class="bdg b-open"><i class="fa-solid fa-lock-open"></i>مفتوح</span>':'<span class="bdg b-closed"><i class="fa-solid fa-lock"></i>مغلق</span>';
+    h+='<div class="it"><div class="top"><div class="t">'+esc(i.title)+'</div>'+st+'</div><div class="s">'+esc(i.topic)+'</div>'+
+      '<div class="m"><span><i class="fa-solid fa-users"></i> أدّاه '+(i.cnt||0)+'</span>'+(i.t?'<span><i class="fa-regular fa-clock"></i> آخر تغيير: <bdi dir="ltr">'+esc(i.t)+'</bdi></span>':'')+(i.ready?'':'<span style="color:#b91c1c;">الأسئلة غير جاهزة</span>')+'</div>'+
+      '<button class="btn tg '+(i.open?'red':'go')+'" type="button" data-id="'+esc(i.id)+'" data-open="'+(i.open?0:1)+'">'+(i.open?'<i class="fa-solid fa-lock"></i>إغلاق التقييم':'<i class="fa-solid fa-lock-open"></i>فتح التقييم')+'</button></div>';
+  });
+  $('items').innerHTML=h||'<p class="s">لا توجد تقييمات.</p>';
+  var sel=$('cid'), v=sel.value;
+  sel.innerHTML=items.map(function(i){return '<option value="'+esc(i.id)+'">'+esc(i.title)+'</option>';}).join('');
+  if(v)sel.value=v;
+}
+function load(){
+  return call({action:'asadmin'}).then(function(r){
+    if(!r.ok){if(r.err==='BAD_KEY'){logout();$('kerr').textContent=msg(r.err);}else $('perr').textContent=msg(r.err);return;}
+    $('perr').textContent='';items=r.items;render();
+  });
+}
+function enter(){$('kc').classList.add('hide');$('panel').classList.remove('hide');load();clearInterval(tm);tm=setInterval(function(){if(!document.hidden)load();},20000);}
+function logout(){key='';SS.del('as_tkey');clearInterval(tm);$('panel').classList.add('hide');$('kc').classList.remove('hide');$('key').value='';}
+$('kf').addEventListener('submit',function(ev){ev.preventDefault();var k=$('key').value.trim();if(!k)return;$('kbtn').disabled=true;key=k;
+  call({action:'askey'}).then(function(r){$('kbtn').disabled=false;if(r.ok){SS.set('as_tkey',k);$('kerr').textContent='';enter();}else{key='';$('kerr').textContent=msg(r.err||'BAD_KEY');}});});
+$('lo').addEventListener('click',logout);
+$('rf').addEventListener('click',function(){$('rf').disabled=true;load().then(function(){$('rf').disabled=false;});});
+$('items').addEventListener('click',function(ev){var b=ev.target.closest('[data-id]');if(!b)return;
+  var id=b.getAttribute('data-id'),op=b.getAttribute('data-open');b.disabled=true;
+  call({action:'asset',id:id,open:op}).then(function(r){b.disabled=false;if(!r.ok){$('perr').textContent=msg(r.err);return;}load();});});
+var found=null;
+$('cid').addEventListener('change',function(){$('cres').classList.add('hide');found=null;});
+$('cbac').addEventListener('input',function(){$('cres').classList.add('hide');found=null;});
+$('cfind').addEventListener('click',function(){
+  var b=$('cbac').value.replace(/\D/g,'');$('cerr').textContent='';$('cres').classList.add('hide');
+  if(!/^\d{5,14}$/.test(b)){$('cerr').textContent=msg('UNKNOWN_BAC');return;}
+  $('cfind').disabled=true;
+  call({action:'asfind',id:$('cid').value,sbac:b}).then(function(r){$('cfind').disabled=false;
+    if(!r.ok){$('cerr').textContent=msg(r.err)+(r.who?' ('+r.who.nom+' '+r.who.prenom+')':'');return;}
+    found={id:$('cid').value,bac:b};
+    $('ckv').innerHTML='<span>الطالب:</span><b>'+esc(r.who.nom+' '+r.who.prenom)+'</b><span>الفوج:</span><b>'+esc(r.who.g)+'</b><span>العلامة:</span><b><bdi dir="ltr">'+fnum(r.s)+' / '+fnum(r.tot)+'</bdi></b><span>الوقت:</span><b><bdi dir="ltr">'+esc(r.t)+'</bdi></b>'+(r.tries?'<span>إلغاءات سابقة:</span><b>'+r.tries+'</b>':'');
+    $('cres').classList.remove('hide');});});
+$('cgo').addEventListener('click',function(){if(!found)return;
+  if(!confirm('تأكيد إلغاء هذه النتيجة؟ سيتمكن الطالب من إعادة التقييم حين يكون مفتوحاً.'))return;
+  $('cgo').disabled=true;
+  call({action:'ascancel',id:found.id,sbac:found.bac,why:$('cwhy').value.trim()}).then(function(r){$('cgo').disabled=false;
+    if(!r.ok){$('cerr').textContent=msg(r.err);return;}
+    $('cres').classList.add('hide');$('cwhy').value='';found=null;
+    $('cerr').innerHTML='<span style="color:#166534;">أُلغيت النتيجة ('+fnum(r.s)+' / '+fnum(r.tot)+') وحُفظت في السجل. يمكن للطالب إعادة التقييم.</span>';load();});});
+if(key)enter();
+})();
+</script>
+</body>
+</html>
