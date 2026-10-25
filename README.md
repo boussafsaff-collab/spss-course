@@ -35,4 +35,5 @@
 
 ## محتوى المادة (البرنامج) وصفحة Moodle
 - قائمة المحاضرات ومحاورها في `index.html` تُحدَّث عند الفتح من ورقة «الإعدادات» (`?action=course`: العمود A اسم الحصة، D الرقم، G النوع، H المحاور) عبر `assets/programme.js`؛ نص فقط بلا روابط ولا تواريخ. القائمة المضمّنة في `index.html` نسخة احتياطية عند تعذّر الاتصال.
-- ملف Moodle (`spss-course-moodle-v3.html`، يُرفع مرة واحدة كمورد «ملف») غلاف دائم: يجلب `index.html` وأنماطه و`assets/programme.js` من هذا المستودع عند كل فتح، فأي تعديل هنا يظهر في Moodle دون إعادة رفع. لا تغيّر `nav.qnav` ولا المعرّفات `prog-list`/`prog-count` لأن الغلاف يعتمد عليها.
+- ملف Moodle (`moodle/spss-course-moodle-v3.html`، يُرفع مرة واحدة كمورد «ملف») غلاف نهائي لا يحوي محتوى ولا تصميماً: يحمّل `assets/moodle-shell.js` (جلب `index.html`، حصر الأنماط تحت `#spx-root`، تكييف المقاسات مع عرض حاوية Moodle عبر container queries/ResizeObserver، روابط مطلقة في لسان جديد، زر «شارك الحصة خارج المنصة» ونافذة رمز QR في صفحة Moodle العليا) و`assets/moodle-shell.css`، ثم `assets/programme.js`. أي تعديل في هذه الملفات يظهر في Moodle دون إعادة رفع. عند تعذّر GitHub يعرض الغلاف رابط صفحة المقياس ورمز QR ثابتاً.
+- لا تغيّر `nav.qnav` ولا المعرّفات `prog-list`/`prog-count` ولا بنية القسم الأول (الترويسة) دون مراجعة `assets/moodle-shell.css`.

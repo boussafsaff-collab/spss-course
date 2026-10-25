@@ -1,0 +1,109 @@
+/* صفحة المقياس داخل Moodle — أنماط محصورة تحت #spx-root (المحتوى) و#spxm (نافذة رمز QR).
+   يُحمِّلها غلاف Moodle من GitHub عند كل فتح؛ أي تعديل هنا يظهر دون إعادة رفع الغلاف. */
+#spx-root{container-type:inline-size;container-name:spxr;display:block;max-width:960px;margin:0 auto;box-sizing:border-box;direction:rtl;text-align:right;
+ font-family:'Cairo','Segoe UI','Noto Sans Arabic',Tahoma,sans-serif;font-size:16px;line-height:1.75;color:#1e293b;background:transparent;overflow-wrap:break-word;-webkit-text-size-adjust:100%;}
+#spx-root *,#spx-root *::before,#spx-root *::after{box-sizing:border-box;}
+#spx-root h1,#spx-root h2,#spx-root h3{font-family:inherit;letter-spacing:normal;text-transform:none;}
+#spx-root p{margin-bottom:0;}
+#spx-root ol,#spx-root ul{margin-bottom:0;}
+#spx-root img,#spx-root svg,#spx-root canvas{max-width:100%;}
+#spx-root a{text-decoration:none;}
+#spx-root a:hover,#spx-root a:focus{text-decoration:none;}
+#spx-root bdi{unicode-bidi:isolate;}
+#spx-root > div{max-width:100%;}
+/* الأزرار الثلاثة: أعمدة قابلة للانكماش (1fr وحدها تمنع الانكماش دون عرض المحتوى) */
+#spx-root .qnav{display:grid !important;grid-template-columns:repeat(3,minmax(0,1fr)) !important;gap:10px;margin:0 0 12px !important;}
+#spx-root a.qbtn{display:flex !important;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-width:0;min-height:84px;padding:12px 6px;border-radius:16px;
+ background:linear-gradient(145deg,var(--c),var(--d)) !important;color:#fff !important;text-decoration:none !important;font-weight:800;font-size:clamp(13px,3.6cqi,17px);text-align:center;line-height:1.3;
+ box-shadow:0 8px 20px rgba(15,23,42,.14);overflow-wrap:anywhere;hyphens:auto;border:0;}
+#spx-root a.qbtn span{display:block;max-width:100%;}
+#spx-root a.qbtn i{font-size:clamp(18px,5.5cqi,26px);color:#fff;opacity:.95;}
+/* زر المشاركة */
+#spx-root button.spx-share{all:unset;box-sizing:border-box;display:flex;align-items:center;gap:12px;width:100%;margin:0 0 16px;padding:12px clamp(10px,3cqi,18px);min-height:64px;
+ border:1.5px solid #d4a73c;border-radius:16px;background:linear-gradient(135deg,#fffaf0,#fdf3dc);color:#3f2a05;cursor:pointer;text-align:right;direction:rtl;
+ font-family:'Cairo','Segoe UI','Noto Sans Arabic',Tahoma,sans-serif;line-height:1.5;box-shadow:0 6px 16px rgba(183,134,42,.14);-webkit-tap-highlight-color:transparent;}
+#spx-root button.spx-share:hover{filter:brightness(1.03);}
+#spx-root button.spx-share:focus-visible{outline:3px solid #b7862a;outline-offset:2px;}
+#spx-root .spx-share-ico{flex:0 0 46px;width:46px;height:46px;border-radius:13px;background:#0f2744;color:#e9c46a;display:inline-flex;align-items:center;justify-content:center;}
+#spx-root .spx-share-ico svg{width:24px;height:24px;fill:currentColor;}
+#spx-root .spx-share-txt{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:1px;}
+#spx-root .spx-share-txt strong{display:block;font-size:clamp(15px,4.2cqi,18px);font-weight:800;color:#3f2a05;line-height:1.4;}
+#spx-root .spx-share-txt small{display:block;font-size:13px;color:#7a5410;font-weight:600;line-height:1.5;}
+#spx-root .spx-share-go{flex:0 0 auto;color:#b7862a;display:inline-flex;}
+#spx-root .spx-share-go svg{width:20px;height:20px;fill:currentColor;}
+#spx-root .spx-load{display:flex;align-items:center;justify-content:center;gap:10px;min-height:120px;border-radius:18px;background:#fff;border:1px solid #e3e9f2;color:#475569;font-weight:700;}
+
+/* حاوية ضيقة (< 360px): Moodle على الهاتف مع الأدراج الجانبية */
+@container spxr (max-width:359.98px){
+#spx-root > div{padding:8px !important;border-radius:16px !important;}
+#spx-root h1{font-size:clamp(21px,8cqi,26px) !important;line-height:1.3 !important;}
+#spx-root h2{font-size:17px !important;}
+#spx-root > div > div:first-child{padding:16px 14px !important;}
+#spx-root > div > div:first-child > div[style*="flex-wrap"]{gap:10px !important;}
+#spx-root > div > div:first-child > div[style*="flex-wrap"] > div:first-child{width:46px !important;height:46px !important;font-size:22px !important;border-radius:14px !important;}
+#spx-root > div > div:first-child > div[style*="flex-wrap"] > div{flex-basis:100% !important;}
+#spx-root > div > div:first-child > div[style*="flex-wrap"] > div:first-child{flex-basis:auto !important;}
+#spx-root > div > div:first-child span[style*="999px"]{font-size:12px !important;white-space:normal !important;padding:3px 10px !important;max-width:100%;}
+#spx-root .qnav{gap:6px !important;}
+#spx-root a.qbtn{min-height:72px;padding:9px 3px;font-size:12.5px;border-radius:13px;gap:4px;}
+#spx-root a.qbtn i{font-size:19px;}
+#spx-root button.spx-share{gap:9px;padding:10px;}
+#spx-root .spx-share-ico{flex-basis:38px;width:38px;height:38px;border-radius:11px;}
+#spx-root .spx-share-ico svg{width:20px;height:20px;}
+#spx-root .spx-share-txt strong{font-size:15px;}
+#spx-root .spx-share-txt small{font-size:12px;}
+#spx-root .spx-share-go{display:none;}
+#spx-root div[style*="border-radius:18px"]{padding:14px 12px !important;}
+#spx-root .prog-item{padding:10px !important;gap:9px !important;}
+}
+/* البديل نفسه عبر صنف يضيفه ResizeObserver (متصفحات بلا container queries) */
+#spx-root.spx-xs > div{padding:8px !important;border-radius:16px !important;}
+#spx-root.spx-xs h1{font-size:clamp(21px,8cqi,26px) !important;line-height:1.3 !important;}
+#spx-root.spx-xs h2{font-size:17px !important;}
+#spx-root.spx-xs > div > div:first-child{padding:16px 14px !important;}
+#spx-root.spx-xs > div > div:first-child > div[style*="flex-wrap"]{gap:10px !important;}
+#spx-root.spx-xs > div > div:first-child > div[style*="flex-wrap"] > div:first-child{width:46px !important;height:46px !important;font-size:22px !important;border-radius:14px !important;}
+#spx-root.spx-xs > div > div:first-child > div[style*="flex-wrap"] > div{flex-basis:100% !important;}
+#spx-root.spx-xs > div > div:first-child > div[style*="flex-wrap"] > div:first-child{flex-basis:auto !important;}
+#spx-root.spx-xs > div > div:first-child span[style*="999px"]{font-size:12px !important;white-space:normal !important;padding:3px 10px !important;max-width:100%;}
+#spx-root.spx-xs .qnav{gap:6px !important;}
+#spx-root.spx-xs a.qbtn{min-height:72px;padding:9px 3px;font-size:12.5px;border-radius:13px;gap:4px;}
+#spx-root.spx-xs a.qbtn i{font-size:19px;}
+#spx-root.spx-xs button.spx-share{gap:9px;padding:10px;}
+#spx-root.spx-xs .spx-share-ico{flex-basis:38px;width:38px;height:38px;border-radius:11px;}
+#spx-root.spx-xs .spx-share-ico svg{width:20px;height:20px;}
+#spx-root.spx-xs .spx-share-txt strong{font-size:15px;}
+#spx-root.spx-xs .spx-share-txt small{font-size:12px;}
+#spx-root.spx-xs .spx-share-go{display:none;}
+#spx-root.spx-xs div[style*="border-radius:18px"]{padding:14px 12px !important;}
+#spx-root.spx-xs .prog-item{padding:10px !important;gap:9px !important;}
+
+/* نافذة رمز QR: طبقة ثابتة تغطي الشاشة (في الوثيقة العليا لـ Moodle إن أمكن) */
+#spxm{all:initial;position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;justify-content:center;padding:12px;box-sizing:border-box;
+ background:rgba(2,6,23,.62);direction:rtl;font-family:'Cairo','Segoe UI','Noto Sans Arabic',Tahoma,sans-serif;-webkit-tap-highlight-color:transparent;}
+#spxm[hidden]{display:none !important;}
+#spxm *,#spxm *::before,#spxm *::after{box-sizing:border-box;}
+#spxm .spxm-panel{position:relative;background:#fff;color:#1e293b;border-radius:20px;width:100%;max-width:440px;max-height:100%;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+ padding:clamp(14px,4vw,22px);text-align:right;box-shadow:0 24px 60px rgba(2,6,23,.4);line-height:1.7;font-size:15px;}
+#spxm .spxm-head{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+#spxm h2{all:unset;display:flex;align-items:center;gap:8px;font-family:inherit;font-size:clamp(17px,4.6vw,20px);font-weight:800;color:#0f2744;line-height:1.4;}
+#spxm h2 svg{width:22px;height:22px;fill:#b7862a;flex:0 0 auto;}
+#spxm p{all:unset;display:block;font-family:inherit;}
+#spxm .spxm-hint{margin:6px 0 10px;font-size:13.5px;color:#475569;line-height:1.7;}
+#spxm .spxm-qr{display:flex;justify-content:center;margin:12px 0 10px;}
+#spxm canvas{display:block;width:min(72vw,300px,calc(100vh - 290px));height:auto;aspect-ratio:1/1;min-width:180px;image-rendering:pixelated;border-radius:12px;border:1px solid #e2e8f0;background:#fff;}
+#spxm input{all:unset;box-sizing:border-box;display:block;width:100%;min-height:44px;border:1px solid #cbd5e1;border-radius:12px;padding:8px 12px;font:600 14px/1.4 ui-monospace,Menlo,Consolas,monospace;
+ color:#0f2744;background:#f8fafc;text-align:left;direction:ltr;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+#spxm .spxm-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+#spxm button{all:unset;box-sizing:border-box;cursor:pointer;font-family:inherit;}
+#spxm button.spxm-btn{flex:1 1 110px;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:8px 12px;border:1.5px solid #0f2744;border-radius:12px;
+ background:#fff;color:#0f2744;font-weight:800;font-size:15px;line-height:1.3;text-align:center;}
+#spxm button.spxm-btn svg{width:18px;height:18px;fill:currentColor;flex:0 0 auto;}
+#spxm button.spxm-primary{background:#0f2744;color:#fff;}
+#spxm button[hidden]{display:none !important;}
+#spxm button.spxm-x{flex:0 0 42px;width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:12px;border:1px solid #e2e8f0;background:#f8fafc;color:#334155;}
+#spxm button.spxm-x svg{width:20px;height:20px;fill:currentColor;}
+#spxm button:focus-visible{outline:3px solid #b7862a;outline-offset:2px;}
+#spxm .spxm-msg{min-height:1.6em;margin:8px 0 0;font-size:13.5px;font-weight:700;color:#047857;text-align:center;}
+#spxm .spxm-msg.err{color:#b45309;}
+@media (max-height:520px){#spxm canvas{width:min(60vw,220px,calc(100vh - 170px));min-width:150px;}#spxm .spxm-hint{display:none;}}
