@@ -143,7 +143,8 @@ function call(o,get){
 }
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function fnum(x){x=Number(x);return isNaN(x)?'':String(Math.round(x*100)/100);}
-function dur(s){s=Math.round(s);if(s>=60&&s%60===0)return (s/60)+' دقائق';if(s>=60)return Math.floor(s/60)+' د '+(s%60)+' ث';return s+' ثانية';}
+function secTxt(n){n=Number(n)||0;if(n===1)return 'ثانية واحدة';if(n===2)return 'ثانيتان';if(n>=3&&n<=10)return n+' ثوانٍ';return n+' ثانية';}
+function dur(s){s=Math.round(s);if(s>=60&&s%60===0){var m=s/60;return m===1?'دقيقة واحدة':m===2?'دقيقتان':m<=10?m+' دقائق':m+' دقيقة';}if(s>=60)return Math.floor(s/60)+' د '+(s%60)+' ث';return s+' ثانية';}
 var bac=(LS.get('as_bac')||'').replace(/\D/g,''), who=null, items=[], Q=null, timers=[];
 function show(id){['list','quiz','result'].forEach(function(k){$(k).classList.toggle('hide',k!==id);});
   $('home').classList.toggle('hide',id==='quiz');$('tlogin').classList.toggle('hide',id==='quiz');$('info').classList.toggle('hide',id!=='list');
@@ -157,7 +158,7 @@ function render(){
       var m=[];
       if(i.n) m.push('<span><i class="fa-regular fa-circle-question"></i> '+i.n+' أسئلة</span>');
       if(i.mode==='all') m.push('<span><i class="fa-regular fa-clock"></i> '+dur(i.sec)+' للتقييم كله</span>');
-      else if(i.per) m.push('<span><i class="fa-regular fa-clock"></i> '+i.per+' ثوانٍ لكل سؤال</span>');
+      else if(i.per) m.push('<span class="tper" data-per="'+i.per+'"><i class="fa-regular fa-clock"></i> '+secTxt(i.per)+' لكل سؤال'+(i.sec?' (المجموع '+dur(i.sec)+')':'')+'</span>');
       else if(i.sec) m.push('<span><i class="fa-regular fa-clock"></i> مدة محددة لكل سؤال</span>');
       var b='';
       if(i.done) b='<div style="font-weight:800;color:#1e40af;">علامتك: <bdi dir="ltr">'+fnum(i.done.s)+' / '+fnum(i.done.tot)+'</bdi></div>';
@@ -295,6 +296,12 @@ function result(r){
 }
 if(bac)$('bac').value=bac;
 load();
+/* update51: تحديث القائمة تلقائياً (الحالة ووقت السؤال الذي يحدده الأستاذ) دون استئناف أو تنبيهات */
+setInterval(function(){
+  if(document.hidden||Q||$('list').classList.contains('hide'))return;
+  var o={action:'aslist'}; if(bac&&who) o.sbac=bac;
+  call(o,true).then(function(r){if(!r||!r.ok||Q||$('list').classList.contains('hide'))return; if(o.sbac&&!r.who)return; items=r.items||items; render();});
+},20000);
 })();
 </script>
 </body>

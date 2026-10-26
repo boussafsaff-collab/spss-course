@@ -61,6 +61,21 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 .foot{text-align:center;font-size:13px;color:#64748b;margin:12px 0 2px;}
 @media (max-width:330px){body{padding:4px 2px;}.w{border-radius:14px;padding:6px;}.card{border-radius:14px;padding:10px;}.op{font-size:15px;padding:8px;}.qt{font-size:16px;}.btn{font-size:15px;}}
 .tg{min-height:44px;font-size:15px;}
+.tmr{border:1px dashed #c7d2e0;border-radius:14px;padding:10px;margin:0 0 10px;background:#fff;}
+.tmh{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;font-weight:800;color:#14365c;font-size:15px;margin:0 0 8px;}
+.tmh .tg2{font-size:12px;font-weight:800;border-radius:999px;padding:1px 9px;background:#e2e8f0;color:#475569;}.tmh .tg2.c{background:#fef3c7;color:#92400e;}
+.tst{display:flex;align-items:stretch;gap:8px;margin:0 0 8px;}
+.tst button{flex:0 0 64px;min-height:52px;border-radius:12px;border:1.5px solid #cbd5e1;background:#eef2f7;color:#0f2744;font:inherit;font-weight:800;font-size:18px;cursor:pointer;direction:ltr;}
+.tst button:disabled{opacity:.4;cursor:default;}
+.tv{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;background:#0f2744;color:#fff;min-height:52px;line-height:1.2;}
+.tv b{font-size:24px;font-weight:800;direction:ltr;}.tv span{font-size:12.5px;color:#cbd5e1;}
+.tv.dirty{background:#b45309;}
+.pre{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 8px;}
+.pre button{flex:1 1 52px;min-height:42px;border-radius:10px;border:1.5px solid #cbd5e1;background:#fff;color:#334155;font:inherit;font-weight:800;font-size:15px;cursor:pointer;}
+.pre button.on{background:#1d4f86;border-color:#1d4f86;color:#fff;}
+.tms{color:#475569;font-size:13.5px;line-height:1.6;margin:0 0 8px;}
+.tmm{font-size:13.5px;font-weight:700;min-height:1em;margin:6px 0 0;}
+.tmr .row .btn{min-height:46px;font-size:15px;}
 .kv{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:15px;margin:8px 0;}.kv b{color:#0f2744;}
 </style>
 </head>
@@ -120,18 +135,39 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 var API='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec';
 var $=function(id){return document.getElementById(id);};
 var SS={get:function(k){try{return sessionStorage.getItem(k);}catch(e){return null;}},set:function(k,v){try{sessionStorage.setItem(k,v);}catch(e){}},del:function(k){try{sessionStorage.removeItem(k);}catch(e){}}};
-var ERR={BAD_KEY:'الرمز غير صحيح.',BAD_ID:'تقييم غير معروف.',NONE:'لا توجد نتيجة لهذا الرقم في هذا التقييم.',UNKNOWN_BAC:'اكتب رقم بكالوريا صحيحاً.',BUSY:'الخادم مشغول، أعد المحاولة.',NET:'تعذّر الاتصال بالخادم.'};
+var ERR={BAD_KEY:'الرمز غير صحيح.',BAD_ID:'تقييم غير معروف.',NONE:'لا توجد نتيجة لهذا الرقم في هذا التقييم.',UNKNOWN_BAC:'اكتب رقم بكالوريا صحيحاً.',BUSY:'الخادم مشغول، أعد المحاولة.',BAD_SEC:'قيمة غير مقبولة.',NET:'تعذّر الاتصال بالخادم.'};
 function msg(e){return ERR[e]||ERR.NET;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function fnum(x){x=Number(x);return isNaN(x)?'':String(Math.round(x*100)/100);}
 var key=SS.get('as_tkey')||'', items=[], tm=null;
+/* update51: وقت الإجابة لكل سؤال — مسودة محلية لا يمحوها التحديث التلقائي حتى الحفظ */
+var PRE=[10,15,20,30,45,60,90], dr={}, tmsg={};
+function secTxt(n){n=Number(n)||0;if(n===1)return 'ثانية واحدة';if(n===2)return 'ثانيتان';if(n>=3&&n<=10)return n+' ثوانٍ';return n+' ثانية';}
+function durTxt(s){s=Math.round(s);var m=Math.floor(s/60),x=s%60;if(!m)return s+' ث';return m+' د'+(x?' '+x+' ث':'');}
+function curSec(i){return Number(i.per)||Number(i.def)||10;}
+function tmrHtml(i){
+  if(!i.ready)return '';
+  var cur=curSec(i), v=dr[i.id]!=null?dr[i.id]:cur, dirty=v!==cur, mn=i.smin||5, mx=i.smax||300, n=Number(i.n)||0;
+  var pre=PRE.map(function(x){return '<button type="button" data-tp="'+x+'" data-tid="'+esc(i.id)+'" class="'+(x===v?'on':'')+'">'+x+'</button>';}).join('');
+  var m=tmsg[i.id]||'';
+  return '<div class="tmr" data-tm="'+esc(i.id)+'"><div class="tmh"><span><i class="fa-solid fa-stopwatch" style="margin-left:6px;"></i>وقت الإجابة لكل سؤال</span><span class="tg2'+(i.custom?' c':'')+'">'+(i.custom?'محدَّد من الأستاذ':'الافتراضي')+'</span></div>'+
+    '<div class="tst"><button type="button" data-ts="5" data-tid="'+esc(i.id)+'" aria-label="زيادة 5 ثوانٍ"'+(v+5>mx?' disabled':'')+'>+5</button>'+
+    '<div class="tv'+(dirty?' dirty':'')+'"><b>'+v+'</b><span>'+(dirty?'لم يُحفظ بعد':'المعتمد الآن')+'</span></div>'+
+    '<button type="button" data-ts="-5" data-tid="'+esc(i.id)+'" aria-label="إنقاص 5 ثوانٍ"'+(v-5<mn?' disabled':'')+'>−5</button></div>'+
+    '<div class="pre">'+pre+'</div>'+
+    '<div class="tms">'+(dirty?'الجديد: <b>'+secTxt(v)+'</b> لكل سؤال (المعتمد حالياً '+secTxt(cur)+')':'المعتمد: <b>'+secTxt(cur)+'</b> لكل سؤال')+(n?'، المجموع '+n+' × '+v+' = <bdi>'+durTxt(n*v)+'</bdi>':'')+'.'+
+      (i.open?' <span style="color:#b45309;">التقييم مفتوح: الوقت الجديد يُطبَّق على من يبدأ بعد الحفظ فقط.</span>':' يُطبَّق على من يبدأ بعد الحفظ.')+'</div>'+
+    '<div class="row"><button class="btn go" type="button" data-tsave="'+esc(i.id)+'"'+(dirty?'':' disabled')+'><i class="fa-solid fa-floppy-disk"></i>حفظ الوقت</button>'+
+    (i.custom&&i.def?'<button class="btn lt" type="button" data-tdef="'+esc(i.id)+'"><i class="fa-solid fa-rotate-left"></i>الافتراضي ('+i.def+' ث)</button>':'')+'</div>'+
+    '<div class="tmm" id="tmm-'+esc(i.id)+'">'+m+'</div></div>';
+}
 function call(o){o.key=key;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{return JSON.parse(t);}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
 function render(){
   var h='';
   items.forEach(function(i){
     var st=i.open?'<span class="bdg b-open"><i class="fa-solid fa-lock-open"></i>مفتوح</span>':'<span class="bdg b-closed"><i class="fa-solid fa-lock"></i>مغلق</span>';
     h+='<div class="it"><div class="top"><div class="t">'+esc(i.title)+'</div>'+st+'</div><div class="s">'+esc(i.topic)+'</div>'+
-      '<div class="m"><span><i class="fa-solid fa-users"></i> أدّاه '+(i.cnt||0)+'</span>'+(i.t?'<span><i class="fa-regular fa-clock"></i> آخر تغيير: <bdi dir="ltr">'+esc(i.t)+'</bdi></span>':'')+(i.ready?'':'<span style="color:#b91c1c;">الأسئلة غير جاهزة</span>')+'</div>'+
+      '<div class="m"><span><i class="fa-solid fa-users"></i> أدّاه '+(i.cnt||0)+'</span>'+(i.t?'<span><i class="fa-regular fa-clock"></i> آخر تغيير: <bdi dir="ltr">'+esc(i.t)+'</bdi></span>':'')+(i.ready?'':'<span style="color:#b91c1c;">الأسئلة غير جاهزة</span>')+(i.ready?'<span><i class="fa-solid fa-stopwatch"></i> '+secTxt(curSec(i))+' لكل سؤال</span>':'')+'</div>'+tmrHtml(i)+
       '<button class="btn tg '+(i.open?'red':'go')+'" type="button" data-id="'+esc(i.id)+'" data-open="'+(i.open?0:1)+'">'+(i.open?'<i class="fa-solid fa-lock"></i>إغلاق التقييم':'<i class="fa-solid fa-lock-open"></i>فتح التقييم')+'</button></div>';
   });
   $('items').innerHTML=h||'<p class="s">لا توجد تقييمات.</p>';
@@ -151,7 +187,26 @@ $('kf').addEventListener('submit',function(ev){ev.preventDefault();var k=$('key'
   call({action:'askey'}).then(function(r){$('kbtn').disabled=false;if(r.ok){SS.set('as_tkey',k);$('kerr').textContent='';enter();}else{key='';$('kerr').textContent=msg(r.err||'BAD_KEY');}});});
 $('lo').addEventListener('click',logout);
 $('rf').addEventListener('click',function(){$('rf').disabled=true;load().then(function(){$('rf').disabled=false;});});
-$('items').addEventListener('click',function(ev){var b=ev.target.closest('[data-id]');if(!b)return;
+function byId(id){return items.filter(function(i){return i.id===id;})[0];}
+function saveSec(id,v,b){
+  if(b)b.disabled=true; tmsg[id]='<span style="color:#475569;">جارٍ الحفظ…</span>'; var e=$('tmm-'+id); if(e)e.innerHTML=tmsg[id];
+  call({action:'assec',id:id,sec:v}).then(function(r){
+    if(!r.ok){if(b)b.disabled=false;tmsg[id]='<span style="color:#b91c1c;">'+(r.err==='BAD_SEC'?'قيمة غير مقبولة.':msg(r.err))+'</span>';if(r.err==='BAD_KEY'){logout();$('kerr').textContent=msg(r.err);return;}render();return;}
+    delete dr[id]; var i=byId(id); if(i){i.per=r.per;i.custom=r.sec;i.sec=r.total;}
+    tmsg[id]='<span style="color:#166534;"><i class="fa-solid fa-check"></i> حُفظ: '+secTxt(r.per)+' لكل سؤال.</span>';
+    render(); load();
+  });
+}
+$('items').addEventListener('click',function(ev){
+  var t=ev.target.closest('[data-ts],[data-tp],[data-tsave],[data-tdef]');
+  if(t){var id=t.getAttribute('data-tid')||t.getAttribute('data-tsave')||t.getAttribute('data-tdef'),i=byId(id);if(!i)return;
+    var mn=i.smin||5,mx=i.smax||300,v=dr[id]!=null?dr[id]:curSec(i);
+    if(t.hasAttribute('data-tsave')){saveSec(id,v,t);return;}
+    if(t.hasAttribute('data-tdef')){if(confirm('إرجاع وقت السؤال إلى الافتراضي ('+secTxt(i.def)+')؟'))saveSec(id,0,t);return;}
+    if(t.hasAttribute('data-ts'))v=Math.max(mn,Math.min(mx,v+Number(t.getAttribute('data-ts'))));
+    else v=Number(t.getAttribute('data-tp'));
+    if(v===curSec(i))delete dr[id];else dr[id]=v; tmsg[id]=''; render(); return;}
+  var b=ev.target.closest('[data-id]');if(!b)return;
   var id=b.getAttribute('data-id'),op=b.getAttribute('data-open');b.disabled=true;
   call({action:'asset',id:id,open:op}).then(function(r){b.disabled=false;if(!r.ok){$('perr').textContent=msg(r.err);return;}load();});});
 var found=null;
