@@ -148,6 +148,24 @@ html.lock,html.lock body{overflow:hidden;}
 [aria-selected=true] .nb2{background:rgba(255,255,255,.18);color:#fff;}
 .sec h3{margin-top:0;}
 .hint{color:#475569;font-size:14px;line-height:1.7;margin:0 0 10px;}
+/* update58: الجدولة */
+.b-sch{background:#dbeafe;color:#1e40af;}
+.sm{display:flex;gap:6px;margin:0 0 10px;}.sm button{flex:1 1 0;min-height:46px;border-radius:12px;border:1.5px solid #cbd5e1;background:#fff;color:#0f2744;font:inherit;font-weight:800;font-size:15px;cursor:pointer;}
+.sm button.on{background:#1d4f86;border-color:#1d4f86;color:#fff;}
+.sk{border:1px solid #e3e9f2;border-radius:12px;padding:8px 10px;margin:0 0 8px;background:#fff;}
+.sk .kh{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;font-weight:800;color:#14365c;font-size:14.5px;margin:0 0 6px;}
+.sk .kf{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px;}.sk .kf>div:first-child{grid-column:1/-1;}
+@media (min-width:600px){.sk .kf{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) minmax(0,1fr);}.sk .kf>div:first-child{grid-column:auto;}}
+.sk label,.sg label{font-size:12.5px;color:#475569;font-weight:700;display:block;margin:0 0 2px;}
+.sk input,.sg input,.sg select{width:100%;min-height:42px;border:1.5px solid #cbd5e1;border-radius:10px;padding:4px 6px;font:inherit;font-size:15px;background:#fff;color:#0f2744;box-sizing:border-box;}
+.sk .dn{font-size:12.5px;color:#1e40af;font-weight:800;}
+.kst{font-size:12px;font-weight:800;border-radius:999px;padding:1px 9px;background:#e2e8f0;color:#475569;}
+.kst.open{background:#dcfce7;color:#166534;}.kst.before{background:#fef3c7;color:#92400e;}.kst.att{background:#e0f2fe;color:#075985;}
+.sg{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin:0 0 10px;}
+@media (min-width:600px){.sg.two{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}}
+.sl{font-size:13.5px;color:#334155;line-height:1.7;margin:4px 0 8px;}.sl b{color:#14365c;}
+.srow{display:flex;gap:8px;flex-wrap:wrap;}.srow .btn{flex:1 1 160px;min-height:46px;font-size:15px;}
+.sx2{display:flex;flex-direction:column;gap:4px;margin:6px 0 8px;}.sx2 div{font-size:13.5px;color:#334155;}
 .asel{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;}
 .asel button{flex:1 1 90px;min-height:44px;border-radius:12px;border:1.5px solid #cbd5e1;background:#fff;color:#0f2744;font:inherit;font-weight:800;font-size:14.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;padding:4px 8px;}
 .asel button.on{background:#1d4f86;border-color:#1d4f86;color:#fff;}
@@ -182,6 +200,7 @@ html.lock,html.lock body{overflow:hidden;}
 <div class="nvh"><span>أقسام اللوحة</span><button type="button" id="nx" aria-label="إغلاق القائمة">✕</button></div>
 <div id="tl" role="tablist" aria-orientation="vertical" aria-label="أقسام لوحة الأستاذ">
 <button type="button" role="tab" id="t-open" data-tab="open" aria-controls="s-open" aria-selected="false" tabindex="-1"><i class="fa-solid fa-toggle-on" aria-hidden="true"></i><span>الفتح والغلق</span><em class="nb2" id="bd-open"></em></button>
+<button type="button" role="tab" id="t-sched" data-tab="sched" aria-controls="s-sched" aria-selected="false" tabindex="-1"><i class="fa-solid fa-calendar-days" aria-hidden="true"></i><span>الجدولة</span><em class="nb2" id="bd-sched"></em></button>
 <button type="button" role="tab" id="t-time" data-tab="time" aria-controls="s-time" aria-selected="false" tabindex="-1"><i class="fa-solid fa-stopwatch" aria-hidden="true"></i><span>الوقت وعدد الأسئلة</span><em class="nb2" id="bd-time"></em></button>
 <button type="button" role="tab" id="t-ex" data-tab="ex" aria-controls="s-ex" aria-selected="false" tabindex="-1"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i><span>التخصصات المعنية</span><em class="nb2" id="bd-ex"></em></button>
 <button type="button" role="tab" id="t-stats" data-tab="stats" aria-controls="s-stats" aria-selected="false" tabindex="-1"><i class="fa-solid fa-chart-column" aria-hidden="true"></i><span>الإحصائيات والتنبيهات</span><em class="nb2" id="bd-stats"></em></button>
@@ -197,6 +216,11 @@ html.lock,html.lock body{overflow:hidden;}
 <h3><i class="fa-solid fa-toggle-on"></i>فتح التقييمات وإغلاقها</h3>
 <p class="hint">التقييم المفتوح يظهر للطلبة المعنيين ويمكنهم بدؤه، والمغلق لا يقبل محاولات جديدة.</p>
 <div id="items"><p class="s">جارٍ التحميل…</p></div>
+</section>
+<section class="card sec hide" id="s-sched" role="tabpanel" aria-labelledby="t-sched">
+<h3><i class="fa-solid fa-calendar-days"></i>جدولة الفتح والغلق حسب التوقيت</h3>
+<p class="hint">في النمط «مجدول» يفتح الخادم التقييم ويغلقه وحده بتوقيت الجزائر. <b>التطبيق</b>: مفتوح لطلبة الفوج صاحب الحصة فقط، من بدايتها إلى نهايتها مع المهلة. <b>المحاضرة</b>: تفتح مع بداية محاضرة التخصص لمن سُجّل حضوره فيها، وتبقى مفتوحة للحاضرين بعدها حتى الأجل النهائي إن حددته. في النمطين لا يجري تقييمَ المحاضرة الغائبُ ولا من دخل بعد انتهاء الحصة. حالة الفتح اليدوية تبقى محفوظة وتعود عند الرجوع إلى «يدوي».</p>
+<div id="b-sched"></div>
 </section>
 <section class="card sec hide" id="s-time" role="tabpanel" aria-labelledby="t-time">
 <h3><i class="fa-solid fa-stopwatch"></i>الوقت وعدد الأسئلة</h3>
@@ -274,7 +298,7 @@ html.lock,html.lock body{overflow:hidden;}
 var API='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec';
 var $=function(id){return document.getElementById(id);};
 var SS={get:function(k){try{return sessionStorage.getItem(k);}catch(e){return null;}},set:function(k,v){try{sessionStorage.setItem(k,v);}catch(e){}},del:function(k){try{sessionStorage.removeItem(k);}catch(e){}}};
-var ERR={BAD_KEY:'الرمز غير صحيح.',BAD_ID:'تقييم غير معروف.',NONE:'لا توجد نتيجة لهذا الرقم في هذا التقييم.',UNKNOWN_BAC:'اكتب رقم بكالوريا صحيحاً.',BUSY:'الخادم مشغول، أعد المحاولة.',BAD_SEC:'قيمة غير مقبولة.',BAD_CNT:'قيمة غير مقبولة.',NO_CONFIRM:'لم يُؤكَّد الإجراء.',BAD_GRP:'الفوج غير معروف.',CLOSED:'التقييم مغلق.',BAD_EX:'تخصص غير صالح، ولا يمكن استبعاد كل التخصصات.',NO_BANK:'لا توجد أسئلة في البنك لهذا التقييم.',NET:'تعذّر الاتصال بالخادم.'};
+var ERR={BAD_KEY:'الرمز غير صحيح.',BAD_ID:'تقييم غير معروف.',NONE:'لا توجد نتيجة لهذا الرقم في هذا التقييم.',UNKNOWN_BAC:'اكتب رقم بكالوريا صحيحاً.',BUSY:'الخادم مشغول، أعد المحاولة.',BAD_SEC:'قيمة غير مقبولة.',BAD_CNT:'قيمة غير مقبولة.',NO_CONFIRM:'لم يُؤكَّد الإجراء.',BAD_GRP:'الفوج غير معروف.',CLOSED:'التقييم مغلق.',BAD_EX:'تخصص غير صالح، ولا يمكن استبعاد كل التخصصات.',NO_BANK:'لا توجد أسئلة في البنك لهذا التقييم.',BAD_MODE:'النمط غير صالح.',BAD_GRACE:'المهلة بين 0 و15 دقيقة.',BAD_SCHED:'موعد غير صالح: تحقق من التاريخ، وأن النهاية بعد البداية.',NO_SLOT:'حدد تاريخاً لفوج أو تخصص واحد على الأقل قبل تفعيل الجدولة.',BAD_UNTIL:'الأجل النهائي غير صالح.',NET:'تعذّر الاتصال بالخادم.'};
 function msg(e){return ERR[e]||ERR.NET;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function fnum(x){x=Number(x);return isNaN(x)?'':String(Math.round(x*100)/100);}
@@ -449,10 +473,11 @@ $('rmgo').addEventListener('click',function(){
 document.addEventListener('toggle',function(ev){var d=ev.target; if(d&&d.getAttribute&&d.getAttribute('data-sg')){if(d.open)stOpen[d.getAttribute('data-sg')]=1;else delete stOpen[d.getAttribute('data-sg')];}},true);
 function call(o){o.key=key;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{return JSON.parse(t);}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
 /* update55: أقسام مستقلة، قسم واحد ظاهر، ومحدِّد للتقييم داخل القسم */
-var TABS=['open','time','ex','stats','cancel','bank'], tab='open', cur=SS.get('as_tcur')||'';
+var TABS=['open','sched','time','ex','stats','cancel','bank'], tab='open', cur=SS.get('as_tcur')||'';
 function curItem(){var i=byId(cur);if(!i&&items.length){i=items[0];cur=i.id;}return i;}
 function shortT(i){return String(i.title||i.id).split(':')[0];}
-function stBdg(i){return i.open?'<span class="bdg b-open"><i class="fa-solid fa-lock-open"></i>مفتوح</span>':'<span class="bdg b-closed"><i class="fa-solid fa-lock"></i>مغلق</span>';}
+function isSch(i){return !!(i.sched&&i.sched.mode==='sched');}
+function stBdg(i){if(isSch(i))return '<span class="bdg b-sch"><i class="fa-regular fa-calendar-check"></i>مجدول: '+(i.open?'مفتوح الآن':'مغلق الآن')+'</span>';return i.open?'<span class="bdg b-open"><i class="fa-solid fa-lock-open"></i>مفتوح</span>':'<span class="bdg b-closed"><i class="fa-solid fa-lock"></i>مغلق</span>';}
 function head(i){return '<div class="top"><div class="t">'+esc(i.title)+'</div>'+stBdg(i)+'</div><div class="s">'+esc(i.topic)+'</div>';}
 function asel(sub){
   if(items.length<2)return '';
@@ -462,6 +487,7 @@ function asel(sub){
 function badges(){
   var no=items.filter(function(i){return i.open;}).length, e=$('bd-open'); e.textContent=items.length?no+'/'+items.length:''; e.className='nb2'+(no?' o':'');
   var tn=0, has=false; items.forEach(function(i){var S=STS[i.id]; if(S){has=true; if(i.open)tn+=Number(S.none)||0;}});
+  var ns=items.filter(isSch).length, e3=$('bd-sched'); e3.textContent=ns?String(ns):''; e3.className='nb2'+(ns?' o':''); $('t-sched').setAttribute('aria-label','الجدولة'+(ns?'، المجدول '+ns:''));
   var e2=$('bd-stats'); e2.textContent=has?String(tn):''; e2.className='nb2'+(tn?' w':''); e2.title=has?'الطلبة المعنيون الذين لم يتقدموا بعد للتقييمات المفتوحة':'';
   $('t-open').setAttribute('aria-label','الفتح والغلق، المفتوح '+no+' من '+items.length);
   $('t-stats').setAttribute('aria-label','الإحصائيات والتنبيهات'+(has?'، لم يتقدموا بعد '+tn:''));
@@ -471,10 +497,13 @@ function render(){
   items.forEach(function(i){
     h+='<div class="it">'+head(i)+
       '<div class="m"><span><i class="fa-solid fa-users"></i> أدّاه '+(i.cnt||0)+'</span>'+(i.t?'<span><i class="fa-regular fa-clock"></i> آخر تغيير: <bdi dir="ltr">'+esc(i.t)+'</bdi></span>':'')+(i.ready?'':'<span style="color:#b91c1c;">الأسئلة غير جاهزة</span>')+(i.ready?'<span><i class="fa-solid fa-stopwatch"></i> '+secTxt(curSec(i))+' لكل سؤال</span>':'')+(i.ready&&i.pool?'<span><i class="fa-solid fa-shuffle"></i> '+qTxt(curCnt(i))+' من '+i.pool+' في البنك</span>':'')+'</div>'+
-      '<button class="btn tg '+(i.open?'red':'go')+'" type="button" data-id="'+esc(i.id)+'" data-open="'+(i.open?0:1)+'">'+(i.open?'<i class="fa-solid fa-lock"></i>إغلاق التقييم':'<i class="fa-solid fa-lock-open"></i>فتح التقييم')+'</button></div>';
+      attLine(i)+(isSch(i)?schSum(i)+'<div class="srow"><button class="btn lt" type="button" data-sgo="'+esc(i.id)+'"><i class="fa-solid fa-calendar-days"></i>تعديل الجدولة</button><button class="btn red" type="button" data-sstop="'+esc(i.id)+'"><i class="fa-solid fa-lock"></i>إيقاف الجدولة وإغلاق التقييم</button></div>':
+      '<button class="btn tg '+(i.open?'red':'go')+'" type="button" data-id="'+esc(i.id)+'" data-open="'+(i.open?0:1)+'">'+(i.open?'<i class="fa-solid fa-lock"></i>إغلاق التقييم':'<i class="fa-solid fa-lock-open"></i>فتح التقييم')+'</button>')+'</div>';
   });
   $('items').innerHTML=h||'<p class="s">لا توجد تقييمات.</p>';
   var i=curItem(), none='<p class="s">لا توجد تقييمات.</p>';
+  var bs=$('b-sched'), ae=document.activeElement;
+  if(!(bs.contains(ae)&&ae.tagName!=='BUTTON'))bs.innerHTML=i?asel(function(x){return isSch(x)?'م':'';})+'<div class="it">'+head(i)+schHtml(i)+'</div>':none;
   $('b-time').innerHTML=i?asel()+'<div class="it">'+head(i)+(i.ready?cntHtml(i)+tmrHtml(i):'<p class="s" style="color:#b91c1c;">الأسئلة غير جاهزة لهذا التقييم.</p>')+'</div>':none;
   $('b-ex').innerHTML=i?asel()+'<div class="it">'+head(i)+exHtml(i)+'</div>':none;
   $('b-stats').innerHTML=i?asel(function(x){var S=STS[x.id];return S?S.none:'';})+'<div class="it">'+head(i)+stHtml(i)+'</div>':none;
@@ -560,6 +589,88 @@ $('lo').addEventListener('click',logout);
 $('binit').addEventListener('click',function(){bankInit($('binit'));});
 $('rf').addEventListener('click',function(){$('rf').disabled=true;load().then(function(){$('rf').disabled=false;});});
 function byId(id){return items.filter(function(i){return i.id===id;})[0];}
+/* update58: الجدولة (مسودة محلية لكل تقييم لا يمحوها التحديث التلقائي حتى الحفظ) */
+var SD={}, smsg={}, DAYS=['الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+function dayOf(d){if(!/^\d{4}-\d\d-\d\d$/.test(d||''))return '';var a=d.split('-');return DAYS[new Date(Date.UTC(+a[0],+a[1]-1,+a[2])).getUTCDay()];}
+function dmy(d){var a=String(d||'').split('-');return a.length===3?a[2]+'/'+a[1]:'';}
+function kLab(i,k){return i.cat==='tp'?k.replace('إدارة مالية - ','الفوج '):k;}
+function sdOf(i){
+  if(SD[i.id])return SD[i.id]; var S=i.sched||{}, m={};
+  (S.keys||[]).forEach(function(x){m[x.k]={d:x.d||'',s:x.s||'',e:x.e||''};});
+  return {mode:S.mode||'manual',gr:S.gr==null?15:S.gr,m:m,until:S.until||'',dirty:false};
+}
+function sdSet(i,f){var d=sdOf(i);d=JSON.parse(JSON.stringify(d));f(d);d.dirty=true;SD[i.id]=d;return d;}
+function attLine(i){
+  if(i.cat!=='lec')return '';
+  var a=i.att, t=a?Object.keys(a).map(function(k){return esc(k)+' '+a[k];}).join('، '):'';
+  return '<div class="lr"><i class="fa-solid fa-user-check"></i> يجريه من سُجّل حضوره في المحاضرة فقط'+(t?' (الحاضرون: '+t+')':'')+'.</div>';
+}
+function schSum(i){
+  var S=i.sched||{};
+  return '<div class="sx2">'+(S.keys||[]).map(function(x){return '<div><b>'+esc(kLab(i,x.k))+'</b>: <span class="kst '+esc(x.st)+'">'+esc(x.txt)+'</span></div>';}).join('')+'<div class="lr">المهلة بعد الحصة: '+esc(S.gr)+' دقيقة'+(S.until?'، الأجل النهائي: <bdi dir="ltr">'+esc(S.until)+'</bdi>':'')+'</div></div>';
+}
+function schHtml(i){
+  var S=i.sched||{}, d=sdOf(i), on=d.mode==='sched', st={};
+  (S.keys||[]).forEach(function(x){st[x.k]=x;});
+  var h='<div class="sl">النمط الحالي: <b>'+(isSch(i)?'مجدول':'يدوي')+'</b>، والحالة اليدوية المحفوظة: <b>'+(i.mopen?'مفتوح':'مغلق')+'</b>.</div>';
+  h+='<div class="sm" role="group" aria-label="نمط الفتح"><button type="button" data-smode="manual" data-sid="'+esc(i.id)+'" class="'+(on?'':'on')+'" aria-pressed="'+(on?'false':'true')+'">يدوي</button><button type="button" data-smode="sched" data-sid="'+esc(i.id)+'" class="'+(on?'on':'')+'" aria-pressed="'+(on?'true':'false')+'">مجدول</button></div>';
+  h+='<div class="sg'+(i.cat==='lec'?' two':'')+'"><div><label for="sgr-'+esc(i.id)+'">المهلة بعد نهاية الحصة (دقائق)</label><select id="sgr-'+esc(i.id)+'" data-sgr="'+esc(i.id)+'">';
+  for(var g=0;g<=15;g++)h+='<option value="'+g+'"'+(Number(d.gr)===g?' selected':'')+'>'+g+(g===15?' (الافتراضي)':'')+'</option>';
+  h+='</select></div>';
+  if(i.cat==='lec')h+='<div><label for="sun-'+esc(i.id)+'">الأجل النهائي للحاضرين (اختياري)</label><input type="datetime-local" dir="ltr" id="sun-'+esc(i.id)+'" data-sun="'+esc(i.id)+'" value="'+esc(String(d.until||'').replace(' ','T'))+'"></div>';
+  h+='</div>';
+  Object.keys(d.m).forEach(function(k){
+    var x=d.m[k], s=st[k], n=esc(i.id)+'-'+Object.keys(d.m).indexOf(k);
+    h+='<div class="sk"><div class="kh"><span>'+esc(kLab(i,k))+(x.d?' <span class="dn">'+esc(dayOf(x.d))+' '+esc(dmy(x.d))+'</span>':'')+'</span>'+(s&&isSch(i)?'<span class="kst '+esc(s.st)+'">'+esc(s.txt)+'</span>':'')+'</div>'+
+      '<div class="kf"><div><label for="sd-'+n+'">التاريخ</label><input type="date" dir="ltr" id="sd-'+n+'" data-skey="'+esc(k)+'" data-sf="d" data-sid="'+esc(i.id)+'" value="'+esc(x.d)+'"></div>'+
+      '<div><label for="ss-'+n+'">من</label><input type="time" dir="ltr" id="ss-'+n+'" data-skey="'+esc(k)+'" data-sf="s" data-sid="'+esc(i.id)+'" value="'+esc(x.s)+'"></div>'+
+      '<div><label for="se-'+n+'">إلى</label><input type="time" dir="ltr" id="se-'+n+'" data-skey="'+esc(k)+'" data-sf="e" data-sid="'+esc(i.id)+'" value="'+esc(x.e)+'"></div></div></div>';
+  });
+  h+='<div class="lr" style="margin:0 0 8px;">'+(i.cat==='lec'?'المواعيد حسب التخصص. ':'المواعيد حسب الفوج، وكل فوج يرى التقييم مفتوحاً في حصته فقط. ')+'التاريخ الفارغ يعني: لا موعد (مغلق لهذا '+(i.cat==='lec'?'التخصص':'الفوج')+' في النمط المجدول).</div>';
+  h+=attLine(i);
+  h+='<div class="srow" style="margin-top:8px;"><button class="btn go" type="button" data-ssave="'+esc(i.id)+'"><i class="fa-solid fa-floppy-disk"></i>حفظ'+(d.dirty?' التغييرات':'')+'</button><button class="btn lt" type="button" data-sdef="'+esc(i.id)+'"><i class="fa-solid fa-rotate-left"></i>المواعيد الافتراضية</button></div>';
+  h+='<div class="tmm" id="smm-'+esc(i.id)+'">'+(smsg[i.id]||'')+'</div>';
+  return h;
+}
+function saveSched(id,b,extra){
+  var i=byId(id); if(!i)return Promise.resolve(); var d=sdOf(i);
+  var o={action:'assched',id:id,mode:d.mode,grace:String(d.gr),sch:JSON.stringify(d.m),until:i.cat==='lec'?String(d.until||'').replace('T',' '):''};
+  if(extra)for(var k in extra)o[k]=extra[k];
+  if(b)b.disabled=true; smsg[id]='<span style="color:#475569;">جارٍ الحفظ…</span>'; var e=$('smm-'+id); if(e)e.innerHTML=smsg[id];
+  return call(o).then(function(r){
+    if(b)b.disabled=false;
+    if(!r.ok){smsg[id]='<span style="color:#b91c1c;">'+msg(r.err)+(r.key?' ('+esc(r.key)+')':'')+'</span>';if(r.err==='BAD_KEY'){logout();$('kerr').textContent=msg(r.err);return r;}render();return r;}
+    delete SD[id]; i.sched=r.sched; i.open=r.open; i.mopen=r.mopen;
+    smsg[id]='<span style="color:#166534;"><i class="fa-solid fa-check"></i> حُفظ: النمط '+(r.sched.mode==='sched'?'مجدول':'يدوي')+'.</span>';
+    render(); load(); return r;
+  });
+}
+function schInput(ev){
+  var t=ev.target, id=t.getAttribute&&t.getAttribute('data-sid'), i;
+  if(t.hasAttribute&&t.hasAttribute('data-sgr')){i=byId(t.getAttribute('data-sgr'));if(i)sdSet(i,function(d){d.gr=Number(t.value);});return;}
+  if(t.hasAttribute&&t.hasAttribute('data-sun')){i=byId(t.getAttribute('data-sun'));if(i)sdSet(i,function(d){d.until=t.value.replace('T',' ');});return;}
+  if(!id||!t.hasAttribute('data-skey'))return; i=byId(id); if(!i)return;
+  var k=t.getAttribute('data-skey'), f=t.getAttribute('data-sf');
+  sdSet(i,function(d){if(!d.m[k])d.m[k]={d:'',s:'',e:''};d.m[k][f]=t.value;});
+  if(f==='d'){var dn=t.closest('.sk').querySelector('.kh > span'); if(dn)dn.innerHTML=esc(kLab(i,k))+(t.value?' <span class="dn">'+esc(dayOf(t.value))+' '+esc(dmy(t.value))+'</span>':'');}
+}
+$('secs').addEventListener('change',schInput);
+$('secs').addEventListener('input',schInput);
+$('secs').addEventListener('click',function(ev){
+  var b=ev.target.closest('[data-smode],[data-ssave],[data-sdef],[data-sgo],[data-sstop]'); if(!b)return;
+  if(b.hasAttribute('data-smode')){var i=byId(b.getAttribute('data-sid'));if(!i)return;var m=b.getAttribute('data-smode');sdSet(i,function(d){d.mode=m;});smsg[i.id]='';render();return;}
+  if(b.hasAttribute('data-ssave')){var id=b.getAttribute('data-ssave'),i2=byId(id),d=i2&&sdOf(i2);if(!i2)return;
+    if(d.mode==='sched'&&!confirm('تفعيل الجدولة لـ«'+i2.title+'»؟ سيفتح الخادم التقييم ويغلقه وحده حسب المواعيد.'))return;
+    saveSched(id,b);return;}
+  if(b.hasAttribute('data-sdef')){var i3=byId(b.getAttribute('data-sdef'));if(!i3)return;var df=(i3.sched||{}).def||{};
+    sdSet(i3,function(d){Object.keys(df).forEach(function(k){d.m[k]={d:df[k].d||'',s:df[k].s||'',e:df[k].e||''};});d.gr=15;});smsg[i3.id]='<span style="color:#475569;">المواعيد الافتراضية من «الإعدادات» والتوقيت الأسبوعي. لم تُحفظ بعد.</span>';render();return;}
+  if(b.hasAttribute('data-sgo')){cur=b.getAttribute('data-sgo');SS.set('as_tcur',cur);setTab('sched');render();return;}
+  if(b.hasAttribute('data-sstop')){var id4=b.getAttribute('data-sstop'),i4=byId(id4);if(!i4)return;
+    if(!confirm('إيقاف الجدولة لـ«'+i4.title+'» وإغلاقه الآن؟ يعود إلى النمط اليدوي مغلقاً.'))return;
+    b.disabled=true; SD[id4]=JSON.parse(JSON.stringify(sdOf(i4))); SD[id4].mode='manual';
+    saveSched(id4,null).then(function(r){if(!r||!r.ok){b.disabled=false;return;}return call({action:'asset',id:id4,open:'0'}).then(function(x){b.disabled=false;if(!x.ok)$('perr').textContent=msg(x.err);load();});});
+    return;}
+});
 function saveSec(id,v,b){
   if(b)b.disabled=true; tmsg[id]='<span style="color:#475569;">جارٍ الحفظ…</span>'; var e=$('tmm-'+id); if(e)e.innerHTML=tmsg[id];
   call({action:'assec',id:id,sec:v}).then(function(r){

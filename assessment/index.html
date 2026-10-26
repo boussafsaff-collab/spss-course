@@ -41,6 +41,11 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 .it .m{color:#64748b;font-size:13px;display:flex;flex-wrap:wrap;gap:4px 12px;margin:0 0 8px;}
 .bdg{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:800;white-space:nowrap;}
 .b-open{background:#dcfce7;color:#166534;}.b-closed{background:#e2e8f0;color:#475569;}.b-done{background:#dbeafe;color:#1e40af;}
+.b-soon{background:#fef3c7;color:#92400e;}
+.why{display:flex;align-items:flex-start;gap:8px;border-radius:12px;padding:8px 10px;font-size:14.5px;line-height:1.65;font-weight:700;background:#f1f5f9;color:#334155;margin:2px 0 0;}
+.why i{margin-top:4px;flex:0 0 auto;}.why span{min-width:0;overflow-wrap:anywhere;}
+.why.before{background:#fffbeb;color:#92400e;}.why.absent{background:#fef2f2;color:#991b1b;}.why.needatt,.why.notyet{background:#eff6ff;color:#1e40af;}
+.why.ok{background:#f0fdf4;color:#166534;margin:0 0 8px;font-size:13.5px;}
 .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
 .qhd{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 8px;}
 .clock{font-weight:800;font-size:20px;color:#0f2744;background:#eef2f7;border-radius:12px;padding:2px 12px;min-width:84px;text-align:center;direction:ltr;}
@@ -162,13 +167,17 @@ function nbRender(){
 }
 function hlCard(id){var c=document.querySelector('.it[data-id="'+id+'"]');if(!c)return;c.classList.add('hl');c.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){c.classList.remove('hl');},4000);}
 document.addEventListener('click',function(ev){var b=ev.target.closest&&ev.target.closest('[data-nb]');if(b)hlCard(b.getAttribute('data-nb'));});
+/* update58: سبب الغلق أو موعد الفتح، وتحديث تلقائي عند حلول موعد الفتح */
+var WHY={before:'fa-regular fa-clock',absent:'fa-solid fa-user-xmark',needatt:'fa-solid fa-clipboard-check',notyet:'fa-regular fa-calendar',after:'fa-solid fa-lock',until:'fa-solid fa-lock',nosched:'fa-regular fa-calendar-xmark',closed:'fa-solid fa-lock'}, wt=null;
+function armOpen(){clearTimeout(wt);var n=Date.now(),t=0;items.forEach(function(i){if(!i.done&&!i.open&&i.opensAt&&i.opensAt>n&&(!t||i.opensAt<t))t=i.opensAt;});
+  if(t&&t-n<12*3600000)wt=setTimeout(function(){if(!Q)load();},t-n+3000);}
 function render(){
-  nbRender();
+  nbRender(); armOpen();
   ['lec','tp'].forEach(function(cat){
     var h='', arr=items.filter(function(i){return i.cat===cat;});
     if(!arr.length) h='<p class="s" style="color:#64748b;">لا توجد تقييمات بعد.</p>';
     arr.forEach(function(i){
-      var st=i.done?'<span class="bdg b-done"><i class="fa-solid fa-check"></i>أُنجز</span>':(i.open?'<span class="bdg b-open"><i class="fa-solid fa-lock-open"></i>مفتوح</span>':'<span class="bdg b-closed"><i class="fa-solid fa-lock"></i>مغلق</span>');
+      var st=i.done?'<span class="bdg b-done"><i class="fa-solid fa-check"></i>أُنجز</span>':(i.open?'<span class="bdg b-open"><i class="fa-solid fa-lock-open"></i>مفتوح</span>':(i.why==='before'?'<span class="bdg b-soon"><i class="fa-regular fa-clock"></i>يفتح لاحقاً</span>':(i.why==='absent'?'<span class="bdg b-closed"><i class="fa-solid fa-user-xmark"></i>غير متاح لك</span>':'<span class="bdg b-closed"><i class="fa-solid fa-lock"></i>مغلق</span>')));
       var m=[];
       if(i.n) m.push('<span><i class="fa-regular fa-circle-question"></i> '+qTxt(i.n)+(i.rnd?' تُسحب عشوائياً':'')+'</span>');
       if(i.mode==='all') m.push('<span><i class="fa-regular fa-clock"></i> '+dur(i.sec)+' للتقييم كله</span>');
@@ -179,8 +188,9 @@ function render(){
       else if(!who) b='';
       else if(!i.ready) b='<div class="s">الأسئلة غير جاهزة بعد.</div>';
       else if(LS.get(skey(i.id))) b='<button class="btn go" type="button" data-go="'+esc(i.id)+'"><i class="fa-solid fa-play"></i>متابعة التقييم</button>';
-      else if(i.open) b='<button class="btn go" type="button" data-go="'+esc(i.id)+'"><i class="fa-solid fa-play"></i>ابدأ التقييم</button>';
-      else b='<div class="s" style="margin:0;">مغلق حالياً، يفتحه الأستاذ في الوقت المحدد.</div>';
+      else if(i.open) b=(i.msg?'<div class="why ok"><i class="fa-regular fa-clock"></i><span>'+esc(i.msg)+'</span></div>':'')+'<button class="btn go" type="button" data-go="'+esc(i.id)+'"><i class="fa-solid fa-play"></i>ابدأ التقييم</button>';
+      else b='<div class="why '+esc(i.why||'closed')+'"><i class="'+(WHY[i.why]||WHY.closed)+'"></i><span>'+esc(i.msg||'مغلق حالياً، يفتحه الأستاذ في الوقت المحدد.')+'</span></div>';
+      if(!who&&i.sched&&!i.done) m.push('<span><i class="fa-regular fa-calendar"></i> يفتح حسب توقيت '+(cat==='tp'?'حصة فوجك':'محاضرة تخصصك')+'</span>');
       h+='<div class="it" data-id="'+esc(i.id)+'"><div class="top"><div class="t">'+esc(i.title)+'</div>'+st+'</div><div class="s">'+esc(i.topic)+'</div><div class="m">'+m.join('')+'</div>'+b+'</div>';
     });
     $('L-'+cat).innerHTML=h;
@@ -220,7 +230,7 @@ function begin(id,btn){
   if(btn)btn.disabled=true;
   call({action:'asstart',sbac:bac,id:id}).then(function(r){
     if(btn)btn.disabled=false;
-    if(!r.ok){if(r.err!=='NET'){LS.del(skey(id));if(btn)alert(msg(r.err));load();}else alert(msg(r.err));return;}
+    if(!r.ok){if(r.err!=='NET'){LS.del(skey(id));if(btn)alert(r.msg||msg(r.err));load();}else alert(msg(r.err));return;}
     var now=Date.now(), sig=r.qs.map(function(q){return q.id;}).join(',')+'|'+(r.vid||'');
     Q={id:r.id,title:r.title,topic:r.topic,mode:r.mode,total:r.total,qs:r.qs,vid:r.vid,sig:sig,t0:now-r.el*1000,qi:0,qt0:0,ans:{},cur:0,w:0,sent:false};
     var old=null; try{old=JSON.parse(LS.get(skey(id))||'null');}catch(e){}
