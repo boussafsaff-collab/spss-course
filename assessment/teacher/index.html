@@ -330,7 +330,7 @@ function saveCnt(id,v,b){
   });
 }
 function bankInit(b){
-  if(!confirm('تثبيت معرّفات أسئلة البنك وعمود «نشط» وإضافة أسئلة المحور 7 للمحاضرة 2 الناقصة؟ لا يُغيَّر نص أي سؤال موجود.'))return;
+  if(!confirm('تثبيت معرّفات أسئلة البنك وعمود «نشط» وإضافة الأسئلة الناقصة (المحور 7 لاختبار التطبيق 3، وبنكا تقييم المحاضرتين 1 و2)؟ لا يُغيَّر نص أي سؤال موجود.'))return;
   b.disabled=true; $('bres').textContent='جارٍ التنفيذ…';
   call({action:'asbankinit'}).then(function(r){b.disabled=false;
     if(!r.ok){$('bres').textContent=msg(r.err);return;}
