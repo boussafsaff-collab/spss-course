@@ -112,10 +112,38 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 .btn.rem{background:#fff7ed;color:#9a3412;border:2px solid #fb923c;box-shadow:none;min-height:46px;font-size:15px;}
 .btn.rem:disabled{opacity:.45;cursor:default;}
 .lr{font-size:12.5px;color:#64748b;margin:4px 0 0;}
+/* update55: شريط تنقل بين الأقسام */
+.nav{position:sticky;top:0;z-index:20;display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;background:#f4f7fb;padding:6px 2px 8px;margin:0 0 8px;scrollbar-width:thin;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+.nav [role=tab]{flex:0 0 auto;display:flex;align-items:center;gap:7px;min-height:44px;padding:6px 12px;border-radius:12px;border:1.5px solid #cbd5e1;background:#fff;color:#0f2744;font:inherit;font-weight:800;font-size:14.5px;white-space:nowrap;cursor:pointer;}
+.nav [role=tab] i{color:#1d4f86;}
+.nav [role=tab][aria-selected=true]{background:#0f2744;border-color:#0f2744;color:#fff;box-shadow:0 6px 16px rgba(15,23,42,.18);}
+.nav [role=tab][aria-selected=true] i{color:#e9c46a;}
+.nav [role=tab]:focus-visible{outline:3px solid #93c5fd;outline-offset:1px;}
+.nb2{font-style:normal;font-size:12px;font-weight:800;border-radius:999px;padding:0 8px;min-width:22px;text-align:center;background:#e2e8f0;color:#334155;line-height:20px;}
+.nb2:empty{display:none;}.nb2.o{background:#dcfce7;color:#166534;}.nb2.w{background:#ffedd5;color:#9a3412;}
+[aria-selected=true] .nb2{background:rgba(255,255,255,.18);color:#fff;}
+.sec h3{margin-top:0;}
+.hint{color:#475569;font-size:14px;line-height:1.7;margin:0 0 10px;}
+.asel{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px;}
+.asel button{flex:1 1 90px;min-height:44px;border-radius:12px;border:1.5px solid #cbd5e1;background:#fff;color:#0f2744;font:inherit;font-weight:800;font-size:14.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;padding:4px 8px;}
+.asel button.on{background:#1d4f86;border-color:#1d4f86;color:#fff;}
+.asel .dt{width:9px;height:9px;border-radius:50%;background:#94a3b8;flex:0 0 auto;}.asel .dt.o{background:#22c55e;}
+.tbar{display:flex;gap:8px;margin:0 0 10px;}.tbar .btn{min-height:42px;font-size:14.5px;}
+@media (min-width:900px){
+ .w.wide{max-width:1180px;}
+ #kc{max-width:560px;margin-left:auto;margin-right:auto;}
+ .lay{display:grid;grid-template-columns:250px minmax(0,1fr);gap:16px;align-items:start;}
+ .nav{flex-direction:column;overflow:visible;position:sticky;top:12px;background:#fff;border:1px solid #e3e9f2;border-radius:18px;padding:10px;margin:0;box-shadow:0 8px 24px rgba(15,23,42,.06);}
+ .nav [role=tab]{width:100%;white-space:normal;text-align:right;border-color:transparent;background:transparent;}
+ .nav [role=tab]:hover{background:#eef2f7;}
+ .nav [role=tab][aria-selected=true]{background:#0f2744;}
+ .nav .nb2{margin-right:auto;}
+}
+@media (max-width:380px){.nav [role=tab]{padding:6px 10px;font-size:14px;}}
 </style>
 </head>
 <body>
-<div class="w" dir="rtl">
+<div class="w" id="wr" dir="rtl">
 <div class="hd"><div class="r">
 <div class="ic"><i class="fa-solid fa-user-tie"></i></div>
 <div style="flex:1 1 200px;min-width:0;">
@@ -134,22 +162,38 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 </div>
 
 <div id="panel" class="hide">
-<div class="card">
-<h3><i class="fa-solid fa-toggle-on"></i>فتح التقييمات وإغلاقها</h3>
-<div id="items"><p class="s">جارٍ التحميل…</p></div>
-<div class="row"><button class="btn lt" id="rf" type="button"><i class="fa-solid fa-rotate"></i>تحديث</button>
+<div class="lay">
+<nav class="nav" id="nav" role="tablist" aria-label="أقسام لوحة الأستاذ">
+<button type="button" role="tab" id="t-open" data-tab="open" aria-controls="s-open" aria-selected="false" tabindex="-1"><i class="fa-solid fa-toggle-on" aria-hidden="true"></i><span>الفتح والغلق</span><em class="nb2" id="bd-open"></em></button>
+<button type="button" role="tab" id="t-time" data-tab="time" aria-controls="s-time" aria-selected="false" tabindex="-1"><i class="fa-solid fa-stopwatch" aria-hidden="true"></i><span>الوقت وعدد الأسئلة</span><em class="nb2" id="bd-time"></em></button>
+<button type="button" role="tab" id="t-ex" data-tab="ex" aria-controls="s-ex" aria-selected="false" tabindex="-1"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i><span>التخصصات المعنية</span><em class="nb2" id="bd-ex"></em></button>
+<button type="button" role="tab" id="t-stats" data-tab="stats" aria-controls="s-stats" aria-selected="false" tabindex="-1"><i class="fa-solid fa-chart-column" aria-hidden="true"></i><span>الإحصائيات والتنبيهات</span><em class="nb2" id="bd-stats"></em></button>
+<button type="button" role="tab" id="t-cancel" data-tab="cancel" aria-controls="s-cancel" aria-selected="false" tabindex="-1"><i class="fa-solid fa-user-xmark" aria-hidden="true"></i><span>إلغاء النتائج</span><em class="nb2" id="bd-cancel"></em></button>
+<button type="button" role="tab" id="t-bank" data-tab="bank" aria-controls="s-bank" aria-selected="false" tabindex="-1"><i class="fa-solid fa-database" aria-hidden="true"></i><span>بنك الأسئلة</span><em class="nb2" id="bd-bank"></em></button>
+</nav>
+<div class="main" id="secs">
+<div class="tbar"><button class="btn lt" id="rf" type="button"><i class="fa-solid fa-rotate"></i>تحديث</button>
 <button class="btn lt" id="lo" type="button"><i class="fa-solid fa-right-from-bracket"></i>خروج</button></div>
-<div class="err" id="perr"></div>
-</div>
-
-<div class="card">
-<h3><i class="fa-solid fa-database"></i>بنك الأسئلة</h3>
-<p class="s" style="color:#475569;font-size:14px;line-height:1.7;margin:0 0 8px;">تُسحب أسئلة كل طالب عشوائياً على الخادم من ورقة «بنك الأسئلة» (سطر «لا» في عمود «نشط» لا يُسحب). يختلف السحب من طالب لآخر، وإعادة تحميل الصفحة تعيد الأسئلة نفسها، وبعد إلغاء النتيجة يأخذ الطالب أسئلة لم تظهر له قدر ما يسمح البنك. السحوبات محفوظة في ورقة «سحب الأسئلة».</p>
-<button class="btn lt" id="binit" type="button"><i class="fa-solid fa-wand-magic-sparkles"></i>تهيئة البنك (المعرّفات وعمود «نشط»)</button>
-<div class="tmm" id="bres"></div>
-</div>
-
-<div class="card">
+<div class="err" id="perr" style="margin:0 0 6px;"></div>
+<section class="card sec" id="s-open" role="tabpanel" aria-labelledby="t-open">
+<h3><i class="fa-solid fa-toggle-on"></i>فتح التقييمات وإغلاقها</h3>
+<p class="hint">التقييم المفتوح يظهر للطلبة المعنيين ويمكنهم بدؤه، والمغلق لا يقبل محاولات جديدة.</p>
+<div id="items"><p class="s">جارٍ التحميل…</p></div>
+</section>
+<section class="card sec hide" id="s-time" role="tabpanel" aria-labelledby="t-time">
+<h3><i class="fa-solid fa-stopwatch"></i>الوقت وعدد الأسئلة</h3>
+<div id="b-time"></div>
+</section>
+<section class="card sec hide" id="s-ex" role="tabpanel" aria-labelledby="t-ex">
+<h3><i class="fa-solid fa-user-graduate"></i>التخصصات المعنية</h3>
+<p class="hint">التخصص المشطوب غير معني: لا يظهر له التقييم ولا يُحتسب في الإحصائيات. الافتراضي: التطبيقات لا تخص «إدارة أعمال»، والمحاضرات لكل التخصصات.</p>
+<div id="b-ex"></div>
+</section>
+<section class="card sec hide" id="s-stats" role="tabpanel" aria-labelledby="t-stats">
+<h3><i class="fa-solid fa-chart-column"></i>الإحصائيات والتنبيهات</h3>
+<div id="b-stats"></div>
+</section>
+<section class="card sec hide" id="s-cancel" role="tabpanel" aria-labelledby="t-cancel">
 <h3><i class="fa-solid fa-user-xmark"></i>إلغاء نتيجة طالب (للسماح بالإعادة)</h3>
 <label for="cid">التقييم</label>
 <select id="cid"></select>
@@ -164,7 +208,17 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 </div>
 <div class="err" id="cerr"></div>
 <p class="s" style="color:#64748b;font-size:13.5px;margin:10px 0 0;">تُنسخ النتيجة الملغاة كاملة (مع وقتها والعلامة) إلى ورقة «سجل إلغاء التقييمات» قبل حذفها، وتُفرَّغ خانتها في قائمة الفوج. يعيد الطالب التقييم بأسئلة جديدة حين يكون مفتوحاً.</p>
-</div>
+
+<h3 style="margin-top:16px;"><i class="fa-solid fa-users-slash"></i>الإلغاء الجماعي لتقييم</h3>
+<div id="b-dz"></div>
+</section>
+<section class="card sec hide" id="s-bank" role="tabpanel" aria-labelledby="t-bank">
+<h3><i class="fa-solid fa-database"></i>بنك الأسئلة</h3>
+<p class="s" style="color:#475569;font-size:14px;line-height:1.7;margin:0 0 8px;">تُسحب أسئلة كل طالب عشوائياً على الخادم من ورقة «بنك الأسئلة» (سطر «لا» في عمود «نشط» لا يُسحب). يختلف السحب من طالب لآخر، وإعادة تحميل الصفحة تعيد الأسئلة نفسها، وبعد إلغاء النتيجة يأخذ الطالب أسئلة لم تظهر له قدر ما يسمح البنك. السحوبات محفوظة في ورقة «سحب الأسئلة».</p>
+<button class="btn lt" id="binit" type="button"><i class="fa-solid fa-wand-magic-sparkles"></i>تهيئة البنك (المعرّفات وعمود «نشط»)</button>
+<div class="tmm" id="bres"></div>
+</section>
+</div></div>
 </div>
 
 <a href="../" class="btn" style="margin-top:4px;"><i class="fa-solid fa-clipboard-check"></i>صفحة التقييم المستمر (الطلبة)</a>
@@ -376,27 +430,66 @@ $('rmgo').addEventListener('click',function(){
 });
 document.addEventListener('toggle',function(ev){var d=ev.target; if(d&&d.getAttribute&&d.getAttribute('data-sg')){if(d.open)stOpen[d.getAttribute('data-sg')]=1;else delete stOpen[d.getAttribute('data-sg')];}},true);
 function call(o){o.key=key;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{return JSON.parse(t);}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
+/* update55: أقسام مستقلة، قسم واحد ظاهر، ومحدِّد للتقييم داخل القسم */
+var TABS=['open','time','ex','stats','cancel','bank'], tab='open', cur=SS.get('as_tcur')||'';
+function curItem(){var i=byId(cur);if(!i&&items.length){i=items[0];cur=i.id;}return i;}
+function shortT(i){return String(i.title||i.id).split(':')[0];}
+function stBdg(i){return i.open?'<span class="bdg b-open"><i class="fa-solid fa-lock-open"></i>مفتوح</span>':'<span class="bdg b-closed"><i class="fa-solid fa-lock"></i>مغلق</span>';}
+function head(i){return '<div class="top"><div class="t">'+esc(i.title)+'</div>'+stBdg(i)+'</div><div class="s">'+esc(i.topic)+'</div>';}
+function asel(sub){
+  if(items.length<2)return '';
+  return '<div class="asel" role="group" aria-label="اختر التقييم">'+items.map(function(i){var on=i.id===cur, x=sub?sub(i):'';
+    return '<button type="button" data-cur="'+esc(i.id)+'" class="'+(on?'on':'')+'" aria-pressed="'+(on?'true':'false')+'" title="'+esc(i.title)+'"><span class="dt'+(i.open?' o':'')+'" aria-hidden="true"></span>'+esc(shortT(i))+(x!==''?' <em class="nb2'+(on?'':' w')+'">'+x+'</em>':'')+'</button>';}).join('')+'</div>';
+}
+function badges(){
+  var no=items.filter(function(i){return i.open;}).length, e=$('bd-open'); e.textContent=items.length?no+'/'+items.length:''; e.className='nb2'+(no?' o':'');
+  var tn=0, has=false; items.forEach(function(i){var S=STS[i.id]; if(S){has=true; if(i.open)tn+=Number(S.none)||0;}});
+  var e2=$('bd-stats'); e2.textContent=has?String(tn):''; e2.className='nb2'+(tn?' w':''); e2.title=has?'الطلبة المعنيون الذين لم يتقدموا بعد للتقييمات المفتوحة':'';
+  $('t-open').setAttribute('aria-label','الفتح والغلق، المفتوح '+no+' من '+items.length);
+  $('t-stats').setAttribute('aria-label','الإحصائيات والتنبيهات'+(has?'، لم يتقدموا بعد '+tn:''));
+}
 function render(){
   var h='';
   items.forEach(function(i){
-    var st=i.open?'<span class="bdg b-open"><i class="fa-solid fa-lock-open"></i>مفتوح</span>':'<span class="bdg b-closed"><i class="fa-solid fa-lock"></i>مغلق</span>';
-    h+='<div class="it"><div class="top"><div class="t">'+esc(i.title)+'</div>'+st+'</div><div class="s">'+esc(i.topic)+'</div>'+
-      '<div class="m"><span><i class="fa-solid fa-users"></i> أدّاه '+(i.cnt||0)+'</span>'+(i.t?'<span><i class="fa-regular fa-clock"></i> آخر تغيير: <bdi dir="ltr">'+esc(i.t)+'</bdi></span>':'')+(i.ready?'':'<span style="color:#b91c1c;">الأسئلة غير جاهزة</span>')+(i.ready?'<span><i class="fa-solid fa-stopwatch"></i> '+secTxt(curSec(i))+' لكل سؤال</span>':'')+(i.ready&&i.pool?'<span><i class="fa-solid fa-shuffle"></i> '+qTxt(curCnt(i))+' من '+i.pool+' في البنك</span>':'')+'</div>'+stHtml(i)+cntHtml(i)+tmrHtml(i)+
-      '<button class="btn tg '+(i.open?'red':'go')+'" type="button" data-id="'+esc(i.id)+'" data-open="'+(i.open?0:1)+'">'+(i.open?'<i class="fa-solid fa-lock"></i>إغلاق التقييم':'<i class="fa-solid fa-lock-open"></i>فتح التقييم')+'</button>'+exHtml(i)+dzHtml(i)+'</div>';
+    h+='<div class="it">'+head(i)+
+      '<div class="m"><span><i class="fa-solid fa-users"></i> أدّاه '+(i.cnt||0)+'</span>'+(i.t?'<span><i class="fa-regular fa-clock"></i> آخر تغيير: <bdi dir="ltr">'+esc(i.t)+'</bdi></span>':'')+(i.ready?'':'<span style="color:#b91c1c;">الأسئلة غير جاهزة</span>')+(i.ready?'<span><i class="fa-solid fa-stopwatch"></i> '+secTxt(curSec(i))+' لكل سؤال</span>':'')+(i.ready&&i.pool?'<span><i class="fa-solid fa-shuffle"></i> '+qTxt(curCnt(i))+' من '+i.pool+' في البنك</span>':'')+'</div>'+
+      '<button class="btn tg '+(i.open?'red':'go')+'" type="button" data-id="'+esc(i.id)+'" data-open="'+(i.open?0:1)+'">'+(i.open?'<i class="fa-solid fa-lock"></i>إغلاق التقييم':'<i class="fa-solid fa-lock-open"></i>فتح التقييم')+'</button></div>';
   });
   $('items').innerHTML=h||'<p class="s">لا توجد تقييمات.</p>';
+  var i=curItem(), none='<p class="s">لا توجد تقييمات.</p>';
+  $('b-time').innerHTML=i?asel()+'<div class="it">'+head(i)+(i.ready?cntHtml(i)+tmrHtml(i):'<p class="s" style="color:#b91c1c;">الأسئلة غير جاهزة لهذا التقييم.</p>')+'</div>':none;
+  $('b-ex').innerHTML=i?asel()+'<div class="it">'+head(i)+exHtml(i)+'</div>':none;
+  $('b-stats').innerHTML=i?asel(function(x){var S=STS[x.id];return S?S.none:'';})+'<div class="it">'+head(i)+stHtml(i)+'</div>':none;
+  $('b-dz').innerHTML=i?asel(function(x){return dzTot(x);})+'<div class="it">'+head(i)+dzHtml(i)+'</div>':none;
   var sel=$('cid'), v=sel.value;
   sel.innerHTML=items.map(function(i){return '<option value="'+esc(i.id)+'">'+esc(i.title)+'</option>';}).join('');
   if(v)sel.value=v;
+  badges();
 }
+function setTab(t,focus){
+  if(TABS.indexOf(t)<0)t='open'; tab=t; SS.set('as_ttab',t);
+  TABS.forEach(function(k){var b=$('t-'+k),on=k===t; b.setAttribute('aria-selected',on?'true':'false'); b.tabIndex=on?0:-1; $('s-'+k).classList.toggle('hide',!on);});
+  if(('#'+t)!==location.hash){try{history.replaceState(null,'','#'+t);}catch(e){location.hash=t;}}
+  var b=$('t-'+t); if(focus)b.focus(); try{b.scrollIntoView({block:'nearest',inline:'nearest'});}catch(e){}
+  var top=$('panel').getBoundingClientRect().top+window.scrollY; if(window.scrollY>top)window.scrollTo(0,top);
+}
+function hashTab(){var h=(location.hash||'').slice(1);return TABS.indexOf(h)>=0?h:'';}
+$('nav').addEventListener('click',function(ev){var b=ev.target.closest('[data-tab]');if(b)setTab(b.getAttribute('data-tab'));});
+$('nav').addEventListener('keydown',function(ev){
+  var k=ev.key, n=TABS.indexOf(tab), m=TABS.length, vert=window.matchMedia&&window.matchMedia('(min-width:900px)').matches;
+  var nx={ArrowLeft:vert?null:n+1,ArrowRight:vert?null:n-1,ArrowDown:vert?n+1:null,ArrowUp:vert?n-1:null,Home:0,End:m-1}[k];
+  if(nx==null)return; ev.preventDefault(); setTab(TABS[(nx+m)%m],true);
+});
+window.addEventListener('hashchange',function(){var h=hashTab();if(h&&h!==tab)setTab(h);});
+setTab(hashTab()||SS.get('as_ttab')||'open');
 function load(){
   return call({action:'asadmin'}).then(function(r){
     if(!r.ok){if(r.err==='BAD_KEY'){logout();$('kerr').textContent=msg(r.err);}else $('perr').textContent=msg(r.err);return;}
     $('perr').textContent='';items=r.items;render();loadStats(false);
   });
 }
-function enter(){$('kc').classList.add('hide');$('panel').classList.remove('hide');load();clearInterval(tm);tm=setInterval(function(){if(!document.hidden)load();},20000);}
-function logout(){key='';SS.del('as_tkey');clearInterval(tm);$('panel').classList.add('hide');$('kc').classList.remove('hide');$('key').value='';}
+function enter(){$('kc').classList.add('hide');$('wr').classList.add('wide');$('panel').classList.remove('hide');load();clearInterval(tm);tm=setInterval(function(){if(!document.hidden)load();},20000);}
+function logout(){key='';SS.del('as_tkey');$('wr').classList.remove('wide');clearInterval(tm);$('panel').classList.add('hide');$('kc').classList.remove('hide');$('key').value='';}
 $('kf').addEventListener('submit',function(ev){ev.preventDefault();var k=$('key').value.trim();if(!k)return;$('kbtn').disabled=true;key=k;
   call({action:'askey'}).then(function(r){$('kbtn').disabled=false;if(r.ok){SS.set('as_tkey',k);$('kerr').textContent='';enter();}else{key='';$('kerr').textContent=msg(r.err||'BAD_KEY');}});});
 $('lo').addEventListener('click',logout);
@@ -412,7 +505,8 @@ function saveSec(id,v,b){
     render(); load();
   });
 }
-$('items').addEventListener('click',function(ev){
+$('secs').addEventListener('click',function(ev){
+  var cb=ev.target.closest('[data-cur]'); if(cb){cur=cb.getAttribute('data-cur');SS.set('as_tcur',cur);render();return;}
   var rb=ev.target.closest('[data-rid]'); if(rb){rOpen(rb.getAttribute('data-rid'),rb.getAttribute('data-rg'));return;}
   if(ev.target.closest('[data-strf]')){stT='';STS={};render();loadStats(true);return;}
   var xb=ev.target.closest('[data-xs],[data-xsave],[data-xdef]');
