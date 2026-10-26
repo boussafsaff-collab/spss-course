@@ -77,6 +77,19 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 .tmm{font-size:13.5px;font-weight:700;min-height:1em;margin:6px 0 0;}
 .tmr .row .btn{min-height:46px;font-size:15px;}
 .kv{display:grid;grid-template-columns:auto 1fr;gap:2px 10px;font-size:15px;margin:8px 0;}.kv b{color:#0f2744;}
+.dz{border:1.5px solid #fecaca;border-radius:14px;padding:10px;margin:10px 0 0;background:#fff7f7;}
+.dz .dh{font-weight:800;color:#991b1b;font-size:15px;margin:0 0 6px;}
+.dz .ds{color:#7f1d1d;font-size:13.5px;line-height:1.6;margin:0 0 8px;}
+.btn.dng{background:#fff;color:#b91c1c;border:2px solid #dc2626;box-shadow:none;}
+.btn.dng:disabled{opacity:.45;cursor:default;}
+.mdl{position:fixed;inset:0;background:rgba(15,23,42,.55);display:flex;align-items:center;justify-content:center;padding:14px;z-index:50;}
+.mdl .bx{background:#fff;border-radius:18px;max-width:440px;width:100%;padding:16px;box-shadow:0 20px 50px rgba(0,0,0,.3);max-height:92vh;overflow:auto;}
+.mdl h4{margin:0 0 8px;color:#991b1b;font-size:18px;display:flex;gap:8px;align-items:center;}
+.mdl p{margin:0 0 8px;line-height:1.7;font-size:15px;color:#1e293b;}
+.mdl .big{font-size:26px;font-weight:800;color:#b91c1c;direction:ltr;display:inline-block;}
+.mdl input{text-align:center;font-size:22px;font-weight:800;}
+.mdl .row{margin-top:10px;}
+.pre button[data-xs]{color:#166534;border-color:#86efac;background:#f0fdf4;}.pre button[data-xs].on{background:#fee2e2;border-color:#dc2626;color:#991b1b;text-decoration:line-through;}
 </style>
 </head>
 <body>
@@ -136,13 +149,27 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 <a href="../../" class="btn lt" id="home" style="margin-top:10px;">🏠 العودة إلى الصفحة الرئيسية</a>
 <p class="foot"><i class="fa-solid fa-building-columns" style="color:#94a3b8;margin-left:6px;"></i>جامعة قسنطينة 2، د. بوصفصاف فريد</p>
 </div>
+<div class="mdl hide" id="bm" role="dialog" aria-modal="true" aria-labelledby="bmh">
+<div class="bx">
+<h4 id="bmh"><i class="fa-solid fa-triangle-exclamation"></i>إلغاء إجابات جميع الطلبة</h4>
+<p>التقييم: <b id="bmt"></b></p>
+<p id="bmc"></p>
+<p style="color:#7f1d1d;font-size:14px;">تُنسخ كل نتيجة كاملة إلى «سجل إلغاء التقييمات» ثم تُحذف، وتُفرَّغ خاناتها في قوائم الأفواج، وتُغلق المحاولات الجارية. يعيد كل طالب التقييم بأسئلة جديدة حين يكون مفتوحاً. لا يمكن التراجع من هذه الصفحة.</p>
+<label for="bmi">للتأكيد اكتب عدد الطلبة المعنيين: <span class="big" id="bmn"></span></label>
+<input type="tel" id="bmi" inputmode="numeric" dir="ltr" autocomplete="off">
+<label for="bmw" style="margin-top:8px;">السبب (اختياري، يُحفظ في السجل)</label>
+<input type="text" id="bmw" style="text-align:right;font-size:16px;font-weight:400;" placeholder="مثال: خلل تقني أثناء التقييم">
+<div class="row"><button class="btn red" id="bmgo" type="button" disabled><i class="fa-solid fa-trash-can"></i>تأكيد الإلغاء للجميع</button>
+<button class="btn lt" id="bmx" type="button">تراجع</button></div>
+<div class="err" id="bme"></div>
+</div></div>
 <script>
 (function(){
 'use strict';
 var API='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec';
 var $=function(id){return document.getElementById(id);};
 var SS={get:function(k){try{return sessionStorage.getItem(k);}catch(e){return null;}},set:function(k,v){try{sessionStorage.setItem(k,v);}catch(e){}},del:function(k){try{sessionStorage.removeItem(k);}catch(e){}}};
-var ERR={BAD_KEY:'الرمز غير صحيح.',BAD_ID:'تقييم غير معروف.',NONE:'لا توجد نتيجة لهذا الرقم في هذا التقييم.',UNKNOWN_BAC:'اكتب رقم بكالوريا صحيحاً.',BUSY:'الخادم مشغول، أعد المحاولة.',BAD_SEC:'قيمة غير مقبولة.',BAD_CNT:'قيمة غير مقبولة.',NO_BANK:'لا توجد أسئلة في البنك لهذا التقييم.',NET:'تعذّر الاتصال بالخادم.'};
+var ERR={BAD_KEY:'الرمز غير صحيح.',BAD_ID:'تقييم غير معروف.',NONE:'لا توجد نتيجة لهذا الرقم في هذا التقييم.',UNKNOWN_BAC:'اكتب رقم بكالوريا صحيحاً.',BUSY:'الخادم مشغول، أعد المحاولة.',BAD_SEC:'قيمة غير مقبولة.',BAD_CNT:'قيمة غير مقبولة.',NO_CONFIRM:'لم يُؤكَّد الإلغاء.',BAD_EX:'تخصص غير صالح، ولا يمكن استبعاد كل التخصصات.',NO_BANK:'لا توجد أسئلة في البنك لهذا التقييم.',NET:'تعذّر الاتصال بالخادم.'};
 function msg(e){return ERR[e]||ERR.NET;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function fnum(x){x=Number(x);return isNaN(x)?'':String(Math.round(x*100)/100);}
@@ -205,6 +232,60 @@ function bankInit(b){
     $('bres').innerHTML='<span style="color:#166534;"><i class="fa-solid fa-check"></i> تم: أُضيف '+r.added+' سؤالاً، وثُبّت '+r.ided+' معرّفاً.</span> '+r.items.map(function(x){var i=byId(x.id);return esc(i?i.title:x.id)+': '+x.n+' من '+x.pool;}).join('، ');
     load();});
 }
+/* update53: إلغاء إجابات جميع الطلبة في تقييم (للإعادة الجماعية) */
+var bmsg={}, bcur=null;
+function dzTot(i){return (Number(i.cnt)||0)+(Number(i.prog)||0);}
+function dzHtml(i){
+  var n=Number(i.cnt)||0, g=Number(i.prog)||0, t=n+g;
+  return '<div class="dz"><div class="dh"><i class="fa-solid fa-triangle-exclamation" style="margin-left:6px;"></i>منطقة الخطر</div>'+
+    '<div class="ds">إجابات مسجّلة: <b>'+n+'</b>'+(g?'، ومحاولات جارية: <b>'+g+'</b>':'')+'. الإلغاء الجماعي يسمح لكل الطلبة بإعادة هذا التقييم بأسئلة جديدة.</div>'+
+    '<button class="btn dng" type="button" data-ball="'+esc(i.id)+'"'+(t?'':' disabled')+'><i class="fa-solid fa-users-slash"></i>إلغاء إجابات جميع الطلبة ('+t+')</button>'+
+    '<div class="tmm" id="bam-'+esc(i.id)+'">'+(bmsg[i.id]||'')+'</div></div>';
+}
+function bOpen(i){
+  bcur=i; var n=Number(i.cnt)||0, g=Number(i.prog)||0, t=n+g;
+  $('bmt').textContent=i.title+' ('+i.topic+')';
+  $('bmc').innerHTML='عدد الطلبة المعنيين: <b>'+t+'</b> (إجابات مسجّلة: <b>'+n+'</b>'+(g?'، محاولات جارية: <b>'+g+'</b>':'')+').';
+  $('bmn').textContent=t; $('bmi').value=''; $('bmw').value=''; $('bme').textContent=''; $('bmgo').disabled=true;
+  $('bm').classList.remove('hide'); setTimeout(function(){try{$('bmi').focus();}catch(e){}},50);
+}
+function bClose(){$('bm').classList.add('hide');bcur=null;}
+$('bmi').addEventListener('input',function(){$('bmgo').disabled=!bcur||$('bmi').value.replace(/\D/g,'')!==String(dzTot(bcur));});
+$('bmx').addEventListener('click',bClose);
+$('bm').addEventListener('click',function(ev){if(ev.target===$('bm'))bClose();});
+$('bmgo').addEventListener('click',function(){
+  if(!bcur||$('bmi').value.replace(/\D/g,'')!==String(dzTot(bcur)))return;
+  var id=bcur.id; $('bmgo').disabled=true; $('bme').innerHTML='<span style="color:#475569;">جارٍ الإلغاء…</span>';
+  call({action:'ascancelall',id:id,confirm:id,why:$('bmw').value.trim()}).then(function(r){
+    if(!r.ok){$('bmgo').disabled=false;$('bme').textContent=msg(r.err);if(r.err==='BAD_KEY'){bClose();logout();$('kerr').textContent=msg(r.err);}return;}
+    bClose();
+    bmsg[id]='<span style="color:#166534;"><i class="fa-solid fa-check"></i> تم الإلغاء. الإجابات الملغاة: '+r.n+(r.prog?'، المحاولات الجارية المغلقة: '+r.prog:'')+'. حُفظ كل شيء في «سجل إلغاء التقييمات».</span>';
+    load();
+  });
+});
+/* update53b: التخصصات غير المعنية بالتقييم (العمود G في «التقييمات») */
+var dx={};
+function exCur(i){return (i.ex||[]).slice();}
+function exHtml(i){
+  var sps=i.sps||[], cur=exCur(i), v=dx[i.id]||cur, dirty=v.slice().sort().join()!==cur.slice().sort().join();
+  var chips=sps.map(function(sp){var on=v.indexOf(sp)>=0;return '<button type="button" data-xs="'+esc(sp)+'" data-xid="'+esc(i.id)+'" class="'+(on?'on':'')+'" aria-pressed="'+(on?'true':'false')+'">'+(on?'<i class="fa-solid fa-ban"></i> ':'<i class="fa-solid fa-check"></i> ')+esc(sp)+'</button>';}).join('');
+  var txt=v.length?'غير معني: <b>'+v.map(esc).join('، ')+'</b>. لا يظهر لطلبة هذا التخصص ويرفض الخادم بدءه أو إرسال إجاباته.':'كل التخصصات معنية بهذا التقييم.';
+  var nx=Number(i.cntx)||0, px=Number(i.progx)||0;
+  var warn=(nx||px)?'<div class="tms" style="color:#b45309;"><i class="fa-solid fa-circle-info"></i> منها '+nx+' إجابة'+(px?' و'+px+' محاولة جارية':'')+' لطلبة من تخصص غير معني (سُجّلت قبل هذا القيد). تبقى في العدد ويشملها الإلغاء الجماعي.</div>':'';
+  return '<div class="tmr" data-xn="'+esc(i.id)+'"><div class="tmh"><span><i class="fa-solid fa-user-graduate" style="margin-left:6px;"></i>التخصصات المعنية</span><span class="tg2'+(i.exraw?' c':'')+'">'+(i.exraw?'محدد':'الافتراضي')+'</span></div>'+
+    '<div class="pre">'+chips+'</div><div class="tms">'+txt+(dirty?' <b style="color:#b45309;">لم يُحفظ بعد</b>':'')+'</div>'+warn+
+    '<div class="row"><button class="btn go" type="button" data-xsave="'+esc(i.id)+'"'+(dirty?'':' disabled')+'><i class="fa-solid fa-floppy-disk"></i>حفظ التخصصات</button>'+
+    (i.exraw?'<button class="btn lt" type="button" data-xdef="'+esc(i.id)+'"><i class="fa-solid fa-rotate-left"></i>الافتراضي</button>':'')+'</div>'+
+    '<div class="tmm" id="xm-'+esc(i.id)+'"></div></div>';
+}
+function saveEx(id,val,btn){
+  btn.disabled=true;
+  call({action:'asex',id:id,ex:val}).then(function(r){
+    if(!r.ok){btn.disabled=false;var m=$('xm-'+id);if(m)m.textContent=msg(r.err);if(r.err==='BAD_KEY'){logout();$('kerr').textContent=msg(r.err);}return;}
+    delete dx[id]; var i=byId(id); if(i){i.ex=r.ex;i.exraw=r.exraw;} render();
+    var m=$('xm-'+id); if(m)m.innerHTML='<span style="color:#166534;"><i class="fa-solid fa-check"></i> حُفظت التخصصات المعنية.</span>';
+  });
+}
 function call(o){o.key=key;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{return JSON.parse(t);}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
 function render(){
   var h='';
@@ -212,7 +293,7 @@ function render(){
     var st=i.open?'<span class="bdg b-open"><i class="fa-solid fa-lock-open"></i>مفتوح</span>':'<span class="bdg b-closed"><i class="fa-solid fa-lock"></i>مغلق</span>';
     h+='<div class="it"><div class="top"><div class="t">'+esc(i.title)+'</div>'+st+'</div><div class="s">'+esc(i.topic)+'</div>'+
       '<div class="m"><span><i class="fa-solid fa-users"></i> أدّاه '+(i.cnt||0)+'</span>'+(i.t?'<span><i class="fa-regular fa-clock"></i> آخر تغيير: <bdi dir="ltr">'+esc(i.t)+'</bdi></span>':'')+(i.ready?'':'<span style="color:#b91c1c;">الأسئلة غير جاهزة</span>')+(i.ready?'<span><i class="fa-solid fa-stopwatch"></i> '+secTxt(curSec(i))+' لكل سؤال</span>':'')+(i.ready&&i.pool?'<span><i class="fa-solid fa-shuffle"></i> '+qTxt(curCnt(i))+' من '+i.pool+' في البنك</span>':'')+'</div>'+cntHtml(i)+tmrHtml(i)+
-      '<button class="btn tg '+(i.open?'red':'go')+'" type="button" data-id="'+esc(i.id)+'" data-open="'+(i.open?0:1)+'">'+(i.open?'<i class="fa-solid fa-lock"></i>إغلاق التقييم':'<i class="fa-solid fa-lock-open"></i>فتح التقييم')+'</button></div>';
+      '<button class="btn tg '+(i.open?'red':'go')+'" type="button" data-id="'+esc(i.id)+'" data-open="'+(i.open?0:1)+'">'+(i.open?'<i class="fa-solid fa-lock"></i>إغلاق التقييم':'<i class="fa-solid fa-lock-open"></i>فتح التقييم')+'</button>'+exHtml(i)+dzHtml(i)+'</div>';
   });
   $('items').innerHTML=h||'<p class="s">لا توجد تقييمات.</p>';
   var sel=$('cid'), v=sel.value;
@@ -243,6 +324,15 @@ function saveSec(id,v,b){
   });
 }
 $('items').addEventListener('click',function(ev){
+  var xb=ev.target.closest('[data-xs],[data-xsave],[data-xdef]');
+  if(xb){var xid=xb.getAttribute('data-xid')||xb.getAttribute('data-xsave')||xb.getAttribute('data-xdef'),xi=byId(xid);if(!xi)return;
+    if(xb.hasAttribute('data-xs')){var sp=xb.getAttribute('data-xs'),v=(dx[xid]||exCur(xi)).slice(),k=v.indexOf(sp);if(k>=0)v.splice(k,1);else v.push(sp);
+      if(v.length>=(xi.sps||[]).length){var m0=$('xm-'+xid);if(m0)m0.textContent='لا يمكن استبعاد كل التخصصات.';return;}
+      dx[xid]=v;render();return;}
+    if(xb.hasAttribute('data-xsave')){var v2=dx[xid]||exCur(xi);saveEx(xid,v2.length?v2.join(','):'-',xb);return;}
+    if(xb.hasAttribute('data-xdef')){if(confirm('إرجاع التخصصات المعنية إلى الافتراضي؟'))saveEx(xid,'def',xb);return;}
+  }
+  var bz=ev.target.closest('[data-ball]'); if(bz){var bi=byId(bz.getAttribute('data-ball')); if(bi)bOpen(bi); return;}
   var c=ev.target.closest('[data-cs],[data-cp],[data-csave],[data-cdef]');
   if(c){var cid=c.getAttribute('data-cid')||c.getAttribute('data-csave')||c.getAttribute('data-cdef'),ci=byId(cid);if(!ci)return;
     var cmx=Number(ci.nmax)||curCnt(ci),cv=dc[cid]!=null?dc[cid]:curCnt(ci);

@@ -133,7 +133,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 var API='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec';
 var $=function(id){return document.getElementById(id);};
 var LS={get:function(k){try{return localStorage.getItem(k);}catch(e){return null;}},set:function(k,v){try{localStorage.setItem(k,v);}catch(e){}},del:function(k){try{localStorage.removeItem(k);}catch(e){}}};
-var ERR={UNKNOWN_BAC:'رقم البكالوريا غير موجود في القوائم. تحقق منه أو راجع الأستاذ.',NO_ROSTER:'القوائم غير متاحة حالياً، أعد المحاولة لاحقاً.',CLOSED:'هذا التقييم مغلق حالياً. انتظر أن يفتحه الأستاذ.',DONE:'أنجزت هذا التقييم من قبل (محاولة واحدة فقط).',NO_BANK:'أسئلة هذا التقييم غير جاهزة بعد.',BUSY:'الخادم مشغول، أعد المحاولة بعد ثوانٍ.',BAD_ID:'تقييم غير معروف، حدّث الصفحة.',NET:'تعذّر الاتصال بالخادم. تحقق من الإنترنت وأعد المحاولة.'};
+var ERR={NOT_CONCERNED:'هذا التقييم لا يعني تخصصك.',RESET:'ألغى الأستاذ هذه المحاولة لجميع الطلبة. عد إلى القائمة وابدأ التقييم من جديد بأسئلة جديدة.',UNKNOWN_BAC:'رقم البكالوريا غير موجود في القوائم. تحقق منه أو راجع الأستاذ.',NO_ROSTER:'القوائم غير متاحة حالياً، أعد المحاولة لاحقاً.',CLOSED:'هذا التقييم مغلق حالياً. انتظر أن يفتحه الأستاذ.',DONE:'أنجزت هذا التقييم من قبل (محاولة واحدة فقط).',NO_BANK:'أسئلة هذا التقييم غير جاهزة بعد.',BUSY:'الخادم مشغول، أعد المحاولة بعد ثوانٍ.',BAD_ID:'تقييم غير معروف، حدّث الصفحة.',NET:'تعذّر الاتصال بالخادم. تحقق من الإنترنت وأعد المحاولة.'};
 function msg(e){return ERR[e]||ERR.NET;}
 function call(o,get){
   var u=API, opt;
