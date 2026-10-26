@@ -60,6 +60,11 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 .hide{display:none!important;}
 .foot{text-align:center;font-size:13px;color:#64748b;margin:12px 0 2px;}
 @media (max-width:330px){body{padding:4px 2px;}.w{border-radius:14px;padding:6px;}.card{border-radius:14px;padding:10px;}.op{font-size:15px;padding:8px;}.qt{font-size:16px;}.btn{font-size:15px;}}
+.nb{background:linear-gradient(135deg,#fff7ed,#ffedd5);border:2px solid #fb923c;border-radius:16px;padding:12px;margin:0 0 12px;color:#7c2d12;box-shadow:0 8px 20px rgba(234,88,12,.15);}
+.nb h4{margin:0 0 6px;font-size:16.5px;color:#9a3412;display:flex;gap:8px;align-items:center;}
+.nb p{margin:0 0 8px;font-size:14.5px;line-height:1.7;}
+.nb .btn{background:#ea580c;min-height:46px;font-size:15px;margin-top:6px;}
+.it.hl{outline:3px solid #fb923c;outline-offset:2px;}
 </style>
 </head>
 <body>
@@ -92,6 +97,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 
 <!-- القائمة -->
 <div id="list">
+<div id="nb"></div>
 <div class="card"><h3><i class="fa-solid fa-chalkboard-user"></i>تقييمات المحاضرات</h3><div id="L-lec"><p class="s" style="color:#64748b;">جارٍ التحميل…</p></div></div>
 <div class="card"><h3><i class="fa-solid fa-laptop-code"></i>تقييمات التطبيق</h3><div id="L-tp"><p class="s" style="color:#64748b;">جارٍ التحميل…</p></div></div>
 <button class="btn lt" id="rf" type="button" style="margin:0 0 14px;"><i class="fa-solid fa-rotate"></i>تحديث القائمة</button>
@@ -145,11 +151,19 @@ function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){retur
 function fnum(x){x=Number(x);return isNaN(x)?'':String(Math.round(x*100)/100);}
 function secTxt(n){n=Number(n)||0;if(n===1)return 'ثانية واحدة';if(n===2)return 'ثانيتان';if(n>=3&&n<=10)return n+' ثوانٍ';return n+' ثانية';}
 function dur(s){s=Math.round(s);if(s>=60&&s%60===0){var m=s/60;return m===1?'دقيقة واحدة':m===2?'دقيقتان':m<=10?m+' دقائق':m+' دقيقة';}if(s>=60)return Math.floor(s/60)+' د '+(s%60)+' ث';return s+' ثانية';}
-var bac=(LS.get('as_bac')||'').replace(/\D/g,''), who=null, items=[], Q=null, timers=[];
+var notes=[], bac=(LS.get('as_bac')||'').replace(/\D/g,''), who=null, items=[], Q=null, timers=[];
 function show(id){['list','quiz','result'].forEach(function(k){$(k).classList.toggle('hide',k!==id);});
   $('home').classList.toggle('hide',id==='quiz');$('tlogin').classList.toggle('hide',id==='quiz');$('info').classList.toggle('hide',id!=='list');
   $('login').classList.toggle('hide',id!=='list'||!!who);$('whoc').classList.toggle('hide',id==='result'||!who);}
+/* update54: تنبيهات الأستاذ (تختفي بعد الإرسال أو عند غلق التقييم) */
+function nbRender(){
+  var n=(who?notes:[]).filter(function(x){var i=items.filter(function(y){return y.id===x.id;})[0];return i&&!i.done&&i.open;});
+  $('nb').innerHTML=n.map(function(x){return '<div class="nb"><h4><i class="fa-solid fa-bell"></i>تنبيه من الأستاذ</h4><p>لم تُجرِ بعد <b>'+esc(x.title)+'</b> ('+esc(x.topic)+'). التقييم مفتوح الآن، أجره قبل غلقه.</p><button class="btn" type="button" data-nb="'+esc(x.id)+'"><i class="fa-solid fa-arrow-left"></i>الذهاب إلى التقييم</button></div>';}).join('');
+}
+function hlCard(id){var c=document.querySelector('.it[data-id="'+id+'"]');if(!c)return;c.classList.add('hl');c.scrollIntoView({behavior:'smooth',block:'center'});setTimeout(function(){c.classList.remove('hl');},4000);}
+document.addEventListener('click',function(ev){var b=ev.target.closest&&ev.target.closest('[data-nb]');if(b)hlCard(b.getAttribute('data-nb'));});
 function render(){
+  nbRender();
   ['lec','tp'].forEach(function(cat){
     var h='', arr=items.filter(function(i){return i.cat===cat;});
     if(!arr.length) h='<p class="s" style="color:#64748b;">لا توجد تقييمات بعد.</p>';
@@ -177,9 +191,10 @@ function load(){
   return call(o,true).then(function(r){
     if(!r.ok){ if(r.err==='UNKNOWN_BAC'||r.err==='NO_ROSTER'){who=null;LS.del('as_bac');$('lerr').textContent=msg(r.err);bac='';return load();}
       $('L-lec').innerHTML=$('L-tp').innerHTML='<p class="err">'+msg(r.err)+'</p>';return;}
-    items=r.items||[]; who=r.who||null;
+    items=r.items||[]; who=r.who||null; notes=r.notes||[];
     if(who){$('wname').textContent=who.nom+' '+who.prenom;$('wgrp').textContent=who.sp+' – الفوج '+who.grp;}
     show('list'); render();
+    var hid=(location.hash||'').slice(1); if(hid&&/^[a-z0-9-]+$/.test(hid)){setTimeout(function(){hlCard(hid);},300);}
     if(who){var p=items.filter(function(i){return !i.done&&LS.get(skey(i.id));})[0]; if(p) begin(p.id,null);}  // استئناف تلقائي بعد إعادة التحميل
     items.forEach(function(i){if(i.done)LS.del(skey(i.id));});
   });
@@ -190,9 +205,9 @@ $('lf').addEventListener('submit',function(ev){ev.preventDefault();
   $('lerr').textContent='';$('lbtn').disabled=true;bac=v;
   call({action:'aslist',sbac:v},true).then(function(r){$('lbtn').disabled=false;
     if(!r.ok){$('lerr').textContent=msg(r.err);bac='';return;}
-    LS.set('as_bac',v);items=r.items;who=r.who;$('wname').textContent=who.nom+' '+who.prenom;$('wgrp').textContent=who.sp+' – الفوج '+who.grp;show('list');render();});
+    LS.set('as_bac',v);items=r.items;who=r.who;notes=r.notes||[];$('wname').textContent=who.nom+' '+who.prenom;$('wgrp').textContent=who.sp+' – الفوج '+who.grp;show('list');render();});
 });
-$('out').addEventListener('click',function(){who=null;bac='';LS.del('as_bac');$('bac').value='';show('list');render();});
+$('out').addEventListener('click',function(){who=null;bac='';notes=[];LS.del('as_bac');$('bac').value='';show('list');render();});
 $('rf').addEventListener('click',function(){$('rf').disabled=true;load().then(function(){$('rf').disabled=false;});});
 $('back').addEventListener('click',function(){load();});
 document.addEventListener('click',function(ev){var b=ev.target.closest&&ev.target.closest('[data-go]');if(b)begin(b.getAttribute('data-go'),b);});
@@ -301,7 +316,7 @@ load();
 setInterval(function(){
   if(document.hidden||Q||$('list').classList.contains('hide'))return;
   var o={action:'aslist'}; if(bac&&who) o.sbac=bac;
-  call(o,true).then(function(r){if(!r||!r.ok||Q||$('list').classList.contains('hide'))return; if(o.sbac&&!r.who)return; items=r.items||items; render();});
+  call(o,true).then(function(r){if(!r||!r.ok||Q||$('list').classList.contains('hide'))return; if(o.sbac&&!r.who)return; items=r.items||items; if(o.sbac)notes=r.notes||[]; render();});
 },20000);
 })();
 </script>
