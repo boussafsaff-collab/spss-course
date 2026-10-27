@@ -171,6 +171,44 @@ html.lock,html.lock body{overflow:hidden;}
 .asel button.on{background:#1d4f86;border-color:#1d4f86;color:#fff;}
 .asel .dt{width:9px;height:9px;border-radius:50%;background:#94a3b8;flex:0 0 auto;}.asel .dt.o{background:#22c55e;}
 .tbar{display:flex;gap:8px;margin:0 0 10px;}.tbar .btn{min-height:42px;font-size:14.5px;}
+/* update59: النداء وإحصائيات الحضور */
+.rsel{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 8px;}.rsel select{flex:1 1 220px;min-width:0;font-size:15.5px;}
+.rsel .btn{flex:0 1 auto;width:auto;min-height:48px;font-size:14.5px;}
+.rinf{background:#eef4fb;border:1px solid #cfe0f3;border-radius:12px;padding:8px 10px;font-size:14px;color:#14365c;font-weight:700;line-height:1.6;margin:0 0 8px;}
+.rinf .now{display:inline-block;background:#16a34a;color:#fff;border-radius:999px;padding:0 9px;font-size:12px;margin-right:4px;}
+.rinf .tst{display:inline-block;background:#fef3c7;color:#92400e;border-radius:999px;padding:0 9px;font-size:12px;margin-right:4px;}
+.rct{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:0 0 10px;}
+@media (min-width:560px){.rct{grid-template-columns:repeat(4,minmax(0,1fr));}}
+.rct div{border-radius:12px;padding:6px 4px;text-align:center;line-height:1.3;border:1px solid #e2e8f0;background:#fff;}
+.rct b{display:block;font-size:22px;font-weight:800;}.rct span{font-size:12.5px;color:#475569;font-weight:700;}
+.rct .c1 b{color:#0f2744;}.rct .c2{background:#f0fdf4;border-color:#bbf7d0;}.rct .c2 b{color:#15803d;}
+.rct .c3{background:#fef2f2;border-color:#fecaca;}.rct .c3 b{color:#b91c1c;}.rct .c4{background:#fffbeb;border-color:#fde68a;}.rct .c4 b{color:#b45309;}
+.rl{display:flex;flex-direction:column;gap:6px;}
+.rr{display:grid;grid-template-columns:44px 44px minmax(0,1fr) 42px 50px;gap:5px;align-items:center;padding:6px 5px;border:1.5px solid #e2e8f0;border-radius:14px;background:#fff;}
+.rr.H{background:#f0fdf4;border-color:#86efac;}.rr.G{background:#fef2f2;border-color:#fca5a5;}
+.rr.hdr{background:transparent;border:0;padding:0 5px;font-size:11.5px;color:#64748b;font-weight:800;text-align:center;line-height:1.3;}
+.rr.hdr span:nth-child(3){text-align:right;}
+.rb{width:44px;height:44px;border-radius:12px;border:2px solid;background:#fff;font:inherit;font-weight:800;font-size:19px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;touch-action:manipulation;}
+.rb.h{color:#15803d;border-color:#4ade80;}.rb.h.on{background:#16a34a;border-color:#16a34a;color:#fff;}
+.rb.g{color:#b91c1c;border-color:#f87171;}.rb.g.on{background:#dc2626;border-color:#dc2626;color:#fff;}
+.rb:disabled{opacity:.5;cursor:default;}
+.rb:focus-visible{outline:3px solid #93c5fd;outline-offset:1px;}
+.rn{min-width:0;line-height:1.35;}
+.rn b{display:block;font-size:14.5px;color:#0f172a;overflow-wrap:anywhere;}
+.rr.G .rn b{text-decoration:line-through;color:#991b1b;}
+.rn small{display:block;font-size:11.5px;color:#64748b;overflow-wrap:anywhere;}
+.rn .sg{font-weight:800;}.rr.H .rn .sg{color:#15803d;}.rr.G .rn .sg{color:#b91c1c;}.rn .sg.w{color:#b45309;}
+.rv{text-align:center;line-height:1.2;}.rv b{display:block;font-size:16px;color:#0f2744;font-weight:800;direction:ltr;}.rv small{font-size:10.5px;color:#64748b;direction:ltr;display:block;}
+.rq{color:#b91c1c;font-size:12.5px;font-weight:700;grid-column:1/-1;}
+.rx{border:1px solid #e2e8f0;border-radius:12px;margin:10px 0 0;background:#fcfdff;}
+.rx>summary{cursor:pointer;padding:10px;font-weight:800;color:#0f2744;font-size:14.5px;min-height:44px;}
+.rx ol{margin:0;padding:0 26px 10px 8px;font-size:13.5px;line-height:1.8;color:#1e293b;}
+.rx ol li span{color:#64748b;direction:ltr;unicode-bidi:isolate;}
+.rx .la{font-weight:800;}.rx .la.h{color:#15803d;}.rx .la.g{color:#b91c1c;}
+.rf2{font-size:12.5px;color:#64748b;margin:10px 0 0;line-height:1.6;}
+.ab{display:inline-block;font-size:11.5px;font-weight:800;border-radius:999px;padding:0 7px;background:#fee2e2;color:#991b1b;margin-right:4px;}
+.ab.m{background:#dcfce7;color:#166534;}
+.bar .a{background:#ef4444;}
 </style>
 </head>
 <body>
@@ -204,6 +242,8 @@ html.lock,html.lock body{overflow:hidden;}
 <button type="button" role="tab" id="t-time" data-tab="time" aria-controls="s-time" aria-selected="false" tabindex="-1"><i class="fa-solid fa-stopwatch" aria-hidden="true"></i><span>الوقت وعدد الأسئلة</span><em class="nb2" id="bd-time"></em></button>
 <button type="button" role="tab" id="t-ex" data-tab="ex" aria-controls="s-ex" aria-selected="false" tabindex="-1"><i class="fa-solid fa-user-graduate" aria-hidden="true"></i><span>التخصصات المعنية</span><em class="nb2" id="bd-ex"></em></button>
 <button type="button" role="tab" id="t-stats" data-tab="stats" aria-controls="s-stats" aria-selected="false" tabindex="-1"><i class="fa-solid fa-chart-column" aria-hidden="true"></i><span>الإحصائيات والتنبيهات</span><em class="nb2" id="bd-stats"></em></button>
+<button type="button" role="tab" id="t-attst" data-tab="attst" aria-controls="s-attst" aria-selected="false" tabindex="-1"><i class="fa-solid fa-clipboard-user" aria-hidden="true"></i><span>إحصائيات الحضور</span><em class="nb2" id="bd-attst"></em></button>
+<button type="button" role="tab" id="t-roll" data-tab="roll" aria-controls="s-roll" aria-selected="false" tabindex="-1"><i class="fa-solid fa-list-check" aria-hidden="true"></i><span>النداء</span><em class="nb2" id="bd-roll"></em></button>
 <button type="button" role="tab" id="t-cancel" data-tab="cancel" aria-controls="s-cancel" aria-selected="false" tabindex="-1"><i class="fa-solid fa-user-xmark" aria-hidden="true"></i><span>إلغاء النتائج</span><em class="nb2" id="bd-cancel"></em></button>
 <button type="button" role="tab" id="t-bank" data-tab="bank" aria-controls="s-bank" aria-selected="false" tabindex="-1"><i class="fa-solid fa-database" aria-hidden="true"></i><span>بنك الأسئلة</span><em class="nb2" id="bd-bank"></em></button>
 </div>
@@ -234,6 +274,16 @@ html.lock,html.lock body{overflow:hidden;}
 <section class="card sec hide" id="s-stats" role="tabpanel" aria-labelledby="t-stats">
 <h3><i class="fa-solid fa-chart-column"></i>الإحصائيات والتنبيهات</h3>
 <div id="b-stats"></div>
+</section>
+<section class="card sec hide" id="s-attst" role="tabpanel" aria-labelledby="t-attst">
+<h3><i class="fa-solid fa-clipboard-user"></i>إحصائيات الحضور</h3>
+<p class="hint">الحاضر: من سُجّل حضوره في الحصة ولم يُرفض في النداء، أو من كُتبت له «ح» في قائمة فوجه. تظهر الحصة بعد بداية موعدها فقط. المحاضرة لكل التخصصات، والتطبيق لأفواج «إدارة مالية».</p>
+<div id="b-attst"><p class="s">جارٍ التحميل…</p></div>
+</section>
+<section class="card sec hide" id="s-roll" role="tabpanel" aria-labelledby="t-roll">
+<h3><i class="fa-solid fa-list-check"></i>النداء</h3>
+<p class="hint">«ح» يؤكد حضور الطالب، و«غ» يلغي تسجيله فيُعدّ غائباً في هذه الحصة (لا تُحتسب له، ولا يجري تقييم المحاضرة، ولا يستطيع التسجيل فيها من جديد). النقر على الزر الآخر يعكس الحالة، وكل نقرة تُحفظ بوقتها في ورقة «سجل النداء».</p>
+<div id="b-roll"><p class="s">جارٍ التحميل…</p></div>
 </section>
 <section class="card sec hide" id="s-cancel" role="tabpanel" aria-labelledby="t-cancel">
 <h3><i class="fa-solid fa-user-xmark"></i>إلغاء نتيجة طالب (للسماح بالإعادة)</h3>
@@ -298,7 +348,7 @@ html.lock,html.lock body{overflow:hidden;}
 var API='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec';
 var $=function(id){return document.getElementById(id);};
 var SS={get:function(k){try{return sessionStorage.getItem(k);}catch(e){return null;}},set:function(k,v){try{sessionStorage.setItem(k,v);}catch(e){}},del:function(k){try{sessionStorage.removeItem(k);}catch(e){}}};
-var ERR={BAD_KEY:'الرمز غير صحيح.',BAD_ID:'تقييم غير معروف.',NONE:'لا توجد نتيجة لهذا الرقم في هذا التقييم.',UNKNOWN_BAC:'اكتب رقم بكالوريا صحيحاً.',BUSY:'الخادم مشغول، أعد المحاولة.',BAD_SEC:'قيمة غير مقبولة.',BAD_CNT:'قيمة غير مقبولة.',NO_CONFIRM:'لم يُؤكَّد الإجراء.',BAD_GRP:'الفوج غير معروف.',CLOSED:'التقييم مغلق.',BAD_EX:'تخصص غير صالح، ولا يمكن استبعاد كل التخصصات.',NO_BANK:'لا توجد أسئلة في البنك لهذا التقييم.',BAD_MODE:'النمط غير صالح.',BAD_GRACE:'المهلة بين 0 و15 دقيقة.',BAD_SCHED:'موعد غير صالح: تحقق من التاريخ، وأن النهاية بعد البداية.',NO_SLOT:'حدد تاريخاً لفوج أو تخصص واحد على الأقل قبل تفعيل الجدولة.',BAD_UNTIL:'الأجل النهائي غير صالح.',NET:'تعذّر الاتصال بالخادم.'};
+var ERR={BAD_KEY:'الرمز غير صحيح.',BAD_ID:'تقييم غير معروف.',NONE:'لا توجد نتيجة لهذا الرقم في هذا التقييم.',UNKNOWN_BAC:'اكتب رقم بكالوريا صحيحاً.',BUSY:'الخادم مشغول، أعد المحاولة.',BAD_SEC:'قيمة غير مقبولة.',BAD_CNT:'قيمة غير مقبولة.',NO_CONFIRM:'لم يُؤكَّد الإجراء.',BAD_GRP:'الفوج غير معروف.',CLOSED:'التقييم مغلق.',NO_CHECKIN:'لا يوجد تسجيل حضور لهذا الطالب في هذه الحصة.',BAD_V:'إجراء غير صالح.',BAD_BAC:'رقم غير صالح.',BAD_EX:'تخصص غير صالح، ولا يمكن استبعاد كل التخصصات.',NO_BANK:'لا توجد أسئلة في البنك لهذا التقييم.',BAD_MODE:'النمط غير صالح.',BAD_GRACE:'المهلة بين 0 و15 دقيقة.',BAD_SCHED:'موعد غير صالح: تحقق من التاريخ، وأن النهاية بعد البداية.',NO_SLOT:'حدد تاريخاً لفوج أو تخصص واحد على الأقل قبل تفعيل الجدولة.',BAD_UNTIL:'الأجل النهائي غير صالح.',NET:'تعذّر الاتصال بالخادم.'};
 function msg(e){return ERR[e]||ERR.NET;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function fnum(x){x=Number(x);return isNaN(x)?'':String(Math.round(x*100)/100);}
@@ -473,7 +523,7 @@ $('rmgo').addEventListener('click',function(){
 document.addEventListener('toggle',function(ev){var d=ev.target; if(d&&d.getAttribute&&d.getAttribute('data-sg')){if(d.open)stOpen[d.getAttribute('data-sg')]=1;else delete stOpen[d.getAttribute('data-sg')];}},true);
 function call(o){o.key=key;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{return JSON.parse(t);}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
 /* update55: أقسام مستقلة، قسم واحد ظاهر، ومحدِّد للتقييم داخل القسم */
-var TABS=['open','sched','time','ex','stats','cancel','bank'], tab='open', cur=SS.get('as_tcur')||'';
+var TABS=['open','sched','time','ex','stats','attst','roll','cancel','bank'], tab='open', cur=SS.get('as_tcur')||'';
 function curItem(){var i=byId(cur);if(!i&&items.length){i=items[0];cur=i.id;}return i;}
 function shortT(i){return String(i.title||i.id).split(':')[0];}
 function isSch(i){return !!(i.sched&&i.sched.mode==='sched');}
@@ -519,6 +569,128 @@ function setTab(t,focus){
   if(('#'+t)!==location.hash){try{history.replaceState(null,'','#'+t);}catch(e){location.hash=t;}}
   var b=$('t-'+t); $('stitle').innerHTML=b.querySelector('i').outerHTML+esc(b.querySelector('span').textContent); if(focus)b.focus();
   var top=$('panel').getBoundingClientRect().top+window.scrollY; if(window.scrollY>top)window.scrollTo(0,top);
+  tabData();
+}
+/* update59: النداء */
+var RL={d:null,id:'',pin:false,busy:{},err:{},sig:'',t:0,open:{}}, rlTm=null;
+function rlLoad(id,quiet){
+  var o={action:'asroll'}; if(id)o.id=id; var g=RL.g=(RL.g||0)+1;
+  if(!quiet&&!RL.d)$('b-roll').innerHTML='<p class="s">جارٍ التحميل…</p>';
+  return call(o).then(function(r){
+    if(!r.ok){if(r.err==='BAD_KEY'){logout();$('kerr').textContent=msg(r.err);return;}if(!RL.d)$('b-roll').innerHTML='<p class="err">'+esc(msg(r.err))+'</p>';return;}
+    if(g!==RL.g||Object.keys(RL.busy).length)return;  // ردّ قديم أو نقرة قيد الحفظ: لا نعيد الرسم
+    var sig=JSON.stringify([r.id,r.rows,r.cnt,r.none,r.log,r.list.length]);
+    RL.d=r; RL.id=r.id; RL.t=Date.now();
+    if(sig!==RL.sig||!quiet){RL.sig=sig;rlRender();}else rlBadge();
+  });
+}
+function rlBadge(){var d=RL.d,e=$('bd-roll');if(!d||!d.cnt){e.textContent='';return;}e.textContent=d.cnt.wait?String(d.cnt.wait):'';e.className='nb2'+(d.cnt.wait?' w':'');$('t-roll').setAttribute('aria-label','النداء'+(d.cnt.wait?'، لم يُنادَ عليهم بعد '+d.cnt.wait:''));}
+function rlState(st){return st==='H'?'مؤكَّد':(st==='G'?'مرفوض (غائب)':'بانتظار النداء');}
+function rlRow(x,i){
+  var b=RL.busy[x.bac], e=RL.err[x.bac]||'';
+  var nmx=esc(x.nom)+' '+esc(x.prenom);
+  return '<div class="rr '+(x.st||'')+'" data-rb="'+esc(x.bac)+'">'+
+    '<button type="button" class="rb h'+(x.st==='H'?' on':'')+'" data-rv="H" data-rbac="'+esc(x.bac)+'" aria-pressed="'+(x.st==='H'?'true':'false')+'" aria-label="حاضر: '+nmx+'"'+(b?' disabled':'')+'>ح</button>'+
+    '<button type="button" class="rb g'+(x.st==='G'?' on':'')+'" data-rv="G" data-rbac="'+esc(x.bac)+'" aria-pressed="'+(x.st==='G'?'true':'false')+'" aria-label="غائب: '+nmx+'"'+(b?' disabled':'')+'>غ</button>'+
+    '<div class="rn"><b>'+nmx+'</b><small>'+(i+1)+'. سجّل <bdi dir="ltr">'+esc(x.t)+'</bdi> · <span class="sg'+(x.st?'':' w')+'">'+(b?'جارٍ الحفظ…':rlState(x.st)+(x.rt?' <bdi dir="ltr">'+esc(x.rt)+'</bdi>':''))+'</span></small></div>'+
+    '<div class="rv" title="الحصص السابقة التي حضرها"><b>'+x.prev+'</b><small>من '+x.held+'</small></div>'+
+    '<div class="rv" title="'+(x.mark==null?'لا تقييم سابق':'أدّى '+x.mn+' من '+x.mm+' تقييمات')+'"><b>'+(x.mark==null?'-':fnum(x.mark))+'</b><small>'+(x.mark==null?'':'/20 · '+x.mn+'/'+x.mm)+'</small></div>'+
+    (e?'<div class="rq">'+esc(e)+'</div>':'')+'</div>';
+}
+function rlRender(){
+  var d=RL.d, box=$('b-roll'); if(!d)return; rlBadge();
+  var opts=d.list.map(function(o){return '<option value="'+esc(o.id)+'"'+(o.id===d.id?' selected':'')+'>'+esc(o.label)+(o.id===d.auto?' (الحصة الحالية)':'')+'</option>';}).join('');
+  var h='<div class="rsel"><label for="rsl" class="hide">الحصة</label><select id="rsl" aria-label="اختر الحصة">'+opts+'</select>'+
+    (d.auto&&d.id!==d.auto?'<button class="btn lt" type="button" id="rauto"><i class="fa-solid fa-location-crosshairs"></i>الحصة الحالية</button>':'')+
+    '<button class="btn lt" type="button" id="rref" aria-label="تحديث"><i class="fa-solid fa-rotate"></i></button></div>';
+  if(!d.occ){box.innerHTML=h+'<p class="s">لا توجد حصص مبرمجة في «الإعدادات».</p>';return;}
+  var o=d.occ;
+  h+='<div class="rinf">'+(o.type==='lec'?'المحاضرة ':'التطبيق ')+o.num+' · '+esc(o.key)+(o.d?' · '+esc(o.day)+' <bdi dir="ltr">'+esc(o.d)+'</bdi> من <bdi dir="ltr">'+esc(o.from)+'</bdi> إلى <bdi dir="ltr">'+esc(o.to)+'</bdi>':'')+
+    (d.id===d.auto?'<span class="now">الحالية</span>':'')+(o.test?'<span class="tst">أرقام تجريبية</span>':'')+'<br><span style="font-weight:400;color:#334155;">'+esc(o.s)+'</span></div>';
+  var c=d.cnt;
+  h+='<div class="rct" aria-live="polite"><div class="c1"><b>'+c.reg+'</b><span>المسجَّلون</span></div><div class="c2"><b>'+c.ok+'</b><span>المؤكَّدون</span></div><div class="c3"><b>'+c.rej+'</b><span>المرفوضون</span></div><div class="c4"><b>'+c.wait+'</b><span>لم يُنادَ عليهم</span></div></div>';
+  if(d.rows.length){
+    h+='<div class="rl" role="list"><div class="rr hdr" aria-hidden="true"><span>حاضر</span><span>غائب</span><span>الطالب (بترتيب التسجيل)</span><span>حضر سابقاً</span><span>العلامة</span></div>'+
+      d.rows.map(function(x,i){return rlRow(x,i);}).join('')+'</div>';
+  }else h+='<p class="s">لم يسجّل أحد حضوره في هذه الحصة بعد.</p>';
+  h+='<p class="rf2"><i class="fa-solid fa-circle-info"></i> <b>حضر سابقاً</b>: '+(o.type==='lec'?'المحاضرات':'حصص التطبيق')+' السابقة التي حضرها الطالب من مجموع ما سبق. <b>العلامة</b>: '+esc(d.formula||'')+'، كل تقييم يُحوَّل إلى 20، ولا يدخل إلا تقييم أُجري فعلاً، ومن لم يؤده تُحسب له 0. بجانبها عدد ما أدّاه من مجموع التقييمات.</p>';
+  if(!o.test){
+    var none=d.none||[];
+    h+='<details class="rx" data-rx="none"'+(RL.open.none?' open':'')+'><summary><i class="fa-solid fa-user-clock"></i> لم يسجّلوا حضورهم ('+none.length+' من '+d.members+')</summary>'+
+      (none.length?'<ol>'+none.map(function(x){return '<li>'+esc(x[1])+' '+esc(x[2])+' <span>'+esc(x[0])+'</span>'+(o.type==='lec'?' · '+esc(x[3]):'')+(x[4]?' <em class="ab m">ح في القائمة</em>':'')+'</li>';}).join('')+'</ol>':'<p class="lr" style="padding:0 10px 10px;">الجميع سجّلوا.</p>')+'</details>';
+  }
+  var lg=d.log||[];
+  h+='<details class="rx" data-rx="log"'+(RL.open.log?' open':'')+'><summary><i class="fa-solid fa-clock-rotate-left"></i> سجل النداء لهذه الحصة ('+lg.length+')</summary>'+
+    (lg.length?'<ol>'+lg.map(function(x){return '<li><span>'+esc(x.d)+' '+esc(x.t)+'</span> '+esc(x.nom)+' '+esc(x.prenom)+': <b class="la '+(x.a==='ح'?'h':'g')+'">'+esc(x.a)+'</b> (قبلها: '+esc(x.prev)+')</li>';}).join('')+'</ol>':'<p class="lr" style="padding:0 10px 10px;">لا إجراء بعد.</p>')+'</details>';
+  h+='<div class="lr">آخر تحديث: <bdi dir="ltr">'+esc(d.t)+'</bdi></div>';
+  var y=window.scrollY; box.innerHTML=h; window.scrollTo(0,y);
+}
+function rlSet(bac,v){
+  var d=RL.d; if(!d||RL.busy[bac])return; var x=null; d.rows.forEach(function(r){if(r.bac===bac)x=r;}); if(!x||x.st===v)return;
+  var old=x.st, id=d.id; RL.g=(RL.g||0)+1; RL.busy[bac]=1; delete RL.err[bac]; x.st=v; rlRecount(); rlRender();
+  call({action:'asrollset',id:id,bac:bac,v:v}).then(function(r){
+    delete RL.busy[bac]; RL.g++;
+    if(!r.ok){x.st=old;RL.err[bac]=msg(r.err);rlRecount();rlRender();if(r.err==='BAD_KEY'){logout();$('kerr').textContent=msg(r.err);}return;}
+    x.rt=r.rt; rlRecount(); rlRender(); if(!Object.keys(RL.busy).length)rlLoad(RL.pin?RL.id:'',true); ATS.d=null;
+  });
+}
+function rlRecount(){var c={reg:0,ok:0,rej:0,wait:0};RL.d.rows.forEach(function(x){c.reg++;if(x.st==='H')c.ok++;else if(x.st==='G')c.rej++;else c.wait++;});RL.d.cnt=c;}
+$('b-roll').addEventListener('click',function(ev){
+  var b=ev.target.closest('[data-rv]'); if(b){rlSet(b.getAttribute('data-rbac'),b.getAttribute('data-rv'));return;}
+  if(ev.target.closest('#rauto')){RL.pin=false;RL.err={};rlLoad('');return;}
+  if(ev.target.closest('#rref')){rlLoad(RL.pin?RL.id:'');}
+});
+$('b-roll').addEventListener('change',function(ev){if(ev.target.id==='rsl'){RL.err={};RL.pin=true;RL.id=ev.target.value;rlLoad(ev.target.value);}});
+$('b-roll').addEventListener('toggle',function(ev){var t=ev.target;if(t&&t.getAttribute&&t.getAttribute('data-rx')){if(t.open)RL.open[t.getAttribute('data-rx')]=1;else delete RL.open[t.getAttribute('data-rx')];}},true);
+/* update59: إحصائيات الحضور (تخصص ثم فوج، مع أسماء الغائبين) */
+var ATS={d:null,sel:'all-lec',open:{},t:0};
+function atLoad(fresh){
+  var o={action:'asattstats'}; if(fresh)o.fresh='1';
+  return call(o).then(function(r){
+    if(!r.ok){if(r.err==='BAD_KEY'){logout();$('kerr').textContent=msg(r.err);return;}if(!ATS.d)$('b-attst').innerHTML='<p class="err">'+esc(msg(r.err))+'</p>';return;}
+    ATS.d=r; ATS.t=Date.now(); atRender();
+  });
+}
+function rateH(o){return 'الحاضرون: <b>'+o.pr+'</b> من <b>'+o.tot+'</b> (<b>'+pct(o.pr,o.tot)+'%</b>)، الغائبون: <b>'+o.ab+'</b>';}
+function aBar(o){return '<div class="bar"><i class="d" style="width:'+pct(o.pr,o.tot)+'%"></i><i class="a" style="width:'+pct(o.ab,o.tot)+'%"></i></div>';}
+function atGr(k,G,all){
+  var lst=G.la||[], key=k+'|'+G.g;
+  return '<details class="gr" data-ag="'+esc(key)+'"'+(ATS.open[key]?' open':'')+'><summary><div class="gt"><span>'+esc(G.g)+(G.d&&!all?' <span class="ch">(<bdi dir="ltr">'+esc(G.d)+'</bdi>)</span>':'')+'</span><span class="ch"><i class="fa-solid fa-chevron-down"></i> الغائبون</span></div>'+
+    '<div class="gn">'+rateH(G)+'</div>'+aBar(G)+'</summary><div class="gb">'+
+    '<h5>'+(all?'الطلبة الذين غابوا ('+lst.length+')':'الغائبون ('+lst.length+')')+'</h5>'+
+    (lst.length?'<ol>'+lst.map(function(x){return '<li>'+esc(x[1])+' '+esc(x[2])+' <span>'+esc(x[0])+'</span>'+(all?' : <b style="color:#b91c1c;">'+x[3]+'</b> '+(x[3]===1?'غياب':'غيابات')+' <span>('+x[4].map(function(n){return (k==='all-lec'?'م':'ت')+n;}).join('، ')+')</span>':(x[3]?' <em class="ab">مرفوض في النداء</em>':''))+'</li>';}).join('')+'</ol>':'<p class="lr">لا غائب.</p>')+
+    '</div></details>';
+}
+function atBlock(k,S,all){
+  var h='<div class="sx"><div class="sh"><span><i class="fa-solid fa-clipboard-user" style="margin-left:6px;"></i>'+esc(all?(k==='all-lec'?'كل المحاضرات ('+S.n+')':'كل حصص التطبيق ('+S.n+')'):S.s)+'</span><button type="button" data-atrf="1"><i class="fa-solid fa-rotate"></i> تحديث</button></div>';
+  if(all&&!S.n)return h+'<div class="tot">لم تُجرَ أي حصة بعد.</div></div>';
+  h+='<div class="tot">'+(all?'مجموع الحضور في كل الحصص: ':'')+rateH(S)+(S.rj?'، منهم <b>'+S.rj+'</b> مرفوض في النداء':'')+'</div>'+aBar(S);
+  S.sps.forEach(function(P){
+    h+='<div class="spb"><div class="spt"><i class="fa-solid fa-users"></i>'+esc(P.sp)+'</div><div class="tot">'+rateH(P)+'</div>'+aBar(P)+P.groups.map(function(G){return atGr(k,G,all);}).join('')+'</div>';
+  });
+  return h+'<div class="lr">آخر تحديث: <bdi dir="ltr">'+esc(ATS.d.t)+'</bdi></div></div>';
+}
+function atRender(){
+  var d=ATS.d, box=$('b-attst'); if(!d)return;
+  var L=d.sess.filter(function(s){return s.type==='lec';}), T=d.sess.filter(function(s){return s.type==='tp';});
+  var b=function(k,lab,o){return '<button type="button" data-ats="'+esc(k)+'" class="'+(ATS.sel===k?'on':'')+'" aria-pressed="'+(ATS.sel===k?'true':'false')+'">'+esc(lab)+' <em class="nb2'+(ATS.sel===k?'':' o')+'">'+pct(o.pr,o.tot)+'%</em></button>';};
+  var h='<div class="asel" role="group" aria-label="المحاضرات">'+b('all-lec','كل المحاضرات',d.all.lec)+L.map(function(s){return b('s|'+s.s,'المحاضرة '+s.num,s);}).join('')+'</div>'+
+    '<div class="asel" role="group" aria-label="التطبيقات">'+b('all-tp','كل التطبيقات',d.all.tp)+T.map(function(s){return b('s|'+s.s,'التطبيق '+s.num,s);}).join('')+'</div>';
+  var k=ATS.sel, S=null, all=false;
+  if(k==='all-lec'){S=d.all.lec;all=true;}else if(k==='all-tp'){S=d.all.tp;all=true;}else d.sess.forEach(function(s){if('s|'+s.s===k)S=s;});
+  if(!S){ATS.sel='all-lec';S=d.all.lec;all=true;k='all-lec';}
+  h+=atBlock(k,S,all);
+  var y=window.scrollY; box.innerHTML=h; window.scrollTo(0,y);
+}
+$('b-attst').addEventListener('click',function(ev){
+  var b=ev.target.closest('[data-ats]'); if(b){ATS.sel=b.getAttribute('data-ats');atRender();return;}
+  if(ev.target.closest('[data-atrf]')){atLoad(true);}
+});
+$('b-attst').addEventListener('toggle',function(ev){var t=ev.target;if(t&&t.getAttribute&&t.getAttribute('data-ag')){if(t.open)ATS.open[t.getAttribute('data-ag')]=1;else delete ATS.open[t.getAttribute('data-ag')];}},true);
+function tabData(){
+  if(!key)return;
+  if(tab==='roll'){if(!RL.d||Date.now()-RL.t>12000)rlLoad(RL.pin?RL.id:'',!!RL.d);}
+  else if(tab==='attst'){if(!ATS.d||Date.now()-ATS.t>60000)atLoad(false);}
 }
 function hashTab(){var h=(location.hash||'').slice(1);return TABS.indexOf(h)>=0?h:'';}
 /* update56: زر القائمة */
@@ -581,8 +753,8 @@ function load(){
     $('perr').textContent='';items=r.items;render();loadStats(false);
   });
 }
-function enter(){$('kc').classList.add('hide');$('wr').classList.add('wide');$('panel').classList.remove('hide');load();clearInterval(tm);tm=setInterval(function(){if(!document.hidden)load();},20000);}
-function logout(){if(dOpen)closeD(true);key='';SS.del('as_tkey');$('wr').classList.remove('wide');clearInterval(tm);$('panel').classList.add('hide');$('kc').classList.remove('hide');$('key').value='';}
+function enter(){$('kc').classList.add('hide');$('wr').classList.add('wide');$('panel').classList.remove('hide');load();clearInterval(tm);tm=setInterval(function(){if(!document.hidden)load();},20000);clearInterval(rlTm);rlTm=setInterval(function(){if(!document.hidden)tabData();},15000);tabData();}
+function logout(){if(dOpen)closeD(true);clearInterval(rlTm);RL.d=null;RL.sig='';RL.pin=false;ATS.d=null;$('b-roll').innerHTML='';$('b-attst').innerHTML='';$('bd-roll').textContent='';key='';SS.del('as_tkey');$('wr').classList.remove('wide');clearInterval(tm);$('panel').classList.add('hide');$('kc').classList.remove('hide');$('key').value='';}
 $('kf').addEventListener('submit',function(ev){ev.preventDefault();var k=$('key').value.trim();if(!k)return;$('kbtn').disabled=true;key=k;
   call({action:'askey'}).then(function(r){$('kbtn').disabled=false;if(r.ok){SS.set('as_tkey',k);$('kerr').textContent='';enter();}else{key='';$('kerr').textContent=msg(r.err||'BAD_KEY');}});});
 $('lo').addEventListener('click',logout);
