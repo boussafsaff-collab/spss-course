@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
+<script src="../assets/auth.js?v=60" data-page="session"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حصة التطبيق 1: تطهير البيانات في SPSS 25 | د. بوصفصاف فريد</title>
     <!-- Tailwind CSS CDN -->
@@ -1095,10 +1096,10 @@ DESCRIPTIVES VARIABLES=Monthly_Income_1 Inc_Median.</pre><p class="text-[11px] t
   var fm=document.getElementById('att-form'); if(!fm){unlock();return;}
   fm.addEventListener('submit',function(ev){ev.preventDefault();var m=document.getElementById('att-msg'),b=document.getElementById('att-btn');var d=new FormData(fm);
     d.append('lecture','التطبيق 1: تطهير البيانات');b.disabled=true;m.textContent='جارٍ الإرسال…';m.className='text-sm mr-2 text-slate-500';
-    fetch('https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec',{method:'POST',body:new URLSearchParams(d)}).then(function(r){return r.text();}).then(function(x){x=String(x).trim();if(x==='BAD_CODE'){b.disabled=false;m.textContent='رمز الحصة غير صحيح.';m.className='text-sm mr-2 text-red-600';return;}var q=x.split('|'),rv=null;if(q[0]==='REVIEW_PAST')rv={md:'review_past',dt:q[1]||''};else if(q[0]==='DUPLICATE')rv={md:'review_attended',hh:q[1]||''};else if(x!=='OK'){throw new Error(x);}try{localStorage.setItem(KEY,'1');localStorage.setItem(KEY+'-rv',JSON.stringify(rv));}catch(e){} unlock(rv); var t=document.getElementById('mod-intro')||document.querySelector('#main-content-wrapper > section:not(#mod-attendance)'); if(t) setTimeout(function(){t.scrollIntoView({behavior:'smooth'});},1200);}).catch(function(){b.disabled=false;m.textContent='تعذّر الإرسال، تحقق من الاتصال وأعد المحاولة.';m.className='text-sm mr-2 text-red-600';});});
+    fetch('https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec',{method:'POST',body:new URLSearchParams(d)}).then(function(r){return r.text();}).then(function(x){x=String(x).trim();if(x==='BAD_CODE'){b.disabled=false;m.textContent='رمز الحصة غير صحيح.';m.className='text-sm mr-2 text-red-600';return;}var q=x.split('|'),rv=null,md=(q.filter(function(z){return /^(normal|review_attended|review_past|review_late|review_rejected)$/.test(z)})[0])||'';if(q[0]==='TOO_EARLY'){b.disabled=false;m.textContent=window.spssSlotMsg?spssSlotMsg(x):'التسجيل غير متاح الآن.';m.className='text-sm mr-2 text-red-600';return;}if(q[0]==='NOT_FOUND'||q[0]==='BAD_BAC'){b.disabled=false;m.textContent='رقم البكالوريا غير موجود في القائمة.';m.className='text-sm mr-2 text-red-600';return;}if(q[0]==='REVIEW_PAST')rv={md:'review_past',dt:q[1]||''};else if(q[0]==='OK'||q[0]==='DUPLICATE'){if(md==='normal')rv=null;else if(md==='review_attended'||(!md&&q[0]==='DUPLICATE'))rv={md:'review_attended',hh:q[0]==='DUPLICATE'?(q[1]||''):''};else if(md)rv={md:md==='review_late'?'review_past':md==='review_rejected'?'review_past':md,dt:''};}else{throw new Error(x);}window.SNAV_LIVE=!rv;try{localStorage.setItem(KEY,'1');localStorage.setItem(KEY+'-rv',JSON.stringify(rv));}catch(e){} unlock(rv); var t=document.getElementById('mod-intro')||document.querySelector('#main-content-wrapper > section:not(#mod-attendance)'); if(t) setTimeout(function(){t.scrollIntoView({behavior:'smooth'});},1200);}).catch(function(){b.disabled=false;m.textContent='تعذّر الإرسال، تحقق من الاتصال وأعد المحاولة.';m.className='text-sm mr-2 text-red-600';});});
 })();
 </script>
-<script src="../assets/session-nav.js" defer></script>
+<script src="../assets/session-nav.js?v=60" defer></script>
 <script src="../assets/remind.js" defer></script>
 </body>
 </html>

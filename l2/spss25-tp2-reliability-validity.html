@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
+<script src="../assets/auth.js?v=60" data-page="session"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>التطبيق 2: الثبات والصدق في SPSS 25</title>
     <!-- Tailwind CSS CDN -->
@@ -238,7 +239,7 @@ function bad(m,t){var g=$('qz-go');g.disabled=false;m.style.color='#fca5a5';m.te
 function dmyT(){var d=new Date();return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear();}
 function esc(t){var e=document.createElement('span');e.textContent=t==null?'':String(t);return e.innerHTML;}
 function isRv(sv){return sv.mode==='L'||sv.md==='review_past'||sv.md==='review_late'||(sv.md==='review_attended'&&!!sv.dt&&sv.dt!==dmyT());}
-// update50: التصفح الحر (من الخادم): دخول ثانٍ، أو بعد تاريخ التطبيق، أو بعد الساعة 15:00 يوم التطبيق (غائب، مراجعة فقط)
+// update50: التصفح الحر (من الخادم): دخول ثانٍ، أو بعد تاريخ التطبيق، أو بعد انتهاء وقت الحصة يوم التطبيق (غائب، مراجعة فقط)
 function fbOf(sv){if(!sv)return '';if(sv.fb==='1')return sv.fbr||'after15';if(sv.md==='review_late')return 'after15';if(sv.md==='review_attended'||sv.md==='review_past')return sv.md;if(sv.mode==='L')return 'review_past';return '';}
 function isFb(sv){return isRv(sv)||!!fbOf(sv);}
 function rchk(sv,cb){var done=0,fin=function(){if(!done){done=1;cb(sv);}};setTimeout(fin,8000);try{fetch(U,{method:'POST',body:new URLSearchParams({bac:sv.f.bac,code:'',lecture:LECN,dry:'1'})}).then(function(r){return r.text()}).then(function(x){var p=String(x).trim().split('|');if(p[0]==='OK')p.splice(1,0,'');else if(p[0]!=='DUPLICATE'){fin();return;}if(p[12]==='1'){sv.fb='1';sv.fbr=p[13]||'';}if(p[8]){sv.md=p[8];sv.dn=p[9]==='1';sv.sc=p[10]||'';sv.tt=p[11]||'';if(p[1])sv.hh=p[1];if(p[6]==='L')sv.mode='L';if(p[7])sv.dt=p[7];if(p[0]==='DUPLICATE')DUP=p[1]||'';try{localStorage.setItem(KL,JSON.stringify(sv))}catch(e){}}fin();}).catch(fin);}catch(e){fin();}}
@@ -248,7 +249,7 @@ var DUP=null;$('qz-go').onclick=function(){
  if(!/^\d{6,9}$/.test(bac)){m.textContent='رقم البكالوريا يتكوّن من 6 إلى 9 أرقام.';return;}
  var g=$('qz-go'),f=null;g.disabled=true;m.style.color='#cbd5e1';m.textContent='جارٍ التحقق…';fs();
  fetch(U,{method:'POST',body:new URLSearchParams({bac:bac,code:code,lecture:LECN})}).then(function(r){return r.text()}).then(function(x){x=String(x).trim();
-  if(x.indexOf('TOO_EARLY')===0)throw 'تعذّر الدخول: تاريخ إلقاء التطبيق هو يوم '+(x.split('|')[1]||'')+'.';
+  if(x.indexOf('TOO_EARLY')===0)throw (window.spssSlotMsg?spssSlotMsg(x):'تعذّر الدخول: تاريخ إلقاء التطبيق هو يوم '+(x.split('|')[1]||'')+'.');
   if(x.indexOf('NO_DATE')===0)throw 'لم يحدّد الأستاذ تاريخ هذا التطبيق لفوجك بعد.';
   if(x.indexOf('BAD_CODE')===0)throw code?'رمز الحصة غير صحيح.':'اليوم هو يوم التطبيق: أدخل رمز الحصة الذي يعلنه الأستاذ.';
   if(x.indexOf('UNKNOWN_BAC')===0)throw 'رقم البكالوريا هذا غير موجود في قوائم الطلبة. تحقّق من الرقم كما هو في شهادة البكالوريا، أو راجع الأستاذ.';
@@ -269,7 +270,7 @@ function status(f){var g=$('qz-go');g.disabled=false;$('qz-lmsg').textContent=''
 // دخول بعد تاريخ التطبيق: مسجَّل غائباً، دون اختبار، والشرائح في تصفح حر
 var C0=null;
 function lateGo(sv,again){show('qz-end');clearInterval(gp);var et=$('qz-etxt');
- window.SNAV_FREE=fbOf(sv)||'review_past';et.innerHTML=sv.md==='review_late'?'<b id="qz-review" data-md="review_late" style="color:#fbbf24">⏰ دخول للمراجعة فقط</b><br>انتهى وقت تسجيل الحضور (15:00)، تُعدّ غائباً في هذه الحصة، ويمكنك تصفّح المحتوى للمراجعة فقط.':'<b id="qz-review" data-md="'+(sv.md==='review_attended'?'review_attended':'review_past')+'" style="color:#fbbf24">🔒 دخول للمراجعة فقط</b><br>'+(sv.md==='review_attended'?'حضورك مسجَّل مسبقاً في هذه الحصة'+(sv.hh?' (الساعة <bdi dir="ltr">'+esc(sv.hh)+'</bdi>)':'')+'؛ لن يُسجَّل مرة أخرى.':'انقضى تاريخ التطبيق'+(sv.dt?' (<bdi dir="ltr">'+esc(sv.dt)+'</bdi>)':'')+'؛ هذا الدخول للمراجعة فقط ولا يُحتسب حضوراً.');
+ window.SNAV_FREE=fbOf(sv)||'review_past';et.innerHTML=sv.md==='review_late'?'<b id="qz-review" data-md="review_late" style="color:#fbbf24">⏰ دخول للمراجعة فقط</b><br>انتهى وقت تسجيل الحضور (نهاية وقت حصتك)، تُعدّ غائباً في هذه الحصة، ويمكنك تصفّح المحتوى للمراجعة فقط.':'<b id="qz-review" data-md="'+(sv.md==='review_attended'?'review_attended':'review_past')+'" style="color:#fbbf24">🔒 دخول للمراجعة فقط</b><br>'+(sv.md==='review_attended'?'حضورك مسجَّل مسبقاً في هذه الحصة'+(sv.hh?' (الساعة <bdi dir="ltr">'+esc(sv.hh)+'</bdi>)':'')+'؛ لن يُسجَّل مرة أخرى.':'انقضى تاريخ التطبيق'+(sv.dt?' (<bdi dir="ltr">'+esc(sv.dt)+'</bdi>)':'')+'؛ هذا الدخول للمراجعة فقط ولا يُحتسب حضوراً.');
  $('qz-erea').textContent=sv.dn?('✅ أدّيت هذا التقييم'+(sv.sc!==''&&sv.sc!=null?': \u2066'+sv.sc+' / '+sv.tt+'\u2069':'')+'، ولا يمكن إعادته.'):'📝 التقييمات تُجرى في صفحة «التقييم المستمر».';
  var qa=$('qz-auto');if(qa)qa.textContent='🔓 تصفح حر: تنقّل بين الشرائح بحرية دون انتظار إشارة الأستاذ.';var c=$('qz-cont'),m=$('qz-smsg');if(C0===null)C0=c.innerHTML;c.innerHTML='تصفّح محتوى التطبيق ←';c.disabled=false;c.className='ok';m.style.color='';m.textContent='';
  c.onclick=function(){c.innerHTML=C0;show(null);fs();ori('landscape');setTimeout(function(){ori('landscape')},400);if(window.dkLate)window.dkLate();if(window.dkGo)window.dkGo(1);};}
@@ -423,6 +424,6 @@ var was=false;
 setInterval(function(){var on=!!K();d.querySelectorAll('.stubtn').forEach(function(b){b.style.display=on?'':'none'});if(box)box.classList.toggle('on',on);
  if(on&&!was){loadIn();clearInterval(tm);tm=setInterval(loadIn,5000);}if(!on&&was){clearInterval(tm);stuClose();}was=on;},700);
 })();
-</script><script src="../assets/session-nav.js" defer></script>
+</script><script src="../assets/session-nav.js?v=60" defer></script>
 <script src="../assets/remind.js" defer></script>
 </body></html>
