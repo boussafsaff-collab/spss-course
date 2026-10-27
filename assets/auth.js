@@ -237,7 +237,7 @@ function meRender(r){var b=document.getElementById('spss-me-b');
  h+='</section>';
  function slot(o,lst,lbl){if(!o)return '<p class="nt">'+lbl+'</p>';var up=(lst||[]).filter(function(x){return x.st==='open'||x.st==='upcoming';});var op=up.filter(function(x){return x.st==='open';})[0];
   var s='<div class="rw"><span class="t">اليوم</span><span class="v">'+esc(o.day)+'</span></div><div class="rw"><span class="t">التوقيت</span><span class="v"><bdi dir="ltr">'+esc(o.s)+' – '+esc(o.e)+'</bdi></span></div>'+
-  '<div class="rw"><span class="t">المكان</span><span class="v">'+esc(o.room||'يُعلَن لاحقاً')+'</span></div>';
+  '<div class="rw"><span class="t">المكان</span><span class="v">'+esc(o.room||(lbl.indexOf('فوجك')>=0?'قاعة الإنترنت، المبنى أ، الطابق الأول':'يُعلَن لاحقاً'))+'</span></div>';
   if(op)s+='<div class="rw nx"><span class="t">🟢 التسجيل مفتوح الآن: '+esc(op.session)+'</span></div>';
   if(up.length){var u=up[0];s+='<div class="rw nx"><span class="t">⏭️ الحصة القادمة: '+esc(u.session)+'<br><small><bdi dir="ltr">'+dm(u.dt)+' · '+esc(u.s)+'–'+esc(u.e)+'</bdi></small></span></div>';}
   else s+='<p class="nt">لا حصص قادمة مبرمجة حالياً.</p>';
