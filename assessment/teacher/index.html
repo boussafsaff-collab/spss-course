@@ -32,6 +32,14 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:#1d4f86;box-sh
 .btn:disabled{opacity:.55;cursor:default;}
 .btn.go{background:#16a34a;}.btn.lt{background:#e2e8f0;color:#0f2744;box-shadow:none;}.btn.red{background:#dc2626;}
 .row{display:flex;gap:8px;flex-wrap:wrap;}.row>*{flex:1 1 120px;}
+.sa2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px;}@media (max-width:420px){.sa2{grid-template-columns:1fr;}}
+.sa-ok{background:#f0fdf4;border:1px solid #86efac;color:#166534;border-radius:12px;padding:9px 12px;margin:8px 0 0;font-weight:700;font-size:14.5px;}
+.sa-it{border:1px solid #e3e9f2;border-radius:14px;padding:10px 12px;margin:0 0 8px;background:#fbfdff;}
+.sa-it .nm{font-weight:800;color:#0f2744;font-size:16px;}.sa-it .mt{color:#475569;font-size:13.5px;margin:3px 0 0;line-height:1.6;}
+.sa-it .bg{display:inline-block;border-radius:999px;padding:1px 9px;font-size:12.5px;font-weight:700;margin-inline-start:6px;}
+.sa-it .bg.d{background:#fef3c7;color:#92400e;}.sa-it .bg.f{background:#e0f2fe;color:#075985;}.sa-it .bg.n{background:#f1f5f9;color:#475569;}
+.sa-it .srow{margin-top:8px;}.sa-it .srow .btn{min-height:42px;font-size:14.5px;flex:1 1 120px;}
+.sa-ed{border-top:1px dashed #cbd5e1;margin-top:8px;padding-top:8px;}
 .err{color:#b91c1c;font-weight:700;font-size:14.5px;margin:8px 0 0;min-height:1em;}
 .who{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .who b{font-size:17px;color:#0f2744;}.who span{color:#475569;font-size:14px;}
@@ -246,6 +254,7 @@ html.lock,html.lock body{overflow:hidden;}
 <button type="button" role="tab" id="t-attst" data-tab="attst" aria-controls="s-attst" aria-selected="false" tabindex="-1"><i class="fa-solid fa-clipboard-user" aria-hidden="true"></i><span>إحصائيات الحضور</span><em class="nb2" id="bd-attst"></em></button>
 <button type="button" role="tab" id="t-roll" data-tab="roll" aria-controls="s-roll" aria-selected="false" tabindex="-1"><i class="fa-solid fa-list-check" aria-hidden="true"></i><span>النداء</span><em class="nb2" id="bd-roll"></em></button>
 <button type="button" role="tab" id="t-cancel" data-tab="cancel" aria-controls="s-cancel" aria-selected="false" tabindex="-1"><i class="fa-solid fa-user-xmark" aria-hidden="true"></i><span>إلغاء النتائج</span><em class="nb2" id="bd-cancel"></em></button>
+<button type="button" role="tab" id="t-add" data-tab="add" aria-controls="s-add" aria-selected="false" tabindex="-1"><i class="fa-solid fa-user-plus" aria-hidden="true"></i><span>إضافة طالب</span><em class="nb2" id="bd-add"></em></button>
 <button type="button" role="tab" id="t-bank" data-tab="bank" aria-controls="s-bank" aria-selected="false" tabindex="-1"><i class="fa-solid fa-database" aria-hidden="true"></i><span>بنك الأسئلة</span><em class="nb2" id="bd-bank"></em></button>
 </div>
 </nav>
@@ -304,6 +313,32 @@ html.lock,html.lock body{overflow:hidden;}
 
 <h3 style="margin-top:16px;"><i class="fa-solid fa-users-slash"></i>الإلغاء الجماعي لتقييم</h3>
 <div id="b-dz"></div>
+</section>
+<section class="card sec hide" id="s-add" role="tabpanel" aria-labelledby="t-add">
+<h3><i class="fa-solid fa-user-plus"></i>إضافة طالب إلى القوائم</h3>
+<p class="s" style="color:#475569;font-size:14px;line-height:1.7;margin:0 0 10px;">يُكتب الطالب في آخر قائمة فوجه بالتنسيق نفسه، فيعمل له الحضور والنداء والإحصائيات ولوحة الطالب والتقييمات، ويخضع لنافذة التسجيل وتاريخ فوجه مثل باقي الطلبة. كل عملية تُسجَّل بوقتها في ورقة «سجل الإضافات».</p>
+<form id="sa-f" novalidate autocomplete="off">
+<label for="sa-bac">رقم البكالوريا</label>
+<input type="tel" id="sa-bac" inputmode="numeric" dir="ltr" maxlength="10" placeholder="6 إلى 10 أرقام" aria-describedby="sa-err">
+<div class="sa2">
+<div><label for="sa-nom" style="margin-top:8px;">اللقب</label><input type="text" id="sa-nom" dir="ltr" maxlength="40" placeholder="NOM" autocapitalize="characters"></div>
+<div><label for="sa-pre" style="margin-top:8px;">الاسم</label><input type="text" id="sa-pre" dir="auto" maxlength="40" placeholder="Prénom"></div>
+</div>
+<div class="sa2">
+<div><label for="sa-sp" style="margin-top:8px;">التخصص</label><select id="sa-sp"><option value="إدارة مالية">إدارة مالية</option><option value="إدارة أعمال">إدارة أعمال</option></select></div>
+<div id="sa-gw"><label for="sa-grp" style="margin-top:8px;">الفوج</label><select id="sa-grp"><option value="">— اختر الفوج —</option><option value="1">01</option><option value="2">02</option><option value="3">03</option></select></div>
+</div>
+<p class="s hide" id="sa-gn" style="color:#64748b;font-size:13.5px;margin:6px 0 0;">«إدارة أعمال»: بلا فوج (يُكتب في قائمة «إدارة أعمال - فوج 1»؛ لا تطبيقات لهذا التخصص).</p>
+<label for="sa-yr" style="margin-top:8px;">سنة البكالوريا <span style="font-weight:400;color:#64748b;">(اختياري)</span></label>
+<input type="tel" id="sa-yr" inputmode="numeric" dir="ltr" maxlength="4" placeholder="2023">
+<button class="btn go" id="sa-go" type="submit" style="margin-top:12px;"><i class="fa-solid fa-user-plus"></i>إضافة الطالب</button>
+<div class="err" id="sa-err" role="alert"></div>
+<div class="sa-ok hide" id="sa-ok" role="status"></div>
+</form>
+<h3 style="margin-top:18px;"><i class="fa-solid fa-users"></i>الطلبة المضافون يدوياً <em class="nb2" id="sa-n"></em></h3>
+<p class="s" style="color:#64748b;font-size:13.5px;margin:0 0 8px;">الحذف يتطلب التأكيد، ولا يُسمح به إلا لطالب ليس له أي حضور أو نتيجة. النقل إلى فوج آخر كذلك.</p>
+<div class="tbar"><button class="btn lt" id="sa-rf" type="button"><i class="fa-solid fa-rotate"></i>تحديث القائمة</button></div>
+<div id="sa-l" aria-live="polite"></div>
 </section>
 <section class="card sec hide" id="s-bank" role="tabpanel" aria-labelledby="t-bank">
 <h3><i class="fa-solid fa-database"></i>بنك الأسئلة</h3>
@@ -524,7 +559,7 @@ $('rmgo').addEventListener('click',function(){
 document.addEventListener('toggle',function(ev){var d=ev.target; if(d&&d.getAttribute&&d.getAttribute('data-sg')){if(d.open)stOpen[d.getAttribute('data-sg')]=1;else delete stOpen[d.getAttribute('data-sg')];}},true);
 function call(o){o.key=key;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{return JSON.parse(t);}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
 /* update55: أقسام مستقلة، قسم واحد ظاهر، ومحدِّد للتقييم داخل القسم */
-var TABS=['open','sched','time','ex','stats','attst','roll','cancel','bank'], tab='open', cur=SS.get('as_tcur')||'';
+var TABS=['open','sched','time','ex','stats','attst','roll','cancel','add','bank'], tab='open', cur=SS.get('as_tcur')||'';
 function curItem(){var i=byId(cur);if(!i&&items.length){i=items[0];cur=i.id;}return i;}
 function shortT(i){return String(i.title||i.id).split(':')[0];}
 function isSch(i){return !!(i.sched&&i.sched.mode==='sched');}
@@ -692,7 +727,102 @@ function tabData(){
   if(!key)return;
   if(tab==='roll'){if(!RL.d||Date.now()-RL.t>12000)rlLoad(RL.pin?RL.id:'',!!RL.d);}
   else if(tab==='attst'){if(!ATS.d||Date.now()-ATS.t>60000)atLoad(false);}
+  else if(tab==='add'){if(!SA.d||Date.now()-SA.t>60000)saLoad();}
 }
+/* update62: إضافة طالب */
+var SA={d:null,t:0,ed:'',busy:0};
+var SAE={BAC_DIGITS:'رقم البكالوريا: أرقام فقط.',BAC_LEN:'رقم البكالوريا: بين 6 و10 أرقام.',BAD_NOM:'اكتب اللقب (حرفان على الأقل).',BAD_PRENOM:'اكتب الاسم (حرفان على الأقل).',BAD_YEAR:'سنة البكالوريا غير صالحة (مثال: 2023).',BAD_SP:'اختر التخصص.',NEED_GRP:'اختر الفوج (01 أو 02 أو 03) لطلبة «إدارة مالية».',BAD_GRP:'الفوج غير معروف.',NO_ROSTER:'قائمة هذا الفوج غير موجودة في الملف.',NOT_FOUND:'الطالب غير موجود في القوائم.',NOT_MANUAL:'هذا طالب من القوائم الرسمية، لا يُعدَّل ولا يُحذف من هنا.',PROTECTED:'رقم الأستاذ التجريبي محمي.',NEED_CONFIRM:'لم يُؤكَّد الحذف.'};
+function saErr(r){
+  if(r.err==='BAC_EXISTS')return 'رقم البكالوريا موجود مسبقاً في «'+esc(r.where||'')+'»'+(r.nom?' ('+esc(r.nom+' '+(r.prenom||''))+')':'')+'.';
+  if(r.err==='HAS_DATA'){var d=r.d||{},p=[];if(d.att)p.push('حضور: '+d.att);if(d.roll)p.push('نداء: '+d.roll);if(d.res)p.push('نتائج: '+d.res);if(d.cells)p.push('خانات في القائمة: '+d.cells);
+    return 'مرفوض: لهذا الطالب بيانات مسجلة ('+p.join('، ')+')، فلا يمكن حذفه أو نقله إلى فوج آخر. يمكن تعديل اللقب والاسم فقط.';}
+  return esc(SAE[r.err]||msg(r.err));
+}
+function saG(g){return g?('0'+g).slice(-2):'';}
+function saGrpUi(spId,gwId,noteId){var f=/مالية/.test($(spId).value);$(gwId).classList.toggle('hide',!f);if(noteId)$(noteId).classList.toggle('hide',f);}
+function saLoad(){
+  if(!SA.d)$('sa-l').innerHTML='<p class="s">جارٍ التحميل…</p>';
+  return call({action:'asstudlist'}).then(function(r){
+    if(!r.ok){$('sa-l').innerHTML='<p class="err">'+esc(msg(r.err))+'</p>';return;}
+    SA.d=r;SA.t=Date.now();saRender();
+  });
+}
+function saRender(){
+  var L=(SA.d&&SA.d.list)||[], h='';
+  $('sa-n').textContent=L.length?String(L.length):''; $('bd-add').textContent='';
+  if(!L.length)h='<p class="s" style="color:#64748b;">لا يوجد طلبة مضافون يدوياً.</p>';
+  L.forEach(function(s){
+    var D=s.data||{}, has=D.any>0, bt='';
+    var tag=s.free?'<span class="bg f">رقم الأستاذ التجريبي (محمي)</span>':(has?'<span class="bg d">له بيانات</span>':'<span class="bg n">بلا بيانات</span>');
+    var dd=[];if(D.att)dd.push('حضور '+D.att);if(D.roll)dd.push('نداء '+D.roll);if(D.res)dd.push('نتائج '+D.res);if(D.cells)dd.push('خانات '+D.cells);
+    h+='<div class="sa-it" data-sab="'+esc(s.bac)+'"><div class="nm"><bdi dir="ltr">'+esc(s.nom)+' '+esc(s.prenom)+'</bdi>'+tag+'</div>'+
+      '<div class="mt">رقم البكالوريا: <bdi dir="ltr">'+esc(s.bac)+'</bdi> · '+esc(s.sp)+(/مالية/.test(s.sp)?' · الفوج '+saG(s.grp):'')+' · القائمة «'+esc(s.sh)+'» (السطر '+s.row+')'+
+      (s.year?' · سنة البكالوريا '+esc(s.year):'')+(s.added?'<br>أضيف: <bdi dir="ltr">'+esc(s.added)+'</bdi>':'')+(dd.length?'<br>البيانات: '+dd.join('، '):'')+'</div>';
+    if(!s.free){
+      h+='<div class="srow"><button class="btn lt" type="button" data-saed="'+esc(s.bac)+'"><i class="fa-solid fa-pen"></i>تعديل</button>'+
+        '<button class="btn dng" type="button" data-sadel="'+esc(s.bac)+'"><i class="fa-solid fa-trash-can"></i>حذف</button></div>';
+      if(SA.ed===s.bac){
+        var fin=/مالية/.test(s.sp);
+        h+='<div class="sa-ed"><div class="sa2"><div><label for="se-nom">اللقب</label><input type="text" id="se-nom" dir="ltr" maxlength="40" value="'+esc(s.nom)+'"></div>'+
+          '<div><label for="se-pre">الاسم</label><input type="text" id="se-pre" dir="auto" maxlength="40" value="'+esc(s.prenom)+'"></div></div>'+
+          '<div class="sa2"><div><label for="se-sp" style="margin-top:8px;">التخصص</label><select id="se-sp"><option'+(fin?' selected':'')+'>إدارة مالية</option><option'+(fin?'':' selected')+'>إدارة أعمال</option></select></div>'+
+          '<div id="se-gw" class="'+(fin?'':'hide')+'"><label for="se-grp" style="margin-top:8px;">الفوج</label><select id="se-grp">'+['1','2','3'].map(function(g){return '<option value="'+g+'"'+(fin&&String(s.grp)===g?' selected':'')+'>0'+g+'</option>';}).join('')+'</select></div></div>'+
+          '<label for="se-yr" style="margin-top:8px;">سنة البكالوريا</label><input type="tel" id="se-yr" inputmode="numeric" dir="ltr" maxlength="4" value="'+esc(s.year||'')+'">'+
+          (has?'<p class="s" style="color:#92400e;font-size:13px;margin:6px 0 0;">له بيانات: يمكن تعديل اللقب والاسم والسنة فقط، لا النقل إلى فوج آخر.</p>':'')+
+          '<div class="srow"><button class="btn go" type="button" data-sasv="'+esc(s.bac)+'"><i class="fa-solid fa-floppy-disk"></i>حفظ</button><button class="btn lt" type="button" data-sacx="1">إلغاء</button></div></div>';
+      }
+    }
+    h+='<div class="err" id="sae-'+esc(s.bac)+'" role="alert"></div></div>';
+  });
+  $('sa-l').innerHTML=h;
+}
+$('sa-sp').addEventListener('change',function(){saGrpUi('sa-sp','sa-gw','sa-gn');});
+$('sa-rf').addEventListener('click',function(){saLoad();});
+$('sa-f').addEventListener('submit',function(ev){
+  ev.preventDefault(); if(SA.busy)return;
+  var e=$('sa-err'), ok=$('sa-ok'); e.textContent=''; ok.classList.add('hide');
+  var o={action:'asstudadd',bac:$('sa-bac').value.trim(),nom:$('sa-nom').value.trim(),prenom:$('sa-pre').value.trim(),sp:$('sa-sp').value,grp:/مالية/.test($('sa-sp').value)?$('sa-grp').value:'',year:$('sa-yr').value.trim()};
+  if(!/^\d+$/.test(o.bac)){e.textContent=SAE.BAC_DIGITS;$('sa-bac').focus();return;}
+  if(o.bac.replace(/^0+/,'').length<6||o.bac.length>10){e.textContent=SAE.BAC_LEN;$('sa-bac').focus();return;}
+  if(o.nom.length<2){e.textContent=SAE.BAD_NOM;$('sa-nom').focus();return;}
+  if(o.prenom.length<2){e.textContent=SAE.BAD_PRENOM;$('sa-pre').focus();return;}
+  if(/مالية/.test(o.sp)&&!o.grp){e.textContent=SAE.NEED_GRP;$('sa-grp').focus();return;}
+  if(o.year&&!/^(19|20)\d\d$/.test(o.year)){e.textContent=SAE.BAD_YEAR;$('sa-yr').focus();return;}
+  var b=$('sa-go'); SA.busy=1; b.disabled=true;
+  call(o).then(function(r){
+    SA.busy=0; b.disabled=false;
+    if(!r.ok){e.innerHTML=saErr(r);return;}
+    var st=r.st; ok.innerHTML='<i class="fa-solid fa-check"></i> أضيف <bdi dir="ltr">'+esc(st.nom+' '+st.prenom)+'</bdi> (<bdi dir="ltr">'+esc(st.bac)+'</bdi>) إلى «'+esc(st.sh)+'»، السطر '+st.row+'.';
+    ok.classList.remove('hide'); ['sa-bac','sa-nom','sa-pre','sa-yr'].forEach(function(k){$(k).value='';}); $('sa-grp').value='';
+    saLoad();
+  });
+});
+$('sa-l').addEventListener('change',function(ev){if(ev.target.id==='se-sp')saGrpUi('se-sp','se-gw');});
+$('sa-l').addEventListener('click',function(ev){
+  var b=ev.target.closest('button'); if(!b||SA.busy)return;
+  var bac=b.getAttribute('data-saed')||b.getAttribute('data-sadel')||b.getAttribute('data-sasv'), s=null;
+  ((SA.d&&SA.d.list)||[]).forEach(function(x){if(x.bac===bac)s=x;});
+  if(b.hasAttribute('data-sacx')){SA.ed='';saRender();return;}
+  if(!s)return;
+  var er=function(t){var e=$('sae-'+bac);if(e)e.innerHTML=t;};
+  if(b.hasAttribute('data-saed')){SA.ed=SA.ed===bac?'':bac;saRender();var f=$('se-nom');if(f)f.focus();return;}
+  if(b.hasAttribute('data-sadel')){
+    if(s.data&&s.data.any){er(saErr({err:'HAS_DATA',d:s.data}));return;}
+    if(!confirm('حذف الطالب '+s.nom+' '+s.prenom+' ('+s.bac+') من «'+s.sh+'»؟\nلا يمكن التراجع عن هذا الإجراء.'))return;
+    SA.busy=1; b.disabled=true;
+    call({action:'asstuddel',bac:bac,confirm:'1'}).then(function(r){SA.busy=0;b.disabled=false;if(!r.ok){er(saErr(r));return;}SA.ed='';saLoad();});
+    return;
+  }
+  if(b.hasAttribute('data-sasv')){
+    var o={action:'asstudedit',bac:bac,nom:$('se-nom').value.trim(),prenom:$('se-pre').value.trim(),year:$('se-yr').value.trim(),sp:$('se-sp').value,grp:/مالية/.test($('se-sp').value)?$('se-grp').value:''};
+    if(o.nom.length<2){er(SAE.BAD_NOM);return;} if(o.prenom.length<2){er(SAE.BAD_PRENOM);return;}
+    if(o.year&&!/^(19|20)\d\d$/.test(o.year)){er(SAE.BAD_YEAR);return;}
+    var mv=o.sp!==s.sp||(/مالية/.test(o.sp)&&String(o.grp)!==String(s.grp));
+    if(mv&&!confirm('نقل الطالب إلى «'+o.sp+(o.grp?' - فوج '+o.grp:'')+'»؟'))return;
+    SA.busy=1; b.disabled=true;
+    call(o).then(function(r){SA.busy=0;b.disabled=false;if(!r.ok){er(saErr(r));return;}SA.ed='';saLoad();});
+  }
+});
 function hashTab(){var h=(location.hash||'').slice(1);return TABS.indexOf(h)>=0?h:'';}
 /* update56: زر القائمة */
 var MQ=window.matchMedia?window.matchMedia('(min-width:1024px)'):{matches:true}, dOpen=false, LSN={get:function(){try{return localStorage.getItem('as_tnav');}catch(e){return null;}},set:function(v){try{localStorage.setItem('as_tnav',v);}catch(e){}}};
@@ -755,7 +885,7 @@ function load(){
   });
 }
 function enter(){$('kc').classList.add('hide');$('wr').classList.add('wide');$('panel').classList.remove('hide');load();clearInterval(tm);tm=setInterval(function(){if(!document.hidden)load();},20000);clearInterval(rlTm);rlTm=setInterval(function(){if(!document.hidden)tabData();},15000);tabData();}
-function logout(){if(dOpen)closeD(true);clearInterval(rlTm);RL.d=null;RL.sig='';RL.pin=false;ATS.d=null;$('b-roll').innerHTML='';$('b-attst').innerHTML='';$('bd-roll').textContent='';key='';SS.del('as_tkey');$('wr').classList.remove('wide');clearInterval(tm);$('panel').classList.add('hide');$('kc').classList.remove('hide');$('key').value='';}
+function logout(){if(dOpen)closeD(true);clearInterval(rlTm);RL.d=null;RL.sig='';RL.pin=false;ATS.d=null;SA.d=null;SA.ed='';$('sa-l').innerHTML='';$('sa-n').textContent='';$('b-roll').innerHTML='';$('b-attst').innerHTML='';$('bd-roll').textContent='';key='';SS.del('as_tkey');$('wr').classList.remove('wide');clearInterval(tm);$('panel').classList.add('hide');$('kc').classList.remove('hide');$('key').value='';}
 $('kf').addEventListener('submit',function(ev){ev.preventDefault();var k=$('key').value.trim();if(!k)return;$('kbtn').disabled=true;key=k;
   call({action:'askey'}).then(function(r){$('kbtn').disabled=false;if(r.ok){SS.set('as_tkey',k);$('kerr').textContent='';enter();}else{key='';$('kerr').textContent=msg(r.err||'BAD_KEY');}});});
 $('lo').addEventListener('click',logout);
