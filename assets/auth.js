@@ -225,7 +225,7 @@ function bar(){if(!ID||document.getElementById('spss-ub'))return;var b=document.
  if(ID.role==='teacher')rqWatch();
  alInit();
  abH();addEventListener('resize',abH);}
-var TPT=[['open','🔓','الفتح والغلق'],['sched','🗓️','الجدولة'],['time','⏱️','الوقت وعدد الأسئلة'],['ex','🎓','التخصصات المعنية'],['stats','📈','الإحصائيات والتنبيهات'],['attst','📊','إحصائيات الحضور'],['roll','📝','النداء'],['rq','📥','طلبات المراجعة'],['cancel','🚫','إلغاء النتائج'],['add','➕','إضافة طالب'],['bank','🗃️','بنك الأسئلة']];
+var TPT=[['open','🔓','الفتح والغلق'],['sched','🗓️','الجدولة'],['time','⏱️','الوقت وعدد الأسئلة'],['ex','🎓','التخصصات المعنية'],['stats','📈','الإحصائيات والتنبيهات'],['attst','📊','إحصائيات الحضور'],['roll','📝','النداء'],['rq','📥','طلبات المراجعة'],['cancel','🚫','إلغاء النتائج'],['add','➕','إضافة طالب'],['alcfg','⚙️','إعدادات التنبيهات'],['bank','🗃️','بنك الأسئلة']];
 function tpCur(){var h=(location.hash||'').slice(1);if(TPT.some(function(x){return x[0]===h;}))return h;var t=null;try{t=sessionStorage.getItem('as_ttab');}catch(e){}return t||'open';}
 function rqN(){var v=String(sg('spss_rqn')||'').split('|');return {n:Number(v[0])||0,t:Number(v[1])||0};}
 function tpBadge(k){var e=document.getElementById('bd-'+k);if(e&&PAGE==='teacher'){var c=/\bw\b/.test(e.className)?'w':(/\bo\b/.test(e.className)?'o':'');return {n:e.textContent.trim(),c:c};}
@@ -242,17 +242,19 @@ function alMap(k){var o=pj(lg(k+alWho()));return o&&typeof o==='object'?o:{};}
 function alPut(k,o){ls(k+alWho(),JSON.stringify(o));}
 function alTs(t){var m=/^(\d{2})\/(\d{2})\/(\d{4})(?:\s+(\d{2}):(\d{2}))?/.exec(String(t||''));return m?new Date(+m[3],+m[2]-1,+m[1],+(m[4]||0),+(m[5]||0)).getTime():0;}
 function alAgo(ts){if(!ts)return '';var d=new Date(ts),p=function(n){return (n<10?'0':'')+n;};return p(d.getDate())+'/'+p(d.getMonth()+1)+'/'+d.getFullYear()+' '+p(d.getHours())+':'+p(d.getMinutes());}
-function alBuild(r){var out=[],AS=ROOT+'assessment/index.html';
- if(ID.role==='teacher'){(r.rows||[]).filter(function(x){return x.st==='pending';}).forEach(function(x){
+function alBuild(r){var out=[],AS=ROOT+'assessment/index.html',C=r.alc||{},on=function(k){return !(C[k]&&C[k].b===0);};
+ if(ID.role==='teacher'){if(!on('trq'))return out;(r.rows||[]).filter(function(x){return x.st==='pending';}).forEach(function(x){
    out.push({id:'trq:'+x.id,ic:'📥',urg:1,ttl:'طلب مراجعة حضور'+(x.test?' (اختبار)':''),body:esc(((x.nom||'')+' '+(x.prenom||'')).trim())+(x.g?' · '+esc(x.g):'')+' · '+(x.type==='tp'?'التطبيق ':'المحاضرة ')+esc(x.num)+(x.note?' · «'+esc(x.note)+'»':''),ts:Number(x.ts)||alTs(x.t),href:ROOT+'assessment/teacher/#rq',lb:'فتح طلبات المراجعة'});});
   return out;}
  var mk=r.marks||{},its=(mk.lec||[]).concat(mk.tp||[]);
  its.forEach(function(o){if(o.st!=='open')return;
-  if(o.rem)out.push({id:'rem:'+o.id+':'+o.rem,ic:'🔔',urg:1,ttl:'تنبيه من الأستاذ',body:'لم تُجرِ بعد <b>'+esc(o.title)+'</b>'+(o.topic?' ('+esc(o.topic)+')':'')+'. التقييم مفتوح الآن، أجره قبل غلقه.',ts:alTs(o.rem),href:AS+'#'+encodeURIComponent(o.id),lb:'الذهاب إلى التقييم الآن'});
-  else if(o.go)out.push({id:'open:'+o.id,ic:'📝',ttl:'تقييم مفتوح',body:'<b>'+esc(o.title)+'</b>'+(o.topic?' ('+esc(o.topic)+')':'')+' مفتوح الآن ولم تُجره بعد.',href:AS+'#'+encodeURIComponent(o.id),lb:'اجتياز التقييم'});});
- (r.openNow||[]).forEach(function(sn){out.push({id:'att:'+sn+':'+new Date().toDateString(),ic:'🟢',ttl:'تسجيل الحضور مفتوح',body:'التسجيل في الحضور مفتوح الآن: <b>'+esc(sn)+'</b>.',x:'me',g:'a',lb:'تتبع الحضور'});});
- (r.rq||[]).forEach(function(q){if(q.st!=='accepted'&&q.st!=='rejected')return;var ok=q.st==='accepted';
+  if(o.rem&&on('rem'))out.push({id:'rem:'+o.id+':'+o.rem,ic:'🔔',urg:1,ttl:'تنبيه من الأستاذ',body:'لم تُجرِ بعد <b>'+esc(o.title)+'</b>'+(o.topic?' ('+esc(o.topic)+')':'')+'. التقييم مفتوح الآن، أجره قبل غلقه.',ts:alTs(o.rem),href:AS+'#'+encodeURIComponent(o.id),lb:'الذهاب إلى التقييم الآن'});
+  else if(o.go&&on('open'))out.push({id:'open:'+o.id,ic:'📝',ttl:'تقييم مفتوح',body:'<b>'+esc(o.title)+'</b>'+(o.topic?' ('+esc(o.topic)+')':'')+' مفتوح الآن ولم تُجره بعد.',href:AS+'#'+encodeURIComponent(o.id),lb:'اجتياز التقييم'});});
+ if(on('att'))(r.openNow||[]).forEach(function(sn){out.push({id:'att:'+sn+':'+new Date().toDateString(),ic:'🟢',ttl:'تسجيل الحضور مفتوح',body:'التسجيل في الحضور مفتوح الآن: <b>'+esc(sn)+'</b>.',x:'me',g:'a',lb:'تتبع الحضور'});});
+ if(on('rq'))(r.rq||[]).forEach(function(q){if(q.st!=='accepted'&&q.st!=='rejected')return;var ok=q.st==='accepted';
   out.push({id:'rq:'+q.id+':'+q.st,ic:ok?'✅':'❌',ttl:ok?'قُبل طلب مراجعة الحضور':'رُفض طلب مراجعة الحضور',body:'طلبك الخاص ب'+(q.type==='tp'?'التطبيق ':'المحاضرة ')+esc(q.num)+(q.s?' ('+esc(q.s)+')':'')+(ok?' قُبل، وسُجّلت حاضراً.':' رُفض.')+(q.reply?' ردّ الأستاذ: «'+esc(q.reply)+'»':''),ts:alTs(q.dt),x:'me',g:'a',lb:'تتبع الحضور'});});
+ if(on('msg'))(r.msg||[]).forEach(function(m){var l=String(m.link||''),me=/^me:([malp])$/.exec(l);
+  out.push({id:'msg:'+m.id,ic:'✉️',urg:1,ttl:'رسالة من الأستاذ',body:'<b>'+esc(m.title)+'</b>: '+esc(m.body),ts:Number(m.ts)||alTs(m.t),href:me?'':ROOT+(l||'alerts.html'),x:me?'me':'',g:me?me[1]:'',lb:me?({m:'تتبع علاماتي',a:'تتبع الحضور',l:'توقيت المحاضرات',p:'توقيت التطبيقات'}[me[1]]):(l?(/assessment\/index/.test(l)?'الذهاب إلى التقييم':'فتح الصفحة'):'')});});
  return out;}
 function alFix(list){var f=alMap('spss_alf_'),r=alMap('spss_alr_'),now=Date.now(),f2={},r2={};
  list.forEach(function(a){f2[a.id]=f[a.id]||now;if(!a.ts)a.ts=f2[a.id];if(r[a.id])r2[a.id]=r[a.id];a.read=!!r[a.id];});

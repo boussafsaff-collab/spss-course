@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<script src="../../assets/auth.js?v=664" data-page="teacher"></script>
+<script src="../../assets/auth.js?v=665" data-page="teacher"></script>
 <link rel="manifest" href="../../manifest.webmanifest">
 <meta name="theme-color" content="#0f2744">
 <link rel="icon" type="image/png" sizes="32x32" href="../../icons/favicon-32.png?v=3">
@@ -238,6 +238,18 @@ html.lock,html.lock body{overflow:hidden;}
 .rqp.p{background:#ffedd5;color:#9a3412;}.rqp.a{background:#dcfce7;color:#166534;}.rqp.r{background:#fee2e2;color:#991b1b;}.rqp.x{background:#e2e8f0;color:#475569;}
 .rqi .rqa{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;}.rqi .rqa input{flex:1 1 220px;min-height:44px;font-size:15px;}
 .rqi .rqa .btn{flex:0 0 auto;}
+.alc-t{width:100%;border-collapse:separate;border-spacing:0 6px;font-size:14.5px}
+.alc-t th{font-size:13px;color:#475569;font-weight:800;text-align:center;padding:0 4px}.alc-t th:first-child{text-align:right}
+.alc-t td{background:#f8fafc;padding:8px 6px;text-align:center;vertical-align:middle}.alc-t td:first-child{text-align:right;border-radius:0 12px 12px 0;padding-right:10px}.alc-t td:last-child{border-radius:12px 0 0 12px}
+.alc-t td b{display:block;color:#0f2744;font-size:14.5px}.alc-t td small{display:block;color:#64748b;font-size:12.5px;line-height:1.5}
+.sw{position:relative;display:inline-block;width:50px;height:30px;flex:none}.sw input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;width:100%;height:100%}
+.sw span{position:absolute;inset:0;background:#cbd5e1;border-radius:999px;transition:.15s}.sw span:after{content:"";position:absolute;top:3px;right:3px;width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:.15s}
+.sw input:checked+span{background:#16a34a}.sw input:checked+span:after{right:23px}.sw input:focus-visible+span{outline:3px solid #fbbf24;outline-offset:2px}.sw input:disabled+span{opacity:.35}
+.alc-na{color:#94a3b8;font-size:12.5px}.alc-st{min-height:22px;font-size:13.5px;font-weight:700;color:#15803d;margin:4px 0}.alc-st.e{color:#b91c1c}
+.tglbl{display:inline-block;background:#fef3c7;color:#92400e;border-radius:999px;padding:0 10px;font-size:12.5px;font-weight:800;margin-inline-start:6px}
+#mg-f textarea{min-height:96px;resize:vertical;font-size:16px}
+.mg-it{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:8px 10px;margin:0 0 8px;font-size:14px}.mg-it .h{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}.mg-it .h b{color:#0f2744}.mg-it time{margin-inline-start:auto;color:#64748b;font-size:12.5px;direction:ltr}
+.mg-it p{margin:4px 0;overflow-wrap:anywhere}.mg-it .btn{min-height:38px;font-size:13.5px;width:auto;padding:4px 12px}
 </style>
 </head>
 <body>
@@ -276,6 +288,7 @@ html.lock,html.lock body{overflow:hidden;}
 <button type="button" role="tab" id="t-rq" data-tab="rq" aria-controls="s-rq" aria-selected="false" tabindex="-1"><i class="fa-solid fa-inbox" aria-hidden="true"></i><span>طلبات المراجعة</span><em class="nb2" id="bd-rq"></em></button>
 <button type="button" role="tab" id="t-cancel" data-tab="cancel" aria-controls="s-cancel" aria-selected="false" tabindex="-1"><i class="fa-solid fa-user-xmark" aria-hidden="true"></i><span>إلغاء النتائج</span><em class="nb2" id="bd-cancel"></em></button>
 <button type="button" role="tab" id="t-add" data-tab="add" aria-controls="s-add" aria-selected="false" tabindex="-1"><i class="fa-solid fa-user-plus" aria-hidden="true"></i><span>إضافة طالب</span><em class="nb2" id="bd-add"></em></button>
+<button type="button" role="tab" id="t-alcfg" data-tab="alcfg" aria-controls="s-alcfg" aria-selected="false" tabindex="-1"><i class="fa-solid fa-sliders" aria-hidden="true"></i><span>إعدادات التنبيهات</span></button>
 <button type="button" role="tab" id="t-bank" data-tab="bank" aria-controls="s-bank" aria-selected="false" tabindex="-1"><i class="fa-solid fa-database" aria-hidden="true"></i><span>بنك الأسئلة</span><em class="nb2" id="bd-bank"></em></button>
 </div>
 </nav>
@@ -367,6 +380,27 @@ html.lock,html.lock body{overflow:hidden;}
 <p class="s" style="color:#64748b;font-size:13.5px;margin:0 0 8px;">الحذف يتطلب التأكيد، ولا يُسمح به إلا لطالب ليس له أي حضور أو نتيجة. النقل إلى فوج آخر كذلك.</p>
 <div class="tbar"><button class="btn lt" id="sa-rf" type="button"><i class="fa-solid fa-rotate"></i>تحديث القائمة</button></div>
 <div id="sa-l" aria-live="polite"></div>
+</section>
+<section class="card sec hide" id="s-alcfg" role="tabpanel" aria-labelledby="t-alcfg">
+<h3><i class="fa-solid fa-sliders"></i>ما يدخل ضمن التنبيهات</h3>
+<p class="s" style="color:#475569;font-size:14px;line-height:1.7;margin:0 0 6px;">لكل نوع: «الجرس» = يظهر في عدد الجرس وصفحة التنبيهات، «الهاتف» = يُرسل إشعاراً إلى الهواتف التي فعّلت الإشعارات. يُحفظ كل تغيير فوراً ويسري على كل الطلبة.</p>
+<div id="alc-b"><p class="s">جارٍ التحميل…</p></div>
+<div class="alc-st" id="alc-st" role="status" aria-live="polite"></div>
+<h3 style="margin-top:18px;"><i class="fa-solid fa-envelope"></i>تنبيه فردي إلى طالب <span class="tglbl">الطالب التجريبي فقط حالياً</span></h3>
+<p class="s" style="color:#475569;font-size:14px;line-height:1.7;margin:0 0 8px;">يظهر في جرس الطالب وصفحة تنبيهاته بعنوان «✉️ رسالة من الأستاذ»، ويصله إشعاراً على هاتفه إن فعّله. للتجربة الآن: ادخل كطالب (☰ ← «الدخول كطالب») بالملف نفسه لترى الرسالة.</p>
+<form id="mg-f" novalidate autocomplete="off">
+<label for="mg-to">إلى</label><select id="mg-to"></select>
+<div id="mg-bw" class="hide"><label for="mg-bac" style="margin-top:8px;">رقم تجريبي (9900xxxx)</label><input type="tel" id="mg-bac" dir="ltr" inputmode="numeric" maxlength="8" placeholder="9900xxxx"></div>
+<label for="mg-ti" style="margin-top:8px;">العنوان</label><input type="text" id="mg-ti" maxlength="80" placeholder="مثال: تذكير بالتطبيق">
+<label for="mg-bd" style="margin-top:8px;">الرسالة</label><textarea id="mg-bd" maxlength="500" placeholder="نص قصير يصل إلى الطالب"></textarea>
+<label for="mg-ln" style="margin-top:8px;">رابط <span style="font-weight:400;color:#64748b;">(اختياري)</span></label><select id="mg-ln"></select>
+<div id="mg-pw" class="hide"><label for="mg-path" style="margin-top:8px;">مسار صفحة من المنصة</label><input type="text" id="mg-path" dir="ltr" maxlength="160" placeholder="l3/spss25-efa.html"></div>
+<button class="btn go" id="mg-go" type="submit" style="margin-top:12px;"><i class="fa-solid fa-paper-plane"></i>إرسال التنبيه</button>
+<div class="err" id="mg-err" role="alert"></div><div class="alc-st" id="mg-ok" role="status"></div>
+</form>
+<h3 style="margin-top:18px;"><i class="fa-solid fa-clock-rotate-left"></i>التنبيهات الفردية المرسلة <em class="nb2" id="mg-n"></em></h3>
+<div class="tbar"><button class="btn lt" id="mg-rf" type="button"><i class="fa-solid fa-rotate"></i>تحديث</button><button class="btn lt" id="mg-da" type="button"><i class="fa-solid fa-trash"></i>حذف الكل</button></div>
+<div id="mg-l" aria-live="polite"></div>
 </section>
 <section class="card sec hide" id="s-bank" role="tabpanel" aria-labelledby="t-bank">
 <h3><i class="fa-solid fa-database"></i>بنك الأسئلة</h3>
@@ -587,7 +621,7 @@ $('rmgo').addEventListener('click',function(){
 document.addEventListener('toggle',function(ev){var d=ev.target; if(d&&d.getAttribute&&d.getAttribute('data-sg')){if(d.open)stOpen[d.getAttribute('data-sg')]=1;else delete stOpen[d.getAttribute('data-sg')];}},true);
 function call(o){o.key=key;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{return JSON.parse(t);}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
 /* update55: أقسام مستقلة، قسم واحد ظاهر، ومحدِّد للتقييم داخل القسم */
-var TABS=['open','sched','time','ex','stats','attst','roll','rq','cancel','add','bank'], tab='open', cur=SS.get('as_tcur')||'';
+var TABS=['open','sched','time','ex','stats','attst','roll','rq','cancel','add','alcfg','bank'], tab='open', cur=SS.get('as_tcur')||'';
 function curItem(){var i=byId(cur);if(!i&&items.length){i=items[0];cur=i.id;}return i;}
 function shortT(i){return String(i.title||i.id).split(':')[0];}
 function isSch(i){return !!(i.sched&&i.sched.mode==='sched');}
@@ -776,7 +810,38 @@ function tabData(){
   else if(tab==='attst'){if(!ATS.d||Date.now()-ATS.t>60000)atLoad(false);}
   else if(tab==='add'){if(!SA.d||Date.now()-SA.t>60000)saLoad();}
   else if(tab==='rq'){if(!RQ.d||Date.now()-RQ.t>15000)rqLoad();}
+  else if(tab==='alcfg'){if(!ALC.d||Date.now()-ALC.t>30000)alcLoad();}
 }
+/* update71: إعدادات التنبيهات + التنبيه الفردي (للطالب التجريبي فقط) */
+var ALC={d:null,t:0,list:[],busy:0};
+var ALT=[['rem','🔔 تنبيه الأستاذ','تذكير «لم تُجرِ التقييم بعد» من قسم الإحصائيات',1,1],['open','📝 تقييم مفتوح','تقييم مفتوح لم يُجره الطالب بعد',1,0],['att','🟢 تسجيل الحضور مفتوح','حصة يمكن التسجيل فيها الآن',1,0],['rq','✅ نتيجة طلب المراجعة','قبول أو رفض طلب الطالب (إلى الطالب)',1,1],['trq','📥 طلب مراجعة جديد','طلب جديد من طالب (إليك أنت)',1,1],['man','🔓 فتح تقييم يدوياً','عند فتحك تقييماً من «الفتح والغلق» (في الجرس يظهر كـ«تقييم مفتوح»)',0,1],['msg','✉️ رسالة فردية','التنبيه الفردي أدناه',1,1]];
+var TSP={f1:'إدارة مالية، الفوج 1',f2:'إدارة مالية، الفوج 2',f3:'إدارة مالية، الفوج 3',ba:'إدارة أعمال'};
+var MGL=[['','بدون رابط'],['me:m','لوحة الطالب: تتبع علاماتي'],['me:a','لوحة الطالب: تتبع الحضور'],['me:l','لوحة الطالب: توقيت المحاضرات'],['me:p','لوحة الطالب: توقيت التطبيقات'],['alerts.html','صفحة التنبيهات']];
+function alcLoad(){$('alc-b').innerHTML='<p class="s">جارٍ التحميل…</p>';call({action:'asmsglist'}).then(function(r){if(!r||!r.ok){$('alc-b').innerHTML='<p class="s">تعذّر التحميل. أعد المحاولة.</p>';return;}ALC.d=r.alc;ALC.t=Date.now();ALC.list=r.list||[];ALC.tstu=r.tstu||{};ALC.test=r.test||[];alcPaint();mgForm();mgList();});}
+function alcPaint(){var d=ALC.d;$('alc-b').innerHTML='<table class="alc-t"><thead><tr><th scope="col">النوع</th><th scope="col">الجرس</th><th scope="col">الهاتف</th></tr></thead><tbody>'+ALT.map(function(x){
+  var c=function(f,on){return on?'<label class="sw"><input type="checkbox" role="switch" data-k="'+x[0]+'" data-f="'+f+'"'+(d[x[0]][f]?' checked':'')+' aria-label="'+esc(x[1].replace(/^\S+\s/,'')+(f==='b'?': الجرس':': الهاتف'))+'"><span></span></label>':'<span class="alc-na" title="لا ينطبق">—</span>';};
+  return '<tr><td><b>'+esc(x[1])+'</b><small>'+esc(x[2])+'</small></td><td>'+c('b',x[3])+'</td><td>'+c('p',x[4])+'</td></tr>';}).join('')+'</tbody></table>';}
+$('alc-b').addEventListener('change',function(e){var i=e.target.closest('input[data-k]');if(!i)return;var k=i.getAttribute('data-k'),f=i.getAttribute('data-f'),v=i.checked?1:0,o={};o[k]={};o[k][f]=v;i.disabled=true;var st=$('alc-st');st.className='alc-st';st.textContent='جارٍ الحفظ…';
+  call({action:'asalcfg',cfg:JSON.stringify(o)}).then(function(r){i.disabled=false;if(r&&r.ok){ALC.d=r.alc;st.textContent='✔ حُفظ: '+(i.getAttribute('aria-label')||'')+' ← '+(v?'مفعّل':'موقوف');}else{i.checked=!v;st.className='alc-st e';st.textContent='تعذّر الحفظ ('+esc((r&&r.err)||'NET')+'). أعد المحاولة.';}});});
+function mgForm(){var t=ALC.tstu||{},h='';Object.keys(TSP).forEach(function(k){if(t[k])h+='<option value="'+t[k]+'">الطالب التجريبي، '+esc(TSP[k])+' ('+t[k]+')</option>';});
+  (ALC.test||[]).forEach(function(b){if(!Object.keys(t).some(function(k){return t[k]===b;}))h+='<option value="'+esc(b)+'">الطالب التجريبي، رقم '+esc(b)+'</option>';});
+  var sel=$('mg-to'),v=sel.value;sel.innerHTML=h+'<option value="*">رقم تجريبي آخر (9900xxxx)…</option>';if(v)sel.value=v;$('mg-bw').classList.toggle('hide',sel.value!=='*');
+  var ln=$('mg-ln'),lv=ln.value;ln.innerHTML=MGL.map(function(x){return '<option value="'+x[0]+'">'+esc(x[1])+'</option>';}).join('')+(items||[]).map(function(i){return '<option value="assessment/index.html#'+esc(i.id)+'">التقييم: '+esc(i.title)+'</option>';}).join('')+'<option value="*">صفحة أخرى من المنصة (محاضرة، تطبيق…)</option>';if(lv)ln.value=lv;$('mg-pw').classList.toggle('hide',ln.value!=='*');}
+$('mg-to').addEventListener('change',function(){$('mg-bw').classList.toggle('hide',this.value!=='*');});
+$('mg-ln').addEventListener('change',function(){$('mg-pw').classList.toggle('hide',this.value!=='*');});
+function mgLink(l){if(!l)return '';if(/^me:/.test(l))return (MGL.filter(function(x){return x[0]===l;})[0]||['',''])[1];var a=(items||[]).filter(function(i){return 'assessment/index.html#'+i.id===l;})[0];return a?'التقييم: '+a.title:l;}
+function mgList(){var L=ALC.list||[];$('mg-n').textContent=L.length||'';$('mg-da').disabled=!L.length;
+  $('mg-l').innerHTML=L.length?L.map(function(m){return '<div class="mg-it"><div class="h"><b>'+esc(m.title)+'</b><span class="tglbl">الطالب التجريبي '+esc(m.bac)+'</span><time>'+esc(m.t)+'</time></div><p>'+esc(m.body)+'</p>'+(m.link?'<p style="color:#475569;font-size:13px;">🔗 '+esc(mgLink(m.link))+'</p>':'')+'<button type="button" class="btn lt" data-mgdel="'+esc(m.id)+'"><i class="fa-solid fa-trash"></i>حذف</button></div>';}).join(''):'<p class="s" style="color:#64748b;">لا توجد تنبيهات فردية مرسلة.</p>';}
+$('mg-f').addEventListener('submit',function(e){e.preventDefault();var to=$('mg-to').value,bac=to==='*'?$('mg-bac').value.trim():to,ti=$('mg-ti').value.trim(),bd=$('mg-bd').value.trim(),ln=$('mg-ln').value;if(ln==='*')ln=$('mg-path').value.trim().replace(/^\/+/,'');
+  var er=$('mg-err'),okm=$('mg-ok');er.textContent='';okm.textContent='';
+  if(!/^9900\d{4}$/.test(bac)){er.textContent='اختر الطالب التجريبي أو اكتب رقماً تجريبياً من 8 أرقام يبدأ بـ 9900.';return;}
+  if(!ti||!bd){er.textContent='اكتب العنوان والرسالة.';return;}
+  var b=$('mg-go');b.disabled=true;call({action:'asmsgsend',bac:bac,title:ti,body:bd,link:ln}).then(function(r){b.disabled=false;
+   if(r&&r.ok){okm.textContent='✔ أُرسل إلى الطالب التجريبي '+bac+'. يظهر في جرسه خلال دقيقتين على الأكثر (أو فوراً بعد «تحديث»).';$('mg-ti').value='';$('mg-bd').value='';ALC.list=r.list||[];mgList();}
+   else er.textContent={TEST_ONLY:'حالياً: الإرسال إلى الطالب التجريبي فقط (أرقام 9900xxxx).',EMPTY:'اكتب العنوان والرسالة.',BAD_LINK:'الرابط غير صالح: اكتب مسار صفحة من المنصة ينتهي بـ .html',BUSY:'الخادم مشغول، أعد المحاولة.'}[r&&r.err]||('تعذّر الإرسال ('+esc((r&&r.err)||'NET')+').');});});
+$('mg-l').addEventListener('click',function(e){var b=e.target.closest('[data-mgdel]');if(!b)return;b.disabled=true;call({action:'asmsgdel',id:b.getAttribute('data-mgdel')}).then(function(r){if(r&&r.ok){ALC.list=r.list||[];mgList();}else b.disabled=false;});});
+$('mg-da').addEventListener('click',function(){if(!confirm('حذف كل التنبيهات الفردية المرسلة؟ (تختفي من صفحات الطلبة)'))return;call({action:'asmsgdel',all:'1'}).then(function(r){if(r&&r.ok){ALC.list=[];mgList();}});});
+$('mg-rf').addEventListener('click',alcLoad);
 /* update65: طلبات مراجعة الحضور */
 var RQ={d:null,t:0,f:'p',busy:{},err:{},msg:{}};
 var RQE={NO_REQUEST:'الطلب غير موجود (ربما حُذف).',ALREADY_DECIDED:'سبق البت في هذا الطلب.',BAD_SESSION:'الحصة غير معروفة.',MOVED:'تغيّرت الورقة، حدّث القائمة.',ROLL_NO_CHECKIN:'تعذّر إنشاء سطر الحضور.',ROLL_BAD_ID:'الحصة لا تخص فوج الطالب.',ROLL_BAD_BAC:'رقم الطالب غير موجود في القوائم.'};
