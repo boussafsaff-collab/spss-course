@@ -15,7 +15,7 @@ var me=document.currentScript||document.querySelector('script[src*="auth.js"]');
 var PAGE=(me&&me.getAttribute('data-page'))||'session';
 var ROOT=new URL('../',(me&&me.src)?me.src:new URL('assets/auth.js',location.href).href).href;
 // اسم المنصة (مكان واحد مع manifest.webmanifest؛ للتغيير: tools/set-app-name.sh)
-var APP_NAME='بوصلة التعليم',APP_SHORT='بوصلة';
+var APP_NAME='بوصلة التعليم',APP_SHORT='بوصلة التعليم';
 var APP_TAG='الدرس في هاتفك، أينما كنت',APP_MODULE='برمجيات إحصائية SPSS';
 var PROFS={f1:'إدارة مالية – الفوج 1',f2:'إدارة مالية – الفوج 2',f3:'إدارة مالية – الفوج 3',ba:'إدارة أعمال'};
 function lg(k){try{return localStorage.getItem(k)}catch(e){return null}}
