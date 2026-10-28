@@ -69,6 +69,7 @@ if(FLT){
 var CSS=[
 '#spss-ub .bell{position:relative;flex:none;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;margin:0;padding:0;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:rgba(255,255,255,.1);color:#fff!important;text-decoration:none!important;-webkit-tap-highlight-color:transparent}#spss-ub .bell:hover{background:rgba(255,255,255,.18)}#spss-ub .bell svg{width:21px;height:21px;display:block}#spss-ub .bell[aria-current]{background:rgba(251,191,36,.22);border-color:#fbbf24}',
 '#spss-ub .bell .cnt{position:absolute;top:-6px;left:-6px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:#f43f5e;color:#fff;font-size:11.5px;font-weight:800;line-height:20px;text-align:center;box-shadow:0 0 0 2px #0f2744;font-style:normal}#spss-ub .bell .cnt:empty{display:none}',
+'#spss-push{background:#fff;border:1px solid #c7d2fe;border-radius:16px;padding:12px 14px;margin:0 0 14px;box-shadow:0 2px 8px rgba(15,39,68,.05)}#spss-push h2{font-size:16px;margin:0 0 4px;color:#0f2744}#spss-push p{margin:4px 0;font-size:14.5px;line-height:1.7;overflow-wrap:anywhere}#spss-push .st.on{color:#166534}#spss-push .st.no{color:#9a3412}#spss-push .hi{font-size:13.5px;color:#475569}#spss-push .pm{font-size:13.5px;font-weight:700;color:#1e3a8a;background:#eff6ff;border-radius:10px;padding:6px 10px;margin-top:8px}#spss-push .ac{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}#spss-push .go{font:inherit;display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:6px 16px;border-radius:12px;border:0;background:#0f2744;color:#fff;font-weight:800;font-size:15px;cursor:pointer;flex:1 1 220px}#spss-push .b2{flex:1 1 160px}',
 '#spss-at{all:initial;box-sizing:border-box;direction:rtl;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;display:flex;align-items:center;gap:8px;max-width:960px;margin:8px auto 10px;padding:7px 8px 7px 12px;background:#fff7ed;border:1.5px solid #fb923c;border-radius:14px;color:#7c2d12;font-size:14px;line-height:1.5;box-shadow:0 4px 12px rgba(234,88,12,.12)}#spss-at *{box-sizing:border-box;font-family:inherit}',
 '#spss-at .tx{flex:1 1 auto;min-width:0;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}#spss-at .tx b{color:#9a3412}',
 '#spss-at .go{flex:none;display:inline-flex;align-items:center;min-height:36px;padding:4px 12px;border-radius:10px;background:#ea580c;color:#fff!important;font-weight:800;font-size:13.5px;text-decoration:none!important;white-space:nowrap}#spss-at .x{flex:none;width:34px;height:34px;border:0;border-radius:10px;background:transparent;color:#9a3412;font-size:18px;cursor:pointer;padding:0;margin:0}#spss-at .x:hover{background:#ffedd5}#spss-at a:focus-visible,#spss-at button:focus-visible{outline:3px solid #0f2744;outline-offset:2px}',
@@ -193,7 +194,7 @@ function getJ(q){return fetch(U+'?'+new URLSearchParams(q).toString()+'&t='+Date
 function goNext(){var n='';try{n=new URLSearchParams(location.search).get('next')||'';}catch(e){}
  var base=new URL(ROOT).pathname;if(n&&n.charAt(0)==='/'&&n.indexOf('//')!==0&&n.indexOf(base)===0){location.replace(n);return true;}return false;}
 function clearAll(){purge(true);try{Object.keys(localStorage).forEach(function(k){if(k.indexOf('spss_alc_')===0)localStorage.removeItem(k);});}catch(e){}['spss_id','as_bac'].forEach(function(k){ls(k,null)});['spss_tkey','spss_tstu','dk-prof','as_tkey','dk-open','tp-slide'].forEach(function(k){ss(k,null)});try{localStorage.removeItem('dk-prof')}catch(e){}}
-function logout(){appBadge(0);clearAll();location.href=ROOT+'index.html';}
+function logout(){appBadge(0);var pt=lg('spss_push_tok');if(pt){try{post({action:'aspushunreg',token:pt}).catch(function(){});}catch(e){}['spss_push_tok','spss_push_on','spss_push_who','spss_push_at'].forEach(function(k){ls(k,null);});}clearAll();location.href=ROOT+'index.html';}
 function dlg(h,setup){var o=document.getElementById('spss-dl');if(o)o.remove();var w=document.createElement('div');w.id='spss-dl';w.innerHTML='<div class="c">'+h+'</div>';
  (document.fullscreenElement||document.body).appendChild(w);w.addEventListener('click',function(e){if(e.target===w)w.remove();});setup&&setup(w);return w;}
 function toStudent(){dlg('<h3>🧪 الدخول كطالب (تجربة)</h3><p>اختر الملف: تتصفح المنصة كطالب من هذا التخصص/الفوج برقم تجريبي، والتسجيل والتقييم يمرّان بالخادم الحقيقي دون المساس بالقوائم (نتائج تجريبية تُمسح بزر).</p><div class="g2">'+
@@ -289,12 +290,72 @@ function alRender(){var c=document.getElementById('spss-alp');if(!c)return;
  h+='<ul class="al">'+L.map(function(a,i){return '<li class="it'+(a.read?'':' un')+(a.urg?' urg':'')+'" data-i="'+i+'"><div class="hd"><span class="ic" aria-hidden="true">'+a.ic+'</span><b>'+esc(a.ttl)+'</b>'+(a.read?'':'<span class="nw">جديد</span>')+'<time>'+alAgo(a.ts)+'</time></div><p>'+a.body+'</p><div class="ac">'+
   (a.lb?'<a class="go" href="'+(a.href||'#')+'" data-a="go">'+esc(a.lb)+'</a>':'')+(a.read?'':'<button type="button" class="b2" data-a="rd">تعليم كمقروء</button>')+'</div></li>';}).join('')+'</ul>';
  c.innerHTML=h;}
-function alPage(){var c=document.getElementById('spss-alp');if(!c)return;alRender();
+function alPage(){var c=document.getElementById('spss-alp');if(!c)return;puCard();alRender();
  c.addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(!b)return;var k=b.getAttribute('data-a'),li=b.closest('li'),a=li&&AL.list[+li.getAttribute('data-i')];
   if(k==='rf'){AL.list=AL.list||null;alLoad(true);return;}
   if(k==='all'){alRead(AL.list.map(function(x){return x.id;}));return;}
   if(k==='rd'&&a){alRead([a.id]);return;}
   if(k==='go'&&a){e.preventDefault();alGo(a);}});}
+/* update70: إشعارات الهاتف (Firebase Cloud Messaging للتوصيل فقط؛ الخلفية تبقى Apps Script والورقة).
+   الإذن يُطلب عند النقر فقط. الرمز يُسجَّل في الخادم (aspushreg) ويُجدَّد عند الفتح إن كان الإذن ممنوحاً. */
+var FB={apiKey:'AIzaSyCCa57qR77IIZ4sZPpBHnUIH6jkMcth1lo',authDomain:'boussala-taalim.firebaseapp.com',projectId:'boussala-taalim',storageBucket:'boussala-taalim.firebasestorage.app',messagingSenderId:'378682963978',appId:'1:378682963978:web:d2f693d849dbdae4a787f3'};
+var FB_VAPID='BCuvhlSr8lMgpQ7oRUbXfL3TNFw9BOsR_H2jzX8EO3L1foW4zijsN9LxBlM2ArGdtrj5O3R0Bu5UlcjSh70hZCQ',FB_V='12.4.0';
+var PU={busy:0,msg:'',sdk:null};
+function puOk(){try{return location.protocol==='https:'&&'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;}catch(e){return false;}}
+function puWho(){return ID?(ID.role==='teacher'?'teacher':String(ID.bac||'')):'';}
+function puAuth(){return ID.role==='teacher'?{key:ID.key}:{sbac:ID.bac};}
+function puState(){if(!puOk())return IOS&&!isSA()?'ios':'na';var p=Notification.permission;if(p==='denied')return 'denied';
+ if(p==='granted'&&lg('spss_push_on')==='1'&&lg('spss_push_tok'))return 'on';return 'off';}
+function puJs(src){return new Promise(function(ok,no){var s=document.createElement('script');s.src=src;s.async=true;s.onload=ok;s.onerror=function(){no(new Error('SDK'));};document.head.appendChild(s);});}
+function puSdk(){if(PU.sdk)return PU.sdk;var b='https://www.gstatic.com/firebasejs/'+FB_V+'/';
+ PU.sdk=(window.firebase&&window.firebase.messaging?Promise.resolve():puJs(b+'firebase-app-compat.js').then(function(){return puJs(b+'firebase-messaging-compat.js');})).then(function(){
+  var f=window.firebase;if(!f.apps.length)f.initializeApp(FB);return Promise.resolve(f.messaging.isSupported?f.messaging.isSupported():true).then(function(ok){if(!ok)throw new Error('NA');return f.messaging();});});
+ PU.sdk.catch(function(){PU.sdk=null;});return PU.sdk;}
+function puReg(){var sc=new URL(ROOT).pathname;return navigator.serviceWorker.register(ROOT+'sw.js',{scope:sc}).then(function(){return navigator.serviceWorker.ready;});}
+function puPlat(){return (IOS?'iOS':(ANDR?'Android':(/Windows/.test(UA)?'Windows':(/Mac/.test(UA)?'Mac':(/Linux/.test(UA)?'Linux':'?')))))+' · '+(/Edg\//.test(UA)?'Edge':(/SamsungBrowser/.test(UA)?'Samsung':(/Firefox\//.test(UA)?'Firefox':(/Chrome\//.test(UA)?'Chrome':(/Safari\//.test(UA)?'Safari':'?')))))+(isSA()?' · app':'');}
+function puToken(){return Promise.all([puSdk(),puReg()]).then(function(x){return x[0].getToken({vapidKey:FB_VAPID,serviceWorkerRegistration:x[1]});});}
+function puSave(tok){var o=puAuth();o.action='aspushreg';o.token=tok;o.plat=puPlat();
+ return post(o).then(function(r){if(!r||!r.ok)throw new Error((r&&r.err)||'NET');ls('spss_push_tok',tok);ls('spss_push_on','1');ls('spss_push_who',puWho());ls('spss_push_at',String(Date.now()));return r;});}
+function puEnable(){if(PU.busy)return Promise.resolve();var s=puState();if(s!=='off'){puPaint();return Promise.resolve();}
+ PU.busy=1;PU.msg='';puPaint();
+ return Notification.requestPermission().then(function(p){if(p!=='granted')throw new Error(p==='denied'?'DENIED':'DISMISSED');return puToken();})
+  .then(function(tok){if(!tok)throw new Error('NO_TOKEN');return puSave(tok);})
+  .then(function(){PU.busy=0;PU.msg='✅ تم التفعيل. ستصلك تنبيهات المنصة على هذا الجهاز.';puPaint();})
+  .catch(function(e){PU.busy=0;var m=String(e&&e.message||e);
+   PU.msg=m==='DENIED'?'':(m==='DISMISSED'?'لم تُمنح الموافقة. أعد المحاولة واختر «سماح».':(m==='NA'?'':'تعذّر التفعيل الآن ('+esc(m.slice(0,60))+'). أعد المحاولة بعد قليل.'));
+   if(m==='NA')ls('spss_push_na','1');puPaint();});}
+function puDisable(){if(PU.busy)return;var tok=lg('spss_push_tok');PU.busy=1;puPaint();
+ var done=function(){ls('spss_push_tok',null);ls('spss_push_on',null);ls('spss_push_who',null);ls('spss_push_at',null);PU.busy=0;PU.msg='تم إيقاف الإشعارات على هذا الجهاز.';puPaint();};
+ Promise.all([tok?post({action:'aspushunreg',token:tok}).catch(function(){}):0,puSdk().then(function(m){return m.deleteToken();}).catch(function(){})]).then(done,done);}
+function puTest(btn){var tok=lg('spss_push_tok');if(!tok)return;btn.disabled=true;var o=puAuth();o.action='aspushme';o.token=tok;
+ post(o).then(function(r){btn.disabled=false;PU.msg=r&&r.ok&&r.sent?'📨 أُرسل إشعار تجريبي، سيظهر خلال ثوانٍ.':(r&&r.err==='TOO_SOON'?'انتظر دقيقة قبل تجربة أخرى.':(r&&r.err==='NOT_REG'?'أعد تفعيل الإشعارات على هذا الجهاز.':'تعذّر الإرسال الآن، والخدمة قيد الإعداد. أعد المحاولة لاحقاً.'));
+  if(r&&r.err==='NOT_REG'){ls('spss_push_on',null);}puPaint();}).catch(function(){btn.disabled=false;});}
+// عند الفتح: تجديد الرمز إن تغيّر أو مرّت 3 أيام أو تغيّر المستخدم؛ وإن سُحب الإذن يُلغى التسجيل
+function puRefresh(){if(!ID||!puOk()||lg('spss_push_on')!=='1')return;var tok=lg('spss_push_tok');
+ if(Notification.permission!=='granted'){if(tok)post({action:'aspushunreg',token:tok}).catch(function(){});ls('spss_push_on',null);ls('spss_push_tok',null);return;}
+ var old=Date.now()-Number(lg('spss_push_at')||0)>3*864e5,who=lg('spss_push_who')!==puWho();
+ puToken().then(function(t){if(t&&(t!==tok||old||who))return puSave(t);}).catch(function(){});}
+function puMsg(){if(!('serviceWorker' in navigator))return;navigator.serviceWorker.addEventListener('message',function(e){var d=e.data||{};if(d.t!=='push')return;
+ if(ID)alLoad(true);var t=document.getElementById('spss-at');if(t)t.remove();var ub=document.getElementById('spss-ub');if(!ub||PAGE==='alerts')return;
+ t=document.createElement('div');t.id='spss-at';t.setAttribute('role','status');
+ t.innerHTML='<span aria-hidden="true">🔔</span><span class="tx"><b>'+esc(d.title||'')+'</b> '+esc(d.body||'')+'</span><a class="go" href="'+esc(d.url||ROOT+'alerts.html')+'">فتح</a><button type="button" class="x" aria-label="إخفاء التنبيه" title="إخفاء">✕</button>';
+ ub.parentNode.insertBefore(t,ub.nextSibling);t.querySelector('.x').onclick=function(){t.remove();};});}
+function puPaint(){var c=document.getElementById('spss-push');if(c)c.innerHTML=puHtml();var m=document.querySelector('#spss-mn [data-x="push"] span:last-child');if(m)m.textContent=puLabel();}
+function puLabel(){var s=puState();return s==='on'?'الإشعارات مفعّلة على هاتفي':'تفعيل الإشعارات على هاتفي';}
+function puHtml(){var s=PU.busy?'busy':puState(),h='',msg=PU.msg?'<p class="pm" role="status">'+PU.msg+'</p>':'';
+ if(lg('spss_push_na')==='1'&&s==='off')s='na';
+ if(s==='busy')h='<p class="st">⏳ جارٍ المعالجة… إن ظهرت نافذة من المتصفح فاختر «سماح».</p>';
+ else if(s==='on')h='<p class="st on">✅ <b>الإشعارات مفعّلة</b> على هذا الجهاز. تصلك تنبيهات المنصة حتى وهي مغلقة.</p><div class="ac"><button type="button" class="b2" data-p="test">📨 إرسال إشعار تجريبي</button><button type="button" class="b2" data-p="off">🔕 إيقاف الإشعارات</button></div>';
+ else if(s==='denied')h='<p class="st no">⛔ <b>الإشعارات مرفوضة</b> لهذا الموقع في إعدادات المتصفح.</p><p class="hi">لتفعيلها: افتح إعدادات الموقع (رمز القفل 🔒 بجانب العنوان) ← الإشعارات ← سماح، ثم أعد تحميل الصفحة.</p>';
+ else if(s==='ios')h='<p class="st">📱 <b>على iPhone وiPad</b> تعمل الإشعارات بعد تثبيت المنصة على الشاشة الرئيسية (iOS 16.4 أو أحدث).</p><p class="hi">في Safari: زر المشاركة ⬆️ ← «إضافة إلى الشاشة الرئيسية»، ثم افتح المنصة من أيقونتها وعُد إلى هذه الصفحة.</p><div class="ac"><button type="button" class="b2" data-p="inst">طريقة التثبيت</button></div>';
+ else if(s==='na')h='<p class="st no">ℹ️ <b>الإشعارات غير مدعومة</b> في هذا المتصفح.</p><p class="hi">'+(INAPP?'افتح المنصة في Chrome أو Safari بدل متصفح التطبيق.':'جرّب Chrome على Android أو الحاسوب، أو Safari على iPhone بعد تثبيت المنصة.')+'</p>';
+ else h='<p class="st">احصل على تنبيهات الأستاذ والتقييمات وطلبات المراجعة مباشرة على هاتفك، حتى والمنصة مغلقة.</p><div class="ac"><button type="button" class="go" data-p="on">🔔 تفعيل الإشعارات على هاتفي</button></div>';
+ return '<h2>إشعارات الهاتف</h2>'+h+msg;}
+function puCard(){var a=document.getElementById('spss-alp');if(!a||document.getElementById('spss-push'))return;var c=document.createElement('section');c.id='spss-push';c.setAttribute('aria-label','إشعارات الهاتف');
+ a.parentNode.insertBefore(c,a);c.innerHTML=puHtml();
+ c.addEventListener('click',function(e){var b=e.target.closest('[data-p]');if(!b)return;var k=b.getAttribute('data-p');
+  if(k==='on')puEnable();else if(k==='off')puDisable();else if(k==='test')puTest(b);else if(k==='inst')instOpen(b);});
+ if(location.hash==='#push')setTimeout(function(){try{c.scrollIntoView({block:'start'});}catch(e){}},50);}
 function mnItem(x,ic,lb,cls,href,cur){var c='it'+(cls?' '+cls:'');var i='<span class="ic" aria-hidden="true">'+ic+'</span><span>'+lb+'</span>';
  return href?'<a class="'+c+'" href="'+href+'"'+(cur?' aria-current="page"':'')+'>'+i+'</a>':'<button type="button" class="'+c+'" data-x="'+x+'">'+i+'</button>';}
 function mnBuild(){var r=ID.role,h='',home=ROOT+'index.html';
@@ -311,7 +372,7 @@ function mnBuild(){var r=ID.role,h='',home=ROOT+'index.html';
  else{
   h+='<p class="gh">لوحة الطالب</p>'+MET.map(function(x){return '<button type="button" class="it" data-x="me" data-g="'+x[0]+'"><span class="ic" aria-hidden="true">'+({m:'📊',a:'🗓️',l:'🧑‍🏫',p:'💻'}[x[0]]||'•')+'</span><span>'+x[2]+'</span></button>';}).join('');
   if(r==='tstu')h+='<p class="gh">وضع التجربة</p>'+mnItem('back','↩️','العودة إلى دور الأستاذ');}
- h+='<p class="gh">المنصة</p>'+(instGone()?'':mnItem('inst',insIc,'تثبيت '+esc(APP_SHORT)))+mnItem('','ℹ️','من نحن','',ROOT+'about.html',PAGE==='about');
+ h+='<p class="gh">المنصة</p>'+mnItem('push','🔔',puLabel())+(instGone()?'':mnItem('inst',insIc,'تثبيت '+esc(APP_SHORT)))+mnItem('','ℹ️','من نحن','',ROOT+'about.html',PAGE==='about');
  h+='</div><div class="ft">'+mnItem('out','🚪',r==='student'?'تغيير المستخدم / خروج':'خروج','dg')+'</div>';
  return h;}
 var MN={ret:null};
@@ -324,7 +385,7 @@ function mnOpen(btn){var m=document.getElementById('spss-mn');if(m)m.remove();
   if(a==='close'){mnClose();return;}
   if(a==='out'){if(confirm(ID.role==='student'?'تسجيل الخروج من المنصة على هذا الجهاز؟ (حضورك ونتائجك المسجَّلة لا تُلغى)':'تسجيل الخروج؟'))logout();return;}
   var hb=document.querySelector('#spss-ub .ham');mnClose(true);
-  if(a==='me'){meTab=x.getAttribute('data-g')||meTab;meOpen(hb);if(!meDesk()){meDrawer(false,true);setTimeout(function(){try{document.getElementById('spss-me').focus();}catch(e){}},80);}}else if(a==='inst')instOpen(hb);else if(a==='tstu')toStudent();else if(a==='back')toTeacher();else if(a==='clean')cleanT(x);});
+  if(a==='me'){meTab=x.getAttribute('data-g')||meTab;meOpen(hb);if(!meDesk()){meDrawer(false,true);setTimeout(function(){try{document.getElementById('spss-me').focus();}catch(e){}},80);}}else if(a==='inst')instOpen(hb);else if(a==='push'){if(puState()==='off'&&PAGE==='alerts'){puEnable();}else if(puState()==='off'&&lg('spss_push_na')!=='1'){puEnable().then(function(){location.href=ROOT+'alerts.html#push';});}else location.href=ROOT+'alerts.html#push';}else if(a==='tstu')toStudent();else if(a==='back')toTeacher();else if(a==='clean')cleanT(x);});
  m.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();mnClose();return;}
   if(e.key==='Tab'){var f=[].slice.call(m.querySelectorAll('.pn a,.pn button'));if(!f.length)return;var a=document.activeElement,f0=f[0],f1=f[f.length-1];
    if(e.shiftKey&&a===f0){e.preventDefault();f1.focus();}else if(!e.shiftKey&&a===f1){e.preventDefault();f0.focus();}}});
@@ -420,7 +481,7 @@ function assessUI(){if(!ID)return;document.body.classList.add('spss-auth');if(ID
  var fix=function(){Array.prototype.forEach.call(document.querySelectorAll('[data-go]'),function(b){if(b.textContent.indexOf('ابدأ التقييم')>=0)b.innerHTML=b.innerHTML.replace('ابدأ التقييم','بدء التقييم');});};
  new MutationObserver(fix).observe(document.body,{childList:true,subtree:true});fix();}
 function landingUI(){if(!ID){loginUI();return;}if(goNext())return;}
-function init(){addCss();if(PAGE==='landing')landingUI();bar();if(PAGE==='alerts')alPage();filterUI();instInit();copyInit();aboutNav();
+function init(){addCss();if(PAGE==='landing')landingUI();bar();if(PAGE==='alerts')alPage();puMsg();if(ID)setTimeout(puRefresh,2500);filterUI();instInit();copyInit();aboutNav();
  if(ID&&ID.role==='student'&&ID.free===undefined)getJ({action:'aslist',sbac:ID.bac}).then(function(r){if(r&&r.ok&&r.who){var s=pj(lg('spss_id'))||{};if(s.bac===ID.bac){s.free=r.who.free?1:0;ls('spss_id',JSON.stringify(s));if(s.free&&FLT)location.reload();}}});
  if(PAGE==='session'){if(!(BIZ&&TPPAGE))sessionUI();}else if(PAGE==='assess')assessUI();
  else if(PAGE==='teacher'&&ID&&ID.role==='tstu'){/* لوحة الأستاذ متاحة دائماً بالرمز */}}
