@@ -111,7 +111,7 @@ function mount(){
   host.appendChild(bi('exit'));host.appendChild(bi('home'));}
  refresh();}
 // ===== update50: التصفح الحر (يحدده الخادم: دخول ثانٍ، أو بعد تاريخ الحصة، أو بعد انتهاء وقت الحصة يوم الحصة) =====
-var FBR={review_attended:'دخول ثانٍ: حضورك مسجَّل مسبقاً',review_past:'مراجعة بعد تاريخ الحصة',after15:'بعد انتهاء وقت الحصة'};
+var FBR={review_attended:'دخول ثانٍ: حضورك مسجَّل مسبقاً',review_past:'مراجعة بعد تاريخ الحصة',after15:'بعد انتهاء وقت الحصة',biz:'تصفح حر، دون تسجيل حضور أو تقييم'};
 function freeR(){var r=window.SNAV_FREE;if(!r||ssGet('dk-prof')||window.SNAV_FORCED)return '';return String(r);}
 function fbPaint(){var r=freeR(),d=dk(),why=FBR[r]||'';
  if(d){var fz=$('snav-fz');if(window.SNAV_FORCED&&!ssGet('dk-prof')){if(!fz){fz=document.createElement('div');fz.id='snav-fz';fz.setAttribute('role','status');fz.textContent='🔗 الأستاذ ربط الشاشات: تتبع شريحته الآن';d.appendChild(fz);}}else if(fz)fz.remove();}

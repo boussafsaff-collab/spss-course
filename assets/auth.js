@@ -55,12 +55,12 @@ var BIZ=FLT&&!FIN;
 var GRPN=ID?String(ID.grp||'').replace(/\D/g,'').replace(/^0+/,''):'';
 var TPPAGE=PAGE==='session'&&/-tp[^\/]*\.html$/i.test(location.pathname);
 if(FLT){
- if(PAGE==='list'){ls('spss_course_specialty',FIN?'إدارة مالية':'إدارة أعمال');if(FIN&&GRPN)ls('spss_course_group','إدارة مالية - فوج '+GRPN);}
- try{document.documentElement.classList.add('spss-flt');if(BIZ)document.documentElement.classList.add('spss-biz');}catch(e){}
+ if(PAGE==='list'){ls('spss_course_specialty',FIN?'إدارة مالية':'إدارة أعمال');if(FIN&&GRPN)ls('spss_course_group','إدارة مالية - فوج '+GRPN);if(BIZ)try{localStorage.removeItem('spss_course_group');}catch(e){}}
+ try{document.documentElement.classList.add('spss-flt');if(BIZ)document.documentElement.classList.add('spss-biz');if(BIZ&&TPPAGE){document.documentElement.classList.add('spss-biztp');window.SNAV_FREE='biz';}}catch(e){}
 }
 // ===== واجهة =====
 var CSS=[
-'html.spss-flt #picker{display:none!important}html.spss-biz a[href$="tps/index.html"]{display:none!important}',
+'html.spss-flt #picker{display:none!important}html.spss-biztp #mod-attendance,html.spss-biztp #mod-quiz,html.spss-biztp [onclick*="mod-attendance"],html.spss-biztp [onclick*="mod-quiz"],html.spss-biztp a[href="#mod-attendance"],html.spss-biztp a[href="#mod-quiz"],html.spss-biztp #att-frame-wrap,html.spss-biztp #qz-login,html.spss-biztp #qz-wait,html.spss-biztp #tq-go,html.spss-biztp #tq-wait,html.spss-biztp .qzbtn,html.spss-biztp #snav-fbn{display:none!important}html.spss-biz #note{display:none!important}.spss-free{direction:rtl;font-family:Cairo,"Segoe UI",Tahoma,sans-serif;display:flex;gap:10px;align-items:flex-start;background:#eff6ff;border:1px solid #93c5fd;color:#0f2744;border-radius:14px;padding:10px 14px;margin:10px auto;max-width:1100px;line-height:1.7;font-size:14px;box-sizing:border-box}.spss-free b{display:block;font-size:15px}.spss-free .i{flex:0 0 auto;font-size:18px;line-height:1.4}',
 '#spss-ub .ham{font-size:20px!important;line-height:1;width:42px;height:38px;padding:0!important;background:rgba(255,255,255,.16)!important;border-radius:10px}',
 '#spss-me{direction:rtl;text-align:right;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;line-height:1.8;position:fixed;inset:0;z-index:2147483601;background:#f4f7fb;color:#1e293b;overflow-y:auto;overscroll-behavior:contain;opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s}#spss-me.open{opacity:1;visibility:visible}#spss-me *{box-sizing:border-box}',
 '#spss-me .mw{max-width:760px;margin:0 auto;padding:clamp(6px,2vw,24px) clamp(4px,1.5vw,16px) 28px}',
@@ -235,16 +235,21 @@ function assessUI(){if(!ID)return;document.body.classList.add('spss-auth');if(ID
 function landingUI(){if(!ID){loginUI();return;}if(goNext())return;}
 function init(){addCss();if(PAGE==='landing')landingUI();bar();filterUI();
  if(ID&&ID.role==='student'&&ID.free===undefined)getJ({action:'aslist',sbac:ID.bac}).then(function(r){if(r&&r.ok&&r.who){var s=pj(lg('spss_id'))||{};if(s.bac===ID.bac){s.free=r.who.free?1:0;ls('spss_id',JSON.stringify(s));if(s.free&&FLT)location.reload();}}});
- if(PAGE==='session')sessionUI();else if(PAGE==='assess')assessUI();
+ if(PAGE==='session'){if(!(BIZ&&TPPAGE))sessionUI();}else if(PAGE==='assess')assessUI();
  else if(PAGE==='teacher'&&ID&&ID.role==='tstu'){/* لوحة الأستاذ متاحة دائماً بالرمز */}}
 // ===== update61: تصفية الصفحات =====
 function filterUI(){if(!FLT)return;
- if(BIZ){Array.prototype.forEach.call(document.querySelectorAll('a[href$="tps/index.html"]'),function(a){a.style.display='none';});
-  var msg='التطبيقات خاصة بطلبة تخصص «إدارة مالية». تخصصك «إدارة أعمال» ليست له حصص تطبيقية.';
-  if(PAGE==='list'&&document.body.getAttribute('data-type')==='tp'){var l=document.getElementById('list');
-   if(l){var mo=new MutationObserver(function(){if(!l.querySelector('.spss-polite'))put();});var put=function(){mo.disconnect();l.innerHTML='<div class="spss-polite">'+esc(msg)+'<br><a href="'+ROOT+'lectures/index.html">← العودة إلى محاضراتك</a></div>';mo.observe(l,{childList:true});};put();}
-   var n=document.getElementById('note');if(n)n.style.display='none';}
-  if(TPPAGE)block(msg);}
+ if(BIZ){var fm='يمكنك تصفح محتوى التطبيقات وشرائحها بحرية (تخصص «إدارة أعمال»)، دون تسجيل حضور ودون تقييم.';
+  if(PAGE==='list'&&document.body.getAttribute('data-type')==='tp'){var l=document.getElementById('list');if(l&&l.parentNode&&!document.querySelector('.spss-free'))l.parentNode.insertBefore(freeNote(fm),l);}
+  if(TPPAGE)bizTp(fm);}
+}
+function freeNote(t){var d=document.createElement('div');d.className='spss-free';d.setAttribute('role','note');d.innerHTML='<span class="i" aria-hidden="true">🔓</span><span><b>تصفح حر، دون تسجيل حضور أو تقييم</b>'+esc(t)+'</span>';return d;}
+function bizTp(fm){var b=document.body;window.SNAV_FREE='biz';
+ var un=function(){if(b.classList.contains('att-locked'))b.classList.remove('att-locked');};un();
+ try{new MutationObserver(un).observe(b,{attributes:true,attributeFilter:['class']});}catch(e){}
+ var w=document.getElementById('main-content-wrapper');if(!document.querySelector('.spss-free')){var n=freeNote(fm);if(w)w.insertBefore(n,w.firstChild);else b.insertBefore(n,b.firstChild);}
+ var db=document.getElementById('deck-btn');if(db&&typeof window.openDeck==='function'){db.onclick=function(e){e.preventDefault();window.openDeck();};db.removeAttribute('onclick');db.disabled=false;db.textContent='عرض الشرائح';
+  try{new MutationObserver(function(){if(db.disabled)db.disabled=false;}).observe(db,{attributes:true,attributeFilter:['disabled']});}catch(e){}}
 }
 function block(msg){if(document.getElementById('spss-blk'))return;var w=document.createElement('div');w.id='spss-blk';w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');
  w.innerHTML='<div class="c"><h3 style="margin:0 0 8px">🙏 هذه الصفحة ليست لفوجك</h3><p style="margin:0">'+esc(msg)+'</p><a href="'+ROOT+'lectures/index.html">← العودة إلى محاضراتك</a> <a href="'+ROOT+'index.html" style="background:#475569">🏠 الرئيسية</a></div>';
