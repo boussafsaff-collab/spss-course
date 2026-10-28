@@ -62,11 +62,17 @@ if(FLT){
 var CSS=[
 'html.spss-flt #picker{display:none!important}html.spss-biz a[href$="tps/index.html"]{display:none!important}',
 '#spss-ub .ham{font-size:20px!important;line-height:1;width:42px;height:38px;padding:0!important;background:rgba(255,255,255,.16)!important;border-radius:10px}',
-'#spss-me-s{position:fixed;inset:0;background:rgba(15,23,42,.45);z-index:2147483600;opacity:0;visibility:hidden;transition:opacity .2s}#spss-me-s.open{opacity:1;visibility:visible}',
-'#spss-me{direction:rtl;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;position:fixed;top:0;bottom:0;right:0;width:min(440px,94vw);background:#f8fafc;color:#0f172a;z-index:2147483601;transform:translateX(105%);visibility:hidden;transition:transform .25s ease,visibility .25s;display:flex;flex-direction:column;box-shadow:-12px 0 30px rgba(15,23,42,.25)}#spss-me.open{transform:none;visibility:visible}',
-'#spss-me .hd{background:#0f2744;color:#fff;padding:12px 14px;display:flex;align-items:center;gap:10px}#spss-me .hd h2{margin:0;font-size:18px;flex:1}#spss-me .hd small{display:block;color:#93c5fd;font-size:12px;font-weight:600}#spss-me .x{border:0;background:rgba(255,255,255,.14);color:#fff;width:40px;height:40px;border-radius:10px;font-size:18px;cursor:pointer}',
-'#spss-me .tb{display:flex;gap:6px;flex-wrap:wrap;padding:8px 10px;background:#e2e8f0}#spss-me .tb button{font:inherit;font-size:13px;font-weight:800;border:0;border-radius:999px;padding:6px 12px;background:#fff;color:#0f2744;cursor:pointer}#spss-me .tb button.on{background:#0f2744;color:#fff}',
-'#spss-me .bd{flex:1;overflow:auto;padding:10px 12px 24px}#spss-me section{background:#fff;border-radius:14px;padding:12px;margin:0 0 12px;box-shadow:0 2px 10px rgba(15,23,42,.08)}#spss-me h3{margin:0 0 8px;font-size:16px;color:#0f2744}#spss-me h4{margin:10px 0 6px;font-size:14px;color:#334155}',
+'#spss-me{direction:rtl;text-align:right;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;line-height:1.8;position:fixed;inset:0;z-index:2147483601;background:#f4f7fb;color:#1e293b;overflow-y:auto;overscroll-behavior:contain;opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s}#spss-me.open{opacity:1;visibility:visible}#spss-me *{box-sizing:border-box}',
+'#spss-me .mw{max-width:760px;margin:0 auto;padding:clamp(6px,2vw,24px) clamp(4px,1.5vw,16px) 28px}',
+'#spss-me .shd{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;background:#0f2744;color:#fff;border-radius:14px;padding:6px 8px;margin:0 0 10px;box-shadow:0 8px 20px rgba(15,23,42,.18)}',
+'#spss-me .shd button{flex:0 0 auto;width:46px;height:46px;border-radius:12px;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:22px;line-height:1;cursor:pointer;font-family:inherit;padding:0}#spss-me .shd .x{font-size:18px}#spss-me .shd button:focus-visible,#spss-me .mnx:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}',
+'#spss-me .stt{flex:1 1 auto;min-width:0;font-weight:800;font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}#spss-me .stt i{color:#e9c46a;margin-left:7px}',
+'#spss-me .mnav{position:fixed;top:0;right:0;bottom:0;width:min(310px,86vw);z-index:60;background:#fff;display:flex;flex-direction:column;gap:4px;padding:12px;overflow-y:auto;overscroll-behavior:contain;transform:translateX(105%);visibility:hidden;transition:transform .22s ease,visibility .22s;box-shadow:-12px 0 30px rgba(0,0,0,.25);border-radius:18px 0 0 18px}#spss-me .mnav.open{transform:none;visibility:visible}',
+'#spss-me .nvh{display:flex;align-items:center;justify-content:space-between;gap:8px;font-weight:800;color:#0f2744;font-size:16px;margin:0 0 6px;padding:0 4px 8px;border-bottom:1px solid #e3e9f2}#spss-me .nvh small{display:block;font-size:12px;font-weight:600;color:#64748b;line-height:1.5}#spss-me .mnx{flex:0 0 auto;width:44px;height:44px;border-radius:12px;border:1.5px solid #cbd5e1;background:#f8fafc;color:#0f2744;font-size:18px;cursor:pointer;font-family:inherit}',
+'#spss-me .tl{display:flex;flex-direction:column;gap:4px}#spss-me .tl [role=tab]{display:flex;align-items:center;gap:9px;width:100%;min-height:48px;padding:8px 12px;border-radius:12px;border:0;background:transparent;color:#0f2744;font:inherit;font-weight:800;font-size:15px;text-align:right;cursor:pointer;line-height:1.5}#spss-me .tl [role=tab] i{color:#1d4f86;width:20px;text-align:center}#spss-me .tl [role=tab]:hover{background:#eef2f7}#spss-me .tl [role=tab][aria-selected=true]{background:#0f2744;color:#fff;box-shadow:0 6px 16px rgba(15,23,42,.18)}#spss-me .tl [role=tab][aria-selected=true] i{color:#e9c46a}#spss-me .tl [role=tab]:focus-visible{outline:3px solid #93c5fd;outline-offset:1px}',
+'#spss-me .bdp{position:fixed;inset:0;background:rgba(15,23,42,.5);z-index:55}#spss-me .hide{display:none!important}html.spss-lock,html.spss-lock body{overflow:hidden}@media (prefers-reduced-motion:reduce){#spss-me,#spss-me .mnav{transition:none}}',
+'@media (min-width:1024px){#spss-me .mw{max-width:1180px}#spss-me .lay{display:grid;grid-template-columns:250px minmax(0,1fr);gap:16px;align-items:start}#spss-me .lay.col{grid-template-columns:minmax(0,1fr)}#spss-me .mnav{position:sticky;top:70px;bottom:auto;width:auto;z-index:1;transform:none;visibility:visible;transition:none;border:1px solid #e3e9f2;border-radius:18px;padding:10px;box-shadow:0 8px 24px rgba(15,23,42,.06);overflow:visible}#spss-me .lay.col .mnav{display:none}#spss-me .nvh .mnx{display:none}#spss-me .nvh{padding-bottom:6px}#spss-me .bdp{display:none!important}}',
+'#spss-me .who{color:#475569;font-size:13.5px;font-weight:700;margin:0 4px 8px}#spss-me section{background:#fff;border:1px solid #e3e9f2;border-radius:18px;padding:clamp(12px,4vw,24px);margin:0 0 14px;box-shadow:0 1px 2px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.06)}#spss-me h3{margin:0 0 10px;font-size:16px;font-weight:800;color:#14365c;display:flex;align-items:center;gap:8px}#spss-me h3 i{color:#1d4f86}#spss-me h4{margin:12px 0 6px;font-size:14px;color:#334155}#spss-me .bd>p{background:#fff;border:1px solid #e3e9f2;border-radius:18px;padding:16px}',
 '#spss-me .rw{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid #e2e8f0;font-size:13.5px}#spss-me .rw:first-of-type{border-top:0}#spss-me .rw .t{flex:1;min-width:0}#spss-me .rw .v{font-weight:800;white-space:nowrap}#spss-me .rw.nx{background:#fef9c3;border-radius:8px;padding:7px 6px}',
 '#spss-me .bg{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:800;white-space:nowrap}#spss-me .ok{background:#dcfce7;color:#166534}#spss-me .no{background:#fee2e2;color:#991b1b}#spss-me .op{background:#dbeafe;color:#1e40af}#spss-me .cl{background:#e2e8f0;color:#475569}#spss-me .rj{background:#fde68a;color:#78350f}',
 '#spss-me .avg{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}#spss-me .avg div{flex:1 1 120px;background:#eff6ff;border-radius:10px;padding:8px;text-align:center;font-size:12.5px}#spss-me .avg b{display:block;font-size:20px;color:#0f2744}#spss-me .nt{font-size:12px;color:#64748b;margin:6px 0 0}',
@@ -205,26 +211,53 @@ function bgA(st){return {present:['ok','حاضر'],absent:['no','غائب'],reje
 function bdg(a){return '<span class="bg '+a[0]+'">'+esc(a[1])+'</span>';}
 function dm(d){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(d||''));return m?m[3]+'/'+m[2]+'/'+m[1]:'';}
 function n2(x){return x==null?'–':String(Math.round(x*100)/100).replace('.',',');}
-function meOpen(btn){var d=document.getElementById('spss-me'),sc=document.getElementById('spss-me-s');
- if(!d){sc=document.createElement('div');sc.id='spss-me-s';sc.onclick=meClose;d=document.createElement('aside');d.id='spss-me';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-label','لوحة الطالب');d.tabIndex=-1;
-  d.innerHTML='<div class="hd"><h2>📊 لوحة الطالب<small id="spss-me-w"></small></h2><button type="button" class="x" aria-label="إغلاق">✕</button></div>'+
-  '<div class="tb" role="tablist"><button type="button" data-g="m">تتبع علاماتي</button><button type="button" data-g="a">تتبع الحضور</button><button type="button" data-g="l">توقيت المحاضرات</button><button type="button" data-g="p">توقيت التطبيقات</button></div><div class="bd" id="spss-me-b"><p>جارٍ التحميل…</p></div>';
-  document.body.appendChild(sc);document.body.appendChild(d);d.querySelector('.x').onclick=meClose;
-  d.querySelector('.tb').onclick=function(e){var b=e.target.closest('[data-g]');if(!b)return;var t=document.getElementById('spss-me-'+b.getAttribute('data-g'));
-   Array.prototype.forEach.call(d.querySelectorAll('.tb button'),function(x){x.classList.toggle('on',x===b)});if(t)t.scrollIntoView({behavior:'smooth',block:'start'});};
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&d.classList.contains('open'))meClose();});}
- d.classList.add('open');sc.classList.add('open');var hb=document.querySelector('#spss-ub .ham');if(hb)hb.setAttribute('aria-expanded','true');setTimeout(function(){d.focus()},60);
+// update63: لوحة الطالب بقائمة عمودية بتصميم لوحة الأستاذ (درج يميني تحت 1024px، وشريط جانبي قابل للطي على الحاسوب)
+var MET=[['m','fa-square-poll-vertical','تتبع علاماتي'],['a','fa-clipboard-user','تتبع الحضور'],['l','fa-chalkboard-user','توقيت المحاضرات'],['p','fa-laptop-code','توقيت التطبيقات']];
+var meTab=sg('spss_metab')||'m',meD=false,meMQ=window.matchMedia?window.matchMedia('(min-width:1024px)'):{matches:true};
+function meDesk(){return !!meMQ.matches;}
+function meCol(){return lg('spss_menav')==='0';}
+function meEl(x){return document.getElementById('spss-me-'+x);}
+function meSync(){var d=document.getElementById('spss-me');if(!d)return;var hb=meEl('hb'),nv=meEl('nav'),lay=meEl('lay');
+ if(meDesk()){meD=false;nv.classList.remove('open');meEl('bdp').classList.add('hide');var c=meCol();lay.classList.toggle('col',c);hb.setAttribute('aria-expanded',c?'false':'true');hb.setAttribute('aria-label',c?'القائمة (إظهار الشريط الجانبي)':'القائمة (طي الشريط الجانبي)');nv.removeAttribute('aria-hidden');nv.removeAttribute('role');nv.removeAttribute('aria-modal');}
+ else{lay.classList.remove('col');nv.classList.toggle('open',meD);meEl('bdp').classList.toggle('hide',!meD);hb.setAttribute('aria-expanded',meD?'true':'false');hb.setAttribute('aria-label','القائمة');
+  if(meD){nv.removeAttribute('aria-hidden');nv.setAttribute('role','dialog');nv.setAttribute('aria-modal','true');}else{nv.setAttribute('aria-hidden','true');nv.removeAttribute('role');nv.removeAttribute('aria-modal');}}}
+function meDrawer(o,nofocus){meD=!!o;meSync();if(meD){var f=function(){var t=meEl('t-'+meTab);if(meD&&t&&!meEl('nav').contains(document.activeElement))try{t.focus();}catch(e){}};f();setTimeout(f,40);setTimeout(f,250);}else if(!nofocus)try{meEl('hb').focus();}catch(e){}}
+function meSel(g,focus){if(!MET.some(function(x){return x[0]===g;}))g='m';meTab=g;ss('spss_metab',g);
+ MET.forEach(function(x){var b=meEl('t-'+x[0]),on=x[0]===g,sc=meEl(x[0]);if(b){b.setAttribute('aria-selected',on?'true':'false');b.tabIndex=on?0:-1;b.classList.toggle('on',on);}if(sc)sc.classList.toggle('hide',!on);});
+ var t=MET.filter(function(x){return x[0]===g;})[0];meEl('t').innerHTML='<i class="fa-solid '+t[1]+'" aria-hidden="true"></i>'+esc(t[2]);
+ if(focus)try{meEl('t-'+g).focus();}catch(e){}}
+function meOpen(btn){var d=document.getElementById('spss-me');
+ if(!d){d=document.createElement('div');d.id='spss-me';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-label','لوحة الطالب');d.tabIndex=-1;
+  d.innerHTML='<div class="mw"><div class="shd"><button type="button" id="spss-me-hb" aria-label="القائمة" aria-expanded="false" aria-controls="spss-me-nav">☰</button><span class="stt" id="spss-me-t" aria-live="polite"></span><button type="button" class="x" aria-label="إغلاق لوحة الطالب" title="إغلاق">✕</button></div>'+
+  '<div class="bdp hide" id="spss-me-bdp"></div><div class="lay" id="spss-me-lay"><nav class="mnav" id="spss-me-nav" aria-label="أقسام لوحة الطالب"><div class="nvh"><span>📊 لوحة الطالب<small id="spss-me-w2"></small></span><button type="button" class="mnx" aria-label="إغلاق القائمة">✕</button></div>'+
+  '<div class="tl tb" role="tablist" aria-orientation="vertical" aria-label="أقسام لوحة الطالب">'+MET.map(function(x){return '<button type="button" role="tab" id="spss-me-t-'+x[0]+'" data-g="'+x[0]+'" aria-controls="spss-me-'+x[0]+'" aria-selected="false" tabindex="-1"><i class="fa-solid '+x[1]+'" aria-hidden="true"></i><span>'+x[2]+'</span></button>';}).join('')+'</div></nav>'+
+  '<div class="mn"><p class="who" id="spss-me-w"></p><div class="bd" id="spss-me-b"><p>جارٍ التحميل…</p></div></div></div></div>';
+  document.body.appendChild(d);
+  d.querySelector('.shd .x').onclick=meClose;d.querySelector('.mnx').onclick=function(){meDrawer(false);};meEl('bdp').onclick=function(){meDrawer(false);};
+  meEl('hb').onclick=function(){if(meDesk()){ls('spss_menav',meCol()?'1':'0');meSync();}else meDrawer(!meD);};
+  var tl=d.querySelector('.tl');
+  tl.onclick=function(e){var b=e.target.closest('[data-g]');if(!b)return;meSel(b.getAttribute('data-g'));if(!meDesk())meDrawer(false,true);try{d.scrollTo(0,0);}catch(x){d.scrollTop=0;}};
+  tl.addEventListener('keydown',function(e){var k=e.key,n=MET.map(function(x){return x[0];}),i=n.indexOf(meTab),j=null;
+   if(k==='ArrowDown')j=i+1;else if(k==='ArrowUp')j=i-1;else if(k==='Home')j=0;else if(k==='End')j=n.length-1;if(j==null)return;e.preventDefault();meSel(n[(j+n.length)%n.length],true);});
+  document.addEventListener('keydown',function(e){if(!d.classList.contains('open'))return;
+   if(e.key==='Escape'){e.preventDefault();if(meD)meDrawer(false);else meClose();return;}
+   if(e.key==='Tab'){var box=meD?meEl('nav'):d,f=[].slice.call(box.querySelectorAll('button')).filter(function(x){return x.tabIndex>=0&&x.offsetParent!==null;});if(!f.length)return;var a=document.activeElement,f0=f[0],f1=f[f.length-1];
+    if(!box.contains(a)){e.preventDefault();f0.focus();}else if(e.shiftKey&&a===f0){e.preventDefault();f1.focus();}else if(!e.shiftKey&&a===f1){e.preventDefault();f0.focus();}}});
+  if(meMQ.addEventListener)meMQ.addEventListener('change',meSync);else if(meMQ.addListener)meMQ.addListener(meSync);}
+ d.classList.add('open');document.documentElement.classList.add('spss-lock');var hb=document.querySelector('#spss-ub .ham');if(hb)hb.setAttribute('aria-expanded','true');
+ meSel(meTab);meD=!meDesk();meSync();
+ if(meD)meDrawer(true);else setTimeout(function(){try{meEl('t-'+meTab).focus();}catch(e){}},60);
  document.getElementById('spss-me-b').innerHTML='<p>جارٍ تحميل بياناتك…</p>';
  getJ({action:'asme',sbac:ID.bac}).then(function(r){ME=r;meRender(r);});}
-function meClose(){var d=document.getElementById('spss-me'),sc=document.getElementById('spss-me-s');if(d)d.classList.remove('open');if(sc)sc.classList.remove('open');var hb=document.querySelector('#spss-ub .ham');if(hb){hb.setAttribute('aria-expanded','false');hb.focus();}}
+function meClose(){var d=document.getElementById('spss-me');meD=false;if(d){d.classList.remove('open');meSync();}document.documentElement.classList.remove('spss-lock');var hb=document.querySelector('#spss-ub .ham');if(hb){hb.setAttribute('aria-expanded','false');hb.focus();}}
 function meRender(r){var b=document.getElementById('spss-me-b');
  if(!r||!r.ok){b.innerHTML='<p class="spss-polite">'+(r&&r.err==='UNKNOWN_BAC'?'رقمك غير موجود في القوائم. راجع الأستاذ.':'تعذّر جلب بياناتك الآن. أعد المحاولة بعد قليل.')+'</p>';return;}
  var w=r.who||{},fin=/مالية/.test(w.sp||'');
- document.getElementById('spss-me-w').textContent=((w.nom||'')+' '+(w.prenom||'')).trim()+' · '+(w.sp||'')+(fin&&w.grp?' · الفوج '+w.grp:'');
+ var wt=((w.nom||'')+' '+(w.prenom||'')).trim()+' · '+(w.sp||'')+(fin&&w.grp?' · الفوج '+w.grp:'');document.getElementById('spss-me-w').textContent=wt;document.getElementById('spss-me-w2').textContent=wt;
  var M=r.marks||{},A=r.att||{},T=r.tt||{},nx=r.next,h='';
  function mrow(o){var sc=o.st==='done'?'<span class="v"><bdi dir="ltr">'+n2(o.s)+'/'+n2(o.tot)+'</bdi> · <bdi dir="ltr">'+n2(o.m20)+'/20</bdi></span>':(o.st==='missed'?'<span class="v"><bdi dir="ltr">0/20</bdi></span>':'');
   return '<div class="rw"><span class="t">'+esc(o.title||o.topic||'')+'</span>'+sc+bdg(bgS(o.st))+'</div>';}
- h+='<section id="spss-me-m"><h3>📝 تتبع علاماتي</h3><div class="avg"><div>معدل تقييمات المحاضرات<b><bdi dir="ltr">'+(M.lecAvg==null?'–':n2(M.lecAvg)+'/20')+'</bdi></b></div>'+(fin?'<div>معدل التطبيقات<b><bdi dir="ltr">'+(M.tpAvg==null?'–':n2(M.tpAvg)+'/20')+'</bdi></b></div>':'')+'</div>';
+ h+='<section id="spss-me-m" role="tabpanel" aria-labelledby="spss-me-t-m"><h3><i class="fa-solid fa-square-poll-vertical" aria-hidden="true"></i>تتبع علاماتي</h3><div class="avg"><div>معدل تقييمات المحاضرات<b><bdi dir="ltr">'+(M.lecAvg==null?'–':n2(M.lecAvg)+'/20')+'</bdi></b></div>'+(fin?'<div>معدل التطبيقات<b><bdi dir="ltr">'+(M.tpAvg==null?'–':n2(M.tpAvg)+'/20')+'</bdi></b></div>':'')+'</div>';
  h+='<h4>تقييمات المحاضرات</h4>'+((M.lec||[]).map(mrow).join('')||'<p class="nt">لا تقييمات بعد.</p>');
  if(fin){h+='<h4>تقييمات التطبيقات</h4>'+((M.tp||[]).map(mrow).join('')||'<p class="nt">لا تقييمات بعد.</p>');
   if((M.tpMarks||[]).length)h+='<h4>علامات حصص التطبيق (/7)</h4>'+M.tpMarks.map(function(x){return '<div class="rw"><span class="t">'+esc(x.title||('الحصة '+x.n))+'</span><span class="v"><bdi dir="ltr">'+(x.m7==null?'0':n2(x.m7))+'/7 · '+n2(x.m20)+'/20</bdi></span></div>';}).join('');}
@@ -232,7 +265,7 @@ function meRender(r){var b=document.getElementById('spss-me-b');
  h+='<p class="nt">المعدل بطريقة «النداء»: المحاضرة = العلامة/المجموع × 20، ومتوسطها على التقييمات التي أُجريت فعلاً؛ التطبيق = علامة الحصة /7 × 20؛ التقييم الذي أُجري ولم تنجزه يُحسب 0. معدل مؤقت يتغير مع كل تقييم.</p></section>';
  function cnt(c){if(!c)return '';return '<div class="avg"><div>حاضر<b>'+c.present+'</b></div><div>غائب<b>'+c.absent+'</b></div><div>مرفوض (غ)<b>'+c.rejected+'</b></div><div>قادم<b>'+c.upcoming+'</b></div><div>نسبة الحضور<b><bdi dir="ltr">'+(c.rate==null?'–':c.rate+'%')+'</bdi></b></div></div>';}
  function arow(x){var isN=nx&&nx.session===x.session;return '<div class="rw'+(isN?' nx':'')+'"><span class="t">'+esc(x.session)+'<br><small style="color:#64748b">'+(x.dt?'<bdi dir="ltr">'+dm(x.dt)+'</bdi>':'')+(x.s?' · <bdi dir="ltr">'+esc(x.s)+'–'+esc(x.e)+'</bdi>':'')+'</small></span>'+bdg(bgA(x.st))+'</div>';}
- h+='<section id="spss-me-a"><h3>✅ تتبع الحضور</h3><h4>المحاضرات</h4>'+cnt(A.cLec)+(A.lec||[]).map(arow).join('');
+ h+='<section id="spss-me-a" role="tabpanel" aria-labelledby="spss-me-t-a"><h3><i class="fa-solid fa-clipboard-user" aria-hidden="true"></i>تتبع الحضور</h3><h4>المحاضرات</h4>'+cnt(A.cLec)+(A.lec||[]).map(arow).join('');
  if(fin&&A.tp)h+='<h4>التطبيقات (الفوج '+esc(w.grp||'')+')</h4>'+cnt(A.cTp)+A.tp.map(arow).join('');
  h+='</section>';
  function slot(o,lst,lbl){if(!o)return '<p class="nt">'+lbl+'</p>';var up=(lst||[]).filter(function(x){return x.st==='open'||x.st==='upcoming';});var op=up.filter(function(x){return x.st==='open';})[0];
@@ -242,10 +275,10 @@ function meRender(r){var b=document.getElementById('spss-me-b');
   if(up.length){var u=up[0];s+='<div class="rw nx"><span class="t">⏭️ الحصة القادمة: '+esc(u.session)+'<br><small><bdi dir="ltr">'+dm(u.dt)+' · '+esc(u.s)+'–'+esc(u.e)+'</bdi></small></span></div>';}
   else s+='<p class="nt">لا حصص قادمة مبرمجة حالياً.</p>';
   s+='<h4>كل الحصص</h4>'+(lst||[]).map(arow).join('');return s;}
- h+='<section id="spss-me-l"><h3>🏛️ توقيت المحاضرات</h3>'+slot(T.lec,A.lec,'لا توقيت محدد.')+'</section>';
- h+='<section id="spss-me-p"><h3>💻 توقيت التطبيقات</h3>'+(fin?slot(T.tp,A.tp,'لا توقيت محدد لفوجك.'):'<p class="nt">تخصص «إدارة أعمال» ليست له حصص تطبيقية.</p>')+'</section>';
+ h+='<section id="spss-me-l" role="tabpanel" aria-labelledby="spss-me-t-l"><h3><i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>توقيت المحاضرات</h3>'+slot(T.lec,A.lec,'لا توقيت محدد.')+'</section>';
+ h+='<section id="spss-me-p" role="tabpanel" aria-labelledby="spss-me-t-p"><h3><i class="fa-solid fa-laptop-code" aria-hidden="true"></i>توقيت التطبيقات</h3>'+(fin?slot(T.tp,A.tp,'لا توقيت محدد لفوجك.'):'<p class="nt">تخصص «إدارة أعمال» ليست له حصص تطبيقية.</p>')+'</section>';
  h+='<p class="nt">التسجيل في الحصة يُفتح في توقيتها فقط. آخر تحديث: <bdi dir="ltr">'+esc(r.now||'')+'</bdi></p>';
- b.innerHTML=h;}
+ b.innerHTML=h;meSel(meTab);}
 window.SPSS_AUTH={id:ID,logout:logout,cur:cur,U:U,root:ROOT,slotMsg:slotMsg,meOpen:function(){if(ID&&ID.role!=='teacher')meOpen();},flt:FLT};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
