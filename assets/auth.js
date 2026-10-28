@@ -232,7 +232,7 @@ function mnOpen(btn){var m=document.getElementById('spss-mn');if(m)m.remove();
   if(a==='close'){mnClose();return;}
   if(a==='out'){if(confirm(ID.role==='student'?'تسجيل الخروج من المنصة على هذا الجهاز؟ (حضورك ونتائجك المسجَّلة لا تُلغى)':'تسجيل الخروج؟'))logout();return;}
   var hb=document.querySelector('#spss-ub .ham');mnClose(true);
-  if(a==='me'){meTab=x.getAttribute('data-g')||meTab;meOpen(hb);}else if(a==='inst')instOpen(hb);else if(a==='tstu')toStudent();else if(a==='back')toTeacher();else if(a==='clean')cleanT(x);});
+  if(a==='me'){meTab=x.getAttribute('data-g')||meTab;meOpen(hb);if(!meDesk()){meDrawer(false,true);setTimeout(function(){try{document.getElementById('spss-me').focus();}catch(e){}},80);}}else if(a==='inst')instOpen(hb);else if(a==='tstu')toStudent();else if(a==='back')toTeacher();else if(a==='clean')cleanT(x);});
  m.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();mnClose();return;}
   if(e.key==='Tab'){var f=[].slice.call(m.querySelectorAll('.pn a,.pn button'));if(!f.length)return;var a=document.activeElement,f0=f[0],f1=f[f.length-1];
    if(e.shiftKey&&a===f0){e.preventDefault();f1.focus();}else if(!e.shiftKey&&a===f1){e.preventDefault();f0.focus();}}});
