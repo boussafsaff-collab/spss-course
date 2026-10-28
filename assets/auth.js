@@ -91,6 +91,7 @@ var CSS=[
 '#spss-ub a:focus-visible,#spss-ub button:focus-visible,#spss-mn a:focus-visible,#spss-mn button:focus-visible{outline:3px solid #fbbf24;outline-offset:2px}',
 'html.spss-ab{scroll-padding-top:calc(var(--spss-abh,56px) + 10px)}'+
 'html.spss-abt .shd{top:calc(var(--spss-abh,56px) + 6px)!important}',
+'@media (max-width:420px){#spss-ub{gap:6px}#spss-ub .bdg{max-width:84px;padding:3px 8px;font-size:12px}#spss-ub .br .nm{font-size:16px}#spss-ub .br{gap:7px}}',
 '@media (max-width:359px){#spss-ub .bdg{display:none}}',
 '#spss-mn{all:initial;direction:rtl;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;position:fixed;inset:0;z-index:2147482990;display:block;visibility:hidden;pointer-events:none}',
 '#spss-mn.open{visibility:visible;pointer-events:auto}#spss-mn *{box-sizing:border-box;font-family:inherit}#spss-mn .ic{font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif}',
