@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # تغيير اسم المنصة في مكان واحد: ./tools/set-app-name.sh "الاسم الكامل" "الاسم القصير" ["الوصف"]
 # يحدّث: manifest.webmanifest (name, short_name, description)، assets/auth.js (APP_NAME, APP_SHORT)، وسم apple-mobile-web-app-title في كل الصفحات،
-# وعنوان offline.html. (الشعار APP_TAG واسم المقياس APP_MODULE يُعدَّلان يدوياً في أعلى assets/auth.js؛ لاحقة «، الاسم القصير» في عناوين صفحات الموقع تُعدَّل يدوياً.)
+# وعنوان offline.html (بالاسم الكامل). (الشعار APP_TAG واسم المقياس APP_MODULE يُعدَّلان يدوياً في أعلى assets/auth.js؛ لاحقة «، الاسم القصير» في عناوين صفحات الموقع تُعدَّل يدوياً.)
 # بعد التشغيل: ارفع رقم ?v= لـ auth.js في الصفحات ثم ادفع التغييرات.
 set -euo pipefail
 cd "$(dirname "$0")/.."
@@ -18,7 +18,7 @@ open('assets/auth.js','w',encoding='utf-8').write(a)
 for f in glob.glob('**/*.html',recursive=True):
     s=open(f,encoding='utf-8').read(); t=re.sub(r'<meta name="apple-mobile-web-app-title" content="[^"]*">','<meta name="apple-mobile-web-app-title" content="%s">'%short.replace('"','&quot;'),s)
     if t!=s: open(f,'w',encoding='utf-8').write(t); print('updated',f)
-o=open('offline.html',encoding='utf-8').read(); o2=re.sub(r'<title>دون اتصال، [^<]*</title>','<title>دون اتصال، %s</title>'%short,o)
+o=open('offline.html',encoding='utf-8').read(); o2=re.sub(r'<title>دون اتصال، [^<]*</title>','<title>دون اتصال، %s</title>'%name,o)
 if o2!=o: open('offline.html','w',encoding='utf-8').write(o2); print('updated offline.html')
 print('ok:',name,'/',short)
 PY
