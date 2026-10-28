@@ -1,8 +1,8 @@
 {
   "id": "/spss-course/",
-  "name": "برمجيات إحصائية SPSS",
-  "short_name": "SPSS",
-  "description": "منصة مقياس برمجيات إحصائية SPSS، د. بوصفصاف فريد، جامعة قسنطينة 2",
+  "name": "بوصلة: الدرس في هاتفك",
+  "short_name": "بوصلة",
+  "description": "منصة جامعية للتعلّم والتواصل عبر الهاتف: الدرس في هاتفك، أينما كنت",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "/spss-course/index.html?source=pwa",
