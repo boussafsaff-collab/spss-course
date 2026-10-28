@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<script src="assets/auth.js?v=656" data-page="about"></script>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f2744">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=3">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png?v=3">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=3">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="بوصلة التعليم">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>من نحن، بوصلة التعليم</title>
+<meta name="description" content="بوصلة التعليم: الدرس في هاتفك، أينما كنت. منصة جامعية للتعلّم والتواصل عبر الهاتف.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;color:#1e293b;line-height:1.8;
+ background:radial-gradient(1100px 600px at 110% -10%,rgba(233,196,106,.22),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(56,130,220,.35),transparent 60%),linear-gradient(155deg,#0b1d33 0%,#0f2744 45%,#1d4f86 100%) fixed;
+ padding:clamp(14px,4vw,40px) 14px 0}
+.bgx{position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:radial-gradient(rgba(255,255,255,.09) 1px,transparent 1.4px);background-size:22px 22px;-webkit-mask-image:linear-gradient(180deg,#000,transparent 85%);mask-image:linear-gradient(180deg,#000,transparent 85%)}
+main{position:relative;max-width:640px;margin:0 auto}
+.c{background:rgba(255,255,255,.97);border:1px solid rgba(255,255,255,.6);border-radius:26px;padding:clamp(20px,5.5vw,32px);box-shadow:0 30px 60px -12px rgba(2,8,23,.55)}
+.top{display:flex;justify-content:flex-start;margin:0 0 12px}
+.back{display:inline-flex;align-items:center;gap:6px;color:#e2e8f0;text-decoration:none;font-weight:700;font-size:14px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);min-height:36px}
+.back:hover,.back:focus-visible{background:rgba(255,255,255,.18)}
+.hd{display:flex;align-items:center;gap:16px;margin:0 0 6px}
+.lg{flex:none;width:76px;height:76px;border-radius:20px;overflow:hidden;box-shadow:0 12px 26px -8px rgba(15,39,68,.6)}
+.lg img{width:100%;height:100%;display:block}
+h1{margin:0;font-size:clamp(28px,8vw,34px);line-height:1.2;font-weight:800;color:#0f2744}
+.tg{margin:4px 0 0;color:#64748b;font-size:15px;font-weight:600}
+.kick{display:inline-block;font-size:12px;font-weight:800;color:#8a6a12;background:#fdf3d7;border-radius:999px;padding:2px 12px;margin:0 0 8px}
+section{margin:22px 0 0;padding:20px 0 0;border-top:1px dashed #dbe3ee}
+h2{display:flex;align-items:center;gap:10px;margin:0 0 10px;font-size:19px;font-weight:800;color:#0f2744}
+h2 .i{flex:none;width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:#eef3fa;color:#1d4f86}
+h2 .i svg{width:18px;height:18px}
+p{margin:0 0 10px;font-size:15.5px;color:#334155}
+ul.f{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ul.f li{display:flex;gap:10px;align-items:flex-start;background:#f8fafc;border:1px solid #e6edf5;border-radius:14px;padding:10px 12px;font-size:15px;color:#1e293b}
+ul.f li .d{flex:none;width:22px;height:22px;margin-top:3px;border-radius:7px;background:linear-gradient(145deg,#0f2744,#1d4f86);color:#e9c46a;display:grid;place-items:center}
+ul.f li .d svg{width:13px;height:13px}
+.md{display:inline-flex;align-items:center;gap:8px;max-width:100%;font-size:14px;font-weight:700;color:#1e3a5f;background:#eef3fa;border:1px solid #dbe5f2;border-radius:999px;padding:5px 14px;margin:0 0 10px}
+.md b{color:#0f2744;font-weight:800}
+.md .dt{flex:none;width:8px;height:8px;border-radius:50%;background:#e9c46a;box-shadow:0 0 0 3px rgba(233,196,106,.3)}
+.note{font-size:14.5px;color:#64748b}
+.who{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:#f8fafc;border:1px solid #e6edf5;border-radius:18px;padding:14px}
+.who .n{flex:1 1 160px;font-size:18px;font-weight:800;color:#0f2744;margin:0}
+.who .r{display:block;font-size:13px;font-weight:600;color:#64748b}
+.li{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 16px;border-radius:12px;background:#0a66c2;color:#fff;text-decoration:none;font-weight:800;font-size:14.5px;box-shadow:0 8px 18px -8px rgba(10,102,194,.7)}
+.li:hover{background:#0858a8}
+.li svg{width:18px;height:18px}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:10px 18px;border-radius:14px;font-weight:800;font-size:15px;text-decoration:none;background:#0f2744;color:#fff;flex:1 1 200px}
+.btn:hover{background:#163a63}
+a:focus-visible{outline:3px solid #e9c46a;outline-offset:2px}
+body footer#spss-copy{margin:20px auto 0;padding:14px 16px calc(18px + env(safe-area-inset-bottom));text-align:center;font-size:12.5px;color:#cbd5e1}
+body footer#spss-copy a{color:inherit}
+body footer#spss-copy a.spss-li svg{color:#70b5f9}
+@media (max-width:380px){.lg{width:64px;height:64px;border-radius:17px}.hd{gap:12px}}
+@media (prefers-reduced-motion:no-preference){.c{animation:up .5s cubic-bezier(.2,.8,.2,1) both}@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}}
+</style>
+</head>
+<body>
+<div class="bgx" aria-hidden="true"></div>
+<main id="main">
+<div class="top"><a class="back" href="index.html"><span aria-hidden="true">→</span> الرئيسية</a></div>
+<article class="c" aria-labelledby="ab-h">
+<span class="kick">من نحن</span>
+<header class="hd">
+<div class="lg"><img src="icons/logo-128.png?v=3" alt="" width="76" height="76"></div>
+<div><h1 id="ab-h">بوصلة التعليم</h1><p class="tg">الدرس في هاتفك، أينما كنت</p></div>
+</header>
+
+<section aria-labelledby="s1">
+<h2 id="s1"><span class="i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/></svg></span>فكرة المنصة</h2>
+<p>تجعل «بوصلة التعليم» من هاتف الأستاذ وهواتف الطلبة قناةً لتقديم أي محاضرة: في أي قاعة، ومع أي عدد من الحاضرين، أو عن بُعد.</p>
+<p>لا حاجة إلى جهاز عرض أو حاسوب، ولا قلق من أعطالهما أو من عدم توفّرهما. منصة خفيفة وسهلة الاستعمال: يفتحها الطالب من هاتفه ويتابع الدرس مباشرة.</p>
+</section>
+
+<section aria-labelledby="s2">
+<h2 id="s2"><span class="i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M11 18h2"/></svg></span>ما تقدمه المنصة</h2>
+<ul class="f">
+<li><span class="d" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span>محتوى المحاضرات وحصص التطبيق، معروضًا بشكل مهيّأ للهاتف.</span></li>
+<li><span class="d" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span>تسجيل الحضور في الحصة من الهاتف.</span></li>
+<li><span class="d" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span>التقييمات عبر المنصة.</span></li>
+<li><span class="d" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span>لوحة الطالب: العلامات والحضور والجداول الزمنية.</span></li>
+<li><span class="d" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span>طلبات مراجعة الحضور.</span></li>
+<li><span class="d" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span><span>التثبيت على الهاتف كتطبيق، والوصول إليها بلمسة واحدة.</span></li>
+</ul>
+</section>
+
+<section aria-labelledby="s3">
+<h2 id="s3"><span class="i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></span>المقاييس</h2>
+<p>المقياس المتاح حاليًا على المنصة:</p>
+<span class="md"><span class="dt" aria-hidden="true"></span>مقياس: <b dir="auto">برمجيات إحصائية SPSS</b></span>
+<p class="note">وستُضاف لاحقًا مقاييس أخرى، وينضم إليها أساتذة وطلبة آخرون.</p>
+</section>
+
+<section aria-labelledby="s4">
+<h2 id="s4"><span class="i" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>المصمم</h2>
+<div class="who">
+<p class="n">د. بوصفصاف فريد<span class="r">تصميم المنصة وإعداد محتواها</span></p>
+<a class="li" href="https://www.linkedin.com/in/farid-boussafsaf" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>LinkedIn<span class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"> (يفتح في نافذة جديدة)</span></a>
+</div>
+</section>
+
+<div class="cta"><a class="btn" href="index.html">الدخول إلى المنصة</a></div>
+</article>
+</main>
+<footer id="spss-copy" data-static="1" dir="rtl">© 2026 <a href="https://www.linkedin.com/in/farid-boussafsaf" target="_blank" rel="noopener noreferrer">د. بوصفصاف فريد</a>، كل الحقوق محفوظة</footer>
+</body>
+</html>
