@@ -5,7 +5,7 @@
    - update70: إشعارات الهاتف (Web Push عبر Firebase Cloud Messaging، رسائل data فقط): يعرض الإشعار، ويفتح رابطه عند النقر،
      ويُعلم الصفحة المفتوحة (شريط داخل المنصة + تحديث الجرس). لا كود Firebase داخل هذا الملف.
    - طلبات Apps Script (script.google.com) ومواقع أخرى: لا يتدخل أبداً. */
-var C='spss-pwa-v13',OFF='offline.html',ABOUT='about.html';
+var C='spss-pwa-v14',OFF='offline.html',ABOUT='about.html';
 self.addEventListener('install',function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll([OFF,ABOUT,'icons/icon-192.png','icons/logo-128.png?v=3','icons/badge-96.png']);}).then(function(){return self.skipWaiting();}));});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf('spss-pwa-')===0&&k!==C;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});
 self.addEventListener('fetch',function(e){var r=e.request;

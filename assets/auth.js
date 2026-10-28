@@ -487,7 +487,7 @@ function assessUI(){if(!ID)return;document.body.classList.add('spss-auth');if(ID
  new MutationObserver(fix).observe(document.body,{childList:true,subtree:true});fix();}
 function landingUI(){if(!ID){loginUI();return;}if(goNext())return;}
 // ===== update72: تهيئة الإشعارات بعد الدخول/التثبيت (نافذة + شريط تذكير مؤجَّل) =====
-var MIUI=/Xiaomi|Redmi|POCO|MIUI|HyperOS|\bM2\d{3}|\b2\d{3}[A-Z0-9]{4,}\b/i.test(UA);
+function isMiui(){return /Xiaomi|Redmi|POCO|MIUI|HyperOS|\bM2\d{3}|\b2\d{3}[A-Z0-9]{4,}\b/i.test(UA);}
 function pnSnz(){return Date.now()<Number(lg('spss_pn_snz')||0);}
 function pnSnooze(d){ls('spss_pn_snz',String(Date.now()+d*864e5));}
 function pnCss(){if(document.getElementById('spss-pn-css'))return;var s=document.createElement('style');s.id='spss-pn-css';s.textContent=
@@ -507,7 +507,7 @@ function pnGuide(s){
  if(s==='na')return '<p>هذا المتصفح لا يدعم الإشعارات. افتح المنصة في <b>Chrome</b> على Android أو الحاسوب، أو ثبّتها من Safari على iPhone.</p>';
  var h='<p>الإشعارات محظورة لهذا الموقع في المتصفح. لتفعيلها:</p>';
  if(ANDR){h+='<ol><li>اضغط مطوّلاً على أيقونة '+esc(APP_SHORT)+' ثم «معلومات التطبيق»، أو افتح المنصة في Chrome واضغط رمز القفل 🔒 بجانب العنوان.</li><li>اختر «<b>الإشعارات</b>» ثم «<b>سماح</b>».</li><li>أغلق التطبيق تماماً ثم افتحه، واضغط «تفعيل الإشعارات».</li></ol>';
-  if(MIUI)h+='<p class="tip"><b>هاتف Xiaomi / Redmi / POCO:</b> افتح الإعدادات ← التطبيقات ← إدارة التطبيقات ← <b>Chrome</b>:<br>• الإشعارات: <b>سماح</b> (وسماح لموقع '+esc(APP_SHORT)+' داخلها).<br>• التشغيل التلقائي (Autostart): <b>مفعّل</b>.<br>• توفير البطارية: <b>بلا قيود</b> (No restrictions).</p>';}
+  if(isMiui())h+='<p class="tip"><b>هاتف Xiaomi / Redmi / POCO:</b> افتح الإعدادات ← التطبيقات ← إدارة التطبيقات ← <b>Chrome</b>:<br>• الإشعارات: <b>سماح</b> (وسماح لموقع '+esc(APP_SHORT)+' داخلها).<br>• التشغيل التلقائي (Autostart): <b>مفعّل</b>.<br>• توفير البطارية: <b>بلا قيود</b> (No restrictions).</p>';}
  else if(IOS)h+='<ol><li>افتح الإعدادات ← الإشعارات ← '+esc(APP_SHORT)+'.</li><li>فعّل «<b>السماح بالإشعارات</b>».</li></ol>';
  else h+='<ol><li>اضغط رمز القفل 🔒 بجانب عنوان الموقع.</li><li>اجعل «<b>الإشعارات</b>» على «<b>سماح</b>».</li><li>أعد تحميل الصفحة ثم اضغط «تفعيل الإشعارات».</li></ol>';
  return h;}
@@ -515,7 +515,7 @@ function pnClose(){var w=document.getElementById('spss-pn');if(w)w.remove();pnSt
 function pnOpen(){if(!ID||document.getElementById('spss-pn'))return;var s=puState();if(s==='on')return;pnCss();ss('spss_pn_seen','1');ss('spss_pn_after',null);
  var w=document.createElement('div');w.id='spss-pn';w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.setAttribute('aria-labelledby','spss-pn-h');
  var ttl=s==='off'?'فعّل الإشعارات على هذا الجهاز':(s==='ios'?'ثبّت المنصة لتصلك الإشعارات':'الإشعارات غير مفعّلة');
- var body=s==='off'?'<p>'+(ID.role==='teacher'?'تصلك فوراً طلبات المراجعة وتنبيهات المنصة، حتى والتطبيق مغلق.':'يصلك فوراً تنبيه عند فتح تقييم أو تسجيل الحضور، ونتائج طلبات المراجعة ورسائل الأستاذ، حتى والتطبيق مغلق.')+'</p><p>اضغط الزر ثم اختر «<b>سماح</b>». سنرسل إشعاراً تجريبياً للتأكد.</p>'+(MIUI?'<p class="tip">هاتف Xiaomi: إن لم يظهر الإشعار التجريبي، اجعل توفير البطارية لـ Chrome «بلا قيود» وفعّل التشغيل التلقائي.</p>':''):pnGuide(s);
+ var body=s==='off'?'<p>'+(ID.role==='teacher'?'تصلك فوراً طلبات المراجعة وتنبيهات المنصة، حتى والتطبيق مغلق.':'يصلك فوراً تنبيه عند فتح تقييم أو تسجيل الحضور، ونتائج طلبات المراجعة ورسائل الأستاذ، حتى والتطبيق مغلق.')+'</p><p>اضغط الزر ثم اختر «<b>سماح</b>». سنرسل إشعاراً تجريبياً للتأكد.</p>'+(isMiui()?'<p class="tip">هاتف Xiaomi: إن لم يظهر الإشعار التجريبي، اجعل توفير البطارية لـ Chrome «بلا قيود» وفعّل التشغيل التلقائي.</p>':''):pnGuide(s);
  w.innerHTML='<div class="c"><div class="hd"><span class="bigic" aria-hidden="true">🔔</span><h2 id="spss-pn-h">'+ttl+'</h2><button type="button" class="x" data-a="x" aria-label="إغلاق">✕</button></div>'+body+
   '<div class="st" role="status" aria-live="polite"></div><div class="bt">'+(s==='off'?'<button type="button" class="p" data-a="go">🔔 تفعيل الإشعارات</button>':'')+'<button type="button" class="s" data-a="later">'+(s==='off'?'لاحقاً':'حسناً')+'</button></div></div>';
  document.body.appendChild(w);var st=w.querySelector('.st'),sp=document.getElementById('spss-pns');if(sp)sp.remove();
@@ -529,7 +529,7 @@ function pnOpen(){if(!ID||document.getElementById('spss-pn'))return;var s=puStat
      b.remove();var l=w.querySelector('[data-a="later"]');if(l)l.textContent='تم';}).catch(function(){st.textContent='✅ تم التفعيل.';b.remove();});});}});
  w.addEventListener('keydown',function(e){if(e.key==='Escape')pnClose();});
  setTimeout(function(){var f=w.querySelector('[data-a="go"]')||w.querySelector('[data-a="later"]');try{f.focus();}catch(e){}},60);}
-function pnStrip(){var o=document.getElementById('spss-pns');if(o)o.remove();if(!ID||PAGE==='alerts'||pnSnz()||document.getElementById('spss-pn'))return;var s=puState();if(s==='on'||s==='na')return;
+function pnStrip(){var o=document.getElementById('spss-pns');if(o)o.remove();if(!ID||(puOk()&&Notification.permission==='granted')||PAGE==='alerts'||pnSnz()||document.getElementById('spss-pn'))return;var s=puState();if(s==='on'||s==='na')return;
  var ub=document.getElementById('spss-ub');if(!ub)return;pnCss();var t=document.createElement('div');t.id='spss-pns';t.setAttribute('role','region');t.setAttribute('aria-label','تذكير الإشعارات');
  t.innerHTML='<span class="tx">🔔 '+(s==='ios'?'ثبّت المنصة على الشاشة الرئيسية لتصلك الإشعارات.':(s==='denied'?'الإشعارات محظورة على هذا الجهاز.':'فعّل الإشعارات لتصلك التنبيهات فوراً.'))+'</span><button type="button" class="go">'+(s==='off'?'تفعيل':'كيف؟')+'</button><button type="button" class="x" aria-label="إخفاء التذكير لثلاثة أيام" title="إخفاء">✕</button>';
  ub.parentNode.insertBefore(t,ub.nextSibling);t.querySelector('.go').onclick=pnOpen;t.querySelector('.x').onclick=function(){pnSnooze(3);t.remove();};}
@@ -537,7 +537,7 @@ function pnInit(){if(!ID)return;var s=puState();
  window.addEventListener('appinstalled',function(){ss('spss_pn_after','1');setTimeout(pnAuto,1500);});
  if(s==='on'||s==='na'){return;}
  pnStrip();pnAuto();}
-function pnAuto(n){n=n||0;if(!ID||puState()==='on'||puState()==='na'||document.getElementById('spss-pn'))return;
+function pnAuto(n){n=n||0;if(!ID||(puOk()&&Notification.permission==='granted')||puState()==='on'||puState()==='na'||document.getElementById('spss-pn'))return;
  var want=sg('spss_pn_after')==='1'||(isSA()&&sg('spss_pn_seen')!=='1'&&!pnSnz());if(!want)return;
  if(document.getElementById('spss-ins')||document.getElementById('spss-lg')){if(n<40)setTimeout(function(){pnAuto(n+1);},1500);return;}
  setTimeout(function(){if(!document.getElementById('spss-ins'))pnOpen();else pnAuto(n+1);},n?400:1800);}
