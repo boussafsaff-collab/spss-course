@@ -1,0 +1,25 @@
+{
+  "id": "/spss-course/",
+  "name": "برمجيات إحصائية SPSS",
+  "short_name": "SPSS",
+  "description": "منصة مقياس برمجيات إحصائية SPSS، د. بوصفصاف فريد، جامعة قسنطينة 2",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/spss-course/index.html?source=pwa",
+  "scope": "/spss-course/",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#0f2744",
+  "background_color": "#0f2744",
+  "categories": ["education"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "related_applications": [
+    { "platform": "webapp", "url": "https://boussafsaff-collab.github.io/spss-course/manifest.webmanifest" }
+  ],
+  "prefer_related_applications": false
+}

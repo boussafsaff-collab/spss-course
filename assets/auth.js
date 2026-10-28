@@ -119,6 +119,25 @@ var CSS=[
 '#spss-dl{position:fixed;inset:0;z-index:2147483001;background:rgba(2,6,23,.72);display:flex;align-items:center;justify-content:center;padding:16px;direction:rtl;font-family:Cairo,"Segoe UI",Tahoma,sans-serif}',
 '#spss-dl .c{background:#fff;color:#1e293b;border-radius:16px;padding:18px;max-width:420px;width:100%;box-sizing:border-box}#spss-dl h3{margin:0 0 8px;font-size:18px}#spss-dl p{margin:0 0 10px;font-size:14px;color:#475569;line-height:1.7}',
 '#spss-dl .g2{display:grid;grid-template-columns:1fr 1fr;gap:8px}#spss-dl button{font:inherit;font-weight:800;font-size:15px;border:0;border-radius:12px;padding:11px 10px;color:#fff;background:#1d4f86;cursor:pointer}#spss-dl button.n{background:#64748b;width:100%;margin-top:10px}',
+'#spss-ins{direction:rtl;text-align:right;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;position:fixed;inset:0;z-index:2147483605;display:flex;align-items:flex-end;justify-content:center;line-height:1.7;color:#0f2744}#spss-ins *{box-sizing:border-box}',
+'#spss-ins .bd{position:absolute;inset:0;background:rgba(2,6,23,.55);animation:spssIn .25s ease both}',
+'#spss-ins .sh{position:relative;width:100%;max-width:480px;max-height:92vh;overflow-y:auto;background:#fff;border-radius:24px 24px 0 0;padding:10px 20px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -18px 50px -12px rgba(2,6,23,.45);animation:spssSU .32s cubic-bezier(.2,.8,.2,1) both}',
+'#spss-ins .sh:focus{outline:none}#spss-ins .gr{width:44px;height:5px;border-radius:9px;background:#cbd5e1;margin:0 auto 12px}',
+'#spss-ins .hd{display:flex;align-items:center;gap:12px;margin:0 0 8px}#spss-ins .lg{flex:none;width:52px;height:52px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#0f2744,#1d4f86);color:#e9c46a;box-shadow:0 10px 22px -8px rgba(15,39,68,.6)}#spss-ins .lg svg{width:27px;height:27px}',
+'#spss-ins .kk{display:inline-block;font-size:11.5px;font-weight:800;color:#8a6d1f;background:#fdf3d7;border-radius:99px;padding:1px 10px}#spss-ins h2{margin:2px 0 0;font-size:19px;font-weight:800;color:#0f2744;line-height:1.4}',
+'#spss-ins .x{margin-inline-start:auto;flex:none;width:40px;height:40px;border:0;border-radius:12px;background:#f1f5f9;color:#334155;font-size:17px;cursor:pointer}',
+'#spss-ins p{margin:0 0 12px;font-size:14.5px;color:#475569}#spss-ins .ok{color:#047857;font-weight:800}',
+'#spss-ins ol{list-style:none;margin:0 0 14px;padding:0;display:grid;gap:8px}#spss-ins li{display:flex;align-items:center;gap:10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:9px 12px;font-size:14px;font-weight:700;color:#1e293b}',
+'#spss-ins li .n{flex:none;width:26px;height:26px;border-radius:50%;background:#0f2744;color:#fff;display:grid;place-items:center;font-size:13px}#spss-ins li svg{flex:none;width:24px;height:24px;color:#2563eb}#spss-ins li b{color:#0f2744}',
+'#spss-ins .lk{display:flex;gap:8px;margin:0 0 14px}#spss-ins .lk input{flex:1;min-width:0;font:inherit;font-size:13px;direction:ltr;text-align:left;border:1.5px solid #cbd5e1;border-radius:12px;padding:10px 12px;color:#0f2744;background:#f8fafc}',
+'#spss-ins .bt{display:flex;gap:10px;flex-wrap:wrap}#spss-ins .bt button,#spss-ins .lk button,#spss-ins .bt a{font:inherit;font-weight:800;font-size:15px;border-radius:14px;padding:12px 16px;min-height:48px;cursor:pointer;border:0;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}',
+'#spss-ins .bt .p{flex:1 1 140px;color:#fff;background:linear-gradient(135deg,#0f2744,#1d4f86);box-shadow:0 10px 20px -10px rgba(15,39,68,.7)}#spss-ins .bt .s{flex:1 1 110px;color:#334155;background:#f1f5f9}#spss-ins .lk button{flex:none;color:#fff;background:#1d4f86}',
+'#spss-ins button:focus-visible,#spss-ins a:focus-visible,#spss-ins input:focus-visible{outline:3px solid #e9c46a;outline-offset:2px}',
+'@keyframes spssSU{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}',
+'@media (min-width:700px){#spss-ins{align-items:center}#spss-ins .sh{border-radius:24px;padding-bottom:20px}#spss-ins .gr{display:none}}',
+'@media (prefers-reduced-motion:reduce){#spss-ins .sh,#spss-ins .bd{animation:none!important}}',
+'#spss-me .nins{display:flex;align-items:center;gap:8px;width:calc(100% - 16px);margin:10px 8px 4px;font:inherit;font-weight:800;font-size:14px;color:#0f2744;background:#fdf3d7;border:1px solid #f1d58a;border-radius:12px;padding:10px 12px;cursor:pointer;text-align:right}#spss-me .nins svg{width:20px;height:20px;flex:none}',
+'#spss-ub .ins{background:#e9c46a!important;color:#0f2744!important}',
 'body.spss-st #prof-btn,body.spss-st #tlogin{display:none!important}body.spss-auth #login{display:none!important}',
 '.spss-hide{display:none!important}.spss-who{grid-column:1/-1;font-size:14px;font-weight:700;color:#0f2744;background:#e0f2fe;border:1px solid #7dd3fc;border-radius:10px;padding:8px 12px}',
 '.dark .spss-who,html.dark .spss-who{background:#0c4a6e;color:#e0f2fe;border-color:#0369a1}.spss-slot{display:block;margin-top:6px;font-size:13.5px;font-weight:700}'].join('\n');
@@ -144,11 +163,11 @@ function bar(){if(!ID||document.getElementById('spss-ub'))return;var b=document.
  var home=PAGE==='landing'?'':'<a class="b" href="'+ROOT+'index.html">🏠 الرئيسية</a>';
  var ham=ID.role!=='teacher'?'<button type="button" class="ham" data-x="me" aria-label="لوحة الطالب" aria-controls="spss-me" aria-expanded="false" title="لوحة الطالب">☰</button>':'';
  if(ID.role==='student'){b.innerHTML=ham+'<span class="who">👤 '+esc((ID.nom+' '+ID.prenom).trim())+'<small>'+esc(ID.sp||'')+(ID.grp?' – الفوج '+esc(ID.grp):'')+'</small></span>'+home+'<button type="button" class="o" data-x="out">تغيير المستخدم / خروج</button>';}
- else if(ID.role==='teacher'){b.innerHTML='<span class="who">👨‍🏫 الأستاذ<small>وضع الأستاذ</small></span>'+home+'<a class="t" href="'+ROOT+'assessment/teacher/">لوحة الأستاذ</a><button type="button" class="g" data-x="tstu">🧪 الدخول كطالب</button><button type="button" data-x="clean">🧹 مسح بيانات التجربة</button><button type="button" class="o" data-x="out">خروج</button>';}
+ else if(ID.role==='teacher'){b.innerHTML='<span class="who">👨‍🏫 الأستاذ<small>وضع الأستاذ</small></span>'+home+'<a class="t" href="'+ROOT+'assessment/teacher/">لوحة الأستاذ</a><button type="button" class="ins" data-x="inst">📲 تثبيت المنصة</button><button type="button" class="g" data-x="tstu">🧪 الدخول كطالب</button><button type="button" data-x="clean">🧹 مسح بيانات التجربة</button><button type="button" class="o" data-x="out">خروج</button>';}
  else{b.className='tstu';b.innerHTML=ham+'<span class="who"><span class="tag">وضع الأستاذ كطالب</span>'+esc(PROFS[ID.prof]||ID.sp||'')+'<small>رقم تجريبي <bdi dir="ltr">'+esc(ID.bac)+'</bdi></small></span>'+home+'<button type="button" class="t" data-x="back">↩️ العودة إلى دور الأستاذ</button><button type="button" class="o" data-x="out">خروج</button>';}
  b.addEventListener('click',function(e){var x=e.target.closest('[data-x]');if(!x)return;var a=x.getAttribute('data-x');
   if(a==='out'){if(confirm(ID.role==='student'?'تسجيل الخروج من المنصة على هذا الجهاز؟ (حضورك ونتائجك المسجَّلة لا تُلغى)':'تسجيل الخروج؟'))logout();}
-  else if(a==='me')meOpen(x);else if(a==='tstu')toStudent();else if(a==='back')toTeacher();else if(a==='clean')cleanT(x);});
+  else if(a==='me')meOpen(x);else if(a==='inst')instOpen(x);else if(a==='tstu')toStudent();else if(a==='back')toTeacher();else if(a==='clean')cleanT(x);});
  document.body.insertBefore(b,document.body.firstChild);}
 // ===== شاشة الدخول (الصفحة الرئيسية) =====
 function loginUI(){if(document.getElementById('spss-lg'))return;var w=document.createElement('div');w.id='spss-lg';w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.setAttribute('aria-labelledby','spss-lg-h');w.setAttribute('aria-describedby','spss-lg-d');
@@ -191,7 +210,7 @@ function loginUI(){if(document.getElementById('spss-lg'))return;var w=document.c
   else if(role==='t'){if(!v){sErr('أدخل الرمز السري.');inp.focus();return;}busy(true);
    post({action:'askey',key:v}).then(function(r){busy(false);if(!r.ok){sErr(r.err==='BAD_KEY'?'الرمز السري غير صحيح.':'تعذّر الاتصال بالخادم، أعد المحاولة.');inp.focus();return;}
     clearAll();ss('spss_tkey',v);ss('dk-prof',v);ss('as_tkey',v);done();});}};
- function done(){if(goNext())return;location.replace(location.pathname);}}
+ function done(){ss('spss_inst_after','1');if(goNext())return;location.replace(location.pathname);}}
 // ===== صفحات الحصص: زر واحد «تسجيل الحضور» برقم الدخول =====
 function lecName(){var r=/LECN\s*=\s*'([^']+)'/,m=null;Array.prototype.some.call(document.querySelectorAll('script:not([src])'),function(s){m=(s.textContent||'').match(r);return !!m;});
  if(m)return m[1];var m2=null;Array.prototype.some.call(document.querySelectorAll('script:not([src])'),function(s){m2=(s.textContent||'').match(/append\('lecture','([^']+)'\)/);return !!m2;});return m2?m2[1]:'';}
@@ -233,7 +252,7 @@ function assessUI(){if(!ID)return;document.body.classList.add('spss-auth');if(ID
  var fix=function(){Array.prototype.forEach.call(document.querySelectorAll('[data-go]'),function(b){if(b.textContent.indexOf('ابدأ التقييم')>=0)b.innerHTML=b.innerHTML.replace('ابدأ التقييم','بدء التقييم');});};
  new MutationObserver(fix).observe(document.body,{childList:true,subtree:true});fix();}
 function landingUI(){if(!ID){loginUI();return;}if(goNext())return;}
-function init(){addCss();if(PAGE==='landing')landingUI();bar();filterUI();
+function init(){addCss();if(PAGE==='landing')landingUI();bar();filterUI();instInit();
  if(ID&&ID.role==='student'&&ID.free===undefined)getJ({action:'aslist',sbac:ID.bac}).then(function(r){if(r&&r.ok&&r.who){var s=pj(lg('spss_id'))||{};if(s.bac===ID.bac){s.free=r.who.free?1:0;ls('spss_id',JSON.stringify(s));if(s.free&&FLT)location.reload();}}});
  if(PAGE==='session'){if(!(BIZ&&TPPAGE))sessionUI();}else if(PAGE==='assess')assessUI();
  else if(PAGE==='teacher'&&ID&&ID.role==='tstu'){/* لوحة الأستاذ متاحة دائماً بالرمز */}}
@@ -283,10 +302,10 @@ function meOpen(btn){var d=document.getElementById('spss-me');
  if(!d){d=document.createElement('div');d.id='spss-me';d.setAttribute('role','dialog');d.setAttribute('aria-modal','true');d.setAttribute('aria-label','لوحة الطالب');d.tabIndex=-1;
   d.innerHTML='<div class="mw"><div class="shd"><button type="button" id="spss-me-hb" aria-label="القائمة" aria-expanded="false" aria-controls="spss-me-nav">☰</button><span class="stt" id="spss-me-t" aria-live="polite"></span><button type="button" class="x" aria-label="إغلاق لوحة الطالب" title="إغلاق">✕</button></div>'+
   '<div class="bdp hide" id="spss-me-bdp"></div><div class="lay" id="spss-me-lay"><nav class="mnav" id="spss-me-nav" aria-label="أقسام لوحة الطالب"><div class="nvh"><span>📊 لوحة الطالب<small id="spss-me-w2"></small></span><button type="button" class="mnx" aria-label="إغلاق القائمة">✕</button></div>'+
-  '<div class="tl tb" role="tablist" aria-orientation="vertical" aria-label="أقسام لوحة الطالب">'+MET.map(function(x){return '<button type="button" role="tab" id="spss-me-t-'+x[0]+'" data-g="'+x[0]+'" aria-controls="spss-me-'+x[0]+'" aria-selected="false" tabindex="-1"><i class="fa-solid '+x[1]+'" aria-hidden="true"></i><span>'+x[2]+'</span></button>';}).join('')+'</div></nav>'+
+  '<div class="tl tb" role="tablist" aria-orientation="vertical" aria-label="أقسام لوحة الطالب">'+MET.map(function(x){return '<button type="button" role="tab" id="spss-me-t-'+x[0]+'" data-g="'+x[0]+'" aria-controls="spss-me-'+x[0]+'" aria-selected="false" tabindex="-1"><i class="fa-solid '+x[1]+'" aria-hidden="true"></i><span>'+x[2]+'</span></button>';}).join('')+'</div><button type="button" class="nins" id="spss-me-ins">'+LOGO.replace('aria-hidden','data-i aria-hidden')+'<span>تثبيت المنصة على هاتفك</span></button></nav>'+
   '<div class="mn"><p class="who" id="spss-me-w"></p><div class="bd" id="spss-me-b"><p>جارٍ التحميل…</p></div></div></div></div>';
   document.body.appendChild(d);
-  d.querySelector('.shd .x').onclick=meClose;d.querySelector('.mnx').onclick=function(){meDrawer(false);};meEl('bdp').onclick=function(){meDrawer(false);};
+  d.querySelector('.shd .x').onclick=meClose;meEl('ins').onclick=function(){instOpen(this);};d.querySelector('.mnx').onclick=function(){meDrawer(false);};meEl('bdp').onclick=function(){meDrawer(false);};
   meEl('hb').onclick=function(){if(meDesk()){ls('spss_menav',meCol()?'1':'0');meSync();}else meDrawer(!meD);};
   var tl=d.querySelector('.tl');
   tl.onclick=function(e){var b=e.target.closest('[data-g]');if(!b)return;meSel(b.getAttribute('data-g'));if(!meDesk())meDrawer(false,true);try{d.scrollTo(0,0);}catch(x){d.scrollTop=0;}};
@@ -366,6 +385,74 @@ function rqClick(ev){var t=ev.target.closest('button');if(!t)return;var row=t.cl
   post({action:'asrqadd',sbac:ID.bac,type:t.getAttribute('data-t'),num:t.getAttribute('data-n'),note:f3.querySelector('textarea').value.slice(0,200)}).then(function(r){
    if(r&&r.ok){if(ME){ME.rq=r.rq;meRender(ME);}var nr=document.querySelector('#spss-me [data-rqk="'+k+'"] .mr2');if(nr){nr.setAttribute('tabindex','-1');try{nr.focus();}catch(e){}}return;}
    t.disabled=false;er.textContent=RQE[r&&r.err]||'تعذّر إرسال الطلب الآن. أعد المحاولة بعد قليل.';}).catch(function(){t.disabled=false;er.textContent='تعذّر الاتصال. أعد المحاولة.';});}}
+// ===== update67: تثبيت المنصة على الهاتف (PWA) =====
+var LOGO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3 20h18"/><path d="M6 16v-5"/><path d="M11 16V6"/><path d="M16 16v-8"/><path d="M20 16v-3"/></svg>';
+var SVG_SHARE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12"/><path d="m7.5 7.5 4.5-4.5 4.5 4.5"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>';
+var SVG_ADD='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M12 8v8M8 12h8"/></svg>';
+var UA=navigator.userAgent||'';
+var IOS=/iPhone|iPad|iPod/i.test(UA)||(/Macintosh/.test(UA)&&navigator.maxTouchPoints>1);
+var ANDR=/Android/i.test(UA);
+var INAPP=/FBAN|FBAV|FB_IAB|FBIOS|FB4A|Messenger|Instagram|Line\/|MicroMessenger|Snapchat|TikTok|musical_ly|Twitter|MoodleMobile|; wv\)|GSA\//i.test(UA);
+var INS={bip:null,want:0,ret:null,why:''};
+function isSA(){try{if(navigator.standalone===true)return true;return ['standalone','fullscreen','minimal-ui','window-controls-overlay'].some(function(m){return window.matchMedia('(display-mode: '+m+')').matches;});}catch(e){return false;}}
+function instMark(src){ls('spss_inst','1');ls('spss_inst_src',src||'');instClose();}
+function instSnz(){var t=Number(lg('spss_inst_snz')||0);return t&&t>Date.now();}
+function instInit(){
+ try{document.documentElement.setAttribute('data-ins',isSA()?'sa':(IOS?'ios':(INAPP?'inapp':'web')));}catch(e){}
+ if(isSA()){if(lg('spss_inst')!=='1')ls('spss_inst_src','standalone');ls('spss_inst','1');}
+ if('serviceWorker' in navigator&&location.protocol==='https:'){try{navigator.serviceWorker.register(ROOT+'sw.js',{scope:new URL(ROOT).pathname}).catch(function(){});}catch(e){}}
+ if(isSA())return;
+ window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();INS.bip=e;
+  // المتصفح لا يعرض هذا الحدث إن كانت المنصة مثبتة: علامة «مثبتة» قديمة ⇒ أُزيلت التطبيق
+  if(lg('spss_inst')==='1'&&lg('spss_inst_src')!=='ios-btn'){ls('spss_inst',null);}
+  if(INS.want===1)instShow('bip');});
+ window.addEventListener('appinstalled',function(){instMark('appinstalled');});
+ if(navigator.getInstalledRelatedApps){try{navigator.getInstalledRelatedApps().then(function(a){if(a&&a.length)instMark('related');}).catch(function(){});}catch(e){}}
+ if(!ID)return;
+ var after=sg('spss_inst_after')==='1';
+ var auto=ID.role==='teacher'?(after&&lg('spss_inst_t')!=='1'):(after||(PAGE!=='session'&&sg('spss_inst_seen')!=='1'));
+ if(!auto)return;
+ setTimeout(function(){
+  if(lg('spss_inst')==='1'||isSA()||instSnz()||document.getElementById('spss-ins')||document.getElementById('spss-lg'))return;
+  if(INAPP)return instShow('inapp');
+  if(IOS)return instShow('ios');
+  if(INS.bip)return instShow('bip');
+  // لم يصل beforeinstallprompt بعد: ننتظره قليلاً؛ إن لم يصل (مثبتة على الأرجح أو متصفح لا يدعم) لا نُلحّ
+  INS.want=1;setTimeout(function(){INS.want=2;},5000);
+ },1200);}
+function instClose(){var w=document.getElementById('spss-ins');if(!w)return;w.remove();try{if(INS.ret&&INS.ret.focus)INS.ret.focus();}catch(e){}INS.ret=null;}
+function instOpen(btn){INS.ret=btn||null;
+ if(isSA())return instShow('done',1);
+ if(INAPP)return instShow('inapp',1);
+ if(IOS)return instShow('ios',1);
+ if(INS.bip)return instShow('bip',1);
+ instShow('manual',1);}
+function instShow(kind,manual){if(document.getElementById('spss-ins'))return;
+ if(!manual){ss('spss_inst_seen','1');ss('spss_inst_after',null);if(ID&&ID.role==='teacher')ls('spss_inst_t','1');}
+ INS.why=kind;var link=ROOT+'index.html';
+ var head='<div class="hd"><div class="lg">'+LOGO+'</div><div><span class="kk">برمجيات إحصائية SPSS</span><h2 id="spss-ins-h">';
+ var x='</h2></div><button type="button" class="x" data-a="x" aria-label="إغلاق">✕</button></div>';
+ var lead='<p id="spss-ins-d">افتح المنصة مباشرة من الشاشة الرئيسية بلمسة واحدة، دون المرور برابط Moodle أو رمز QR في كل مرة.</p>';
+ var later='<button type="button" class="s" data-a="later">لاحقًا</button>',h='';
+ if(kind==='bip')h=head+'ثبّت المنصة على هاتفك'+x+lead+'<div class="bt"><button type="button" class="p" data-a="go">📲 تثبيت</button>'+later+'</div>';
+ else if(kind==='ios')h=head+'ثبّت المنصة على هاتفك'+x+lead+'<p><b>اضغط زر المشاركة ثم إضافة إلى الشاشة الرئيسية</b></p><ol><li><span class="n">1</span>'+SVG_SHARE+'<span>اضغط زر <b>المشاركة</b> في شريط Safari</span></li><li><span class="n">2</span>'+SVG_ADD+'<span>اختر <b>«إضافة إلى الشاشة الرئيسية»</b></span></li><li><span class="n">3</span><span class="lg" style="width:24px;height:24px;border-radius:7px;box-shadow:none">'+LOGO+'</span><span>اضغط <b>«إضافة»</b> ثم افتح المنصة من أيقونة SPSS</span></li></ol><div class="bt"><button type="button" class="p" data-a="added">✓ تمت الإضافة</button>'+later+'</div>';
+ else if(kind==='inapp')h=head+'افتح الرابط في Chrome أو Safari'+x+'<p id="spss-ins-d">أنت تتصفح من داخل تطبيق (فيسبوك، ماسنجر، Moodle…) لا يسمح بتثبيت المنصة. افتح الرابط في <b>Chrome</b> (أندرويد) أو <b>Safari</b> (آيفون) أولاً، ثم ثبّتها من هناك.</p><div class="lk"><input type="text" readonly value="'+esc(link)+'" aria-label="رابط المنصة"><button type="button" data-a="copy">نسخ الرابط</button></div><div class="bt">'+(ANDR?'<a class="p" data-a="chrome" href="intent://'+esc(link.replace(/^https?:\/\//,''))+'#Intent;scheme=https;package=com.android.chrome;end">فتح في Chrome</a>':'')+later+'</div>';
+ else if(kind==='done')h=head+'المنصة مثبتة'+x+'<p id="spss-ins-d" class="ok">✓ المنصة مثبتة على هذا الجهاز وتعمل الآن كتطبيق.</p><div class="bt"><button type="button" class="p" data-a="x">حسناً</button></div>';
+ else h=head+'ثبّت المنصة على هاتفك'+x+(lg('spss_inst')==='1'?'<p id="spss-ins-d" class="ok">✓ المنصة مثبتة على هذا الجهاز على الأرجح: ابحث عن أيقونة «SPSS» في الشاشة الرئيسية.</p>':lead)+'<p>إن لم تكن مثبتة: من قائمة المتصفح <b>⋮</b> اختر <b>«تثبيت التطبيق»</b> أو <b>«إضافة إلى الشاشة الرئيسية»</b>.</p><div class="bt"><button type="button" class="p" data-a="x">حسناً</button></div>';
+ var w=document.createElement('div');w.id='spss-ins';w.setAttribute('data-k',kind);
+ w.innerHTML='<div class="bd" data-a="x"></div><div class="sh" role="dialog" aria-modal="true" aria-labelledby="spss-ins-h" aria-describedby="spss-ins-d" tabindex="-1"><div class="gr" aria-hidden="true"></div>'+h+'</div>';
+ document.body.appendChild(w);
+ var sh=w.querySelector('.sh'),f=w.querySelector('.bt .p')||w.querySelector('.bt button')||sh;try{f.focus({preventScroll:true});}catch(e){}
+ w.addEventListener('keydown',function(e){if(e.key==='Escape'){e.stopPropagation();instClose();return;}
+  if(e.key==='Tab'){var fs=Array.prototype.filter.call(sh.querySelectorAll('button,a[href],input'),function(n){return n.offsetParent!==null;});if(!fs.length)return;var a0=fs[0],a1=fs[fs.length-1];
+   if(e.shiftKey&&document.activeElement===a0){e.preventDefault();a1.focus();}else if(!e.shiftKey&&document.activeElement===a1){e.preventDefault();a0.focus();}}});
+ w.addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(!b)return;var a=b.getAttribute('data-a');
+  if(a==='x')instClose();
+  else if(a==='later'){ls('spss_inst_snz',String(Date.now()+3*864e5));instClose();}
+  else if(a==='added')instMark('ios-btn');
+  else if(a==='go'&&INS.bip){var ev=INS.bip;INS.bip=null;try{ev.prompt();ev.userChoice.then(function(c){if(c&&c.outcome==='accepted')instMark('prompt');else instClose();}).catch(function(){instClose();});}catch(err){instClose();}}
+  else if(a==='copy'){var inp=w.querySelector('.lk input'),okf=function(){b.textContent='✓ تم النسخ';};
+   try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(link).then(okf,function(){inp.select();try{document.execCommand('copy');okf();}catch(x){}});else{inp.select();document.execCommand('copy');okf();}}catch(err){inp.select();}}});}
 window.SPSS_AUTH={id:ID,logout:logout,cur:cur,U:U,root:ROOT,slotMsg:slotMsg,meOpen:function(){if(ID&&ID.role!=='teacher')meOpen();},flt:FLT};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
