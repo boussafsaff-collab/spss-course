@@ -25,7 +25,9 @@ var PROFS={f1:'إدارة مالية – الفوج 1',f2:'إدارة مالية
 function lg(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function ls(k,v){try{if(v==null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}}
 function sg(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
-function ss(k,v){try{if(v==null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,v)}catch(e){}}
+function ss(k,v){try{if(v==null)sessionStorage.removeItem(k);else sessionStorage.setItem(k,v)}catch(e){}if(k==='spss_tkey')ls(k,v);}
+// update71b: جلسة الأستاذ تبقى على هذا الجهاز حتى «خروج» صريح (كانت في sessionStorage فتضيع عند غلق التطبيق)
+try{if(!sessionStorage.getItem('spss_tkey')&&localStorage.getItem('spss_tkey'))sessionStorage.setItem('spss_tkey',localStorage.getItem('spss_tkey'));}catch(e){}
 function pj(t){try{return JSON.parse(t||'null')}catch(e){return null}}
 function esc(t){var d=document.createElement('span');d.textContent=t==null?'':String(t);return d.innerHTML;}
 function cur(){var k=sg('spss_tkey');
@@ -423,7 +425,7 @@ function loginUI(){if(document.getElementById('spss-lg'))return;var w=document.c
  Array.prototype.forEach.call(w.querySelectorAll('[data-r]'),function(b){b.onclick=function(){role=b.getAttribute('data-r');last=b;Array.prototype.forEach.call(w.querySelectorAll('[data-r]'),function(x){x.classList.toggle('on',x===b)});
   s1.classList.add('hide');f.hidden=false;sErr('');inp.value='';busy(false);
   if(role==='s'){lab.textContent='رقم شهادة البكالوريا';inp.type='tel';inp.setAttribute('inputmode','numeric');inp.maxLength=10;inp.placeholder='6 إلى 9 أرقام';inp.autocomplete='off';
-   fi.innerHTML=IC.card;eye.hidden=true;rc.className='rc';rc.innerHTML=IC.stu+'طالب';hn.textContent='تُدخله مرة واحدة فقط على هذا الجهاز.';}
+   fi.innerHTML=IC.card;eye.hidden=true;rc.className='rc';rc.innerHTML=IC.stu+'طالب';hn.textContent='تُدخله مرة واحدة فقط على هذا الجهاز.';if(!inp.value&&/^\d{5,10}$/.test(lg('spss_last_bac')||''))inp.value=lg('spss_last_bac');}
   else{lab.textContent='الرمز السري للأستاذ';inp.type='password';inp.removeAttribute('inputmode');inp.maxLength=80;inp.placeholder='';inp.autocomplete='current-password';
    fi.innerHTML=IC.lock;eye.hidden=false;eyeSet(false);rc.className='rc t';rc.innerHTML=IC.tea+'أستاذ';hn.textContent='الرمز خاص بالأستاذ ولا يُشارك مع الطلبة.';}
   setTimeout(function(){inp.focus()},50);};});
@@ -437,7 +439,7 @@ function loginUI(){if(document.getElementById('spss-lg'))return;var w=document.c
   if(role==='s'){v=v.replace(/\D/g,'');if(!/^\d{5,10}$/.test(v)){sErr('اكتب رقم البكالوريا (أرقام فقط).');inp.focus();return;}busy(true);
    getJ({action:'aslist',sbac:v}).then(function(r){busy(false);
     if(!r.ok||!r.who){sErr(r.err==='UNKNOWN_BAC'?'رقم البكالوريا هذا غير موجود في قوائم الطلبة. تحقّق منه أو راجع الأستاذ.':r.err==='NO_ROSTER'?'قوائم الطلبة غير مهيّأة بعد.':'تعذّر الاتصال بالخادم، أعد المحاولة.');inp.focus();return;}
-    clearAll();ls('spss_id',JSON.stringify({bac:v,nom:r.who.nom||'',prenom:r.who.prenom||'',sp:r.who.sp||'',grp:r.who.grp||'',free:r.who.free?1:0,t:Date.now()}));ls('as_bac',v);done();});}
+    clearAll();ls('spss_last_bac',v);ls('spss_id',JSON.stringify({bac:v,nom:r.who.nom||'',prenom:r.who.prenom||'',sp:r.who.sp||'',grp:r.who.grp||'',free:r.who.free?1:0,t:Date.now()}));ls('as_bac',v);done();});}
   else if(role==='t'){if(!v){sErr('أدخل الرمز السري.');inp.focus();return;}busy(true);
    post({action:'askey',key:v}).then(function(r){busy(false);if(!r.ok){sErr(r.err==='BAD_KEY'?'الرمز السري غير صحيح.':'تعذّر الاتصال بالخادم، أعد المحاولة.');inp.focus();return;}
     clearAll();ss('spss_tkey',v);ss('dk-prof',v);ss('as_tkey',v);done();});}};
