@@ -319,7 +319,7 @@ function puReg(){var sc=new URL(ROOT).pathname;return navigator.serviceWorker.re
 function puPlat(){return (IOS?'iOS':(ANDR?'Android':(/Windows/.test(UA)?'Windows':(/Mac/.test(UA)?'Mac':(/Linux/.test(UA)?'Linux':'?')))))+' · '+(/Edg\//.test(UA)?'Edge':(/SamsungBrowser/.test(UA)?'Samsung':(/Firefox\//.test(UA)?'Firefox':(/Chrome\//.test(UA)?'Chrome':(/Safari\//.test(UA)?'Safari':'?')))))+(isSA()?' · app':'');}
 function puToken(){return Promise.all([puSdk(),puReg()]).then(function(x){return x[0].getToken({vapidKey:FB_VAPID,serviceWorkerRegistration:x[1]});});}
 function puSave(tok){var o=puAuth();o.action='aspushreg';o.token=tok;o.plat=puPlat();
- return post(o).then(function(r){if(!r||!r.ok)throw new Error((r&&r.err)||'NET');ls('spss_push_tok',tok);ls('spss_push_on','1');ls('spss_push_who',puWho());ls('spss_push_at',String(Date.now()));return r;});}
+ return post(o).then(function(r){if(!r||!r.ok)throw new Error((r&&r.err)||'NET');ls('spss_push_off_u',null);ls('spss_push_tok',tok);ls('spss_push_on','1');ls('spss_push_who',puWho());ls('spss_push_at',String(Date.now()));return r;});}
 function puEnable(){if(PU.busy)return Promise.resolve();var s=puState();if(s!=='off'){puPaint();return Promise.resolve();}
  PU.busy=1;PU.msg='';puPaint();
  return Notification.requestPermission().then(function(p){if(p!=='granted')throw new Error(p==='denied'?'DENIED':'DISMISSED');return puToken();})
@@ -329,13 +329,14 @@ function puEnable(){if(PU.busy)return Promise.resolve();var s=puState();if(s!=='
    PU.msg=m==='DENIED'?'':(m==='DISMISSED'?'لم تُمنح الموافقة. أعد المحاولة واختر «سماح».':(m==='NA'?'':(/push service|Registration failed|AbortError|not supported/i.test(m)?'هذا المتصفح لا يوفّر خدمة الإشعارات على هذا الجهاز. جرّب Chrome (Android/الحاسوب) أو Safari بعد تثبيت المنصة (iPhone).':'تعذّر التفعيل الآن ('+esc(m.slice(0,60))+'). أعد المحاولة بعد قليل.')));
    if(m==='NA')ls('spss_push_na','1');puPaint();});}
 function puDisable(){if(PU.busy)return;var tok=lg('spss_push_tok');PU.busy=1;puPaint();
- var done=function(){ls('spss_push_tok',null);ls('spss_push_on',null);ls('spss_push_who',null);ls('spss_push_at',null);PU.busy=0;PU.msg='تم إيقاف الإشعارات على هذا الجهاز.';puPaint();};
+ var done=function(){ls('spss_push_off_u','1');ls('spss_push_tok',null);ls('spss_push_on',null);ls('spss_push_who',null);ls('spss_push_at',null);PU.busy=0;PU.msg='تم إيقاف الإشعارات على هذا الجهاز.';puPaint();};
  Promise.all([tok?post({action:'aspushunreg',token:tok}).catch(function(){}):0,puSdk().then(function(m){return m.deleteToken();}).catch(function(){})]).then(done,done);}
 function puTest(btn){var tok=lg('spss_push_tok');if(!tok)return;btn.disabled=true;var o=puAuth();o.action='aspushme';o.token=tok;
  post(o).then(function(r){btn.disabled=false;PU.msg=r&&r.ok&&r.sent?'📨 أُرسل إشعار تجريبي، سيظهر خلال ثوانٍ.':(r&&r.err==='TOO_SOON'?'انتظر دقيقة قبل تجربة أخرى.':(r&&r.err==='NOT_REG'?'أعد تفعيل الإشعارات على هذا الجهاز.':'تعذّر الإرسال الآن، والخدمة قيد الإعداد. أعد المحاولة لاحقاً.'));
   if(r&&r.err==='NOT_REG'){ls('spss_push_on',null);}puPaint();}).catch(function(){btn.disabled=false;});}
 // عند الفتح: تجديد الرمز إن تغيّر أو مرّت 3 أيام أو تغيّر المستخدم؛ وإن سُحب الإذن يُلغى التسجيل
-function puRefresh(){if(!ID||!puOk()||lg('spss_push_on')!=='1')return;var tok=lg('spss_push_tok');
+function puRefresh(){if(!ID||!puOk())return;var tok=lg('spss_push_tok');
+ if(lg('spss_push_on')!=='1'||!tok){if(Notification.permission==='granted'&&lg('spss_push_off_u')!=='1')puToken().then(function(t){if(t)return puSave(t).then(function(){puPaint();pnStrip();});}).catch(function(){});return;}
  if(Notification.permission!=='granted'){if(tok)post({action:'aspushunreg',token:tok}).catch(function(){});ls('spss_push_on',null);ls('spss_push_tok',null);return;}
  var old=Date.now()-Number(lg('spss_push_at')||0)>3*864e5,who=lg('spss_push_who')!==puWho();
  puToken().then(function(t){if(t&&(t!==tok||old||who))return puSave(t);}).catch(function(){});}
@@ -443,7 +444,7 @@ function loginUI(){if(document.getElementById('spss-lg'))return;var w=document.c
   else if(role==='t'){if(!v){sErr('أدخل الرمز السري.');inp.focus();return;}busy(true);
    post({action:'askey',key:v}).then(function(r){busy(false);if(!r.ok){sErr(r.err==='BAD_KEY'?'الرمز السري غير صحيح.':'تعذّر الاتصال بالخادم، أعد المحاولة.');inp.focus();return;}
     clearAll();ss('spss_tkey',v);ss('dk-prof',v);ss('as_tkey',v);done();});}};
- function done(){ss('spss_inst_after','1');if(goNext())return;location.replace(location.pathname);}}
+ function done(){ss('spss_inst_after','1');ss('spss_pn_after','1');if(goNext())return;location.replace(location.pathname);}}
 // ===== صفحات الحصص: زر واحد «تسجيل الحضور» برقم الدخول =====
 function lecName(){var r=/LECN\s*=\s*'([^']+)'/,m=null;Array.prototype.some.call(document.querySelectorAll('script:not([src])'),function(s){m=(s.textContent||'').match(r);return !!m;});
  if(m)return m[1];var m2=null;Array.prototype.some.call(document.querySelectorAll('script:not([src])'),function(s){m2=(s.textContent||'').match(/append\('lecture','([^']+)'\)/);return !!m2;});return m2?m2[1]:'';}
@@ -485,7 +486,62 @@ function assessUI(){if(!ID)return;document.body.classList.add('spss-auth');if(ID
  var fix=function(){Array.prototype.forEach.call(document.querySelectorAll('[data-go]'),function(b){if(b.textContent.indexOf('ابدأ التقييم')>=0)b.innerHTML=b.innerHTML.replace('ابدأ التقييم','بدء التقييم');});};
  new MutationObserver(fix).observe(document.body,{childList:true,subtree:true});fix();}
 function landingUI(){if(!ID){loginUI();return;}if(goNext())return;}
-function init(){addCss();if(PAGE==='landing')landingUI();bar();if(PAGE==='alerts')alPage();puMsg();if(ID)setTimeout(puRefresh,2500);filterUI();instInit();copyInit();aboutNav();
+// ===== update72: تهيئة الإشعارات بعد الدخول/التثبيت (نافذة + شريط تذكير مؤجَّل) =====
+var MIUI=/Xiaomi|Redmi|POCO|MIUI|HyperOS|\bM2\d{3}|\b2\d{3}[A-Z0-9]{4,}\b/i.test(UA);
+function pnSnz(){return Date.now()<Number(lg('spss_pn_snz')||0);}
+function pnSnooze(d){ls('spss_pn_snz',String(Date.now()+d*864e5));}
+function pnCss(){if(document.getElementById('spss-pn-css'))return;var s=document.createElement('style');s.id='spss-pn-css';s.textContent=
+ '#spss-pn{position:fixed;inset:0;z-index:10050;background:rgba(15,23,42,.55);display:flex;align-items:flex-end;justify-content:center;direction:rtl;font-family:inherit}'+
+ '#spss-pn .c{background:#fff;width:100%;max-width:520px;max-height:88vh;overflow:auto;border-radius:18px 18px 0 0;padding:18px 18px 22px;box-shadow:0 -8px 30px rgba(0,0,0,.25);color:#0f172a}'+
+ '@media(min-width:700px){#spss-pn{align-items:center}#spss-pn .c{border-radius:18px}}'+
+ '#spss-pn .hd{display:flex;align-items:center;gap:10px}#spss-pn h2{font-size:19px;margin:0;flex:1;line-height:1.5}#spss-pn .x{border:0;background:#f1f5f9;border-radius:50%;width:36px;height:36px;font-size:16px;cursor:pointer}'+
+ '#spss-pn .bigic{font-size:34px}#spss-pn p{font-size:15px;line-height:1.8;margin:10px 0}#spss-pn ol{margin:8px 0;padding-inline-start:22px;font-size:14.5px;line-height:1.9}'+
+ '#spss-pn .bt{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}#spss-pn .bt button{flex:1 1 140px;min-height:46px;border-radius:12px;font:inherit;font-weight:700;font-size:15px;cursor:pointer}'+
+ '#spss-pn .p{background:#0f2747;color:#fff;border:0}#spss-pn .p[disabled]{opacity:.6}#spss-pn .s{background:#fff;color:#0f2747;border:1.5px solid #cbd5e1}'+
+ '#spss-pn .st{min-height:22px;font-weight:700;font-size:14.5px;color:#15803d}#spss-pn .st.e{color:#b91c1c}#spss-pn .tip{background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:8px 10px;font-size:13.5px}'+
+ '#spss-pns{display:flex;align-items:center;gap:8px;background:#fff7ed;border-bottom:1px solid #fed7aa;padding:8px 12px;direction:rtl;font-size:14px;color:#7c2d12}'+
+ '#spss-pns .tx{flex:1;line-height:1.6}#spss-pns .go{background:#ea580c;color:#fff;border:0;border-radius:10px;padding:7px 12px;font:inherit;font-weight:700;cursor:pointer;white-space:nowrap}'+
+ '#spss-pns .x{background:none;border:0;font-size:16px;color:#9a3412;cursor:pointer;min-width:32px;min-height:32px}';document.head.appendChild(s);}
+function pnGuide(s){
+ if(s==='ios')return '<p>على iPhone وiPad تعمل الإشعارات فقط من المنصة المثبّتة على الشاشة الرئيسية (iOS 16.4 أو أحدث):</p><ol><li>افتح المنصة في <b>Safari</b>.</li><li>اضغط زر المشاركة <b>⬆️</b> ثم «<b>إضافة إلى الشاشة الرئيسية</b>».</li><li>افتح المنصة من أيقونتها الجديدة وسجّل الدخول مرة واحدة فيها.</li><li>اضغط «تفعيل الإشعارات» ثم «سماح».</li></ol>';
+ if(s==='na')return '<p>هذا المتصفح لا يدعم الإشعارات. افتح المنصة في <b>Chrome</b> على Android أو الحاسوب، أو ثبّتها من Safari على iPhone.</p>';
+ var h='<p>الإشعارات محظورة لهذا الموقع في المتصفح. لتفعيلها:</p>';
+ if(ANDR){h+='<ol><li>اضغط مطوّلاً على أيقونة '+esc(APP_SHORT)+' ثم «معلومات التطبيق»، أو افتح المنصة في Chrome واضغط رمز القفل 🔒 بجانب العنوان.</li><li>اختر «<b>الإشعارات</b>» ثم «<b>سماح</b>».</li><li>أغلق التطبيق تماماً ثم افتحه، واضغط «تفعيل الإشعارات».</li></ol>';
+  if(MIUI)h+='<p class="tip"><b>هاتف Xiaomi / Redmi / POCO:</b> افتح الإعدادات ← التطبيقات ← إدارة التطبيقات ← <b>Chrome</b>:<br>• الإشعارات: <b>سماح</b> (وسماح لموقع '+esc(APP_SHORT)+' داخلها).<br>• التشغيل التلقائي (Autostart): <b>مفعّل</b>.<br>• توفير البطارية: <b>بلا قيود</b> (No restrictions).</p>';}
+ else if(IOS)h+='<ol><li>افتح الإعدادات ← الإشعارات ← '+esc(APP_SHORT)+'.</li><li>فعّل «<b>السماح بالإشعارات</b>».</li></ol>';
+ else h+='<ol><li>اضغط رمز القفل 🔒 بجانب عنوان الموقع.</li><li>اجعل «<b>الإشعارات</b>» على «<b>سماح</b>».</li><li>أعد تحميل الصفحة ثم اضغط «تفعيل الإشعارات».</li></ol>';
+ return h;}
+function pnClose(){var w=document.getElementById('spss-pn');if(w)w.remove();pnStrip();}
+function pnOpen(){if(!ID||document.getElementById('spss-pn'))return;var s=puState();if(s==='on')return;pnCss();ss('spss_pn_seen','1');ss('spss_pn_after',null);
+ var w=document.createElement('div');w.id='spss-pn';w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.setAttribute('aria-labelledby','spss-pn-h');
+ var ttl=s==='off'?'فعّل الإشعارات على هذا الجهاز':(s==='ios'?'ثبّت المنصة لتصلك الإشعارات':'الإشعارات غير مفعّلة');
+ var body=s==='off'?'<p>'+(ID.role==='teacher'?'تصلك فوراً طلبات المراجعة وتنبيهات المنصة، حتى والتطبيق مغلق.':'يصلك فوراً تنبيه عند فتح تقييم أو تسجيل الحضور، ونتائج طلبات المراجعة ورسائل الأستاذ، حتى والتطبيق مغلق.')+'</p><p>اضغط الزر ثم اختر «<b>سماح</b>». سنرسل إشعاراً تجريبياً للتأكد.</p>'+(MIUI?'<p class="tip">هاتف Xiaomi: إن لم يظهر الإشعار التجريبي، اجعل توفير البطارية لـ Chrome «بلا قيود» وفعّل التشغيل التلقائي.</p>':''):pnGuide(s);
+ w.innerHTML='<div class="c"><div class="hd"><span class="bigic" aria-hidden="true">🔔</span><h2 id="spss-pn-h">'+ttl+'</h2><button type="button" class="x" data-a="x" aria-label="إغلاق">✕</button></div>'+body+
+  '<div class="st" role="status" aria-live="polite"></div><div class="bt">'+(s==='off'?'<button type="button" class="p" data-a="go">🔔 تفعيل الإشعارات</button>':'')+'<button type="button" class="s" data-a="later">'+(s==='off'?'لاحقاً':'حسناً')+'</button></div></div>';
+ document.body.appendChild(w);var st=w.querySelector('.st'),sp=document.getElementById('spss-pns');if(sp)sp.remove();
+ w.addEventListener('click',function(e){var b=e.target.closest('[data-a]');if(e.target===w){pnSnooze(1);return pnClose();}if(!b)return;var a=b.getAttribute('data-a');
+  if(a==='x'||a==='later'){pnSnooze(a==='later'?1:3);return pnClose();}
+  if(a==='go'){b.disabled=true;st.className='st';st.textContent='جارٍ التفعيل…';
+   puEnable().then(function(){if(puState()!=='on'){b.disabled=false;st.className='st e';var ns=puState();
+     if(ns==='denied'){w.querySelector('.c').insertAdjacentHTML('beforeend',pnGuide('denied'));b.remove();}st.textContent=PU.msg?PU.msg.replace(/<[^>]+>/g,''):'لم يكتمل التفعيل. أعد المحاولة.';return;}
+    st.textContent='✅ تم التفعيل. جارٍ إرسال إشعار تجريبي…';var o=puAuth();o.action='aspushme';o.token=lg('spss_push_tok');
+    return post(o).then(function(r){st.textContent=r&&r.ok&&r.sent?'✅ تم التفعيل، وأُرسل إشعار تجريبي سيظهر خلال ثوانٍ.':'✅ تم التفعيل. يمكنك تجربة الإشعار لاحقاً من صفحة التنبيهات.';
+     b.remove();var l=w.querySelector('[data-a="later"]');if(l)l.textContent='تم';}).catch(function(){st.textContent='✅ تم التفعيل.';b.remove();});});}});
+ w.addEventListener('keydown',function(e){if(e.key==='Escape')pnClose();});
+ setTimeout(function(){var f=w.querySelector('[data-a="go"]')||w.querySelector('[data-a="later"]');try{f.focus();}catch(e){}},60);}
+function pnStrip(){var o=document.getElementById('spss-pns');if(o)o.remove();if(!ID||PAGE==='alerts'||pnSnz()||document.getElementById('spss-pn'))return;var s=puState();if(s==='on'||s==='na')return;
+ var ub=document.getElementById('spss-ub');if(!ub)return;pnCss();var t=document.createElement('div');t.id='spss-pns';t.setAttribute('role','region');t.setAttribute('aria-label','تذكير الإشعارات');
+ t.innerHTML='<span class="tx">🔔 '+(s==='ios'?'ثبّت المنصة على الشاشة الرئيسية لتصلك الإشعارات.':(s==='denied'?'الإشعارات محظورة على هذا الجهاز.':'فعّل الإشعارات لتصلك التنبيهات فوراً.'))+'</span><button type="button" class="go">'+(s==='off'?'تفعيل':'كيف؟')+'</button><button type="button" class="x" aria-label="إخفاء التذكير لثلاثة أيام" title="إخفاء">✕</button>';
+ ub.parentNode.insertBefore(t,ub.nextSibling);t.querySelector('.go').onclick=pnOpen;t.querySelector('.x').onclick=function(){pnSnooze(3);t.remove();};}
+function pnInit(){if(!ID)return;var s=puState();
+ window.addEventListener('appinstalled',function(){ss('spss_pn_after','1');setTimeout(pnAuto,1500);});
+ if(s==='on'||s==='na'){return;}
+ pnStrip();pnAuto();}
+function pnAuto(n){n=n||0;if(!ID||puState()==='on'||puState()==='na'||document.getElementById('spss-pn'))return;
+ var want=sg('spss_pn_after')==='1'||(isSA()&&sg('spss_pn_seen')!=='1'&&!pnSnz());if(!want)return;
+ if(document.getElementById('spss-ins')||document.getElementById('spss-lg')){if(n<40)setTimeout(function(){pnAuto(n+1);},1500);return;}
+ setTimeout(function(){if(!document.getElementById('spss-ins'))pnOpen();else pnAuto(n+1);},n?400:1800);}
+function init(){addCss();if(PAGE==='landing')landingUI();bar();if(PAGE==='alerts')alPage();puMsg();if(ID)setTimeout(puRefresh,2500);if(ID)setTimeout(pnInit,600);filterUI();instInit();copyInit();aboutNav();
  if(ID&&ID.role==='student'&&ID.free===undefined)getJ({action:'aslist',sbac:ID.bac}).then(function(r){if(r&&r.ok&&r.who){var s=pj(lg('spss_id'))||{};if(s.bac===ID.bac){s.free=r.who.free?1:0;ls('spss_id',JSON.stringify(s));if(s.free&&FLT)location.reload();}}});
  if(PAGE==='session'){if(!(BIZ&&TPPAGE))sessionUI();}else if(PAGE==='assess')assessUI();
  else if(PAGE==='teacher'&&ID&&ID.role==='tstu'){/* لوحة الأستاذ متاحة دائماً بالرمز */}}
