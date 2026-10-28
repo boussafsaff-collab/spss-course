@@ -322,7 +322,7 @@ function puEnable(){if(PU.busy)return Promise.resolve();var s=puState();if(s!=='
   .then(function(tok){if(!tok)throw new Error('NO_TOKEN');return puSave(tok);})
   .then(function(){PU.busy=0;PU.msg='✅ تم التفعيل. ستصلك تنبيهات المنصة على هذا الجهاز.';puPaint();})
   .catch(function(e){PU.busy=0;var m=String(e&&e.message||e);
-   PU.msg=m==='DENIED'?'':(m==='DISMISSED'?'لم تُمنح الموافقة. أعد المحاولة واختر «سماح».':(m==='NA'?'':'تعذّر التفعيل الآن ('+esc(m.slice(0,60))+'). أعد المحاولة بعد قليل.'));
+   PU.msg=m==='DENIED'?'':(m==='DISMISSED'?'لم تُمنح الموافقة. أعد المحاولة واختر «سماح».':(m==='NA'?'':(/push service|Registration failed|AbortError|not supported/i.test(m)?'هذا المتصفح لا يوفّر خدمة الإشعارات على هذا الجهاز. جرّب Chrome (Android/الحاسوب) أو Safari بعد تثبيت المنصة (iPhone).':'تعذّر التفعيل الآن ('+esc(m.slice(0,60))+'). أعد المحاولة بعد قليل.')));
    if(m==='NA')ls('spss_push_na','1');puPaint();});}
 function puDisable(){if(PU.busy)return;var tok=lg('spss_push_tok');PU.busy=1;puPaint();
  var done=function(){ls('spss_push_tok',null);ls('spss_push_on',null);ls('spss_push_who',null);ls('spss_push_at',null);PU.busy=0;PU.msg='تم إيقاف الإشعارات على هذا الجهاز.';puPaint();};
@@ -338,7 +338,7 @@ function puRefresh(){if(!ID||!puOk()||lg('spss_push_on')!=='1')return;var tok=lg
 function puMsg(){if(!('serviceWorker' in navigator))return;navigator.serviceWorker.addEventListener('message',function(e){var d=e.data||{};if(d.t!=='push')return;
  if(ID)alLoad(true);var t=document.getElementById('spss-at');if(t)t.remove();var ub=document.getElementById('spss-ub');if(!ub||PAGE==='alerts')return;
  t=document.createElement('div');t.id='spss-at';t.setAttribute('role','status');
- t.innerHTML='<span aria-hidden="true">🔔</span><span class="tx"><b>'+esc(d.title||'')+'</b> '+esc(d.body||'')+'</span><a class="go" href="'+esc(d.url||ROOT+'alerts.html')+'">فتح</a><button type="button" class="x" aria-label="إخفاء التنبيه" title="إخفاء">✕</button>';
+ t.innerHTML='<span class="tx"><b>'+esc(d.title||'')+'</b> '+esc(d.body||'')+'</span><a class="go" href="'+esc(d.url||ROOT+'alerts.html')+'">فتح</a><button type="button" class="x" aria-label="إخفاء التنبيه" title="إخفاء">✕</button>';
  ub.parentNode.insertBefore(t,ub.nextSibling);t.querySelector('.x').onclick=function(){t.remove();};});}
 function puPaint(){var c=document.getElementById('spss-push');if(c)c.innerHTML=puHtml();var m=document.querySelector('#spss-mn [data-x="push"] span:last-child');if(m)m.textContent=puLabel();}
 function puLabel(){var s=puState();return s==='on'?'الإشعارات مفعّلة على هاتفي':'تفعيل الإشعارات على هاتفي';}
