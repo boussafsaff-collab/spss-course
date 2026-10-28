@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<script src="../../assets/auth.js?v=642" data-page="teacher"></script>
+<script src="../../assets/auth.js?v=643" data-page="teacher"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
 <title>لوحة الأستاذ، التقييم المستمر، SPSS</title>
@@ -218,6 +218,17 @@ html.lock,html.lock body{overflow:hidden;}
 .ab{display:inline-block;font-size:11.5px;font-weight:800;border-radius:999px;padding:0 7px;background:#fee2e2;color:#991b1b;margin-right:4px;}
 .ab.m{background:#dcfce7;color:#166534;}
 .bar .a{background:#ef4444;}
+.rqal{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 10px;padding:10px 14px;border:1.5px solid #f59e0b;border-radius:14px;background:#fffbeb;color:#78350f;font:inherit;font-weight:800;font-size:15px;text-align:start;cursor:pointer;}
+.rqal i{color:#d97706;font-size:18px;}.rqal:hover{background:#fef3c7;}.rqal:focus-visible{outline:3px solid #93c5fd;outline-offset:2px;}
+.rqf{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px;}
+.rqf button{font:inherit;font-size:14px;font-weight:700;padding:6px 12px;border-radius:999px;border:1.5px solid #cbd5e1;background:#fff;color:#0f2744;cursor:pointer;}
+.rqf button[aria-pressed=true]{background:#0f2744;border-color:#0f2744;color:#fff;}
+.rqi .top{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap;}.rqi .top .t{flex:1 1 220px;min-width:0;}
+.rqi dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 10px;margin:6px 0;font-size:14px;}.rqi dt{color:#64748b;font-weight:700;}.rqi dd{margin:0;min-width:0;overflow-wrap:anywhere;}
+.rqp{display:inline-block;border-radius:999px;padding:2px 10px;font-size:12.5px;font-weight:800;white-space:nowrap;}
+.rqp.p{background:#ffedd5;color:#9a3412;}.rqp.a{background:#dcfce7;color:#166534;}.rqp.r{background:#fee2e2;color:#991b1b;}.rqp.x{background:#e2e8f0;color:#475569;}
+.rqi .rqa{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;}.rqi .rqa input{flex:1 1 220px;min-height:44px;font-size:15px;}
+.rqi .rqa .btn{flex:0 0 auto;}
 </style>
 </head>
 <body>
@@ -253,6 +264,7 @@ html.lock,html.lock body{overflow:hidden;}
 <button type="button" role="tab" id="t-stats" data-tab="stats" aria-controls="s-stats" aria-selected="false" tabindex="-1"><i class="fa-solid fa-chart-column" aria-hidden="true"></i><span>الإحصائيات والتنبيهات</span><em class="nb2" id="bd-stats"></em></button>
 <button type="button" role="tab" id="t-attst" data-tab="attst" aria-controls="s-attst" aria-selected="false" tabindex="-1"><i class="fa-solid fa-clipboard-user" aria-hidden="true"></i><span>إحصائيات الحضور</span><em class="nb2" id="bd-attst"></em></button>
 <button type="button" role="tab" id="t-roll" data-tab="roll" aria-controls="s-roll" aria-selected="false" tabindex="-1"><i class="fa-solid fa-list-check" aria-hidden="true"></i><span>النداء</span><em class="nb2" id="bd-roll"></em></button>
+<button type="button" role="tab" id="t-rq" data-tab="rq" aria-controls="s-rq" aria-selected="false" tabindex="-1"><i class="fa-solid fa-inbox" aria-hidden="true"></i><span>طلبات المراجعة</span><em class="nb2" id="bd-rq"></em></button>
 <button type="button" role="tab" id="t-cancel" data-tab="cancel" aria-controls="s-cancel" aria-selected="false" tabindex="-1"><i class="fa-solid fa-user-xmark" aria-hidden="true"></i><span>إلغاء النتائج</span><em class="nb2" id="bd-cancel"></em></button>
 <button type="button" role="tab" id="t-add" data-tab="add" aria-controls="s-add" aria-selected="false" tabindex="-1"><i class="fa-solid fa-user-plus" aria-hidden="true"></i><span>إضافة طالب</span><em class="nb2" id="bd-add"></em></button>
 <button type="button" role="tab" id="t-bank" data-tab="bank" aria-controls="s-bank" aria-selected="false" tabindex="-1"><i class="fa-solid fa-database" aria-hidden="true"></i><span>بنك الأسئلة</span><em class="nb2" id="bd-bank"></em></button>
@@ -262,6 +274,7 @@ html.lock,html.lock body{overflow:hidden;}
 <div class="tbar"><button class="btn lt" id="rf" type="button"><i class="fa-solid fa-rotate"></i>تحديث</button>
 <button class="btn lt" id="lo" type="button"><i class="fa-solid fa-right-from-bracket"></i>خروج</button></div>
 <div class="err" id="perr" style="margin:0 0 6px;"></div>
+<button type="button" class="rqal hide" id="rq-al"><i class="fa-solid fa-bell" aria-hidden="true"></i><span id="rq-alt"></span></button>
 <section class="card sec" id="s-open" role="tabpanel" aria-labelledby="t-open">
 <h3><i class="fa-solid fa-toggle-on"></i>فتح التقييمات وإغلاقها</h3>
 <p class="hint">التقييم المفتوح يظهر للطلبة المعنيين ويمكنهم بدؤه، والمغلق لا يقبل محاولات جديدة.</p>
@@ -289,6 +302,12 @@ html.lock,html.lock body{overflow:hidden;}
 <h3><i class="fa-solid fa-clipboard-user"></i>إحصائيات الحضور</h3>
 <p class="hint">الحاضر: من سُجّل حضوره في الحصة ولم يُرفض في النداء، أو من كُتبت له «ح» في قائمة فوجه. تظهر الحصة بعد بداية موعدها فقط. المحاضرة لكل التخصصات، والتطبيق لأفواج «إدارة مالية».</p>
 <div id="b-attst"><p class="s">جارٍ التحميل…</p></div>
+</section>
+<section class="card sec hide" id="s-rq" role="tabpanel" aria-labelledby="t-rq">
+<h3><i class="fa-solid fa-inbox"></i>طلبات مراجعة الحضور</h3>
+<p class="hint">يرسل الطالب طلباً من لوحته لحصة مضت سُجّل فيها غائباً (لا تسجيل، أو «غ» في النداء). «قبول» يسجّله حاضراً بالمسار نفسه لزر «ح» في النداء (خانة «ح» في قائمة فوجه، و«سجل النداء»، وكل الأعمدة المحسوبة)، و«رفض» لا يغيّر شيئاً. الرد اختياري ويظهر للطالب. كل طلب وكل قرار يُحفظ في ورقة «طلبات مراجعة الحضور».</p>
+<div class="rqf" role="group" aria-label="تصفية الطلبات"><button type="button" data-rqf="p" aria-pressed="true">قيد المراجعة</button><button type="button" data-rqf="all" aria-pressed="false">كل الطلبات</button></div>
+<div id="b-rq"><p class="s">جارٍ التحميل…</p></div>
 </section>
 <section class="card sec hide" id="s-roll" role="tabpanel" aria-labelledby="t-roll">
 <h3><i class="fa-solid fa-list-check"></i>النداء</h3>
@@ -559,7 +578,7 @@ $('rmgo').addEventListener('click',function(){
 document.addEventListener('toggle',function(ev){var d=ev.target; if(d&&d.getAttribute&&d.getAttribute('data-sg')){if(d.open)stOpen[d.getAttribute('data-sg')]=1;else delete stOpen[d.getAttribute('data-sg')];}},true);
 function call(o){o.key=key;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{return JSON.parse(t);}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
 /* update55: أقسام مستقلة، قسم واحد ظاهر، ومحدِّد للتقييم داخل القسم */
-var TABS=['open','sched','time','ex','stats','attst','roll','cancel','add','bank'], tab='open', cur=SS.get('as_tcur')||'';
+var TABS=['open','sched','time','ex','stats','attst','roll','rq','cancel','add','bank'], tab='open', cur=SS.get('as_tcur')||'';
 function curItem(){var i=byId(cur);if(!i&&items.length){i=items[0];cur=i.id;}return i;}
 function shortT(i){return String(i.title||i.id).split(':')[0];}
 function isSch(i){return !!(i.sched&&i.sched.mode==='sched');}
@@ -605,6 +624,7 @@ function setTab(t,focus){
   if(('#'+t)!==location.hash){try{history.replaceState(null,'','#'+t);}catch(e){location.hash=t;}}
   var b=$('t-'+t); $('stitle').innerHTML=b.querySelector('i').outerHTML+esc(b.querySelector('span').textContent); if(focus)b.focus();
   var top=$('panel').getBoundingClientRect().top+window.scrollY; if(window.scrollY>top)window.scrollTo(0,top);
+  if(RQ.d)rqBadge();
   tabData();
 }
 /* update59: النداء */
@@ -746,7 +766,42 @@ function tabData(){
   if(tab==='roll'){if(!RL.d||Date.now()-RL.t>12000)rlLoad(RL.pin?RL.id:'',!!RL.d);}
   else if(tab==='attst'){if(!ATS.d||Date.now()-ATS.t>60000)atLoad(false);}
   else if(tab==='add'){if(!SA.d||Date.now()-SA.t>60000)saLoad();}
+  else if(tab==='rq'){if(!RQ.d||Date.now()-RQ.t>15000)rqLoad();}
 }
+/* update65: طلبات مراجعة الحضور */
+var RQ={d:null,t:0,f:'p',busy:{},err:{},msg:{}};
+var RQE={NO_REQUEST:'الطلب غير موجود (ربما حُذف).',ALREADY_DECIDED:'سبق البت في هذا الطلب.',BAD_SESSION:'الحصة غير معروفة.',MOVED:'تغيّرت الورقة، حدّث القائمة.',ROLL_NO_CHECKIN:'تعذّر إنشاء سطر الحضور.',ROLL_BAD_ID:'الحصة لا تخص فوج الطالب.',ROLL_BAD_BAC:'رقم الطالب غير موجود في القوائم.'};
+function rqLoad(){var g=RQ.g=(RQ.g||0)+1;
+  return call({action:'asrqlist'}).then(function(r){if(g!==RQ.g)return;
+    if(!r.ok){if(r.err==='BAD_KEY'){logout();$('kerr').textContent=msg(r.err);return;}if(!RQ.d)$('b-rq').innerHTML='<p class="err">'+esc(msg(r.err))+'</p>';return;}
+    RQ.d=r;RQ.t=Date.now();rqBadge();rqRender();});}
+function rqBadge(){var n=RQ.d?RQ.d.pending:0,e=$('bd-rq');e.textContent=n?String(n):'';e.className='nb2'+(n?' w':'');
+  $('t-rq').setAttribute('aria-label','طلبات المراجعة'+(n?'، قيد المراجعة '+n:''));
+  var al=$('rq-al');al.classList.toggle('hide',!n||tab==='rq');$('rq-alt').textContent=n?(n===1?'طلب مراجعة حضور واحد':n+' طلبات مراجعة حضور')+' بانتظار قرارك: اضغط للعرض':'';}
+function rqD(d){d=String(d||'');if(/^\d{1,2}\/\d{1,2}\/\d{4}/.test(d))return d.slice(0,10);var M='JanFebMarAprMayJunJulAugSepOctNovDec',m=/^\w{3} (\w{3}) (\d{1,2}) (\d{4})/.exec(d);
+  if(m&&M.indexOf(m[1])>=0)return ('0'+m[2]).slice(-2)+'/'+('0'+(M.indexOf(m[1])/3+1)).slice(-2)+'/'+m[3];var m2=/^(\d{4})-(\d{2})-(\d{2})/.exec(d);return m2?m2[3]+'/'+m2[2]+'/'+m2[1]:d;}
+function rqP(st){return st==='pending'?'<span class="rqp p">قيد المراجعة</span>':(st==='accepted'?'<span class="rqp a">مقبول</span>':'<span class="rqp r">مرفوض</span>');}
+function rqRender(){var d=RQ.d,box=$('b-rq');if(!d)return;var ae=document.activeElement;if(box.contains(ae)&&ae.tagName==='INPUT')return;
+  [].forEach.call(document.querySelectorAll('[data-rqf]'),function(b){b.setAttribute('aria-pressed',b.getAttribute('data-rqf')===RQ.f?'true':'false');});
+  var L=d.rows.filter(function(x){return RQ.f==='all'||x.st==='pending';});
+  if(!L.length){box.innerHTML='<p class="s">'+(RQ.f==='all'?'لا توجد طلبات بعد.':'لا طلبات قيد المراجعة.')+'</p>';return;}
+  box.innerHTML=L.map(function(x){var pend=x.st==='pending',b=RQ.busy[x.id];
+    return '<div class="it rqi" data-rqid="'+esc(x.id)+'"><div class="top"><div class="t">'+esc((x.nom+' '+x.prenom).trim())+(x.test?' <span class="rqp x">اختبار</span>':'')+'</div>'+rqP(x.st)+'</div>'+
+      '<dl><dt>الفوج</dt><dd>'+esc(x.g)+'</dd><dt>الحصة</dt><dd>'+esc(x.s||((x.type==='lec'?'المحاضرة ':'التطبيق ')+x.num))+(rqD(x.d)?' · <bdi dir="ltr">'+esc(rqD(x.d))+'</bdi>':'')+'</dd>'+
+      '<dt>الحالة السابقة</dt><dd>'+esc(x.prev)+'</dd><dt>ملاحظة الطالب</dt><dd>'+(x.note?esc(x.note):'<span class="s">(لا ملاحظة)</span>')+'</dd><dt>وقت الطلب</dt><dd><bdi dir="ltr">'+esc(x.t)+'</bdi></dd>'+
+      (!pend?'<dt>القرار</dt><dd>'+(x.st==='accepted'?'مقبول':'مرفوض')+' · <bdi dir="ltr">'+esc(x.dt)+'</bdi></dd>'+(x.reply?'<dt>ردك</dt><dd>'+esc(x.reply)+'</dd>':''):'')+'</dl>'+
+      (pend?'<div class="rqa"><input type="text" maxlength="300" placeholder="رد اختياري يظهر للطالب" aria-label="رد اختياري على '+esc(x.nom+' '+x.prenom)+'" id="rqr-'+esc(x.id)+'">'+
+        '<button class="btn go" type="button" data-rqv="A"'+(b?' disabled':'')+'><i class="fa-solid fa-check"></i>قبول</button><button class="btn red" type="button" data-rqv="R"'+(b?' disabled':'')+'><i class="fa-solid fa-xmark"></i>رفض</button></div>':'')+
+      (RQ.err[x.id]?'<p class="err">'+esc(RQ.err[x.id])+'</p>':'')+'</div>';}).join('');}
+$('b-rq').addEventListener('click',function(ev){var t=ev.target.closest('[data-rqv]');if(!t)return;var it=t.closest('[data-rqid]'),id=it.getAttribute('data-rqid'),v=t.getAttribute('data-rqv');
+  var x=(RQ.d.rows||[]).filter(function(r){return r.id===id;})[0];if(!x||RQ.busy[id])return;
+  if(v==='A'&&!confirm('قبول الطلب يسجّل '+(x.nom+' '+x.prenom).trim()+' حاضراً في '+(x.type==='lec'?'المحاضرة ':'التطبيق ')+x.num+' (خانة «ح» في القائمة وسجل النداء). متابعة؟'))return;
+  var rp=$('rqr-'+id)?$('rqr-'+id).value:'';RQ.busy[id]=1;delete RQ.err[id];[].forEach.call(it.querySelectorAll('button'),function(b){b.disabled=true;});
+  call({action:'asrqdo',id:id,v:v,reply:rp}).then(function(r){delete RQ.busy[id];
+    if(!r.ok)RQ.err[id]=RQE[r.err]||msg(r.err);else{ATS.d=null;RL.sig='';}
+    document.activeElement&&document.activeElement.blur&&document.activeElement.blur();return rqLoad();});});
+document.querySelector('.rqf').addEventListener('click',function(ev){var b=ev.target.closest('[data-rqf]');if(!b)return;RQ.f=b.getAttribute('data-rqf');rqRender();});
+$('rq-al').addEventListener('click',function(){setTab('rq',true);});
 /* update62: إضافة طالب */
 var SA={d:null,t:0,ed:'',busy:0};
 var SAE={BAC_DIGITS:'رقم البكالوريا: أرقام فقط.',BAC_LEN:'رقم البكالوريا: بين 6 و10 أرقام.',BAD_NOM:'اكتب اللقب (حرفان على الأقل).',BAD_PRENOM:'اكتب الاسم (حرفان على الأقل).',BAD_YEAR:'سنة البكالوريا غير صالحة (مثال: 2023).',BAD_SP:'اختر التخصص.',NEED_GRP:'اختر الفوج (01 أو 02 أو 03) لطلبة «إدارة مالية».',BAD_GRP:'الفوج غير معروف.',NO_ROSTER:'قائمة هذا الفوج غير موجودة في الملف.',NOT_FOUND:'الطالب غير موجود في القوائم.',NOT_MANUAL:'هذا طالب من القوائم الرسمية، لا يُعدَّل ولا يُحذف من هنا.',PROTECTED:'رقم الأستاذ التجريبي محمي.',NEED_CONFIRM:'لم يُؤكَّد الحذف.'};
@@ -902,8 +957,8 @@ function load(){
     $('perr').textContent='';items=r.items;render();loadStats(false);
   });
 }
-function enter(){$('kc').classList.add('hide');$('wr').classList.add('wide');$('panel').classList.remove('hide');load();clearInterval(tm);tm=setInterval(function(){if(!document.hidden)load();},20000);clearInterval(rlTm);rlTm=setInterval(function(){if(!document.hidden)tabData();},15000);tabData();}
-function logout(){if(dOpen)closeD(true);clearInterval(rlTm);RL.d=null;RL.sig='';RL.pin=false;ATS.d=null;SA.d=null;SA.ed='';$('sa-l').innerHTML='';$('sa-n').textContent='';$('b-roll').innerHTML='';$('b-attst').innerHTML='';$('bd-roll').textContent='';key='';SS.del('as_tkey');$('wr').classList.remove('wide');clearInterval(tm);$('panel').classList.add('hide');$('kc').classList.remove('hide');$('key').value='';}
+function enter(){$('kc').classList.add('hide');$('wr').classList.add('wide');$('panel').classList.remove('hide');load();clearInterval(tm);tm=setInterval(function(){if(!document.hidden){load();rqLoad();}},20000);rqLoad();clearInterval(rlTm);rlTm=setInterval(function(){if(!document.hidden)tabData();},15000);tabData();}
+function logout(){if(dOpen)closeD(true);clearInterval(rlTm);RL.d=null;RL.sig='';RL.pin=false;RQ.d=null;RQ.busy={};RQ.err={};$('b-rq').innerHTML='';$('bd-rq').textContent='';$('rq-al').classList.add('hide');ATS.d=null;SA.d=null;SA.ed='';$('sa-l').innerHTML='';$('sa-n').textContent='';$('b-roll').innerHTML='';$('b-attst').innerHTML='';$('bd-roll').textContent='';key='';SS.del('as_tkey');$('wr').classList.remove('wide');clearInterval(tm);$('panel').classList.add('hide');$('kc').classList.remove('hide');$('key').value='';}
 $('kf').addEventListener('submit',function(ev){ev.preventDefault();var k=$('key').value.trim();if(!k)return;$('kbtn').disabled=true;key=k;
   call({action:'askey'}).then(function(r){$('kbtn').disabled=false;if(r.ok){SS.set('as_tkey',k);$('kerr').textContent='';enter();}else{key='';$('kerr').textContent=msg(r.err||'BAD_KEY');}});});
 $('lo').addEventListener('click',logout);
