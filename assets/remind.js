@@ -1,3 +1,5 @@
+/* update69: مع الدخول عبر auth.js تُعرض التنبيهات في الجرس وصفحة «التنبيهات» (alerts.html) وشريط صغير تحت الشريط العلوي، فلا تُعرض هذه البطاقة.
+   تبقى البطاقة فقط لمن يحمل رقم بكالوريا محفوظاً دون جلسة دخول. */
 /* update54: تنبيه الأستاذ للطالب الذي لم يُجرِ تقييماً مفتوحاً (يظهر برقم البكالوريا المحفوظ في هذا الجهاز) */
 (function(){
 'use strict';
@@ -27,6 +29,7 @@ function show(notes){
   document.body.insertBefore(d,document.body.firstChild);
 }
 function run(){
+  if(window.__spssAL)return;
   var b=bacOf(); if(!b)return;
   var ck='as-notes-'+b, hit=null;
   try{hit=JSON.parse(sessionStorage.getItem(ck)||'null');}catch(e){}
