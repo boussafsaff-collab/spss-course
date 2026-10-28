@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<script src="../assets/auth.js?v=630" data-page="assess"></script>
+<script src="../assets/auth.js?v=640" data-page="assess"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>التقييم المستمر، برمجيات إحصائية SPSS، د. بوصفصاف فريد</title>
 <meta name="description" content="فضاء التقييم المستمر لمقياس برمجيات إحصائية SPSS: تقييمات المحاضرات والتطبيقات بشكل فردي.">
@@ -197,6 +197,15 @@ function render(){
     $('L-'+cat).innerHTML=h;
   });
 }
+/* update64: «اجتياز التقييم» من لوحة الطالب (?go=المعرّف): يبدأ التقييم مباشرة برقم الطالب المحفوظ إن كان مفتوحاً له
+   (الخادم يتحقق من كل القيود في asstart: التخصص، حضور المحاضرة، محاولة واحدة، الموعد). وإلا تُعرض بطاقته مع سبب الغلق. */
+var GO=(function(){try{var g=new URLSearchParams(location.search).get('go')||'';return /^[a-z0-9-]{2,30}$/.test(g)?g:'';}catch(e){return '';}})();
+function goFromDash(){if(!GO)return;var id=GO;GO='';
+  try{var u=new URL(location.href);u.searchParams.delete('go');history.replaceState(null,'',u.pathname+u.search+u.hash);}catch(e){}
+  var i=items.filter(function(x){return x.id===id;})[0];
+  if(!i){alert('هذا التقييم غير متاح لك.');return;}
+  if(i.done||!i.open||!i.ready){setTimeout(function(){hlCard(id);},300);return;}
+  var b=document.querySelector('[data-go="'+id+'"]');begin(id,b||{disabled:false});}
 function load(){
   var o={action:'aslist'}; if(bac) o.sbac=bac;
   return call(o,true).then(function(r){
@@ -206,7 +215,8 @@ function load(){
     if(who){$('wname').textContent=who.nom+' '+who.prenom;$('wgrp').textContent=who.sp+' – الفوج '+who.grp;}
     show('list'); render();
     var hid=(location.hash||'').slice(1); if(hid&&/^[a-z0-9-]+$/.test(hid)){setTimeout(function(){hlCard(hid);},300);}
-    if(who){var p=items.filter(function(i){return !i.done&&LS.get(skey(i.id));})[0]; if(p) begin(p.id,null);}  // استئناف تلقائي بعد إعادة التحميل
+    if(who){var p=items.filter(function(i){return !i.done&&LS.get(skey(i.id));})[0]; if(p) begin(p.id,null);  // استئناف تلقائي بعد إعادة التحميل
+      else goFromDash();}
     items.forEach(function(i){if(i.done)LS.del(skey(i.id));});
   });
 }
@@ -216,7 +226,7 @@ $('lf').addEventListener('submit',function(ev){ev.preventDefault();
   $('lerr').textContent='';$('lbtn').disabled=true;bac=v;
   call({action:'aslist',sbac:v},true).then(function(r){$('lbtn').disabled=false;
     if(!r.ok){$('lerr').textContent=msg(r.err);bac='';return;}
-    LS.set('as_bac',v);items=r.items;who=r.who;notes=r.notes||[];$('wname').textContent=who.nom+' '+who.prenom;$('wgrp').textContent=who.sp+' – الفوج '+who.grp;show('list');render();});
+    LS.set('as_bac',v);items=r.items;who=r.who;notes=r.notes||[];$('wname').textContent=who.nom+' '+who.prenom;$('wgrp').textContent=who.sp+' – الفوج '+who.grp;show('list');render();goFromDash();});
 });
 $('out').addEventListener('click',function(){who=null;bac='';notes=[];LS.del('as_bac');$('bac').value='';show('list');render();});
 $('rf').addEventListener('click',function(){$('rf').disabled=true;load().then(function(){$('rf').disabled=false;});});
