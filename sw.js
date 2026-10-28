@@ -5,7 +5,7 @@
    - update70: إشعارات الهاتف (Web Push عبر Firebase Cloud Messaging، رسائل data فقط): يعرض الإشعار، ويفتح رابطه عند النقر،
      ويُعلم الصفحة المفتوحة (شريط داخل المنصة + تحديث الجرس). لا كود Firebase داخل هذا الملف.
    - طلبات Apps Script (script.google.com) ومواقع أخرى: لا يتدخل أبداً. */
-var C='spss-pwa-v11',OFF='offline.html',ABOUT='about.html';
+var C='spss-pwa-v12',OFF='offline.html',ABOUT='about.html';
 self.addEventListener('install',function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll([OFF,ABOUT,'icons/icon-192.png','icons/logo-128.png?v=3','icons/badge-96.png']);}).then(function(){return self.skipWaiting();}));});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf('spss-pwa-')===0&&k!==C;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});
 self.addEventListener('fetch',function(e){var r=e.request;
@@ -23,7 +23,7 @@ self.addEventListener('push',function(e){var j={},d={};
  e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(function(cs){
   var fg=false;cs.forEach(function(c){try{c.postMessage({t:'push',title:ttl,body:bd,url:url,kind:d.kind||'',tag:d.tag||''});}catch(x){}if(c.visibilityState==='visible'&&c.focused)fg=true;});
   var nv=self.navigator;try{if(nv&&'setAppBadge' in nv)nv.setAppBadge().catch(function(){});}catch(x){}
-  if(fg&&!ios)return;   // المنصة مفتوحة أمام المستخدم: يكفي الشريط داخلها
+  // update71c: يُعرض إشعار النظام دائماً (حتى والتطبيق مفتوح)؛ كان يُكتم في المقدّمة فلا يظهر الإشعار التجريبي
   return self.registration.showNotification(ttl,{body:bd,icon:sc+'icons/icon-192.png',badge:sc+'icons/badge-96.png',tag:d.tag||'spss',renotify:true,lang:'ar',dir:'rtl',data:{url:url}});
  }));});
 self.addEventListener('notificationclick',function(e){e.notification.close();var url=(e.notification.data&&e.notification.data.url)||self.registration.scope;
