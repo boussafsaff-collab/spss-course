@@ -17,6 +17,8 @@ var ROOT=new URL('../',(me&&me.src)?me.src:new URL('assets/auth.js',location.hre
 // اسم المنصة (مكان واحد مع manifest.webmanifest؛ للتغيير: tools/set-app-name.sh)
 var APP_NAME='بوصلة التعليم',APP_SHORT='بوصلة التعليم';
 var APP_TAG='الدرس في هاتفك، أينما كنت',APP_MODULE='برمجيات إحصائية SPSS';
+// سطر حقوق النشر (مكان واحد لكل الصفحات ولوحة الطالب وبطاقة الدخول؛ offline.html نسخة ثابتة)
+var APP_COPY='© 2026 د. بوصفصاف فريد، كل الحقوق محفوظة';
 var PROFS={f1:'إدارة مالية – الفوج 1',f2:'إدارة مالية – الفوج 2',f3:'إدارة مالية – الفوج 3',ba:'إدارة أعمال'};
 function lg(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function ls(k,v){try{if(v==null)localStorage.removeItem(k);else localStorage.setItem(k,v)}catch(e){}}
@@ -137,6 +139,7 @@ var CSS=[
 '#spss-ins .bt .p{flex:1 1 140px;color:#fff;background:linear-gradient(135deg,#0f2744,#1d4f86);box-shadow:0 10px 20px -10px rgba(15,39,68,.7)}#spss-ins .bt .s{flex:1 1 110px;color:#334155;background:#f1f5f9}#spss-ins .lk button{flex:none;color:#fff;background:#1d4f86}',
 '#spss-ins button:focus-visible,#spss-ins a:focus-visible,#spss-ins input:focus-visible{outline:3px solid #e9c46a;outline-offset:2px}',
 '@keyframes spssSU{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}',
+'footer#spss-copy{display:block;margin:28px auto 0;padding:14px 16px calc(14px + env(safe-area-inset-bottom));text-align:center;font:500 12.5px/1.7 Cairo,"Segoe UI",Tahoma,sans-serif;color:#64748b;direction:rtl;clear:both}#spss-copy.in{margin:10px 0 0;padding:0;text-align:center;font-size:12px;color:inherit;opacity:.85;direction:rtl}#spss-me .cpy{margin:18px 0 4px;text-align:center;font-size:12px;color:#64748b}',
 '@media (min-width:700px){#spss-ins{align-items:center}#spss-ins .sh{border-radius:24px;padding-bottom:20px}#spss-ins .gr{display:none}}',
 '@media (prefers-reduced-motion:reduce){#spss-ins .sh,#spss-ins .bd{animation:none!important}}',
 '#spss-me .nins{display:flex;align-items:center;gap:8px;width:calc(100% - 16px);margin:10px 8px 4px;font:inherit;font-weight:800;font-size:14px;color:#0f2744;background:#fdf3d7;border:1px solid #f1d58a;border-radius:12px;padding:10px 12px;cursor:pointer;text-align:right}#spss-me .nins svg{width:20px;height:20px;flex:none}',
@@ -186,7 +189,7 @@ function loginUI(){if(document.getElementById('spss-lg'))return;var w=document.c
  '<form id="spss-lf" class="stp" autocomplete="off" hidden novalidate><div class="fh"><button type="button" class="bk" aria-label="رجوع إلى اختيار الصفة">'+IC.back+'رجوع</button><span class="rc" id="spss-rc"></span></div>'+
  '<label for="spss-in"></label><div class="fld"><span class="fi"></span><input id="spss-in" aria-describedby="spss-hn spss-er"><button type="button" class="eye" hidden aria-pressed="false" aria-label="إظهار الرمز">'+IC.eye+'</button></div><p class="hn" id="spss-hn"></p>'+
  '<button class="go" type="submit"><span class="sp" aria-hidden="true"></span>'+IC['in']+'<span class="gt">دخول</span></button><div class="er" id="spss-er" role="alert" aria-live="assertive"></div></form>'+
- '<div class="qr"><img src="'+ROOT+'assets/qr-spss.png" alt="رمز QR للمنصة"><span><b>شارك المنصة</b>امسح الرمز للوصول إلى المنصة من هاتفك.</span></div><p class="ft">د. بوصفصاف فريد · جامعة قسنطينة 2</p></div>';
+ '<div class="qr"><img src="'+ROOT+'assets/qr-spss.png" alt="رمز QR للمنصة"><span><b>شارك المنصة</b>امسح الرمز للوصول إلى المنصة من هاتفك.</span></div><p class="ft" dir="rtl">'+esc(APP_COPY)+'</p></div>';
  document.body.appendChild(w);document.documentElement.style.overflow='hidden';
  var f=w.querySelector('#spss-lf'),s1=w.querySelector('#spss-s1'),inp=w.querySelector('#spss-in'),lab=w.querySelector('label'),er=w.querySelector('#spss-er'),go=f.querySelector('.go'),gt=go.querySelector('.gt'),fld=w.querySelector('.fld'),fi=w.querySelector('.fi'),eye=w.querySelector('.eye'),hn=w.querySelector('#spss-hn'),rc=w.querySelector('#spss-rc'),role='',last=null;
  function sErr(m){er.textContent=m||'';fld.classList.toggle('bad',!!m);if(m)inp.setAttribute('aria-invalid','true');else inp.removeAttribute('aria-invalid');}
@@ -257,7 +260,7 @@ function assessUI(){if(!ID)return;document.body.classList.add('spss-auth');if(ID
  var fix=function(){Array.prototype.forEach.call(document.querySelectorAll('[data-go]'),function(b){if(b.textContent.indexOf('ابدأ التقييم')>=0)b.innerHTML=b.innerHTML.replace('ابدأ التقييم','بدء التقييم');});};
  new MutationObserver(fix).observe(document.body,{childList:true,subtree:true});fix();}
 function landingUI(){if(!ID){loginUI();return;}if(goNext())return;}
-function init(){addCss();if(PAGE==='landing')landingUI();bar();filterUI();instInit();
+function init(){addCss();if(PAGE==='landing')landingUI();bar();filterUI();instInit();copyInit();
  if(ID&&ID.role==='student'&&ID.free===undefined)getJ({action:'aslist',sbac:ID.bac}).then(function(r){if(r&&r.ok&&r.who){var s=pj(lg('spss_id'))||{};if(s.bac===ID.bac){s.free=r.who.free?1:0;ls('spss_id',JSON.stringify(s));if(s.free&&FLT)location.reload();}}});
  if(PAGE==='session'){if(!(BIZ&&TPPAGE))sessionUI();}else if(PAGE==='assess')assessUI();
  else if(PAGE==='teacher'&&ID&&ID.role==='tstu'){/* لوحة الأستاذ متاحة دائماً بالرمز */}}
@@ -308,7 +311,7 @@ function meOpen(btn){var d=document.getElementById('spss-me');
   d.innerHTML='<div class="mw"><div class="shd"><button type="button" id="spss-me-hb" aria-label="القائمة" aria-expanded="false" aria-controls="spss-me-nav">☰</button><span class="stt" id="spss-me-t" aria-live="polite"></span><button type="button" class="x" aria-label="إغلاق لوحة الطالب" title="إغلاق">✕</button></div>'+
   '<div class="bdp hide" id="spss-me-bdp"></div><div class="lay" id="spss-me-lay"><nav class="mnav" id="spss-me-nav" aria-label="أقسام لوحة الطالب"><div class="nvh"><span>📊 لوحة الطالب<small id="spss-me-w2"></small></span><button type="button" class="mnx" aria-label="إغلاق القائمة">✕</button></div>'+
   '<div class="tl tb" role="tablist" aria-orientation="vertical" aria-label="أقسام لوحة الطالب">'+MET.map(function(x){return '<button type="button" role="tab" id="spss-me-t-'+x[0]+'" data-g="'+x[0]+'" aria-controls="spss-me-'+x[0]+'" aria-selected="false" tabindex="-1"><i class="fa-solid '+x[1]+'" aria-hidden="true"></i><span>'+x[2]+'</span></button>';}).join('')+'</div><button type="button" class="nins" id="spss-me-ins"><img src="'+ROOT+'icons/logo-128.png?v=3" alt="" width="22" height="22" style="border-radius:6px"><span>تثبيت '+esc(APP_NAME)+' على هاتفك</span></button></nav>'+
-  '<div class="mn"><p class="who" id="spss-me-w"></p><div class="bd" id="spss-me-b"><p>جارٍ التحميل…</p></div></div></div></div>';
+  '<div class="mn"><p class="who" id="spss-me-w"></p><div class="bd" id="spss-me-b"><p>جارٍ التحميل…</p></div></div></div><p class="cpy" dir="rtl">'+esc(APP_COPY)+'</p></div>';
   document.body.appendChild(d);
   d.querySelector('.shd .x').onclick=meClose;meEl('ins').onclick=function(){instOpen(this);};d.querySelector('.mnx').onclick=function(){meDrawer(false);};meEl('bdp').onclick=function(){meDrawer(false);};
   meEl('hb').onclick=function(){if(meDesk()){ls('spss_menav',meCol()?'1':'0');meSync();}else meDrawer(!meD);};
@@ -390,6 +393,14 @@ function rqClick(ev){var t=ev.target.closest('button');if(!t)return;var row=t.cl
   post({action:'asrqadd',sbac:ID.bac,type:t.getAttribute('data-t'),num:t.getAttribute('data-n'),note:f3.querySelector('textarea').value.slice(0,200)}).then(function(r){
    if(r&&r.ok){if(ME){ME.rq=r.rq;meRender(ME);}var nr=document.querySelector('#spss-me [data-rqk="'+k+'"] .mr2');if(nr){nr.setAttribute('tabindex','-1');try{nr.focus();}catch(e){}}return;}
    t.disabled=false;er.textContent=RQE[r&&r.err]||'تعذّر إرسال الطلب الآن. أعد المحاولة بعد قليل.';}).catch(function(){t.disabled=false;er.textContent='تعذّر الاتصال. أعد المحاولة.';});}}
+
+// ===== update67b: سطر حقوق النشر أسفل الصفحات =====
+function copyInit(){if(document.getElementById('spss-copy')||!document.body)return;
+ var f=document.querySelector('body > footer')||document.querySelector('footer'),el;
+ if(f){el=document.createElement('p');el.className='in';f.appendChild(el);}else{el=document.createElement('footer');document.body.appendChild(el);}
+ el.id='spss-copy';el.setAttribute('dir','rtl');el.setAttribute('lang','ar');el.textContent=APP_COPY;
+ var t=0;function fix(){var h=0,H=innerHeight;var a=document.querySelectorAll('body *');for(var i=0;i<a.length;i++){var e=a[i];if(e.closest&&e.closest('#spss-lg,#spss-ins,#spss-me,#spss-copy'))continue;var cs=getComputedStyle(e);if(cs.position!=='fixed'||cs.display==='none'||cs.visibility==='hidden')continue;var r=e.getBoundingClientRect();if(r.height>0&&r.height<H*0.4&&r.width>innerWidth*0.3&&r.bottom>=H-4&&r.top>H*0.5)h=Math.max(h,H-r.top);}el.style.marginBottom=h?Math.ceil(h+6)+'px':'';}
+ function q(){clearTimeout(t);t=setTimeout(fix,250);}fix();setTimeout(fix,1500);addEventListener('resize',q);addEventListener('load',q);}
 // ===== update67: تثبيت المنصة على الهاتف (PWA) =====
 var LOGO_IMG='<img src="'+ROOT+'icons/logo-128.png?v=3" alt="" width="54" height="54" decoding="async">';
 var SVG_SHARE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3v12"/><path d="m7.5 7.5 4.5-4.5 4.5 4.5"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg>';
