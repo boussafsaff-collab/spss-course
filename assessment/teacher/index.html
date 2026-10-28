@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<script src="../../assets/auth.js?v=640" data-page="teacher"></script>
+<script src="../../assets/auth.js?v=641" data-page="teacher"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
 <title>لوحة الأستاذ، التقييم المستمر، SPSS</title>
@@ -706,6 +706,23 @@ function atBlock(k,S,all){
   });
   return h+'<div class="lr">آخر تحديث: <bdi dir="ltr">'+esc(ATS.d.t)+'</bdi></div></div>';
 }
+/* update64b: علامة حضور المحاضرات (للأستاذ فقط): 0,5 لكل حضور مؤكَّد، من العمود المحجوب في قائمة الفوج */
+function f2(x){return x==null?'–':String(Math.round(x*100)/100).replace('.',',');}
+function atLm(L){
+  var h='<div class="sx" id="lecmk"><div class="sh"><span><i class="fa-solid fa-user-lock" style="margin-left:6px;"></i>علامة حضور المحاضرات (للأستاذ فقط)</span></div>'+
+    '<div class="tot">0,5 نقطة لكل محاضرة حضرها الطالب (خانة «ح» في قائمة فوجه، والمرفوض «غ» لا يُحتسب)، دون سقف. هي العمود المحجوب «علامة حضور المحاضرة» في الورقة، ولا تدخل في «حضور التطبيق /3» ولا في معدل التطبيق، ولا يراها الطالب.</div>';
+  if(!L.length)return h+'<div class="tot">لا بيانات.</div></div>';
+  L.forEach(function(P){
+    h+='<div class="spb"><div class="spt"><i class="fa-solid fa-users"></i>'+esc(P.sp)+'</div>'+P.groups.map(function(G){
+      var st=G.st.slice().sort(function(a,b){return (b[4]||0)-(a[4]||0)||String(a[1]).localeCompare(String(b[1]),'ar');});
+      var key='lm|'+G.g, sum=0,n=0; st.forEach(function(x){if(x[4]!=null){sum+=x[4];n++;}});
+      return '<details class="gr" data-ag="'+esc(key)+'"'+(ATS.open[key]?' open':'')+'><summary><div class="gt"><span>'+esc(G.g)+'</span><span class="ch"><i class="fa-solid fa-chevron-down"></i> العلامات</span></div>'+
+        '<div class="gn">'+st.length+' طالباً · متوسط العلامة: <b>'+(n?f2(sum/n):'–')+'</b></div></summary><div class="gb"><ol>'+
+        st.map(function(x){return '<li>'+esc(x[1])+' '+esc(x[2])+' <span>'+esc(x[0])+'</span> : <b>'+f2(x[4])+'</b> <span>('+x[3]+' ح'+(x[5]!==x[3]?' · مؤكَّد في الحضور: '+x[5]:'')+')</span></li>';}).join('')+'</ol></div></details>';
+    }).join('')+'</div>';
+  });
+  return h+'</div>';
+}
 function atRender(){
   var d=ATS.d, box=$('b-attst'); if(!d)return;
   var L=d.sess.filter(function(s){return s.type==='lec';}), T=d.sess.filter(function(s){return s.type==='tp';});
@@ -716,6 +733,7 @@ function atRender(){
   if(k==='all-lec'){S=d.all.lec;all=true;}else if(k==='all-tp'){S=d.all.tp;all=true;}else d.sess.forEach(function(s){if('s|'+s.s===k)S=s;});
   if(!S){ATS.sel='all-lec';S=d.all.lec;all=true;k='all-lec';}
   h+=atBlock(k,S,all);
+  if(k==='all-lec')h+=atLm(d.lecMark||[]);
   var y=window.scrollY; box.innerHTML=h; window.scrollTo(0,y);
 }
 $('b-attst').addEventListener('click',function(ev){

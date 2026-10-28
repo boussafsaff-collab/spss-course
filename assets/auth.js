@@ -259,19 +259,21 @@ function meRender(r){var b=document.getElementById('spss-me-b');
   var go=o.go?'<br><a class="go" href="'+ROOT+'assessment/index.html?go='+encodeURIComponent(o.id)+'"><i class="fa-solid fa-play" aria-hidden="true"></i>اجتياز التقييم</a>':'';
   var rm=o.rem&&o.go?'<span class="rem"><i class="fa-solid fa-bell" aria-hidden="true"></i>تنبيه من الأستاذ ('+esc(o.rem)+'): أجره قبل غلقه</span>':'';
   return '<div class="rw"><span class="t">'+esc(o.title||o.topic||'')+rm+go+'</span>'+sc+bdg(bgS(o.st))+'</div>';}
- h+='<section id="spss-me-m" role="tabpanel" aria-labelledby="spss-me-t-m"><h3><i class="fa-solid fa-square-poll-vertical" aria-hidden="true"></i>تتبع علاماتي</h3><div class="avg"><div>معدل تقييمات المحاضرات<b><bdi dir="ltr">'+(M.lecAvg==null?'–':n2(M.lecAvg)+'/20')+'</bdi></b></div>'+(fin?'<div>معدل التطبيقات<b><bdi dir="ltr">'+(M.tpAvg==null?'–':n2(M.tpAvg)+'/20')+'</bdi></b></div>':'')+(M.att3?'<div>علامة الحضور<b><bdi dir="ltr">'+(M.att3.m3==null?'–':n2(M.att3.m3)+'/3')+'</bdi></b></div>':'')+'</div>';
+ h+='<section id="spss-me-m" role="tabpanel" aria-labelledby="spss-me-t-m"><h3><i class="fa-solid fa-square-poll-vertical" aria-hidden="true"></i>تتبع علاماتي</h3><div class="avg"><div>معدل تقييمات المحاضرات<b><bdi dir="ltr">'+(M.lecAvg==null?'–':n2(M.lecAvg)+'/20')+'</bdi></b></div>'+(fin?'<div>معدل التطبيقات<b><bdi dir="ltr">'+(M.tpAvg==null?'–':n2(M.tpAvg)+'/20')+'</bdi></b></div>':'')+(M.att3&&!M.att3.na?'<div>حضور التطبيق<b><bdi dir="ltr">'+(M.att3.m3==null?'–':n2(M.att3.m3)+'/3')+'</bdi></b></div>':'')+'</div>';
  h+='<h4>تقييمات المحاضرات</h4>'+((M.lec||[]).map(mrow).join('')||'<p class="nt">لا تقييمات بعد.</p>');
  if(fin){h+='<h4>تقييمات التطبيقات</h4>'+((M.tp||[]).map(mrow).join('')||'<p class="nt">لا تقييمات بعد.</p>');
   }
  else h+='<p class="nt">تخصص «إدارة أعمال»: لا تطبيقات، فالمعدل من تقييمات المحاضرات وحدها.</p>';
- // update64: علامة الحضور /3 (بدل «علامات حصص التطبيق /7»)
+ // update64b: علامة الحضور /3 = عمود «حضور التطبيق /3» في قائمة فوجك (حصص التطبيق فقط، مقارنة بأعلى حضور في الفوج)
  var X=M.att3;
- if(X){h+='<h4>علامة الحضور <bdi dir="ltr">(/3)</bdi></h4><div class="a3">'+
-  '<div class="rw"><span class="t">حضورك المؤكَّد</span><span class="v">'+X.n+' من '+X.held+' حصة</span></div>'+
-  '<div class="rw"><span class="t">منها</span><span class="v">'+X.lec+' محاضرة'+(fin?' و'+X.tp+' تطبيق':'')+'</span></div>'+
-  '<div class="rw"><span class="t">أكبر عدد حضور في تخصصك (المرجع)</span><span class="v">'+X.max+'</span></div>'+
-  '<div class="rw"><span class="t">علامتك</span><span class="v"><b><bdi dir="ltr">'+(X.m3==null?'–':n2(X.m3)+'/3')+'</bdi></b></span></div></div>';}
- h+='<p class="nt">المعدل بطريقة «النداء»: المحاضرة = العلامة/المجموع × 20، ومتوسطها على التقييمات التي أُجريت فعلاً؛ التطبيق = علامة الحصة /7 × 20؛ التقييم الذي أُجري ولم تنجزه يُحسب 0. علامة الحضور = 3 × عدد حضورك المؤكَّد ÷ أكبر عدد حضور بين طلبة تخصصك (الأكثر حضوراً يأخذ 3/3)، ويُحتسب '+(fin?'حضور المحاضرات والتطبيقات':'حضور المحاضرات')+' الذي جرى، ولا يُحتسب ما رُفض في النداء (غ). علامات مؤقتة تتغير مع كل حصة وكل تقييم.</p></section>';
+ if(X&&X.na)h+='<h4>علامة الحضور <bdi dir="ltr">(/3)</bdi></h4><p class="nt" style="margin-top:0">لا تنطبق على تخصص «إدارة أعمال»: هذه العلامة تخص حضور حصص التطبيق، وتخصصك بلا حصص تطبيقية.</p>';
+ else if(X){h+='<h4>علامة الحضور <bdi dir="ltr">(/3)</bdi>: حضور التطبيق</h4><div class="a3">'+
+  '<div class="rw"><span class="t">حضورك في حصص التطبيق (ح)</span><span class="v">'+X.n+' من '+X.held+' حصة جرت</span></div>'+
+  '<div class="rw"><span class="t">غياباتك المسجَّلة (غ)</span><span class="v">'+X.g+'</span></div>'+
+  '<div class="rw"><span class="t">أعلى حضور في فوجك (المرجع)</span><span class="v">'+X.max+'</span></div>'+
+  '<div class="rw"><span class="t">علامتك</span><span class="v"><b><bdi dir="ltr">'+(X.m3==null?'–':n2(X.m3)+'/3')+'</bdi></b></span></div></div>'+
+  (X.m3==null?'<p class="nt">تظهر العلامة بعد تسجيل أول حضور أو غياب لك في حصص التطبيق.</p>':'');}
+ h+='<p class="nt">المعدل بطريقة «النداء»: المحاضرة = العلامة/المجموع × 20، ومتوسطها على التقييمات التي أُجريت فعلاً؛ التطبيق = علامة الحصة /7 × 20؛ التقييم الذي أُجري ولم تنجزه يُحسب 0. '+(fin?'علامة الحضور (/3) هي نفسها عمود «حضور التطبيق /3» في قائمة فوجك: 3 × عدد حصص التطبيق التي حضرتها (ح) ÷ أعلى عدد حضور في فوجك، فيأخذ الأكثر حضوراً 3/3، والغياب (غ) لا يُحتسب حضوراً. ':'')+'علامات مؤقتة تتغير مع كل حصة وكل تقييم.</p></section>';
  function cnt(c){if(!c)return '';return '<div class="avg"><div>حاضر<b>'+c.present+'</b></div><div>غائب<b>'+c.absent+'</b></div><div>مرفوض (غ)<b>'+c.rejected+'</b></div><div>قادم<b>'+c.upcoming+'</b></div><div>نسبة الحضور<b><bdi dir="ltr">'+(c.rate==null?'–':c.rate+'%')+'</bdi></b></div></div>';}
  function arow(x){var isN=nx&&nx.session===x.session;return '<div class="rw'+(isN?' nx':'')+'"><span class="t">'+esc(x.session)+'<br><small style="color:#64748b">'+(x.dt?'<bdi dir="ltr">'+dm(x.dt)+'</bdi>':'')+(x.s?' · <bdi dir="ltr">'+esc(x.s)+'–'+esc(x.e)+'</bdi>':'')+'</small></span>'+bdg(bgA(x.st))+'</div>';}
  h+='<section id="spss-me-a" role="tabpanel" aria-labelledby="spss-me-t-a"><h3><i class="fa-solid fa-clipboard-user" aria-hidden="true"></i>تتبع الحضور</h3><h4>المحاضرات</h4>'+cnt(A.cLec)+(A.lec||[]).map(arow).join('');
