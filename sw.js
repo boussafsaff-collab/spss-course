@@ -2,7 +2,7 @@
    - الصفحات (HTML): من الشبكة دائماً؛ صفحة «دون اتصال» فقط عند انقطاع الشبكة؛ وصفحة «من نحن» (about.html) تُحفظ وتُعرض كما هي دون اتصال.
    - JS/CSS/الصور وغيرها: لا يتدخل (المتصفح والشبكة كالعادة، مع ?v= كما هي) — لا نسخة قديمة من auth.js أبداً.
    - طلبات Apps Script (script.google.com) ومواقع أخرى: لا يتدخل أبداً. */
-var C='spss-pwa-v5',OFF='offline.html',ABOUT='about.html';
+var C='spss-pwa-v6',OFF='offline.html',ABOUT='about.html';
 self.addEventListener('install',function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll([OFF,ABOUT,'icons/icon-192.png','icons/logo-128.png?v=3']);}).then(function(){return self.skipWaiting();}));});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf('spss-pwa-')===0&&k!==C;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});
 self.addEventListener('fetch',function(e){var r=e.request;
