@@ -5,11 +5,21 @@
    - update70: إشعارات الهاتف (Web Push عبر Firebase Cloud Messaging، رسائل data فقط): يعرض الإشعار، ويفتح رابطه عند النقر،
      ويُعلم الصفحة المفتوحة (شريط داخل المنصة + تحديث الجرس). لا كود Firebase داخل هذا الملف.
    - طلبات Apps Script (script.google.com) ومواقع أخرى: لا يتدخل أبداً. */
-var C='spss-pwa-v14',OFF='offline.html',ABOUT='about.html';
+var C='spss-pwa-v15',OFF='offline.html',ABOUT='about.html';
 self.addEventListener('install',function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll([OFF,ABOUT,'icons/icon-192.png','icons/logo-128.png?v=3','icons/badge-96.png']);}).then(function(){return self.skipWaiting();}));});
-self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf('spss-pwa-')===0&&k!==C;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});
+self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf('spss-pwa-')===0&&k!==C||k.indexOf('spss-static-')===0&&k!==SC;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});
+// update73: ملفات ثابتة: ذات ?v= (لا تتغيّر أبداً) ومكتبات CDN ذات الإصدار: من الذاكرة أولاً؛ الصور والخطوط: تُعرض المخزّنة وتُحدَّث في الخلفية.
+// HTML وJS بلا ?v= وطلبات Apps Script: من الشبكة كما كانت (لا بيانات قديمة أبداً).
+var SC='spss-static-v1';
+function stFirst(e,r){e.respondWith(caches.open(SC).then(function(c){return c.match(r).then(function(h){return h||fetch(r).then(function(res){if(res&&(res.ok||res.type==='opaque'))c.put(r,res.clone());return res;});});}));}
+function stSwr(e,r){e.respondWith(caches.open(SC).then(function(c){return c.match(r).then(function(h){var f=fetch(r).then(function(res){if(res&&(res.ok||res.type==='opaque'))c.put(r,res.clone());return res;}).catch(function(){return h;});if(h){e.waitUntil(f.catch(function(){}));return h;}return f;});}));}
 self.addEventListener('fetch',function(e){var r=e.request;
- if(r.method!=='GET'||r.mode!=='navigate')return;
+ if(r.method!=='GET')return;
+ if(r.mode!=='navigate'){try{var q=new URL(r.url);
+  if(/script\.google/.test(q.hostname))return;
+  if(q.origin===self.location.origin){if(/[?&]v=/.test(q.search))return stFirst(e,r);if(/\.(png|jpe?g|webp|svg|gif|ico|woff2?|ttf)$/i.test(q.pathname))return stSwr(e,r);return;}
+  if(/(^|\.)(gstatic\.com|cdnjs\.cloudflare\.com|cdn\.jsdelivr\.net)$/.test(q.hostname)&&/\d+\.\d+/.test(q.pathname))return stFirst(e,r);
+  if(/fonts\.googleapis\.com$/.test(q.hostname))return stSwr(e,r);}catch(x){}return;}
  var u=new URL(r.url);if(u.origin!==self.location.origin||u.pathname.indexOf(new URL(self.registration.scope).pathname)!==0)return;
  var ab=/\/about\.html$/.test(u.pathname);
  e.respondWith(fetch(r).then(function(res){if(ab&&res&&res.ok){var cp=res.clone();caches.open(C).then(function(c){c.put(ABOUT,cp);});}return res;}).catch(function(){return caches.match(ab?ABOUT:OFF,{cacheName:C}).then(function(x){return x||new Response('دون اتصال',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});});}));});

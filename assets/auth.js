@@ -192,10 +192,19 @@ var CSS=[
 '.dark .spss-who,html.dark .spss-who{background:#0c4a6e;color:#e0f2fe;border-color:#0369a1}.spss-slot{display:block;margin-top:6px;font-size:13.5px;font-weight:700}'].join('\n');
 function addCss(){if(document.getElementById('spss-auth-css'))return;var s=document.createElement('style');s.id='spss-auth-css';s.textContent=CSS;document.head.appendChild(s);}
 function post(o){return fetch(U,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text()}).then(function(t){t=String(t).trim();try{return JSON.parse(t)}catch(e){return {ok:0,err:t||'NET'};}});}
+// update73: بيانات الطالب (asme): طلب واحد مشترك بين الجرس ولوحة «بياناتي»، ونسخة محلية تُعرض فوراً ثم تُحدَّث
+var ME_P=null;
+function meKey(){return 'spss_me_'+(ID&&ID.bac||'');}
+function meCache(){var c=pj(lg(meKey()));return c&&c.r&&c.r.ok&&Date.now()-c.t<6*3600e3?c:null;}
+function meGet(){if(ME_P)return ME_P;ME_P=getJ({action:'asme',sbac:ID.bac}).then(function(r){ME_P=null;if(r&&r.ok){try{ls(meKey(),JSON.stringify({t:Date.now(),r:r}));}catch(e){}}return r;},function(e){ME_P=null;throw e;});return ME_P;}
+// أي فعل كتابة إلى الخادم (تسجيل حضور، تقييم، طلب…) يمسح النسخ المحلية فوراً كي لا تظهر علامة أو حضور قديم
+var RD_ACT={course:1,aslist:1,asme:1,asnotes:1,askey:1,asrqlist:1,asrqmine:1,asadmin:1,asstudlist:1,asstats:1,asattstats:1,asmsglist:1,asroll:1,qzgate:1,qzstatus:1,lqstatus:1,tsver:1,checkkey:1,slide:1,monitor:1,stsum:1,qzlist:1,qzstats:1,asfind:1,ascnt:1,lecqzst:1};
+function dataPurge(){try{Object.keys(localStorage).forEach(function(k){if(/^(spss_me_|spss_alc_|tp_c_)/.test(k))localStorage.removeItem(k);});}catch(e){}}
+(function(){if(!window.fetch||window.__spssF)return;window.__spssF=1;var F0=window.fetch;window.fetch=function(u,o){try{var s=String(u&&u.url||u);if(/script\.google/.test(s)){var b=o&&o.body,t=s+'&'+(b?String(b):'');var m=t.match(/[?&]action=([a-z0-9_]+)/i)||t.match(/"action"\s*:\s*"([a-z0-9_]+)"/i);var a=m?m[1]:'';if(!RD_ACT[a]){dataPurge();var p=F0.apply(this,arguments);p.then(dataPurge,function(){});return p;}}}catch(e){}return F0.apply(this,arguments);};})();
 function getJ(q){return fetch(U+'?'+new URLSearchParams(q).toString()+'&t='+Date.now()).then(function(r){return r.text()}).then(function(t){try{return JSON.parse(t)}catch(e){return {ok:0,err:'NET'};}});}
 function goNext(){var n='';try{n=new URLSearchParams(location.search).get('next')||'';}catch(e){}
  var base=new URL(ROOT).pathname;if(n&&n.charAt(0)==='/'&&n.indexOf('//')!==0&&n.indexOf(base)===0){location.replace(n);return true;}return false;}
-function clearAll(){purge(true);try{Object.keys(localStorage).forEach(function(k){if(k.indexOf('spss_alc_')===0)localStorage.removeItem(k);});}catch(e){}['spss_id','as_bac'].forEach(function(k){ls(k,null)});['spss_tkey','spss_tstu','dk-prof','as_tkey','dk-open','tp-slide'].forEach(function(k){ss(k,null)});try{localStorage.removeItem('dk-prof')}catch(e){}}
+function clearAll(){purge(true);dataPurge();try{Object.keys(localStorage).forEach(function(k){if(k.indexOf('spss_alc_')===0)localStorage.removeItem(k);});}catch(e){}['spss_id','as_bac'].forEach(function(k){ls(k,null)});['spss_tkey','spss_tstu','dk-prof','as_tkey','dk-open','tp-slide'].forEach(function(k){ss(k,null)});try{localStorage.removeItem('dk-prof')}catch(e){}}
 function logout(){appBadge(0);var pt=lg('spss_push_tok');if(pt){try{post({action:'aspushunreg',token:pt}).catch(function(){});}catch(e){}['spss_push_tok','spss_push_on','spss_push_who','spss_push_at'].forEach(function(k){ls(k,null);});}clearAll();location.href=ROOT+'index.html';}
 function dlg(h,setup){var o=document.getElementById('spss-dl');if(o)o.remove();var w=document.createElement('div');w.id='spss-dl';w.innerHTML='<div class="c">'+h+'</div>';
  (document.fullscreenElement||document.body).appendChild(w);w.addEventListener('click',function(e){if(e.target===w)w.remove();});setup&&setup(w);return w;}
@@ -270,7 +279,7 @@ function alPaint(){var n=alUnread(),b=document.querySelector('#spss-ub .bell');
 function alLoad(force){if(!ID||AL.busy)return;var who=alWho();if(!who)return;var ck='spss_alc_'+who,hit=pj(lg(ck));
  if(hit&&hit.l&&!AL.list){AL.list=alFix(hit.l);alPaint();}
  if(!force&&hit&&Date.now()-hit.t<120000&&hit.l)return;
- AL.busy=true;var q=ID.role==='teacher'?post({action:'asrqlist',key:ID.key}):getJ({action:'asme',sbac:ID.bac});
+ AL.busy=true;var q=ID.role==='teacher'?post({action:'asrqlist',key:ID.key}):meGet();
  q.then(function(r){AL.busy=false;if(!r||!r.ok){if(PAGE==='alerts'&&!AL.list){AL.err=1;alRender();}return;}
   if(ID.role==='teacher')ss('spss_rqn',(r.pending||0)+'|'+Date.now());
   var l=alBuild(r);ls(ck,JSON.stringify({t:Date.now(),l:l}));AL.err=0;AL.list=alFix(l);alPaint();}).catch(function(){AL.busy=false;});}
@@ -608,8 +617,8 @@ function meOpen(btn){var d=document.getElementById('spss-me');
  d.classList.add('open');document.documentElement.classList.add('spss-lock');var hb=document.querySelector('#spss-ub .ham');if(hb)hb.setAttribute('aria-expanded','true');
  meSel(meTab);meD=!meDesk();meSync();
  if(meD)meDrawer(true);else setTimeout(function(){try{meEl('t-'+meTab).focus();}catch(e){}},60);
- document.getElementById('spss-me-b').innerHTML='<p>جارٍ تحميل بياناتك…</p>';
- getJ({action:'asme',sbac:ID.bac}).then(function(r){ME=r;meRender(r);});}
+ var mc=meCache();if(mc){ME=mc.r;meRender(mc.r);}else document.getElementById('spss-me-b').innerHTML='<p>جارٍ تحميل بياناتك…</p>';
+ meGet().then(function(r){if(r&&r.ok||!mc){ME=r;meRender(r);}});}
 function meClose(){var d=document.getElementById('spss-me');meD=false;if(d){d.classList.remove('open');meSync();}document.documentElement.classList.remove('spss-lock');var hb=document.querySelector('#spss-ub .ham');if(hb){hb.setAttribute('aria-expanded','false');hb.focus();}}
 function meRender(r){var b=document.getElementById('spss-me-b');
  if(!r||!r.ok){b.innerHTML='<p class="spss-polite">'+(r&&r.err==='UNKNOWN_BAC'?'رقمك غير موجود في القوائم. راجع الأستاذ.':'تعذّر جلب بياناتك الآن. أعد المحاولة بعد قليل.')+'</p>';return;}

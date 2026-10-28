@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<script src="../../assets/auth.js?v=668" data-page="teacher"></script>
+<script src="../../assets/auth.js?v=669" data-page="teacher"></script>
 <link rel="manifest" href="../../manifest.webmanifest">
 <meta name="theme-color" content="#0f2744">
 <link rel="icon" type="image/png" sizes="32x32" href="../../icons/favicon-32.png?v=3">
@@ -619,7 +619,10 @@ $('rmgo').addEventListener('click',function(){
   });
 });
 document.addEventListener('toggle',function(ev){var d=ev.target; if(d&&d.getAttribute&&d.getAttribute('data-sg')){if(d.open)stOpen[d.getAttribute('data-sg')]=1;else delete stOpen[d.getAttribute('data-sg')];}},true);
-function call(o){o.key=key;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{return JSON.parse(t);}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
+function call(o){o.key=key;var a=o.action,c=TPC[a]&&!o.fresh&&!o.id;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{var j=JSON.parse(t);if(c&&j&&j.ok){try{localStorage.setItem('tp_c_'+a,JSON.stringify({t:Date.now(),r:j}));}catch(e){}}return j;}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
+/* update73: آخر نسخة من بيانات اللوحة تُعرض فوراً عند الفتح ثم تُستبدل بالجديدة (تُمسح عند أي تعديل) */
+var TPC={asadmin:1,asrqlist:1,asstudlist:1};
+function tpC(a){try{var c=JSON.parse(localStorage.getItem('tp_c_'+a)||'null');return c&&c.r&&c.r.ok&&Date.now()-c.t<6*3600e3?c.r:null;}catch(e){return null;}}
 /* update55: أقسام مستقلة، قسم واحد ظاهر، ومحدِّد للتقييم داخل القسم */
 var TABS=['open','sched','time','ex','stats','attst','roll','rq','cancel','add','alcfg','bank'], tab='open', cur=SS.get('as_tcur')||'';
 function curItem(){var i=byId(cur);if(!i&&items.length){i=items[0];cur=i.id;}return i;}
@@ -845,7 +848,7 @@ $('mg-rf').addEventListener('click',alcLoad);
 /* update65: طلبات مراجعة الحضور */
 var RQ={d:null,t:0,f:'p',busy:{},err:{},msg:{}};
 var RQE={NO_REQUEST:'الطلب غير موجود (ربما حُذف).',ALREADY_DECIDED:'سبق البت في هذا الطلب.',BAD_SESSION:'الحصة غير معروفة.',MOVED:'تغيّرت الورقة، حدّث القائمة.',ROLL_NO_CHECKIN:'تعذّر إنشاء سطر الحضور.',ROLL_BAD_ID:'الحصة لا تخص فوج الطالب.',ROLL_BAD_BAC:'رقم الطالب غير موجود في القوائم.'};
-function rqLoad(){var g=RQ.g=(RQ.g||0)+1;
+function rqLoad(){var g=RQ.g=(RQ.g||0)+1;if(!RQ.d){var c0=tpC('asrqlist');if(c0){RQ.d=c0;try{rqBadge();rqRender();}catch(e){}}}
   return call({action:'asrqlist'}).then(function(r){if(g!==RQ.g)return;
     if(!r.ok){if(r.err==='BAD_KEY'){logout();$('kerr').textContent=msg(r.err);return;}if(!RQ.d)$('b-rq').innerHTML='<p class="err">'+esc(msg(r.err))+'</p>';return;}
     RQ.d=r;RQ.t=Date.now();rqBadge();rqRender();});}
@@ -888,6 +891,7 @@ function saErr(r){
 function saG(g){return g?('0'+g).slice(-2):'';}
 function saGrpUi(spId,gwId,noteId){var f=/مالية/.test($(spId).value);$(gwId).classList.toggle('hide',!f);if(noteId)$(noteId).classList.toggle('hide',f);}
 function saLoad(){
+  if(!SA.d){var c0=tpC('asstudlist');if(c0){SA.d=c0;try{saRender();}catch(e){}}}
   if(!SA.d)$('sa-l').innerHTML='<p class="s">جارٍ التحميل…</p>';
   return call({action:'asstudlist'}).then(function(r){
     if(!r.ok){$('sa-l').innerHTML='<p class="err">'+esc(msg(r.err))+'</p>';return;}
@@ -1026,6 +1030,7 @@ window.addEventListener('hashchange',function(){var h=hashTab();if(h&&h!==tab)se
 syncNav();
 setTab(hashTab()||SS.get('as_ttab')||'open');
 function load(){
+  if(!items.length){var c0=tpC('asadmin');if(c0&&c0.items){items=c0.items;try{render();}catch(e){}}}
   return call({action:'asadmin'}).then(function(r){
     if(!r.ok){if(r.err==='BAD_KEY'){logout();$('kerr').textContent=msg(r.err);}else $('perr').textContent=msg(r.err);return;}
     $('perr').textContent='';items=r.items;render();loadStats(false);
