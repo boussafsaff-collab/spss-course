@@ -67,6 +67,12 @@ if(FLT){
 }
 // ===== واجهة =====
 var CSS=[
+'#spss-ub .ham{position:relative}#spss-ub .ham.dot::after{content:"";position:absolute;top:6px;left:6px;width:10px;height:10px;border-radius:50%;background:#f43f5e;box-shadow:0 0 0 2px #0f2744}',
+'#spss-mn .it .nb{margin-right:auto;font-style:normal;font-size:12px;font-weight:800;border-radius:999px;padding:0 8px;min-width:22px;text-align:center;line-height:20px;background:#e2e8f0;color:#334155}#spss-mn .it .nb.w{background:#ffedd5;color:#9a3412}#spss-mn .it .nb.o{background:#dcfce7;color:#166534}#spss-mn .it .nb:empty{display:none}',
+'#spss-mn .it.sub{min-height:42px;font-size:14.5px;padding:6px 10px}#spss-mn .it.sub .ic{width:30px;height:30px;font-size:15px}',
+'html.spss-abtp #hb,html.spss-abtp #nav,html.spss-abtp #bdp,html.spss-abtp .nvh{display:none!important}html.spss-abtp .lay{display:block!important}',
+'html.spss-abtp .w:has(#panel:not(.hide)) .hd{display:none!important}',
+'html.spss-abtp .shd{padding:10px 14px!important;min-height:0!important}html.spss-abtp #stitle::before{content:"لوحة الأستاذ ‹ ";color:#93c5fd;font-weight:700;font-family:Cairo,"Segoe UI",Tahoma,sans-serif}',
 '#spss-ub{all:initial;box-sizing:border-box;direction:rtl;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;position:sticky;top:0;z-index:45;display:flex;align-items:center;gap:8px;width:100%;min-height:56px;padding:8px max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left));background:linear-gradient(180deg,#12305a,#0f2744);color:#fff;box-shadow:0 2px 12px rgba(2,6,23,.22);border-bottom:1px solid rgba(255,255,255,.08);line-height:1.4}',
 '#spss-ub *{box-sizing:border-box;font-family:inherit}#spss-ub.tstu{border-bottom:3px solid #fbbf24}',
 '#spss-ub .br{display:flex;align-items:center;gap:9px;min-width:0;flex:0 1 auto;color:#fff!important;text-decoration:none!important;border-radius:12px;padding:2px 4px 2px 8px;margin:0;background:none}',
@@ -207,7 +213,18 @@ function bar(){if(!ID||document.getElementById('spss-ub'))return;var b=document.
  b.addEventListener('click',function(e){var x=e.target.closest('[data-x]');if(!x)return;mnOpen(x);});
  document.body.insertBefore(b,document.body.firstChild);
  document.documentElement.classList.add('spss-ab'); if(PAGE==='teacher')document.documentElement.classList.add('spss-abt');
+ if(PAGE==='teacher'&&ID.role==='teacher')document.documentElement.classList.add('spss-abtp');
+ if(ID.role==='teacher')rqWatch();
  abH();addEventListener('resize',abH);}
+var TPT=[['open','🔓','الفتح والغلق'],['sched','🗓️','الجدولة'],['time','⏱️','الوقت وعدد الأسئلة'],['ex','🎓','التخصصات المعنية'],['stats','📈','الإحصائيات والتنبيهات'],['attst','📊','إحصائيات الحضور'],['roll','📝','النداء'],['rq','📥','طلبات المراجعة'],['cancel','🚫','إلغاء النتائج'],['add','➕','إضافة طالب'],['bank','🗃️','بنك الأسئلة']];
+function tpCur(){var h=(location.hash||'').slice(1);if(TPT.some(function(x){return x[0]===h;}))return h;var t=null;try{t=sessionStorage.getItem('as_ttab');}catch(e){}return t||'open';}
+function rqN(){var v=String(sg('spss_rqn')||'').split('|');return {n:Number(v[0])||0,t:Number(v[1])||0};}
+function tpBadge(k){var e=document.getElementById('bd-'+k);if(e&&PAGE==='teacher'){var c=/\bw\b/.test(e.className)?'w':(/\bo\b/.test(e.className)?'o':'');return {n:e.textContent.trim(),c:c};}
+ if(k==='rq'){var r=rqN();return {n:r.n?String(r.n):'',c:r.n?'w':''};}return {n:'',c:''};}
+function rqSet(n){ss('spss_rqn',(Number(n)||0)+'|'+Date.now());var hb=document.querySelector('#spss-ub .ham');if(hb){hb.classList.toggle('dot',(Number(n)||0)>0);hb.setAttribute('aria-label','القائمة'+((Number(n)||0)>0?' ('+n+' طلبات مراجعة بانتظار قرارك)':''));}}
+function rqWatch(){if(PAGE==='teacher'){var e=document.getElementById('bd-rq');if(!e)return;var f=function(){rqSet(parseInt(e.textContent,10)||0);};if(e.textContent.trim())f();try{new MutationObserver(f).observe(e,{childList:true,characterData:true,subtree:true});}catch(x){}return;}
+ var r=rqN();if(r.t&&Date.now()-r.t<120000){rqSet(r.n);return;}
+ post({action:'asrqlist',key:ID.key}).then(function(x){if(x&&x.ok)rqSet(x.pending||0);}).catch(function(){});}
 function mnItem(x,ic,lb,cls,href,cur){var c='it'+(cls?' '+cls:'');var i='<span class="ic" aria-hidden="true">'+ic+'</span><span>'+lb+'</span>';
  return href?'<a class="'+c+'" href="'+href+'"'+(cur?' aria-current="page"':'')+'>'+i+'</a>':'<button type="button" class="'+c+'" data-x="'+x+'">'+i+'</button>';}
 function mnBuild(){var r=ID.role,h='',home=ROOT+'index.html';
@@ -216,7 +233,10 @@ function mnBuild(){var r=ID.role,h='',home=ROOT+'index.html';
  h+='<div class="hd"><img src="'+ROOT+'icons/logo-128.png?v=3" alt="" width="40" height="40"><div class="t"><b id="spss-mn-h">'+esc(APP_NAME)+'</b>'+who+'</div><button type="button" class="x" data-x="close" aria-label="إغلاق القائمة" title="إغلاق">✕</button></div><div class="ls">';
  h+=mnItem('','🏠','الرئيسية','',home,PAGE==='landing');
  if(r==='teacher'){
-  h+='<p class="gh">أدوات الأستاذ</p>'+mnItem('','📋','لوحة الأستاذ','',ROOT+'assessment/teacher/',PAGE==='teacher')+mnItem('tstu','🧪','الدخول كطالب')+mnItem('clean','🧹','مسح بيانات التجربة');}
+  var ct=PAGE==='teacher'?tpCur():'';
+  h+='<p class="gh">لوحة الأستاذ</p>'+TPT.map(function(x){var b=tpBadge(x[0]),on=ct===x[0];
+   return '<a class="it sub" data-tab="'+x[0]+'" href="'+ROOT+'assessment/teacher/#'+x[0]+'"'+(on?' aria-current="true"':'')+(b.n?' aria-label="'+esc(x[2]+'، '+(x[0]==='rq'?'قيد المراجعة ':'')+b.n)+'"':'')+'><span class="ic" aria-hidden="true">'+x[1]+'</span><span>'+x[2]+'</span><em class="nb'+(b.c?' '+b.c:'')+'">'+esc(b.n)+'</em></a>';}).join('');
+  h+='<p class="gh">أدوات الأستاذ</p>'+mnItem('tstu','🧪','الدخول كطالب')+mnItem('clean','🧹','مسح بيانات التجربة');}
  else{
   h+='<p class="gh">لوحة الطالب</p>'+MET.map(function(x){return '<button type="button" class="it" data-x="me" data-g="'+x[0]+'"><span class="ic" aria-hidden="true">'+({m:'📊',a:'🗓️',l:'🧑‍🏫',p:'💻'}[x[0]]||'•')+'</span><span>'+x[2]+'</span></button>';}).join('');
   if(r==='tstu')h+='<p class="gh">وضع التجربة</p>'+mnItem('back','↩️','العودة إلى دور الأستاذ');}
@@ -228,7 +248,8 @@ function mnOpen(btn){var m=document.getElementById('spss-mn');if(m)m.remove();
  m=document.createElement('div');m.id='spss-mn';if(ID.role==='tstu')m.className='tstu';
  m.innerHTML='<div class="bd" data-x="close"></div><div class="pn" role="dialog" aria-modal="true" aria-labelledby="spss-mn-h" tabindex="-1">'+mnBuild()+'</div>';
  document.body.appendChild(m);MN.ret=btn||null;
- m.addEventListener('click',function(e){var x=e.target.closest('[data-x]');if(!x)return;var a=x.getAttribute('data-x');
+ m.addEventListener('click',function(e){var tb=e.target.closest('a[data-tab]');if(tb){if(PAGE==='teacher'&&document.getElementById('s-'+tb.getAttribute('data-tab'))){e.preventDefault();mnClose(true);var k=tb.getAttribute('data-tab');if(location.hash!=='#'+k)location.hash=k;else try{window.dispatchEvent(new HashChangeEvent('hashchange'));}catch(er){}setTimeout(function(){try{var sc=document.getElementById('s-'+k);sc.setAttribute('tabindex','-1');sc.focus({preventScroll:true});}catch(er){}},60);}else mnClose(true);return;}
+  var x=e.target.closest('[data-x]');if(!x)return;var a=x.getAttribute('data-x');
   if(a==='close'){mnClose();return;}
   if(a==='out'){if(confirm(ID.role==='student'?'تسجيل الخروج من المنصة على هذا الجهاز؟ (حضورك ونتائجك المسجَّلة لا تُلغى)':'تسجيل الخروج؟'))logout();return;}
   var hb=document.querySelector('#spss-ub .ham');mnClose(true);
