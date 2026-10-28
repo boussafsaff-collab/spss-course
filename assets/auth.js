@@ -67,8 +67,39 @@ if(FLT){
 }
 // ===== واجهة =====
 var CSS=[
+'#spss-ub{all:initial;box-sizing:border-box;direction:rtl;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;position:sticky;top:0;z-index:45;display:flex;align-items:center;gap:8px;width:100%;min-height:56px;padding:8px max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left));background:linear-gradient(180deg,#12305a,#0f2744);color:#fff;box-shadow:0 2px 12px rgba(2,6,23,.22);border-bottom:1px solid rgba(255,255,255,.08);line-height:1.4}',
+'#spss-ub *{box-sizing:border-box;font-family:inherit}#spss-ub.tstu{border-bottom:3px solid #fbbf24}',
+'#spss-ub .br{display:flex;align-items:center;gap:9px;min-width:0;flex:0 1 auto;color:#fff!important;text-decoration:none!important;border-radius:12px;padding:2px 4px 2px 8px;margin:0;background:none}',
+'#spss-ub .br img{width:34px;height:34px;border-radius:9px;display:block;flex:none;box-shadow:0 0 0 1px rgba(255,255,255,.18)}',
+'#spss-ub .br .nm{font-size:17px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;letter-spacing:0;color:#fff}',
+'#spss-ub .sp{flex:1 1 0;min-width:4px}',
+'#spss-ub .bdg{flex:0 1 auto;min-width:0;max-width:34vw;font-size:12.5px;font-weight:700;color:#dbeafe;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:3px 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
+'#spss-ub.tstu .bdg{background:#fbbf24;color:#451a03;border-color:#fbbf24}',
+'#spss-ub .ham{flex:none;display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;margin:0;padding:0;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;-webkit-tap-highlight-color:transparent}',
+'#spss-ub .ham svg{width:22px;height:22px;display:block}#spss-ub .ham:hover{background:rgba(255,255,255,.18)}',
+'#spss-ub a:focus-visible,#spss-ub button:focus-visible,#spss-mn a:focus-visible,#spss-mn button:focus-visible{outline:3px solid #fbbf24;outline-offset:2px}',
+'html.spss-ab{scroll-padding-top:calc(var(--spss-abh,56px) + 10px)}'+
+'html.spss-abt .shd{top:calc(var(--spss-abh,56px) + 6px)!important}',
+'@media (max-width:359px){#spss-ub .bdg{display:none}}',
+'#spss-mn{all:initial;direction:rtl;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;position:fixed;inset:0;z-index:2147482990;display:block;visibility:hidden;pointer-events:none}',
+'#spss-mn.open{visibility:visible;pointer-events:auto}#spss-mn *{box-sizing:border-box;font-family:inherit}#spss-mn .ic{font-family:"Segoe UI Emoji","Apple Color Emoji","Noto Color Emoji",sans-serif}',
+'#spss-mn .bd{position:absolute;inset:0;background:rgba(2,6,23,.5);opacity:0;transition:opacity .2s}#spss-mn.open .bd{opacity:1}',
+'#spss-mn .pn{position:absolute;top:0;bottom:0;left:0;width:min(320px,86vw);background:#fff;color:#1e293b;display:flex;flex-direction:column;box-shadow:12px 0 32px rgba(2,6,23,.28);transform:translateX(-104%);transition:transform .22s ease;border-radius:0 18px 18px 0;overflow:hidden}',
+'#spss-mn.open .pn{transform:none}@media (prefers-reduced-motion:reduce){#spss-mn .pn,#spss-mn .bd{transition:none}}',
+'#spss-mn .hd{display:flex;align-items:center;gap:10px;padding:14px 14px 12px;background:linear-gradient(180deg,#12305a,#0f2744);color:#fff}',
+'#spss-mn .hd img{width:40px;height:40px;border-radius:10px;flex:none}#spss-mn .hd .t{flex:1;min-width:0}',
+'#spss-mn .hd b{display:block;font-size:16px;font-weight:800;line-height:1.3}#spss-mn .hd small{display:block;font-size:12.5px;font-weight:600;color:#bfdbfe;line-height:1.5;overflow-wrap:anywhere}',
+'#spss-mn.tstu .hd small .tg{display:inline-block;background:#fbbf24;color:#451a03;border-radius:999px;padding:0 8px;font-weight:800;margin-left:4px}',
+'#spss-mn .x{flex:none;width:38px;height:38px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-size:18px;line-height:1;cursor:pointer;padding:0;margin:0}',
+'#spss-mn .ls{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:8px 10px 12px}',
+'#spss-mn .gh{margin:12px 8px 4px;font-size:12px;font-weight:800;color:#64748b;letter-spacing:0}',
+'#spss-mn .it{display:flex;align-items:center;gap:12px;width:100%;min-height:46px;margin:2px 0;padding:8px 10px;border:0;border-radius:12px;background:none;color:#0f2744!important;font-size:15px;font-weight:700;text-align:right;text-decoration:none!important;cursor:pointer;line-height:1.4}',
+'#spss-mn .it:hover{background:#eef4fb}#spss-mn .it[aria-current]{background:#e0ecfb}',
+'#spss-mn .it .ic{flex:none;width:34px;height:34px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;background:#eef2f7;font-size:16px}',
+'#spss-mn .it .ic img{width:24px;height:24px;border-radius:6px;display:block}',
+'#spss-mn .ft{border-top:1px solid #e6edf5;padding:8px 10px calc(10px + env(safe-area-inset-bottom))}',
+'#spss-mn .it.dg{color:#be123c!important}#spss-mn .it.dg .ic{background:#ffe4e6}#spss-mn .it.dg:hover{background:#fff1f2}',
 'html.spss-flt #picker{display:none!important}html.spss-biztp #mod-attendance,html.spss-biztp #mod-quiz,html.spss-biztp [onclick*="mod-attendance"],html.spss-biztp [onclick*="mod-quiz"],html.spss-biztp a[href="#mod-attendance"],html.spss-biztp a[href="#mod-quiz"],html.spss-biztp #att-frame-wrap,html.spss-biztp #qz-login,html.spss-biztp #qz-wait,html.spss-biztp #tq-go,html.spss-biztp #tq-wait,html.spss-biztp .qzbtn,html.spss-biztp #snav-fbn{display:none!important}html.spss-biz #note{display:none!important}.spss-free{direction:rtl;font-family:Cairo,"Segoe UI",Tahoma,sans-serif;display:flex;gap:10px;align-items:flex-start;background:#eff6ff;border:1px solid #93c5fd;color:#0f2744;border-radius:14px;padding:10px 14px;margin:10px auto;max-width:1100px;line-height:1.7;font-size:14px;box-sizing:border-box}.spss-free b{display:block;font-size:15px}.spss-free .i{flex:0 0 auto;font-size:18px;line-height:1.4}',
-'#spss-ub .ham{font-size:20px!important;line-height:1;width:42px;height:38px;padding:0!important;background:rgba(255,255,255,.16)!important;border-radius:10px}',
 '#spss-me{direction:rtl;text-align:right;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;line-height:1.8;position:fixed;inset:0;z-index:2147483601;background:#f4f7fb;color:#1e293b;overflow-y:auto;overscroll-behavior:contain;opacity:0;visibility:hidden;transition:opacity .2s ease,visibility .2s}#spss-me.open{opacity:1;visibility:visible}#spss-me *{box-sizing:border-box}',
 '#spss-me .mw{max-width:760px;margin:0 auto;padding:clamp(6px,2vw,24px) clamp(4px,1.5vw,16px) 28px}',
 '#spss-me .shd{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;background:#0f2744;color:#fff;border-radius:14px;padding:6px 8px;margin:0 0 10px;box-shadow:0 8px 20px rgba(15,23,42,.18)}',
@@ -85,11 +116,6 @@ var CSS=[
 '#spss-me .avg{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}#spss-me .avg div{flex:1 1 92px;background:#eff6ff;border-radius:10px;padding:8px;text-align:center;font-size:12.5px}#spss-me .avg b{display:block;font-size:20px;color:#0f2744}#spss-me .nt{font-size:12px;color:#64748b;margin:6px 0 0}#spss-me .rw.mga{flex-wrap:wrap;align-items:center;row-gap:6px}#spss-me .rw.mga>.t{flex:1 1 100%;min-width:0;white-space:normal;overflow-wrap:anywhere}#spss-me .mgl{flex:1 1 100%;display:flex;align-items:center;flex-wrap:wrap;gap:6px 8px;min-width:0}#spss-me .mrem{display:inline-flex;align-items:center;gap:5px;min-width:0;font-size:12px;font-weight:700;color:#92400e;line-height:1.4}#spss-me .mrem i{color:#d97706}#spss-me .mgo{display:inline-flex;align-items:center;justify-content:center;gap:8px;flex:0 0 auto;width:auto;margin:2px 0 0;margin-inline-end:auto;min-height:42px;padding:8px 18px;border-radius:12px;border:0;background:#0f2744;color:#fff;font:inherit;font-weight:800;font-size:14px;line-height:1.2;white-space:nowrap;text-decoration:none;box-shadow:0 4px 12px rgba(15,39,68,.22);transition:background .15s}#spss-me .mgo i{color:#e9c46a}#spss-me .mgo:hover{background:#1d4f86}#spss-me .mgo:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}#spss-me .a3 b{color:#0f2744}#spss-me .mrq{display:inline-flex;align-items:center;justify-content:center;gap:7px;flex:0 0 auto;width:auto;height:auto;margin:2px 0 0;margin-inline-end:auto;min-height:38px;padding:6px 14px;border-radius:12px;border:1.5px solid #0f2744;background:#fff;color:#0f2744;font:inherit;font-weight:800;font-size:13.5px;line-height:1.2;white-space:nowrap;cursor:pointer;box-shadow:none}#spss-me .mrq:hover{background:#eff6ff}#spss-me .mrq:focus-visible,#spss-me .mrqs:focus-visible,#spss-me .mrqc:focus-visible{outline:3px solid #93c5fd;outline-offset:2px}#spss-me .mrqr{flex:1 1 100%;min-width:0;font-size:12.5px;line-height:1.5;color:#334155;background:#f8fafc;border-inline-start:3px solid #94a3b8;padding:4px 8px;border-radius:6px;overflow-wrap:anywhere}#spss-me .mrqk{font-size:11.5px;color:#64748b;white-space:nowrap}#spss-me .mrqf{flex:1 1 100%;display:flex;flex-direction:column;gap:6px;margin:4px 0 0;min-width:0}#spss-me .mrqf label{font-size:12.5px;font-weight:700;color:#334155}#spss-me .mrqf textarea{display:block;width:100%;box-sizing:border-box;min-height:64px;margin:0;font:inherit;font-size:14px;line-height:1.5;padding:8px 10px;border:1.5px solid #cbd5e1;border-radius:10px;background:#fff;color:#0f172a;resize:vertical}#spss-me .mrqb{display:flex;gap:8px;flex-wrap:wrap;align-items:center}#spss-me .mrqs,#spss-me .mrqc{display:inline-flex;align-items:center;gap:6px;width:auto;min-height:38px;margin:0;padding:6px 14px;border-radius:12px;border:0;font:inherit;font-weight:800;font-size:13.5px;white-space:nowrap;cursor:pointer;box-shadow:none}#spss-me .mrqs{background:#0f2744;color:#fff}#spss-me .mrqs[disabled]{opacity:.6;cursor:wait}#spss-me .mrqc{background:#e2e8f0;color:#0f2744}#spss-me .rw.mrw{display:block}#spss-me .mr1{display:flex;align-items:flex-start;gap:8px}#spss-me .mr1 .t{flex:1 1 auto;min-width:0;overflow-wrap:anywhere}#spss-me .mr1 .bg{margin-top:1px}#spss-me .mr2{display:flex;align-items:center;gap:6px;min-height:28px;margin-top:1px}#spss-me .mr2 .md{flex:0 0 auto;color:#64748b;white-space:nowrap}#spss-me .mr2 .mc{flex:1 1 auto;display:flex;justify-content:center;min-width:0}#spss-me .mr3{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-top:4px}#spss-me .mrw .mrqr{display:block;margin-top:4px}#spss-me .mrw .mrq{margin:0;min-height:30px;padding:3px 10px;gap:5px;border-radius:999px;font-size:12px;border-width:1.5px}#spss-me .mrw .mrq i{font-size:11px}#spss-me .mrw .mrqf{display:flex;margin-top:8px}#spss-me .mrqe{color:#b91c1c;font-size:12.5px;font-weight:700;margin:0;min-height:0}#spss-me .mrqe:empty{display:none}',
 '#spss-blk{direction:rtl;font-family:Cairo,"Segoe UI",Tahoma,sans-serif;position:fixed;inset:0;background:rgba(15,23,42,.88);z-index:2147483602;display:flex;align-items:center;justify-content:center;padding:16px}#spss-blk .c{background:#fff;border-radius:16px;padding:22px;max-width:440px;text-align:center}#spss-blk a{display:inline-block;margin-top:12px;background:#0f2744;color:#fff;border-radius:10px;padding:9px 16px;font-weight:800;text-decoration:none}',
 '.spss-polite{direction:rtl;background:#fff7ed;border:1px solid #fdba74;color:#7c2d12;border-radius:14px;padding:14px;font-weight:700;text-align:center}.spss-polite a{color:#0f2744}',
-'#spss-ub{direction:rtl;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;background:#0f2744;color:#e2e8f0;font-size:14px;line-height:1.5;position:relative;z-index:50;box-shadow:0 2px 8px rgba(0,0,0,.18)}',
-'#spss-ub .who{flex:1 1 200px;min-width:0;font-weight:700;color:#fff}#spss-ub .who small{font-weight:600;color:#93c5fd;margin-right:6px}',
-'#spss-ub button,#spss-ub a{font:inherit;font-size:13px;font-weight:800;border:0;border-radius:10px;padding:6px 12px;color:#fff;background:#334155;cursor:pointer;text-decoration:none;white-space:nowrap}',
-'#spss-ub .o{background:#be123c}#spss-ub .t{background:#7c3aed}#spss-ub .b{background:#0369a1}#spss-ub .g{background:#047857}',
-'#spss-ub.tstu{background:#92400e}#spss-ub.tstu .who{color:#fff7ed}#spss-ub.tstu .tag{background:#fbbf24;color:#451a03;border-radius:999px;padding:2px 10px;font-weight:800;margin-left:6px}',
 '#spss-lg,#spss-lg *{box-sizing:border-box}',
 '#spss-lg{position:fixed;inset:0;z-index:2147483000;overflow:auto;direction:rtl;font-family:Cairo,"Segoe UI","Noto Sans Arabic",Tahoma,sans-serif;display:flex;padding:clamp(14px,4vw,40px) 14px;color:#1e293b;background:radial-gradient(1100px 600px at 110% -10%,rgba(233,196,106,.22),transparent 60%),radial-gradient(900px 600px at -10% 110%,rgba(56,130,220,.35),transparent 60%),linear-gradient(155deg,#081627 0%,#0f2744 45%,#1d4f86 100%)}',
 '#spss-lg .bgx{position:fixed;inset:0;pointer-events:none;opacity:.5;background-image:radial-gradient(rgba(255,255,255,.09) 1px,transparent 1.4px);background-size:22px 22px;-webkit-mask-image:linear-gradient(180deg,#000,transparent 85%);mask-image:linear-gradient(180deg,#000,transparent 85%)}',
@@ -146,7 +172,6 @@ var CSS=[
 '@media (prefers-reduced-motion:reduce){#spss-ins .sh,#spss-ins .bd{animation:none!important}}',
 '#spss-me .nins{display:flex;align-items:center;gap:8px;width:calc(100% - 16px);margin:10px 8px 4px;font:inherit;font-weight:800;font-size:14px;color:#0f2744;background:#fdf3d7;border:1px solid #f1d58a;border-radius:12px;padding:10px 12px;cursor:pointer;text-align:right}#spss-me .nins svg{width:20px;height:20px;flex:none}',
 '#spss-lg .lg img,#spss-ins .lg img{width:100%!important;height:100%!important;border-radius:inherit;display:block;object-fit:cover}#spss-lg .lg,#spss-ins .lg{overflow:hidden}#spss-me .nins img{flex:none}',
-'#spss-ub .ins{background:#e9c46a!important;color:#0f2744!important}',
 'body.spss-st #prof-btn,body.spss-st #tlogin{display:none!important}body.spss-auth #login{display:none!important}',
 '.spss-hide{display:none!important}.spss-who{grid-column:1/-1;font-size:14px;font-weight:700;color:#0f2744;background:#e0f2fe;border:1px solid #7dd3fc;border-radius:10px;padding:8px 12px}',
 '.dark .spss-who,html.dark .spss-who{background:#0c4a6e;color:#e0f2fe;border-color:#0369a1}.spss-slot{display:block;margin-top:6px;font-size:13.5px;font-weight:700}'].join('\n');
@@ -168,16 +193,57 @@ function toStudent(){dlg('<h3>🧪 الدخول كطالب (تجربة)</h3><p>�
 function toTeacher(){purge(true);ls('as_bac',null);ss('spss_tstu',null);location.reload();}
 function cleanT(btn){if(!confirm('حذف كل بيانات «الأستاذ كطالب» (الحضور، التقييمات، السجلات) من ورقة Google وإلغاء تفعيل الأرقام التجريبية؟'))return;btn.disabled=true;
  post({action:'astu',op:'off',key:ID.key}).then(function(r){btn.disabled=false;if(!r.ok){alert('تعذّر: '+(r.err||''));return;}var d=r.deleted||{},n=0;for(var k in d)n+=d[k];alert('✅ تم الحذف: '+n+' سطراً تجريبياً.');});}
-function bar(){if(!ID||document.getElementById('spss-ub'))return;var b=document.createElement('div');b.id='spss-ub';b.setAttribute('data-role',ID.role);
- var home=PAGE==='landing'?'':'<a class="b" href="'+ROOT+'index.html">🏠 الرئيسية</a>';
- var ham=ID.role!=='teacher'?'<button type="button" class="ham" data-x="me" aria-label="لوحة الطالب" aria-controls="spss-me" aria-expanded="false" title="لوحة الطالب">☰</button>':'';
- if(ID.role==='student'){b.innerHTML=ham+'<span class="who">👤 '+esc((ID.nom+' '+ID.prenom).trim())+'<small>'+esc(ID.sp||'')+(ID.grp?' – الفوج '+esc(ID.grp):'')+'</small></span>'+home+'<button type="button" class="o" data-x="out">تغيير المستخدم / خروج</button>';}
- else if(ID.role==='teacher'){b.innerHTML='<span class="who">👨‍🏫 الأستاذ<small>وضع الأستاذ</small></span>'+home+'<a class="t" href="'+ROOT+'assessment/teacher/">لوحة الأستاذ</a><button type="button" class="ins" data-x="inst">📲 تثبيت '+esc(APP_SHORT)+'</button><button type="button" class="g" data-x="tstu">🧪 الدخول كطالب</button><button type="button" data-x="clean">🧹 مسح بيانات التجربة</button><button type="button" class="o" data-x="out">خروج</button>';}
- else{b.className='tstu';b.innerHTML=ham+'<span class="who"><span class="tag">وضع الأستاذ كطالب</span>'+esc(PROFS[ID.prof]||ID.sp||'')+'<small>رقم تجريبي <bdi dir="ltr">'+esc(ID.bac)+'</bdi></small></span>'+home+'<button type="button" class="t" data-x="back">↩️ العودة إلى دور الأستاذ</button><button type="button" class="o" data-x="out">خروج</button>';}
- b.addEventListener('click',function(e){var x=e.target.closest('[data-x]');if(!x)return;var a=x.getAttribute('data-x');
-  if(a==='out'){if(confirm(ID.role==='student'?'تسجيل الخروج من المنصة على هذا الجهاز؟ (حضورك ونتائجك المسجَّلة لا تُلغى)':'تسجيل الخروج؟'))logout();}
-  else if(a==='me')meOpen(x);else if(a==='inst')instOpen(x);else if(a==='tstu')toStudent();else if(a==='back')toTeacher();else if(a==='clean')cleanT(x);});
- document.body.insertBefore(b,document.body.firstChild);}
+function abH(){var b=document.getElementById('spss-ub');if(!b)return;try{var cs=getComputedStyle(document.body),px=function(v){return parseFloat(v)||0;};
+ b.style.marginTop=-(px(cs.paddingTop)+px(cs.marginTop))+'px';b.style.marginRight=-(px(cs.paddingRight)+px(cs.marginRight))+'px';b.style.marginLeft=-(px(cs.paddingLeft)+px(cs.marginLeft))+'px';b.style.marginBottom=(cs.display==='flex'||cs.display==='grid')?'0':px(cs.paddingTop)+'px';
+ b.style.width='calc(100% + '+(px(cs.paddingLeft)+px(cs.paddingRight)+px(cs.marginLeft)+px(cs.marginRight))+'px)';}catch(e){}
+ document.documentElement.style.setProperty('--spss-abh',Math.ceil(b.getBoundingClientRect().height)+'px');}
+function instGone(){return isSA()||lg('spss_inst')==='1';}
+var HAM='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+function bar(){if(!ID||document.getElementById('spss-ub'))return;var b=document.createElement('header');b.id='spss-ub';b.setAttribute('data-role',ID.role);b.setAttribute('role','banner');
+ if(ID.role==='tstu')b.className='tstu';
+ var bd=ID.role==='teacher'?'الأستاذ':(ID.role==='tstu'?'طالب تجريبي':(ID.prenom||ID.nom||'طالب'));
+ b.innerHTML='<a class="br" href="'+ROOT+'index.html" aria-label="'+esc(APP_NAME)+': الصفحة الرئيسية"><img src="'+ROOT+'icons/logo-128.png?v=3" alt="" width="34" height="34" decoding="async"><span class="nm">'+esc(APP_NAME)+'</span></a><span class="sp"></span>'+
+  '<span class="bdg" title="'+esc(bd)+'">'+esc(bd)+'</span><button type="button" class="ham" data-x="menu" aria-label="القائمة" aria-haspopup="dialog" aria-controls="spss-mn" aria-expanded="false" title="القائمة">'+HAM+'</button>';
+ b.addEventListener('click',function(e){var x=e.target.closest('[data-x]');if(!x)return;mnOpen(x);});
+ document.body.insertBefore(b,document.body.firstChild);
+ document.documentElement.classList.add('spss-ab'); if(PAGE==='teacher')document.documentElement.classList.add('spss-abt');
+ abH();addEventListener('resize',abH);}
+function mnItem(x,ic,lb,cls,href,cur){var c='it'+(cls?' '+cls:'');var i='<span class="ic" aria-hidden="true">'+ic+'</span><span>'+lb+'</span>';
+ return href?'<a class="'+c+'" href="'+href+'"'+(cur?' aria-current="page"':'')+'>'+i+'</a>':'<button type="button" class="'+c+'" data-x="'+x+'">'+i+'</button>';}
+function mnBuild(){var r=ID.role,h='',home=ROOT+'index.html';
+ var insIc='<img src="'+ROOT+'icons/logo-128.png?v=3" alt="" width="24" height="24">';
+ var who=r==='teacher'?'<small>وضع الأستاذ</small>':(r==='tstu'?'<small><span class="tg">وضع الأستاذ كطالب</span>'+esc(PROFS[ID.prof]||ID.sp||'')+' · رقم تجريبي <bdi dir="ltr">'+esc(ID.bac)+'</bdi></small>':'<small>'+esc((ID.nom+' '+ID.prenom).trim())+(ID.sp?' · '+esc(ID.sp):'')+(ID.grp?' · الفوج '+esc(ID.grp):'')+'</small>');
+ h+='<div class="hd"><img src="'+ROOT+'icons/logo-128.png?v=3" alt="" width="40" height="40"><div class="t"><b id="spss-mn-h">'+esc(APP_NAME)+'</b>'+who+'</div><button type="button" class="x" data-x="close" aria-label="إغلاق القائمة" title="إغلاق">✕</button></div><div class="ls">';
+ h+=mnItem('','🏠','الرئيسية','',home,PAGE==='landing');
+ if(r==='teacher'){
+  h+='<p class="gh">أدوات الأستاذ</p>'+mnItem('','📋','لوحة الأستاذ','',ROOT+'assessment/teacher/',PAGE==='teacher')+mnItem('tstu','🧪','الدخول كطالب')+mnItem('clean','🧹','مسح بيانات التجربة');}
+ else{
+  h+='<p class="gh">لوحة الطالب</p>'+MET.map(function(x){return '<button type="button" class="it" data-x="me" data-g="'+x[0]+'"><span class="ic" aria-hidden="true">'+({m:'📊',a:'🗓️',l:'🧑‍🏫',p:'💻'}[x[0]]||'•')+'</span><span>'+x[2]+'</span></button>';}).join('');
+  if(r==='tstu')h+='<p class="gh">وضع التجربة</p>'+mnItem('back','↩️','العودة إلى دور الأستاذ');}
+ h+='<p class="gh">المنصة</p>'+(instGone()?'':mnItem('inst',insIc,'تثبيت '+esc(APP_SHORT)))+mnItem('','ℹ️','من نحن','',ROOT+'about.html',PAGE==='about');
+ h+='</div><div class="ft">'+mnItem('out','🚪',r==='student'?'تغيير المستخدم / خروج':'خروج','dg')+'</div>';
+ return h;}
+var MN={ret:null};
+function mnOpen(btn){var m=document.getElementById('spss-mn');if(m)m.remove();
+ m=document.createElement('div');m.id='spss-mn';if(ID.role==='tstu')m.className='tstu';
+ m.innerHTML='<div class="bd" data-x="close"></div><div class="pn" role="dialog" aria-modal="true" aria-labelledby="spss-mn-h" tabindex="-1">'+mnBuild()+'</div>';
+ document.body.appendChild(m);MN.ret=btn||null;
+ m.addEventListener('click',function(e){var x=e.target.closest('[data-x]');if(!x)return;var a=x.getAttribute('data-x');
+  if(a==='close'){mnClose();return;}
+  if(a==='out'){if(confirm(ID.role==='student'?'تسجيل الخروج من المنصة على هذا الجهاز؟ (حضورك ونتائجك المسجَّلة لا تُلغى)':'تسجيل الخروج؟'))logout();return;}
+  var hb=document.querySelector('#spss-ub .ham');mnClose(true);
+  if(a==='me'){meTab=x.getAttribute('data-g')||meTab;meOpen(hb);}else if(a==='inst')instOpen(hb);else if(a==='tstu')toStudent();else if(a==='back')toTeacher();else if(a==='clean')cleanT(x);});
+ m.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();mnClose();return;}
+  if(e.key==='Tab'){var f=[].slice.call(m.querySelectorAll('.pn a,.pn button'));if(!f.length)return;var a=document.activeElement,f0=f[0],f1=f[f.length-1];
+   if(e.shiftKey&&a===f0){e.preventDefault();f1.focus();}else if(!e.shiftKey&&a===f1){e.preventDefault();f0.focus();}}});
+ void m.offsetWidth;m.classList.add('open');document.documentElement.classList.add('spss-lock');
+ var hb=document.querySelector('#spss-ub .ham');if(hb)hb.setAttribute('aria-expanded','true');
+ setTimeout(function(){try{m.querySelector('.x').focus();}catch(e){}},30);}
+function mnClose(keep){var m=document.getElementById('spss-mn');if(!m)return;m.classList.remove('open');
+ if(!document.querySelector('#spss-me.open'))document.documentElement.classList.remove('spss-lock');
+ var hb=document.querySelector('#spss-ub .ham');if(hb)hb.setAttribute('aria-expanded','false');
+ setTimeout(function(){if(m.parentNode&&!m.classList.contains('open'))m.remove();},260);
+ if(!keep)try{(MN.ret||hb).focus();}catch(e){}}
 // ===== شاشة الدخول (الصفحة الرئيسية) =====
 function loginUI(){if(document.getElementById('spss-lg'))return;var w=document.createElement('div');w.id='spss-lg';w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');w.setAttribute('aria-labelledby','spss-lg-h');w.setAttribute('aria-describedby','spss-lg-d');
  // update66: تصميم جديد (الشكل فقط؛ السلوك والتحقق والاستدعاءات كما هي)
