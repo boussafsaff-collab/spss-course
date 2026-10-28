@@ -247,8 +247,9 @@ function freeNote(t){var d=document.createElement('div');d.className='spss-free'
 function bizTp(fm){var b=document.body;window.SNAV_FREE='biz';
  var un=function(){if(b.classList.contains('att-locked'))b.classList.remove('att-locked');};un();
  try{new MutationObserver(un).observe(b,{attributes:true,attributeFilter:['class']});}catch(e){}
- var w=document.getElementById('main-content-wrapper');if(!document.querySelector('.spss-free')){var n=freeNote(fm);if(w)w.insertBefore(n,w.firstChild);else b.insertBefore(n,b.firstChild);}
- var db=document.getElementById('deck-btn');if(db&&typeof window.openDeck==='function'){db.onclick=function(e){e.preventDefault();window.openDeck();};db.removeAttribute('onclick');db.disabled=false;db.textContent='عرض الشرائح';
+ var w=document.getElementById('main-content-wrapper');if(!document.querySelector('.spss-free')){var n=freeNote(fm);var ms=document.getElementById('mod-slides');if(w)w.insertBefore(n,w.firstChild);else if(ms&&ms.parentNode)ms.parentNode.insertBefore(n,ms);else b.insertBefore(n,b.firstChild);}
+ var db=document.getElementById('deck-btn');if(db){db.removeAttribute('onclick');db.disabled=false;db.textContent='عرض الشرائح';
+  db.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();try{if(window.dkLate)window.dkLate();if(window.dkCtl&&window.dkCtl.lock)window.dkCtl.lock(false);}catch(x){}if(typeof window.openDeck==='function')window.openDeck();},true);
   try{new MutationObserver(function(){if(db.disabled)db.disabled=false;}).observe(db,{attributes:true,attributeFilter:['disabled']});}catch(e){}}
 }
 function block(msg){if(document.getElementById('spss-blk'))return;var w=document.createElement('div');w.id='spss-blk';w.setAttribute('role','dialog');w.setAttribute('aria-modal','true');
