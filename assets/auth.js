@@ -720,7 +720,8 @@ function instMark(src){ls('spss_inst','1');ls('spss_inst_src',src||'');instClose
 function instSnz(){var t=Number(lg('spss_inst_snz')||0);return t&&t>Date.now();}
 function updInit(reg){ // update124: تنبيه «نسخة جديدة»
  var K='spss_ver_seen',sw=navigator.serviceWorker,shown=false;
- function ask(cb){var c=sw.controller;if(!c)return;var ch=new MessageChannel();ch.port1.onmessage=function(e){var v=e.data&&e.data.v;if(v)cb(v)};try{c.postMessage({t:'ver'},[ch.port2])}catch(e){}}
+ function ask(cb){fetch(ROOT+'sw.js?vq='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()}).then(function(t){var m=t.match(/spss-pwa-v\d+/);if(m)cb(m[0]);else ask0(cb)}).catch(function(){ask0(cb)})}
+ function ask0(cb){var c=sw.controller;if(!c)return;var ch=new MessageChannel();ch.port1.onmessage=function(e){var v=e.data&&e.data.v;if(v)cb(v)};try{c.postMessage({t:'ver'},[ch.port2])}catch(e){}}
  function chk(){ask(function(v){var o=null;try{o=localStorage.getItem(K)}catch(e){}if(!o){try{localStorage.setItem(K,v)}catch(e){}return}if(o!==v)show(v)})}
  function seen(v){try{localStorage.setItem(K,v)}catch(e){}}
  function show(v){if(shown||!document.body)return;shown=true;
@@ -728,7 +729,7 @@ function updInit(reg){ // update124: تنبيه «نسخة جديدة»
   var d=document.createElement('div');d.id='spss-upd';d.setAttribute('role','status');
   var ios=/iPhone|iPad|iPod/i.test(navigator.userAgent);
   d.innerHTML='<b>✨ نسخة جديدة من التطبيق متاحة</b><p>أُضيفت تحسينات وتصحيحات جديدة. اضغط «تحديث الآن» لتحميلها.'+(ios?' إن لم تظهر التغييرات على iPhone، فأغلق التطبيق كليًّا ثم افتحه من جديد.':'')+'</p><div class="ub"><button type="button" class="u1">🔄 تحديث الآن</button><button type="button" class="u2">لاحقًا</button></div>';
-  d.querySelector('.u1').onclick=function(){seen(v);d.querySelector('.u1').textContent='⏳ جارٍ التحديث…';var r=function(){location.reload()};if(reg&&reg.waiting){try{reg.waiting.postMessage({t:'skip'})}catch(e){}sw.addEventListener('controllerchange',r);setTimeout(r,1500)}else r()};
+  d.querySelector('.u1').onclick=function(){seen(v);d.querySelector('.u1').textContent='⏳ جارٍ التحديث…';var r=function(){location.reload()};try{reg&&reg.update()}catch(e){}if(reg&&reg.waiting){try{reg.waiting.postMessage({t:'skip'})}catch(e){}sw.addEventListener('controllerchange',r);setTimeout(r,1500)}else r()};
   d.querySelector('.u2').onclick=function(){seen(v);d.remove()};
   document.body.appendChild(d)}
  chk();
