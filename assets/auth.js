@@ -802,8 +802,16 @@ function offLesson(){if(PAGE!=='session'||!('caches' in window)||!navigator.serv
 
 /* update86: بوابة الدرس (زرّان: عرض الشرائح / عرض المحتوى) + قارئ كتاب بملء الشاشة صفحةً صفحة، يُغلق بـ ✕ إلى البوابة؛ حفظ الموضع محلياً لكل درس ومستخدم. */
 function bookMode(){if(PAGE!=='session')return;var b=document.body;
- var S=Array.prototype.filter.call(document.querySelectorAll('section.module-card[id^="mod-"]'),function(x){return x.id!=='mod-attendance'&&x.id!=='mod-slides';});if(S.length<2)return;
- var SL=document.getElementById('mod-slides');
+ var S=Array.prototype.filter.call(document.querySelectorAll('section.module-card[id^="mod-"]'),function(x){return x.id!=='mod-attendance'&&x.id!=='mod-slides';});
+ var SL=document.getElementById('mod-slides'),SYN=false;
+ /* update87: صفحات مبنية على الشرائح فقط (مثل التطبيق 2): يُبنى «المحتوى» من نسخ الشرائح دون المساس بالعارض الأصلي */
+ if(S.length<2){var SS=document.querySelectorAll('#dk .trk > .sl');if(SS.length<2)return;SYN=true;
+  var hold=document.createElement('div');hold.id='bk-syn';var anc=document.getElementById('mod-intro')||SL;anc.parentNode.insertBefore(hold,anc.nextSibling);
+  S=Array.prototype.map.call(SS,function(sl,i){var c=sl.cloneNode(true);Array.prototype.forEach.call(c.querySelectorAll('[id]'),function(e){e.removeAttribute('id');});Array.prototype.forEach.call(c.querySelectorAll('script,button,input,video,audio,iframe'),function(e){e.remove();});
+   var h=c.querySelector('h3,h2'),sec=document.createElement('section');sec.id='mod-bk'+(i+1);sec.className='module-card bk-sl';
+   sec.innerHTML='<div class="bk-sh">'+(h?esc((h.textContent||'').trim()):('الشريحة '+(i+1)))+'</div><div class="bk-sb"></div>';if(h)h.remove();
+   var bd=sec.querySelector('.bk-sb');while(c.firstChild)bd.appendChild(c.firstChild);hold.appendChild(sec);return sec;});
+  var s2=document.createElement('style');s2.textContent='.bk-sl{background:#fff;border-radius:16px;box-shadow:0 4px 18px -10px #0f274466;color:#0f172a;line-height:1.8;font-size:15px}.dark .bk-sl{background:#1e293b;color:#e2e8f0}.bk-sl .bk-sh{padding:14px 16px;font-weight:800;font-size:17px;border-bottom:1px solid #e2e8f0;background:#f8fafc;border-radius:16px 16px 0 0}.dark .bk-sl .bk-sh{background:#0f172a;border-color:#334155}.bk-sl .bk-sb{padding:12px 16px}.bk-sl .bk-sb>*{margin:6px 0}.bk-sl .hdr{font-size:13px;opacity:.75}.bk-sl .tag{display:inline-block;background:#fef3c7;color:#92400e;border-radius:8px;padding:2px 8px;font-size:12px;font-weight:700}.bk-sl table{width:100%;border-collapse:collapse;font-size:13px}.bk-sl td,.bk-sl th{border:1px solid #cbd5e1;padding:4px}.bk-sl img{max-width:100%;height:auto}';document.head.appendChild(s2);}
  var who=ID?(ID.role==='teacher'?'T':String(ID.bac||'')):'g',K='spss_book_'+location.pathname+'|'+who;
  var st=document.createElement('style');st.textContent='.bk-off{display:none!important}.bk-in{animation:bkIn .26s ease}.bk-inr{animation:bkInR .26s ease}@keyframes bkIn{from{opacity:.2;transform:translateX(-36px)}to{opacity:1;transform:none}}@keyframes bkInR{from{opacity:.2;transform:translateX(36px)}to{opacity:1;transform:none}}'+
   '#bk-hub{max-width:56rem;margin:16px auto;padding:18px 16px;border-radius:18px;background:#fff;box-shadow:0 8px 30px -12px #0f274455;text-align:center}.dark #bk-hub{background:#1e293b;color:#e2e8f0}#bk-hub h2{font-weight:800;font-size:18px;margin:0 0 12px}#bk-hub .bt{display:flex;flex-direction:column;gap:12px}#bk-hub button{padding:14px 16px;border-radius:14px;font-weight:800;font-size:16px;color:#fff}#bk-hub .s1{background:#0284c7}#bk-hub .s2{background:#d97706}#bk-hub small{display:block;margin-top:10px;opacity:.75}'+
@@ -838,10 +846,10 @@ function bookMode(){if(PAGE!=='session')return;var b=document.body;
   try{if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(function(){});}catch(e){}hubShow();}
  function toast(t){var d=document.createElement('div');d.textContent=t;d.style.cssText='position:fixed;top:60px;left:50%;transform:translateX(-50%);background:#0f2744;color:#fff;padding:8px 14px;border-radius:12px;z-index:9999;font-size:14px;box-shadow:0 6px 20px #0005';b.appendChild(d);setTimeout(function(){d.remove();},2800);}
  var hub=null;
- function hubShow(){S.forEach(function(x){x.classList.add('bk-off');});if(SL)SL.classList.add('bk-off');var a=document.getElementById('mod-attendance');
+ function hubShow(){S.forEach(function(x){x.classList.add('bk-off');});if(SL&&!SYN)SL.classList.add('bk-off');if(SYN){var db0=document.getElementById('deck-btn'),w0=db0&&db0.closest('.text-center');if(w0)w0.classList.add('bk-off');}var a=document.getElementById('mod-attendance');
   if(!hub){hub=document.createElement('div');hub.id='bk-hub';var h=document.querySelector('h1');
    hub.innerHTML='<h2>'+esc(h?(h.textContent||'').trim().replace(/\s+/g,' ').slice(0,90):'الدرس')+'</h2><div class="bt">'+(typeof window.openDeck==='function'?'<button type="button" class="s1">🖥️ عرض الشرائح</button>':'')+'<button type="button" class="s2">📖 '+(TPPAGE?'عرض محتوى التطبيق':'عرض محتوى المحاضرة')+'</button></div><small>تصفّح المحتوى صفحةً صفحة بالسحب أفقياً؛ ويُحفظ موضعك تلقائياً.</small>';
-   var o=b.querySelector('.spss-off');var ref=o||a;if(ref&&ref.parentNode)ref.parentNode.insertBefore(hub,ref.nextSibling);else S[0].parentNode.insertBefore(hub,S[0]);
+   var o=b.querySelector('.spss-off');var ref=SYN&&SL?SL:(o||a);if(ref&&ref.parentNode)ref.parentNode.insertBefore(hub,ref.nextSibling);else S[0].parentNode.insertBefore(hub,S[0]);
    var s1=hub.querySelector('.s1');if(s1)s1.onclick=function(){try{if(window.dkLate)window.dkLate();}catch(x){}var db=document.getElementById('deck-btn');if(db&&ID&&ID.role==='teacher')db.click();else window.openDeck();};
    hub.querySelector('.s2').onclick=function(){enter(null);};}
   hub.classList.remove('bk-off');}
