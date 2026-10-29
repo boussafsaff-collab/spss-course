@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-<script src="../assets/auth.js?v=699" data-page="session"></script>
+<script src="../assets/auth.js?v=700" data-page="session"></script>
 <link rel="manifest" href="../manifest.webmanifest">
 <meta name="theme-color" content="#0f2744">
 <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png?v=3">
@@ -937,7 +937,7 @@ window.TP3QZ.deckWait=deckWait;
 window.TP3QZ.addrStart=function(){if(addrTimer)return;addrTimer=1;var f=function(){getCfg(function(o,ok){if(ok){showAddr(o&&o.addr||'');var ww=!(o&&o.go===1);deckWait(ww);}else if(dkW===null)deckWait(false);if(!isFree())addrTimer=setTimeout(f,dkW?8000:45000);});};deckWait(true);f();};
 // ===== التقييم عند الطالب =====
 var ov=$('tqz'),st=null,tick=null,wd=null,lt=0,gp=null,SCR=['tq-wait','tq-box','tq-end','tq-go'],F=null,LG=null;
-function show(id){SCR.forEach(function(x){$(x).classList.toggle('on',x===id)});ov.classList.toggle('on',!!id);document.documentElement.style.overflow=id?'hidden':'';document.body.style.overflow=id?'hidden':'';if(id)ov.scrollTop=0;}
+function show(id){id=null;/* update100: لا شاشات وسيطة (ملخص/تقييم/انتظار) قبل واجهة الحصة المختصرة */SCR.forEach(function(x){$(x).classList.toggle('on',x===id)});ov.classList.toggle('on',!!id);document.documentElement.style.overflow=id?'hidden':'';document.body.style.overflow=id?'hidden':'';if(id)ov.scrollTop=0;}
 function save(){if(st)ls(KS,st);}
 function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t;}return a;}
 function status(bac,cb){fetch(U+'?action=qzstatus&quiz='+encodeURIComponent(QN)+'&mat='+encodeURIComponent(bac)+'&t='+Date.now()).then(function(r){return r.text()}).then(function(x){cb(String(x).trim());}).catch(function(){cb('');});}
