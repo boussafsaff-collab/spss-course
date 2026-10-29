@@ -841,9 +841,10 @@ function bookMode(){if(PAGE!=='session'){document.documentElement.classList.remo
   rd=document.createElement('div');rd.id='bk-rd';rd.setAttribute('role','dialog');rd.setAttribute('aria-label','قارئ الدرس');
   rd.innerHTML='<div id="bk-top"><button type="button" class="x" aria-label="إغلاق والعودة">✕</button><button type="button" class="ix">📑 الفهرس</button><div class="t"></div></div><div id="bk-pg"><i></i></div><div id="bk-sc"></div><button type="button" class="bk-ar" id="bk-pv" aria-label="الصفحة السابقة"><bdi dir="ltr">→</bdi> السابقة</button><button type="button" class="bk-ar" id="bk-nx" aria-label="الصفحة التالية">التالية <bdi dir="ltr">←</bdi></button>';
   b.appendChild(rd);sc=rd.querySelector('#bk-sc');ph=S.map(function(x){var c=document.createComment('bk');x.parentNode.insertBefore(c,x);sc.appendChild(x);return c;});
-  document.documentElement.classList.add('bk-lock');/* update98: لا نطلب ملء الشاشة من المتصفح، لأن تنبيه المتصفح «للخروج من وضع ملء الشاشة…» كان يغطي أزرار التنقل */
+  document.documentElement.classList.add('bk-lock');try{if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(function(){});}catch(e){}/* update98: لا نطلب ملء الشاشة من المتصفح، لأن تنبيه المتصفح «للخروج من وضع ملء الشاشة…» كان يغطي أزرار التنقل */
   rd.querySelector('.x').onclick=exit;rd.querySelector('.ix').onclick=idx;rd.querySelector('#bk-pv').onclick=function(){go(cur-1,-1);};rd.querySelector('#bk-nx').onclick=function(){go(cur+1,1);};
   setTimeout(function(){measure();var o=pj(lg(K)),i=target!=null?target:find(o);go(i,0);if(target==null&&i>0)toast('تابعتَ من حيث توقفت: صفحة '+(i+1)+' من '+P.length);},60);}
+ (function(){var E=Element.prototype;['requestFullscreen','webkitRequestFullscreen'].forEach(function(m){var o=E[m];if(!o)return;E[m]=function(){if(open)return Promise.resolve();return o.apply(this,arguments);};});})();
  function exit(){if(!open)return;open=false;AT.concat(S).forEach(function(x){x.classList.remove('bk-off','bk-in','bk-inr');});
   S.forEach(function(x,i){ph[i].parentNode.insertBefore(x,ph[i]);ph[i].remove();});rd.remove();rd=null;document.documentElement.classList.remove('bk-lock');
   try{if(document.fullscreenElement&&document.exitFullscreen)document.exitFullscreen().catch(function(){});}catch(e){}hubShow();}

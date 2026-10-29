@@ -5,7 +5,7 @@
    - update70: إشعارات الهاتف (Web Push عبر Firebase Cloud Messaging، رسائل data فقط): يعرض الإشعار، ويفتح رابطه عند النقر،
      ويُعلم الصفحة المفتوحة (شريط داخل المنصة + تحديث الجرس). لا كود Firebase داخل هذا الملف.
    - طلبات Apps Script (script.google.com) ومواقع أخرى: لا يتدخل أبداً. */
-var C='spss-pwa-v48',OFF='offline.html',ABOUT='about.html';
+var C='spss-pwa-v50',OFF='offline.html',ABOUT='about.html';
 self.addEventListener('install',function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll([OFF,ABOUT,'icons/icon-192.png','icons/logo-128.png?v=3','icons/badge-96.png']);}).then(function(){return self.skipWaiting();}));});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf('spss-pwa-')===0&&k!==C||k.indexOf('spss-static-')===0&&k!==SC;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});
 // update73: ملفات ثابتة: ذات ?v= (لا تتغيّر أبداً) ومكتبات CDN ذات الإصدار: من الذاكرة أولاً؛ الصور والخطوط: تُعرض المخزّنة وتُحدَّث في الخلفية.
@@ -24,7 +24,8 @@ self.addEventListener('fetch',function(e){var r=e.request;
   if(/fonts\.googleapis\.com$/.test(q.hostname))return stSwr(e,r);return lsFb(e,r);}catch(x){}return;}
  var u=new URL(r.url);if(u.origin!==self.location.origin||u.pathname.indexOf(new URL(self.registration.scope).pathname)!==0)return;
  var ab=/\/about\.html$/.test(u.pathname);
- e.respondWith(fetch(r).then(function(res){if(ab&&res&&res.ok){var cp=res.clone();caches.open(C).then(function(c){c.put(ABOUT,cp);});}return res;}).catch(function(){return caches.open(LSC).then(function(c){return c.match(u.origin+u.pathname);}).then(function(h){return h||caches.match(ab?ABOUT:OFF,{cacheName:C});}).then(function(x){return x||new Response('دون اتصال',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});});}));});
+ var fr=/\.html$/.test(u.pathname)?new Request(r.url,{cache:'no-cache',credentials:'same-origin'}):r;/* update99: صفحات HTML تُعاد التحقّق منها دائماً حتى لا تبقى نسخة قديمة في ذاكرة المتصفح */
+ e.respondWith(fetch(fr).then(function(res){if(ab&&res&&res.ok){var cp=res.clone();caches.open(C).then(function(c){c.put(ABOUT,cp);});}return res;}).catch(function(){return caches.open(LSC).then(function(c){return c.match(u.origin+u.pathname);}).then(function(h){return h||caches.match(ab?ABOUT:OFF,{cacheName:C});}).then(function(x){return x||new Response('دون اتصال',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});});}));});
 self.addEventListener('message',function(e){var d=e.data||{};if(d.t!=='badge')return;var n=Number(d.n)||0,nv=self.navigator;
  try{if(nv&&'setAppBadge' in nv){var p=n?nv.setAppBadge(n):nv.clearAppBadge();if(p&&e.waitUntil)e.waitUntil(p.catch(function(){}));}}catch(x){}});
 self.addEventListener('push',function(e){var j={},d={};
