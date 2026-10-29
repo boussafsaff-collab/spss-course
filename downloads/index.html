@@ -14,6 +14,8 @@
 <meta property="og:url" content="https://boussafsaff-collab.github.io/spss-course/downloads/">
 <meta property="og:locale" content="ar_DZ">
 <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png?v=3">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#0b1e33">
 <link rel="apple-touch-icon" href="../icons/apple-touch-icon.png?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -38,6 +40,7 @@ h2{font-size:26px;margin:8px 0 16px}
 .btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;border-radius:12px;font-weight:800;font-size:16px;text-decoration:none;color:#fff;background:#0284c7;transition:transform .1s,filter .1s}
 .btn:hover{filter:brightness(1.08);transform:translateY(-1px)}.btn.soon{background:#cbd5e1;color:#475569;cursor:not-allowed;pointer-events:none}
 .btn small{font-weight:600;opacity:.85}
+.ins{margin-top:18px;display:inline-flex;align-items:center;gap:8px;padding:12px 20px;border-radius:12px;font:inherit;font-weight:800;font-size:16px;border:0;cursor:pointer;background:#16a34a;color:#fff}.ins:hover{filter:brightness(1.08)}#insh{margin:8px 0 0;font-size:14px;opacity:.9;display:none}
 .note{background:#fff7ed;border:1px solid #fed7aa;border-radius:14px;padding:14px 18px;margin:28px 0;color:#7c2d12}
 footer{margin-top:40px;background:#0f172a;color:#94a3b8;text-align:center;font-size:14px;padding:18px 12px}footer strong{color:#fff}
 @media(max-width:900px){.grid,.steps{grid-template-columns:1fr 1fr}}
@@ -49,6 +52,8 @@ footer{margin-top:40px;background:#0f172a;color:#94a3b8;text-align:center;font-s
  <div class="top"><a class="brand" href="../index.html"><img src="../icons/apple-touch-icon.png?v=3" alt="شعار منصة بوصلة التعليم">منصة بوصلة التعليم</a></div>
  <h1>تحميل ملفات الحصص التطبيقية SPSS</h1>
  <p class="lead">منصة بوصلة التعليم (Boussola Education)، مقياس البرمجيات الإحصائية SPSS، د. بوصفصاف فريد. قم بتحميل ملفات كل حصة على حاسوبك، ثم اعمل عليها في SPSS متّبعًا خطوات الحصة على تطبيق الهاتف.</p>
+ <button type="button" class="ins" id="ins">📲 تثبيت التطبيق على الهاتف</button>
+ <p id="insh"></p>
 </div></header>
 <main class="w">
  <section class="steps" aria-label="طريقة العمل">
@@ -90,6 +95,18 @@ T.forEach(function(s){var c=e('article','card');c.appendChild(e('span','tag',s.t
  var f=e('div','fl');(s.files||[]).forEach(function(x){var ok=/^https:\/\/(drive|docs)\.google\.com\//.test(x.url||''),a=e('a','btn'+(ok?'':' soon'));
   a.textContent=(ok?'📥 ':'⏳ ')+x.label;if(ok){a.href=x.url;a.target='_blank';a.rel='noopener'}else{a.appendChild(e('small',null,' (قريبًا)'));a.setAttribute('aria-disabled','true')}f.appendChild(a)});
  c.appendChild(f);g.appendChild(c)});})();
+</script>
+<script>
+(function(){var b=document.getElementById('ins'),h=document.getElementById('insh'),dp=null;
+if('serviceWorker' in navigator)navigator.serviceWorker.register('../sw.js',{scope:'../'}).catch(function(){});
+var st=matchMedia('(display-mode: standalone)').matches||navigator.standalone;if(st){b.style.display='none';return}
+addEventListener('beforeinstallprompt',function(e){e.preventDefault();dp=e});
+addEventListener('appinstalled',function(){b.style.display='none';h.style.display='block';h.textContent='✅ تمّ تثبيت التطبيق.'});
+function msg(t){h.textContent=t;h.style.display='block'}
+b.onclick=function(){if(dp){dp.prompt();dp.userChoice.finally(function(){dp=null});return}
+var ua=navigator.userAgent;if(/iPhone|iPad|iPod/i.test(ua))msg('على iPhone: افتح الصفحة في Safari، ثم اضغط زر المشاركة ⬆️ واختر «إضافة إلى الشاشة الرئيسية».');
+else if(/Android/i.test(ua))msg('على Android: افتح قائمة المتصفح ⋮ في Chrome واختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».');
+else msg('افتح هذه الصفحة على هاتفك (Chrome على Android أو Safari على iPhone) ثم اضغط هذا الزر لتثبيت تطبيق منصة بوصلة التعليم.')};})();
 </script>
 </body>
 </html>
