@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>فضاء الأستاذ: روابط ملفات الحصص | بوصلة التعليم</title><meta name="robots" content="noindex,nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Cairo,system-ui,sans-serif;background:#f1f5f9;color:#0f172a}
+.w{max-width:1000px;margin:0 auto;padding:20px}h1{font-size:26px;margin:4px 0}
+.box{background:#fff;border-radius:16px;padding:18px;margin:14px 0;box-shadow:0 6px 24px -14px #0f274466}
+.help{background:#eff6ff;border:1px solid #bfdbfe}.help ol{margin:6px 0;padding-inline-start:22px;line-height:1.9}
+label{font-size:13px;font-weight:700;color:#475569;display:block;margin-top:8px}
+input,textarea{width:100%;font:inherit;padding:8px 10px;border:1px solid #cbd5e1;border-radius:10px}
+input.bad{border-color:#dc2626;background:#fef2f2}input.ok{border-color:#16a34a}
+.row{display:grid;grid-template-columns:1fr 2fr auto;gap:8px;align-items:end;margin-top:6px}
+.g2{display:grid;grid-template-columns:1fr 2fr;gap:10px}
+button,.b{font:inherit;font-weight:800;border:0;border-radius:10px;padding:9px 14px;cursor:pointer;background:#e2e8f0;color:#0f172a;text-decoration:none;display:inline-block}
+.p{background:#0284c7;color:#fff}.g{background:#16a34a;color:#fff}.r{background:#fee2e2;color:#b91c1c}.o{background:#d97706;color:#fff}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.bar{display:flex;gap:8px;flex-wrap:wrap}
+#st{font-weight:700;margin-top:8px}textarea{direction:ltr;font-family:monospace;font-size:12px;height:160px}
+@media(max-width:640px){.row,.g2{grid-template-columns:1fr}}
+</style></head><body><div class="w">
+<h1>👨‍🏫 فضاء الأستاذ: روابط ملفات الحصص التطبيقية</h1>
+<p>تتحكّم هذه الصفحة في أزرار صفحة التحميل العامة <a href="./" target="_blank">downloads/</a>.</p>
+<div class="box help"><b>طريقة العمل:</b><ol>
+<li>في Google Drive: زر الفأرة الأيمن على الملف ← «مشاركة» ← «الوصول العام: أي شخص لديه الرابط (عارض)» ← «نسخ الرابط».</li>
+<li>الصق الرابط في خانة الملف المناسب أدناه (تصبح الخانة خضراء إذا كان الرابط صالحًا).</li>
+<li>لإضافة حصة جديدة: اضغط «➕ إضافة حصة»، ثم املأ اسمها وأضف ملفاتها.</li>
+<li>اضغط «💾 نسخ ونشر»: يُنسخ المحتوى ويُفتح ملف <code>files.json</code> على GitHub. احذف كل محتواه، والصق الجديد، ثم «Commit changes».</li>
+<li>تظهر الأزرار للطلبة خلال دقيقة إلى دقيقتين. تُحفظ مسودّتك في هذا المتصفح تلقائيًّا.</li></ol></div>
+<div id="L"></div>
+<div class="bar"><button class="o" id="add">➕ إضافة حصة</button><button class="g" id="pub">💾 نسخ ونشر</button><button id="dl">⬇️ تنزيل files.json</button><button id="rl">↺ تحميل المنشور حاليًّا</button><a class="b" href="./" target="_blank">👁️ معاينة صفحة الطلبة</a></div>
+<div id="st"></div>
+<div class="box"><label>المحتوى (JSON) الذي سيُنشر:</label><textarea id="out" readonly></textarea></div>
+</div>
+<script>
+(function(){var K='spss_dl_draft',D=[],L=document.getElementById('L'),O=document.getElementById('out'),S=document.getElementById('st');
+var GH='https://github.com/boussafsaff-collab/spss-course/edit/main/downloads/files.json';
+function ok(u){return /^https:\/\/(drive|docs)\.google\.com\//.test(u||'')}
+function e(t,a,x){var n=document.createElement(t);for(var k in a||{})n.setAttribute(k,a[k]);if(x!=null)n.textContent=x;return n}
+function inp(o,k,ph,cb){var i=e('input',{placeholder:ph||''});i.value=o[k]||'';i.oninput=function(){o[k]=i.value.trim();cb&&cb(i);sv()};cb&&cb(i);return i}
+function chk(i){i.className=!i.value?'':(ok(i.value.trim())?'ok':'bad')}
+function sv(){O.value=JSON.stringify(D,null,1);try{localStorage.setItem(K,O.value)}catch(x){}}
+function R(){L.textContent='';D.forEach(function(t,ti){var b=e('div',{class:'box'}),h=e('div',{class:'hd'});h.appendChild(e('b',null,(t.tag||'حصة')+' '+(t.hidden?'(مخفية)':'')));
+ var br=e('div',{class:'bar'});[['⬆️',function(){if(ti){D.splice(ti-1,0,D.splice(ti,1)[0]);R()}}],['⬇️',function(){if(ti<D.length-1){D.splice(ti+1,0,D.splice(ti,1)[0]);R()}}],[t.hidden?'👁️ إظهار':'🙈 إخفاء',function(){t.hidden=!t.hidden;if(!t.hidden)delete t.hidden;R()}],['🗑️ حذف الحصة',function(){if(confirm('حذف هذه الحصة؟')){D.splice(ti,1);R()}},'r']].forEach(function(z){var x=e('button',{class:z[2]||'',type:'button'},z[0]);x.onclick=z[1];br.appendChild(x)});h.appendChild(br);b.appendChild(h);
+ var g=e('div',{class:'g2'}),a=e('div'),c=e('div');a.appendChild(e('label',null,'الوسم (مثل: التطبيق 4)'));a.appendChild(inp(t,'tag'));c.appendChild(e('label',null,'عنوان الحصة'));c.appendChild(inp(t,'title'));g.appendChild(a);g.appendChild(c);b.appendChild(g);
+ b.appendChild(e('label',null,'وصف قصير (اختياري)'));b.appendChild(inp(t,'desc'));
+ b.appendChild(e('label',null,'الملفات:'));(t.files=t.files||[]).forEach(function(f,fi){var r=e('div',{class:'row'}),p=e('div'),q=e('div');p.appendChild(inp(f,'label','اسم الزر'));
+  q.appendChild(inp(f,'url','https://drive.google.com/…',chk));var d=e('button',{class:'r',type:'button'},'✕');d.onclick=function(){t.files.splice(fi,1);R()};r.appendChild(p);r.appendChild(q);r.appendChild(d);b.appendChild(r)});
+ var af=e('button',{type:'button',style:'margin-top:10px'},'➕ إضافة ملف');af.onclick=function(){t.files.push({label:'ملف البيانات',url:''});R()};b.appendChild(af);L.appendChild(b)});sv()}
+function load(fromPub){fetch('files.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){var dr=null;try{dr=localStorage.getItem(K)}catch(x){}D=(!fromPub&&dr)?JSON.parse(dr):j;R();S.textContent=(!fromPub&&dr)?'📝 تمّ تحميل مسودّتك المحفوظة في هذا المتصفح.':'✅ تمّ تحميل النسخة المنشورة حاليًّا.'}).catch(function(){S.textContent='⚠️ تعذّر تحميل files.json.'})}
+document.getElementById('add').onclick=function(){D.push({tag:'التطبيق '+(D.length+1),title:'',desc:'',files:[{label:'ملف البيانات (Excel)',url:''}]});R();scrollTo(0,document.body.scrollHeight)};
+document.getElementById('rl').onclick=function(){if(confirm('تجاهل المسودّة وتحميل النسخة المنشورة؟'))load(true)};
+document.getElementById('dl').onclick=function(){var a=e('a',{href:URL.createObjectURL(new Blob([O.value],{type:'application/json'})),download:'files.json'});a.click()};
+document.getElementById('pub').onclick=function(){var bad=D.some(function(t){return(t.files||[]).some(function(f){return f.url&&!ok(f.url)})});if(bad&&!confirm('بعض الروابط غير صالحة (باللون الأحمر) وستظهر «قريبًا». متابعة؟'))return;
+ sv();var go=function(m){S.textContent=m;open(GH,'_blank')};if(navigator.clipboard)navigator.clipboard.writeText(O.value).then(function(){go('📋 نُسخ المحتوى. في GitHub: احذف كل المحتوى، والصق (Ctrl+V)، ثم Commit changes.')},function(){O.select();go('انسخ المحتوى من الخانة أدناه يدويًّا ثم الصقه في GitHub.')});else{O.select();go('انسخ المحتوى من الخانة أدناه يدويًّا ثم الصقه في GitHub.')}};
+load(false)})();
+</script></body></html>

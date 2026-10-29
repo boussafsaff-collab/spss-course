@@ -70,16 +70,7 @@ footer{margin-top:40px;background:#0f172a;color:#94a3b8;text-align:center;font-s
 </main>
 <footer>© 2026 <strong>د. بوصفصاف فريد</strong>، منصة بوصلة التعليم (Boussola Education)، جامعة عبد الحميد مهري قسنطينة 2</footer>
 
-<!--
-  ===================== دليل الأستاذ: إضافة روابط Google Drive =====================
-  1) ارفع الملف إلى Google Drive.
-  2) زر الفأرة الأيمن على الملف ← مشاركة ← «الوصول العام»: اختر «أي شخص لديه الرابط» بصلاحية «عارض».
-  3) انسخ الرابط (مثل https://drive.google.com/file/d/XXXX/view?usp=sharing) والصقه في الحقل url أدناه
-     مكان PASTE_DRIVE_LINK. يمكن أيضًا لصق رابط مجلد كامل.
-  4) الرابط الذي يبقى PASTE_DRIVE_LINK أو فارغًا يظهر زرًّا رماديًّا «قريبًا».
-  5) لإضافة ملف: انسخ سطرًا من files والصقه تحته. لإضافة حصة: انسخ كتلة { ... } كاملة.
-  ملاحظة: احرص على الفواصل , بين العناصر وعلامات التنصيص "..." (صيغة JSON).
--->
+<!-- الروابط تُدار من فضاء الأستاذ: downloads/admin.html (يُحفظ في downloads/files.json). القائمة أدناه نسخة احتياطية فقط. -->
 <script type="application/json" id="cfg">
 [
  {"tag":"التطبيق 1","title":"تطهير البيانات (Data Cleaning)","desc":"ملف البنك: الغياب، نمط الغياب، القيم الشاذة وشكل التوزيع.","page":"../l1/spss25-tp1-data-cleaning.html",
@@ -91,12 +82,14 @@ footer{margin-top:40px;background:#0f172a;color:#94a3b8;text-align:center;font-s
 ]
 </script>
 <script>
-(function(){var T=JSON.parse(document.getElementById('cfg').textContent),g=document.getElementById('tps');
+(function(){var g=document.getElementById('tps');
 function e(t,c,x){var n=document.createElement(t);if(c)n.className=c;if(x!=null)n.textContent=x;return n}
-T.forEach(function(s){var c=e('article','card');c.appendChild(e('span','tag',s.tag));c.appendChild(e('h3',null,s.title));c.appendChild(e('p',null,s.desc));
+function R(T){g.textContent='';T.forEach(function(s){if(s.hidden)return;var c=e('article','card');c.appendChild(e('span','tag',s.tag));c.appendChild(e('h3',null,s.title));if(s.desc)c.appendChild(e('p',null,s.desc));
  var f=e('div','fl');(s.files||[]).forEach(function(x){var ok=/^https:\/\/(drive|docs)\.google\.com\//.test(x.url||''),a=e('a','btn'+(ok?'':' soon'));
   a.textContent=(ok?'📥 ':'⏳ ')+x.label;if(ok){a.href=x.url;a.target='_blank';a.rel='noopener'}else{a.appendChild(e('small',null,' (قريبًا)'));a.setAttribute('aria-disabled','true')}f.appendChild(a)});
- c.appendChild(f);g.appendChild(c)});})();
+ c.appendChild(f);g.appendChild(c)})}
+var F=JSON.parse(document.getElementById('cfg').textContent);R(F);
+fetch('files.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(T){if(Array.isArray(T))R(T)}).catch(function(){});})();
 </script>
 <script>
 (function(){var b=document.getElementById('ins'),h=document.getElementById('insh'),dp=null;
