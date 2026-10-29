@@ -1060,7 +1060,9 @@ function sdSet(i,f){var d=sdOf(i);d=JSON.parse(JSON.stringify(d));f(d);d.dirty=t
 function attLine(i){
   if(i.cat!=='lec')return '';
   var a=i.att, t=a?Object.keys(a).map(function(k){return esc(k)+' '+a[k];}).join('، '):'';
-  return '<div class="lr"><i class="fa-solid fa-user-check"></i> يجريه من سُجّل حضوره في المحاضرة فقط'+(t?' (الحاضرون: '+t+')':'')+'.</div>';
+  var ab=i.abs==='all';
+  return '<div class="lr"><i class="fa-solid fa-user-check"></i> يجريه من سُجّل حضوره في المحاضرة'+(ab?'، و<b>الغائبون «غ»</b> أيضاً':' فقط')+(t?' (الحاضرون: '+t+')':'')+'.</div>'+
+   '<button class="btn lt" type="button" data-abs="'+esc(i.id)+'" data-absm="'+(ab?'off':'all')+'" aria-pressed="'+(ab?'true':'false')+'"><i class="fa-solid '+(ab?'fa-user-xmark':'fa-user-plus')+'"></i>'+(ab?'منع الغائبين «غ» من إجرائه':'السماح للغائبين «غ» بإجرائه')+'</button>'+(i.abs==='test'?'<span class="s"> (مفعّل للأرقام التجريبية فقط)</span>':'');
 }
 function schSum(i){
   var S=i.sched||{};
@@ -1166,6 +1168,8 @@ $('secs').addEventListener('click',function(ev){
     if(t.hasAttribute('data-ts'))v=Math.max(mn,Math.min(mx,v+Number(t.getAttribute('data-ts'))));
     else v=Number(t.getAttribute('data-tp'));
     if(v===curSec(i))delete dr[id];else dr[id]=v; tmsg[id]=''; render(); return;}
+  var ab=ev.target.closest('[data-abs]');if(ab){var am=ab.getAttribute('data-absm');if(am==='all'&&!confirm('السماح للطلبة المسجَّلين غائبين «غ» في هذه المحاضرة بإجراء تقييمها؟ (من لم يسجّل حضوره أصلاً يبقى ممنوعاً)'))return;ab.disabled=true;
+   call({action:'asabs',id:ab.getAttribute('data-abs'),mode:am}).then(function(r){ab.disabled=false;if(!r.ok){$('perr').textContent=msg(r.err);return;}load();});return;}
   var b=ev.target.closest('[data-id]');if(!b)return;
   var id=b.getAttribute('data-id'),op=b.getAttribute('data-open');b.disabled=true;
   call({action:'asset',id:id,open:op}).then(function(r){b.disabled=false;if(!r.ok){$('perr').textContent=msg(r.err);return;}load();});});
