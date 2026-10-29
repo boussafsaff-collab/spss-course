@@ -718,10 +718,28 @@ var INS={bip:null,want:0,ret:null,why:''};
 function isSA(){try{if(navigator.standalone===true)return true;return ['standalone','fullscreen','minimal-ui','window-controls-overlay'].some(function(m){return window.matchMedia('(display-mode: '+m+')').matches;});}catch(e){return false;}}
 function instMark(src){ls('spss_inst','1');ls('spss_inst_src',src||'');instClose();}
 function instSnz(){var t=Number(lg('spss_inst_snz')||0);return t&&t>Date.now();}
+function updInit(reg){ // update124: تنبيه «نسخة جديدة»
+ var K='spss_ver_seen',sw=navigator.serviceWorker,shown=false;
+ function ask(cb){var c=sw.controller;if(!c)return;var ch=new MessageChannel();ch.port1.onmessage=function(e){var v=e.data&&e.data.v;if(v)cb(v)};try{c.postMessage({t:'ver'},[ch.port2])}catch(e){}}
+ function chk(){ask(function(v){var o=null;try{o=localStorage.getItem(K)}catch(e){}if(!o){try{localStorage.setItem(K,v)}catch(e){}return}if(o!==v)show(v)})}
+ function seen(v){try{localStorage.setItem(K,v)}catch(e){}}
+ function show(v){if(shown||!document.body)return;shown=true;
+  if(!document.getElementById('upd-css')){var st=document.createElement('style');st.id='upd-css';st.textContent='#spss-upd{position:fixed;inset-inline:12px;bottom:14px;z-index:2147483000;max-width:460px;margin:0 auto;background:#0f172a;color:#f8fafc;border-radius:16px;padding:14px 16px;box-shadow:0 12px 40px -10px #000a;font-family:inherit;direction:rtl;text-align:right;animation:updIn .3s ease}@keyframes updIn{from{transform:translateY(30px);opacity:0}}#spss-upd b{display:block;font-size:16px;margin-bottom:4px}#spss-upd p{margin:0 0 10px;font-size:13.5px;opacity:.85;line-height:1.7}#spss-upd .ub{display:flex;gap:8px}#spss-upd button{font:inherit;font-weight:800;border:0;border-radius:10px;padding:9px 14px;cursor:pointer}#spss-upd .u1{background:#16a34a;color:#fff;flex:1}#spss-upd .u2{background:#334155;color:#e2e8f0}';document.head.appendChild(st)}
+  var d=document.createElement('div');d.id='spss-upd';d.setAttribute('role','status');
+  var ios=/iPhone|iPad|iPod/i.test(navigator.userAgent);
+  d.innerHTML='<b>✨ نسخة جديدة من التطبيق متاحة</b><p>أُضيفت تحسينات وتصحيحات جديدة. اضغط «تحديث الآن» لتحميلها.'+(ios?' إن لم تظهر التغييرات على iPhone، فأغلق التطبيق كليًّا ثم افتحه من جديد.':'')+'</p><div class="ub"><button type="button" class="u1">🔄 تحديث الآن</button><button type="button" class="u2">لاحقًا</button></div>';
+  d.querySelector('.u1').onclick=function(){seen(v);d.querySelector('.u1').textContent='⏳ جارٍ التحديث…';var r=function(){location.reload()};if(reg&&reg.waiting){try{reg.waiting.postMessage({t:'skip'})}catch(e){}sw.addEventListener('controllerchange',r);setTimeout(r,1500)}else r()};
+  d.querySelector('.u2').onclick=function(){seen(v);d.remove()};
+  document.body.appendChild(d)}
+ chk();
+ sw.addEventListener('controllerchange',function(){setTimeout(chk,300)});
+ var up=function(){try{reg&&reg.update()}catch(e){}};setTimeout(up,4000);
+ document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'){up();setTimeout(chk,2500)}});
+}
 function instInit(){
  try{document.documentElement.setAttribute('data-ins',isSA()?'sa':(IOS?'ios':(INAPP?'inapp':'web')));}catch(e){}
  if(isSA()){if(lg('spss_inst')!=='1')ls('spss_inst_src','standalone');ls('spss_inst','1');}
- if('serviceWorker' in navigator&&location.protocol==='https:'){try{navigator.serviceWorker.register(ROOT+'sw.js',{scope:new URL(ROOT).pathname}).catch(function(){});}catch(e){}}
+ if('serviceWorker' in navigator&&location.protocol==='https:'){try{navigator.serviceWorker.register(ROOT+'sw.js',{scope:new URL(ROOT).pathname}).then(updInit).catch(function(){});}catch(e){}}
  if(isSA())return;
  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();INS.bip=e;
   // المتصفح لا يعرض هذا الحدث إن كانت المنصة مثبتة: علامة «مثبتة» قديمة ⇒ أُزيلت التطبيق
