@@ -1063,9 +1063,9 @@ function attLine(i){
   if(i.cat!=='lec')return '';
   var a=i.att, t=a?Object.keys(a).map(function(k){return esc(k)+' '+a[k];}).join('، '):'';
   var ab=i.abs==='all';
-  return '<div class="lr"><i class="fa-solid fa-user-check"></i> يجريه من سُجّل حضوره في المحاضرة'+(ab?'، و<b>الغائبون «غ»</b> أيضاً':' فقط')+(t?' (الحاضرون: '+t+')':'')+'.</div>'+
-   '<div class="lr" style="font-weight:700;color:'+(ab?'#15803d':'#64748b')+'"><i class="fa-solid '+(ab?'fa-toggle-on':'fa-toggle-off')+'"></i> تقييم الغائبين «غ»: '+(ab?'مفعّل':'غير مفعّل')+'</div>'+
-   '<button class="btn '+(ab?'red':'go')+'" type="button" data-abs="'+esc(i.id)+'" data-absm="'+(ab?'off':'all')+'" aria-pressed="'+(ab?'true':'false')+'"><i class="fa-solid '+(ab?'fa-user-xmark':'fa-user-plus')+'"></i>'+(ab?'منع الغائبين «غ» من إجرائه':'السماح للغائبين «غ» بإجرائه')+'</button>'+(i.abs==='test'?'<span class="s"> (مفعّل للأرقام التجريبية فقط)</span>':'');
+  return '<div class="lr"><i class="fa-solid fa-user-check"></i> يجريه من سُجّل حضوره في المحاضرة'+(ab?'، و<b>الغائبون</b> أيضاً («غ» ومن لم يسجّل حضوره)':' فقط')+(t?' (الحاضرون: '+t+')':'')+'.</div>'+
+   '<div class="absbox" style="display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin:10px 0 16px;padding:10px 0 14px;border-top:1px dashed #cbd5e1;border-bottom:1px dashed #cbd5e1"><div class="lr" style="margin:0;font-weight:700;color:'+(ab?'#15803d':'#64748b')+'"><i class="fa-solid '+(ab?'fa-toggle-on':'fa-toggle-off')+'"></i> تقييم الغائبين «غ»: '+(ab?'مفعّل':'غير مفعّل')+'</div>'+
+   '<button class="btn '+(ab?'red':'go')+'" type="button" data-abs="'+esc(i.id)+'" data-absm="'+(ab?'off':'all')+'" aria-pressed="'+(ab?'true':'false')+'"><i class="fa-solid '+(ab?'fa-user-xmark':'fa-user-plus')+'"></i>'+(ab?'منع الغائبين «غ» من إجرائه':'السماح للغائبين «غ» بإجرائه')+'</button>'+(i.abs==='test'?'<span class="s"> (مفعّل للأرقام التجريبية فقط)</span>':'')+'</div>';
 }
 function schSum(i){
   var S=i.sched||{};
