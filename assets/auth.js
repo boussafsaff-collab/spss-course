@@ -387,7 +387,7 @@ function mnBuild(){var r=ID.role,h='',home=ROOT+'index.html';
   var ct=PAGE==='teacher'?tpCur():'';
   h+='<p class="gh">لوحة الأستاذ</p>'+TPT.map(function(x){var b=tpBadge(x[0]),on=ct===x[0];
    return '<a class="it sub" data-tab="'+x[0]+'" href="'+ROOT+'assessment/teacher/#'+x[0]+'"'+(on?' aria-current="true"':'')+(b.n?' aria-label="'+esc(x[2]+'، '+(x[0]==='rq'?'قيد المراجعة ':'')+b.n)+'"':'')+'><span class="ic" aria-hidden="true">'+x[1]+'</span><span>'+x[2]+'</span><em class="nb'+(b.c?' '+b.c:'')+'">'+esc(b.n)+'</em></a>';}).join('');
-  h+='<p class="gh">أدوات الأستاذ</p>'+mnItem('tstu','🧪','الدخول كطالب')+mnItem('clean','🧹','مسح بيانات التجربة');}
+  h+='<p class="gh">أدوات الأستاذ</p>'+mnItem('tstu','🧪','الدخول كطالب')+mnItem('clean','🧹','مسح بيانات التجربة')+mnItem('','📈','إحصائيات الاستخدام','',ROOT+'stats.html',PAGE==='stats');}
  else{
   h+='<p class="gh">لوحة الطالب</p>'+MET.map(function(x){return '<button type="button" class="it" data-x="me" data-g="'+x[0]+'"><span class="ic" aria-hidden="true">'+({m:'📊',a:'🗓️',l:'🧑‍🏫',p:'💻'}[x[0]]||'•')+'</span><span>'+x[2]+'</span></button>';}).join('');
   if(r==='tstu')h+='<p class="gh">وضع التجربة</p>'+mnItem('back','↩️','العودة إلى دور الأستاذ');}
@@ -395,7 +395,7 @@ function mnBuild(){var r=ID.role,h='',home=ROOT+'index.html';
  h+='</div><div class="ft">'+mnItem('out','🚪',r==='student'?'تغيير المستخدم / خروج':'خروج','dg')+'</div>';
  return h;}
 function verNm(v){var m=String(v||'').match(/v(\d+)/);if(!m)return'…';var n=+m[1];return 'الإصدار \u200e'+(1+Math.floor(n/1000))+'.'+('00'+(n%1000)).slice(-3)+'\u200e';}
-document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.spss-ver .vc');if(!b)return;var box=b.parentNode,vm=box.querySelector('.vm'),vn=box.querySelector('.vn'),U=window.spssUpd;vm.textContent='⏳ جارٍ البحث…';
+document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.spss-ver .vc');if(!b)return;var box=b.parentNode,vm=box.querySelector('.vm'),vn=box.querySelector('.vn'),U=window.spssUpd;vm.textContent='⏳ جارٍ البحث…';try{window.spssAn&&spssAn('upd_check')}catch(e){}
  if(!U){vm.textContent='⚠️ تعذّر البحث الآن. أعد المحاولة بعد قليل.';return}var t=setTimeout(function(){vm.textContent='⚠️ تعذّر الاتصال. تحقّق من الإنترنت ثم أعد المحاولة.'},8000),done=false;
  U.check(function(r,v,c){if(done)return;done=true;clearTimeout(t);if(r==='new'){vm.textContent='✨ توجد نسخة جديدة ('+verNm(v)+'). اضغط «تحديث الآن» في البطاقة أسفل الشاشة.';}else{vm.textContent='✅ تطبيقك محدَّث.';vn.textContent=verNm(v);}});});
 var MN={ret:null};
@@ -408,7 +408,7 @@ function mnOpen(btn){var m=document.getElementById('spss-mn');if(m)m.remove();
   if(a==='close'){mnClose();return;}
   if(a==='out'){if(confirm(ID.role==='student'?'تسجيل الخروج من المنصة على هذا الجهاز؟ (حضورك ونتائجك المسجَّلة لا تُلغى)':'تسجيل الخروج؟'))logout();return;}
   var hb=document.querySelector('#spss-ub .ham');mnClose(true);
-  if(a==='me'){meTab=x.getAttribute('data-g')||meTab;meOpen(hb);if(!meDesk()){meDrawer(false,true);setTimeout(function(){try{document.getElementById('spss-me').focus();}catch(e){}},80);}}else if(a==='inst')instOpen(hb);else if(a==='push'){if(puState()==='off'&&PAGE==='alerts'){puEnable();}else if(puState()==='off'&&lg('spss_push_na')!=='1'){puEnable().then(function(){location.href=ROOT+'alerts.html#push';});}else location.href=ROOT+'alerts.html#push';}else if(a==='tstu')toStudent();else if(a==='back')toTeacher();else if(a==='clean')cleanT(x);});
+  if(a==='me'){meTab=x.getAttribute('data-g')||meTab;meOpen(hb);if(!meDesk()){meDrawer(false,true);setTimeout(function(){try{document.getElementById('spss-me').focus();}catch(e){}},80);}}else if(a==='inst'){try{anEv('inst_click')}catch(e){}instOpen(hb);}else if(a==='push'){if(puState()==='off'&&PAGE==='alerts'){puEnable();}else if(puState()==='off'&&lg('spss_push_na')!=='1'){puEnable().then(function(){location.href=ROOT+'alerts.html#push';});}else location.href=ROOT+'alerts.html#push';}else if(a==='tstu')toStudent();else if(a==='back')toTeacher();else if(a==='clean')cleanT(x);});
  m.addEventListener('keydown',function(e){if(e.key==='Escape'){e.preventDefault();mnClose();return;}
   if(e.key==='Tab'){var f=[].slice.call(m.querySelectorAll('.pn a,.pn button'));if(!f.length)return;var a=document.activeElement,f0=f[0],f1=f[f.length-1];
    if(e.shiftKey&&a===f0){e.preventDefault();f1.focus();}else if(!e.shiftKey&&a===f1){e.preventDefault();f0.focus();}}});
@@ -567,7 +567,7 @@ function pnAuto(n){n=n||0;if(!ID||(puOk()&&Notification.permission==='granted')|
  var want=sg('spss_pn_after')==='1'||(isSA()&&sg('spss_pn_seen')!=='1'&&!pnSnz());if(!want)return;
  if(document.getElementById('spss-ins')||document.getElementById('spss-lg')){if(n<40)setTimeout(function(){pnAuto(n+1);},1500);return;}
  setTimeout(function(){if(!document.getElementById('spss-ins'))pnOpen();else pnAuto(n+1);},n?400:1800);}
-function init(){addCss();if(PAGE==='landing')landingUI();bar();if(PAGE==='alerts')alPage();puMsg();if(ID)setTimeout(puRefresh,2500);if(ID)setTimeout(pnInit,600);filterUI();instInit();copyInit();aboutNav();
+function init(){addCss();if(PAGE==='landing')landingUI();bar();if(PAGE==='alerts')alPage();puMsg();if(ID)setTimeout(puRefresh,2500);if(ID)setTimeout(pnInit,600);filterUI();instInit();anInit();copyInit();aboutNav();
  if(ID&&ID.role==='student'&&ID.free===undefined)getJ({action:'aslist',sbac:ID.bac}).then(function(r){if(r&&r.ok&&r.who){var s=pj(lg('spss_id'))||{};if(s.bac===ID.bac){s.free=r.who.free?1:0;ls('spss_id',JSON.stringify(s));if(s.free&&FLT)location.reload();}}});
  if(PAGE==='session'){if(!(BIZ&&TPPAGE))sessionUI();}else if(PAGE==='assess')assessUI();
  else if(PAGE==='teacher'&&ID&&ID.role==='tstu'){/* لوحة الأستاذ متاحة دائماً بالرمز */}}
@@ -733,7 +733,7 @@ function updInit(reg){ // update124: تنبيه «نسخة جديدة»
   var d=document.createElement('div');d.id='spss-upd';d.setAttribute('role','status');
   var ios=/iPhone|iPad|iPod/i.test(navigator.userAgent);
   d.innerHTML='<b>✨ نسخة جديدة من التطبيق متاحة</b><p>أُضيفت تحسينات وتصحيحات جديدة. اضغط «تحديث الآن» لتحميلها.'+(ios?' إن لم تظهر التغييرات على iPhone، فأغلق التطبيق كليًّا ثم افتحه من جديد.':'')+'</p><div class="ub"><button type="button" class="u1">🔄 تحديث الآن</button><button type="button" class="u2">لاحقًا</button></div>';
-  d.querySelector('.u1').onclick=function(){seen(v);d.querySelector('.u1').textContent='⏳ جارٍ التحديث…';var r=function(){location.reload()};try{reg&&reg.update()}catch(e){}if(reg&&reg.waiting){try{reg.waiting.postMessage({t:'skip'})}catch(e){}sw.addEventListener('controllerchange',r);setTimeout(r,1500)}else r()};
+  d.querySelector('.u1').onclick=function(){seen(v);try{window.spssAn&&spssAn('upd')}catch(e){}d.querySelector('.u1').textContent='⏳ جارٍ التحديث…';var r=function(){location.reload()};try{reg&&reg.update()}catch(e){}if(reg&&reg.waiting){try{reg.waiting.postMessage({t:'skip'})}catch(e){}sw.addEventListener('controllerchange',r);setTimeout(r,1500)}else r()};
   d.querySelector('.u2').onclick=function(){seen(v);d.remove()};
   document.body.appendChild(d)}
  window.spssUpd={live:ask,inst:ask0,check:function(cb){ask(function(v){var o=null;try{o=localStorage.getItem(K)}catch(e){}ask0(function(c){var cur=c||o;if(v!==cur||v!==o){shown=false;show(v);cb&&cb('new',v,cur)}else cb&&cb('ok',v,cur)});if(!sw.controller){if(v!==o){shown=false;show(v);cb&&cb('new',v,o)}else cb&&cb('ok',v,o)}})}};
@@ -743,6 +743,25 @@ function updInit(reg){ // update124: تنبيه «نسخة جديدة»
  var up=function(){try{reg&&reg.update()}catch(e){}};setTimeout(up,4000);
  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'){up();setTimeout(chk,2500)}});
 }
+// update128: إحصائيات مجهولة الهوية (لا اسم ولا رقم بكالوريا)
+var AN={};
+function anId(){var a=lg('spss_anid');if(!a||!/^[a-z0-9]{8,24}$/.test(a)){a=(Date.now().toString(36)+Math.random().toString(36).slice(2,12)).slice(0,24);ls('spss_anid',a);}return a;}
+function anR(){return ID?(ID.role==='teacher'?'t':(ID.role==='tstu'?'x':'s')):'g';}
+function anK(){return PAGE==='landing'?'home':(TPPAGE?'tp':(PAGE==='session'?'lec':(PAGE==='assess'?'as':'other')));}
+function anPost(o,bc){try{var b=new URLSearchParams(o);if(bc&&navigator.sendBeacon){navigator.sendBeacon(U,b);return;}fetch(U,{method:'POST',mode:'no-cors',body:b,keepalive:true}).catch(function(){});}catch(e){}}
+function anEv(e){anPost({action:'an',e:e,r:anR(),ai:anId()});}
+window.spssAn=anEv;
+function anHb(off){var o={action:'hb',ai:anId(),r:anR(),pg:anK()};if(ID&&ID.grp)o.g=String(ID.grp);if(off)o.off='1';anPost(o,off);}
+function anInit(){if(location.protocol!=='https:')return;var ev=['pv_'+anK()];
+ if(sg('spss_an_open')!=='1'){ss('spss_an_open','1');ev.unshift('open');if(isSA())ev.push('open_pwa');}
+ if(isSA()&&lg('spss_an_sa')!=='1'){ls('spss_an_sa','1');ev.push('inst_sa');}
+ anEv(ev.join(','));
+ window.addEventListener('appinstalled',function(){anEv('inst_ok');});
+ var t=null;function go(){if(t)return;anHb();t=setInterval(function(){if(document.visibilityState==='visible')anHb();},120000);}
+ function stop(){if(t){clearInterval(t);t=null;}anHb(true);}
+ if(document.visibilityState==='visible')go();
+ document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')go();else stop();});
+ window.addEventListener('pagehide',stop);}
 function instInit(){
  try{document.documentElement.setAttribute('data-ins',isSA()?'sa':(IOS?'ios':(INAPP?'inapp':'web')));}catch(e){}
  if(isSA()){if(lg('spss_inst')!=='1')ls('spss_inst_src','standalone');ls('spss_inst','1');}

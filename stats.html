@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<script src="assets/auth.js?v=709" data-page="stats"></script>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0f2744">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png?v=3">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>إحصائيات الاستخدام | بوصلتك مع الأستاذ</title>
+<style>
+body{font-family:Cairo,system-ui,sans-serif;background:#f1f5f9;color:#0f172a;margin:0}
+main{max-width:980px;margin:0 auto;padding:16px}
+h1{font-size:1.4rem;margin:8px 0 4px}.sub{color:#475569;margin:0 0 14px;font-size:.9rem}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.c{background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 10px -4px #0002}
+.c h2{font-size:.95rem;margin:0 0 6px;color:#334155}.c .n{font-size:2rem;font-weight:800;color:#0f2744}
+.c small{display:block;color:#64748b}.on .n{color:#059669}
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden;margin-top:14px;font-size:.88rem}
+th,td{padding:8px;border-bottom:1px solid #e2e8f0;text-align:center}th{background:#0f2744;color:#fff}
+.note{background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:12px;margin-top:14px;font-size:.85rem;line-height:1.8}
+.msg{padding:20px;text-align:center}button{font:inherit;padding:8px 14px;border-radius:10px;border:0;background:#0f2744;color:#fff;cursor:pointer}
+@media(prefers-color-scheme:dark){body{background:#0b1220;color:#e2e8f0}.c,table{background:#111827}.c h2{color:#cbd5e1}.c .n{color:#93c5fd}td{border-color:#1f2937}.note{background:#1f1407;border-color:#7c2d12}}
+</style>
+</head>
+<body>
+<main id="main">
+<h1>📈 إحصائيات الاستخدام</h1>
+<p class="sub">أرقام مجمَّعة ومجهولة الهوية لطلبة المنصة وزوّارها (لا تُحتسب زيارات الأستاذ ولا وضع التجربة). <button id="rf" type="button">🔄 تحديث</button> <span id="at"></span></p>
+<div id="out" class="msg">⏳ جارٍ التحميل…</div>
+<div class="note"><b>حدود القياس:</b><br>
+• «متصل الآن» يعني جهازًا أرسل إشارة نشاط خلال آخر 5 دقائق (كل دقيقتين أثناء فتح الصفحة)، وليس اتصالًا مباشرًا لحظيًّا.<br>
+• التثبيتات تقديرية: يُحتسب حدث التثبيت على أندرويد/كروم، ويُحتسب أول تشغيل للتطبيق المثبَّت؛ أمّا على iPhone فلا يُعلِم Safari بالتثبيت، فيظهر عند أول فتح من الشاشة الرئيسية فقط.<br>
+• «زائر فريد» يعتمد على معرّف عشوائي محفوظ في الجهاز؛ مسح بيانات المتصفح أو تغيير الجهاز يُنشئ معرّفًا جديدًا.<br>
+• لا يُرسَل أي اسم أو رقم بكالوريا؛ تُحفظ العدادات اليومية 120 يومًا.</div>
+</main>
+<script>
+(function(){
+var U='https://script.google.com/macros/s/AKfycbysPtnOf5M0_SSFEal76q_XQbV9dtJnxbSnZO2xaXa8NUtfSdCCfcvMT3y2QiCzUjUJ/exec';
+function k(){try{return sessionStorage.getItem('spss_tkey')||localStorage.getItem('spss_tkey')}catch(e){return null}}
+var O=document.getElementById('out');
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var KN={home:'الرئيسية',lec:'المحاضرات',tp:'الأعمال التطبيقية',as:'التقييمات',dl:'التحميلات',other:'صفحات أخرى'};
+function sum(c,ev){var n=0;['s','g'].forEach(function(r){n+=Number(c[ev+'|'+r]||0)});return n}
+function load(){var key=k();if(!key){O.innerHTML='🔒 هذه الصفحة خاصة بالأستاذ. سجّل الدخول بوضع الأستاذ أولًا.';return}
+ O.className='msg';O.textContent='⏳ جارٍ التحميل…';
+ fetch(U,{method:'POST',body:new URLSearchParams({action:'anstats',key:key})}).then(function(r){return r.json()}).then(draw).catch(function(){O.textContent='⚠️ تعذّر جلب الإحصائيات أو الرمز غير صالح.'})}
+function draw(d){if(!d||!d.days){O.textContent='⚠️ تعذّر جلب الإحصائيات أو الرمز غير صالح.';return}
+ var days=d.days.slice().sort(function(a,b){return a.d<b.d?1:-1}),today=days[0]&&days[0].d===d.at.slice(0,10).replace(/-/g,'')?days[0].c:{};
+ function tot(ev,n){var s=0;days.slice(0,n||9999).forEach(function(x){s+=sum(x.c,ev)});return s}
+ function t7(ev){var lim=new Date(Date.now()-6*864e5),L=lim.getFullYear()*1e4+(lim.getMonth()+1)*100+lim.getDate(),s=0;days.forEach(function(x){if(+x.d>=L)s+=sum(x.c,ev)});return s}
+ function card(t,ev,cls){return '<div class="c '+(cls||'')+'"><h2>'+t+'</h2><div class="n">'+sum(today,ev)+'</div><small>اليوم · آخر 7 أيام: '+t7(ev)+' · المجموع (60 يومًا): '+tot(ev)+'</small></div>'}
+ var on=d.online||{},ins=function(f){return f('inst_ok')+f('inst_sa')};
+ var h='<div class="g">';
+ h+='<div class="c on"><h2>🟢 متصلون الآن</h2><div class="n">'+(on.s||0)+'</div><small>طالب مسجَّل · زوّار: '+(on.g||0)+'</small></div>';
+ h+=card('📲 فتوحات المنصة (جلسات)','open')+card('👤 زوّار فريدون','uniq')+card('📱 فتح من التطبيق المثبَّت','open_pwa');
+ h+='<div class="c"><h2>✅ تثبيتات (تقديرية)</h2><div class="n">'+ins(function(e){return sum(today,e)})+'</div><small>اليوم · آخر 7 أيام: '+ins(t7)+' · المجموع: '+ins(function(e){return tot(e)})+' · نقرات زر التثبيت: '+tot('inst_click')+'</small></div>';
+ h+=card('⬇️ تحميل ملفات','dl_file')+card('📂 زيارات صفحة التحميلات','pv_dl')+card('📖 مشاهدات المحاضرات','pv_lec')+card('🧪 مشاهدات الأعمال التطبيقية','pv_tp')+card('📝 فتح التقييمات','pv_as')+card('🔄 تحديثات التطبيق','upd')+card('🔍 البحث عن تحديثات','upd_check');
+ h+='</div>';
+ var kk=Object.keys(on.k||{}),gg=Object.keys(on.grp||{});
+ if(kk.length||gg.length){h+='<div class="c" style="margin-top:12px"><h2>المتصلون الآن حسب الصفحة والفوج</h2><small>'+kk.map(function(x){return esc(KN[x]||x)+': '+on.k[x]}).join(' · ')+'</small><small>'+gg.map(function(x){return 'فوج '+esc(x)+': '+on.grp[x]}).join(' · ')+'</small></div>'}
+ h+='<table><thead><tr><th>اليوم</th><th>فتوحات</th><th>زوّار فريدون</th><th>تثبيتات</th><th>محاضرات</th><th>أعمال تطبيقية</th><th>تقييمات</th><th>تحميل ملفات</th></tr></thead><tbody>';
+ days.slice(0,14).forEach(function(x){var c=x.c,d0=x.d.slice(6,8)+'/'+x.d.slice(4,6);h+='<tr><td>'+d0+'</td><td>'+sum(c,'open')+'</td><td>'+sum(c,'uniq')+'</td><td>'+(sum(c,'inst_ok')+sum(c,'inst_sa'))+'</td><td>'+sum(c,'pv_lec')+'</td><td>'+sum(c,'pv_tp')+'</td><td>'+sum(c,'pv_as')+'</td><td>'+sum(c,'dl_file')+'</td></tr>'});
+ if(!days.length)h+='<tr><td colspan="8">لا توجد بيانات بعد.</td></tr>';
+ h+='</tbody></table>';O.className='';O.innerHTML=h;document.getElementById('at').textContent='آخر تحديث: '+(d.at||'')}
+document.getElementById('rf').onclick=load;load();setInterval(function(){if(document.visibilityState==='visible')load()},60000);
+})();
+</script>
+</body>
+</html>
