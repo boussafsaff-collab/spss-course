@@ -9,7 +9,8 @@
 'use strict';
 if(window.__snav)return;window.__snav=1;
 var me=document.currentScript||document.querySelector('script[src*="session-nav.js"]');
-var HOME=(me&&me.getAttribute('data-home'))||'../lectures/index.html';
+var ISTP=/-tp[^/]*\.html$/i.test(location.pathname),LST=ISTP?'قائمة التطبيقات':'قائمة المحاضرات',LSH=ISTP?'التطبيقات':'المحاضرات';
+var HOME=(me&&me.getAttribute('data-home'))||(ISTP?'../tps/index.html':'../lectures/index.html');
 var $=function(x){return document.getElementById(x)};
 function lsGet(k){try{return localStorage.getItem(k)}catch(e){return null}}
 function ssGet(k){try{return sessionStorage.getItem(k)}catch(e){return null}}
@@ -61,7 +62,7 @@ document.head.appendChild(css);
 function ask(kind,ok){var old=$('snav-dlg');if(old)old.remove();
  var w=document.createElement('div');w.id='snav-dlg';w.setAttribute('role','alertdialog');w.setAttribute('aria-modal','true');
  var ex=kind==='exit';
- w.innerHTML='<div class="c"><h3>'+(ex?'🚪 الخروج من الحصة؟':'🏠 مغادرة الحصة؟')+'</h3><p>'+(ex?'سيتوقف تتبّع شرائح الأستاذ، وتُمسح بيانات الدخول من هذا الجهاز، وتعود إلى صفحة الدخول.':'ستغادر الحصة وتنتقل إلى قائمة المحاضرات.')+'</p><p class="k">✅ حضورك المسجَّل في الحصة لا يُلغى.</p><div class="r"><button type="button" class="y'+(ex?'':' h')+'">'+(ex?'نعم، الخروج':'نعم، قائمة المحاضرات')+'</button><button type="button" class="n">إلغاء والبقاء في الحصة</button></div></div>';
+ w.innerHTML='<div class="c"><h3>'+(ex?'🚪 الخروج من الحصة؟':'🏠 مغادرة الحصة؟')+'</h3><p>'+(ex?'سيتوقف تتبّع شرائح الأستاذ، وتُمسح بيانات الدخول من هذا الجهاز، وتعود إلى صفحة الدخول.':'ستغادر الحصة وتنتقل إلى '+LST+'.')+'</p><p class="k">✅ حضورك المسجَّل في الحصة لا يُلغى.</p><div class="r"><button type="button" class="y'+(ex?'':' h')+'">'+(ex?'نعم، الخروج':'نعم، '+LST+'')+'</button><button type="button" class="n">إلغاء والبقاء في الحصة</button></div></div>';
  (document.fullscreenElement&&document.fullscreenElement!==document.documentElement?document.fullscreenElement:document.body).appendChild(w);
  var y=w.querySelector('.y'),n=w.querySelector('.n');
  function close(){w.remove();document.removeEventListener('keydown',kd,true);}
@@ -85,7 +86,7 @@ function onHome(e){if(e){e.stopPropagation();}if(isLive()){e&&e.preventDefault()
 // ===== الصفوف داخل البطاقات =====
 function row(light){var r=document.createElement('div');r.className='snav-row'+(light?' lt':'');r.setAttribute('data-snav-row','');
  var x=document.createElement('button');x.type='button';x.className='snav-b snav-x';x.setAttribute('data-snav-exit','');x.innerHTML='🚪 الخروج من الحصة';x.addEventListener('click',onExit);
- var h=document.createElement('a');h.className='snav-b snav-h';h.href=HOME;h.setAttribute('data-snav-home','');h.innerHTML='🏠 العودة إلى قائمة المحاضرات';h.addEventListener('click',onHome);
+ var h=document.createElement('a');h.className='snav-b snav-h';h.href=HOME;h.setAttribute('data-snav-home','');h.innerHTML='🏠 العودة إلى '+LST+'';h.addEventListener('click',onHome);
  r.appendChild(x);r.appendChild(h);return r;}
 function mount(){
  // 1) بطاقة تسجيل الحضور في الصفحة (المحاضرات والتطبيقات 1 و3)
@@ -103,8 +104,8 @@ function mount(){
  var d=dk();if(d&&!d.querySelector('[data-snav-i]')){var xb=d.querySelector('[data-a="x"]'),host,cls='';
   if(xb){host=xb.parentNode;cls=xb.className||'';}else{host=document.createElement('div');host.id='snav-fab';d.appendChild(host);}
   var bi=function(kind){var b=document.createElement('button');b.type='button';b.className=(cls?cls+' ':'')+'snav-i '+(kind==='exit'?'snav-x':'snav-h');b.setAttribute('data-snav-i',kind);
-   var full=kind==='exit'?'الخروج من الحصة':'العودة إلى قائمة المحاضرات';b.title=full;b.setAttribute('aria-label',full);
-   b.innerHTML=(kind==='exit'?'🚪':'🏠')+'<span class="t">'+(kind==='exit'?'خروج':'المحاضرات')+'</span>';
+   var full=kind==='exit'?'الخروج من الحصة':'العودة إلى '+LST+'';b.title=full;b.setAttribute('aria-label',full);
+   b.innerHTML=(kind==='exit'?'🚪':'🏠')+'<span class="t">'+(kind==='exit'?'خروج':LSH)+'</span>';
    b.addEventListener('click',kind==='exit'?onExit:function(e){e.preventDefault();e.stopPropagation();ask('home',function(){location.href=HOME;});});
    ['touchstart','touchend','pointerdown','mousedown'].forEach(function(ev){b.addEventListener(ev,function(e){e.stopPropagation();},{passive:true});});
    return b;};
