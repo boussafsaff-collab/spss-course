@@ -825,7 +825,7 @@ function bookMode(){if(PAGE!=='session')return;var b=document.body;
   S.forEach(function(x){x.classList.toggle('bk-off',x!==p.s);x.classList.remove('bk-in','bk-inr');});
   AT.forEach(function(x){x.classList.toggle('bk-off',p.a.indexOf(x)<0&&x.closest('section')===p.s);});cur=i;
   if(dir){void p.s.offsetWidth;p.s.classList.add(dir>0?'bk-in':'bk-inr');}
-  var top=p.s.getBoundingClientRect().top+window.scrollY-90;window.scrollTo({top:Math.max(0,top),behavior:'auto'});paint();save();}
+  var top=p.s.getBoundingClientRect().top+window.scrollY-165;window.scrollTo({top:Math.max(0,top),behavior:'auto'});paint();save();}
  function find(o){if(!o)return 0;if(o.n===P.length&&o.i<P.length)return o.i;var j=-1;P.forEach(function(p,i){if(j<0&&p.s.id===o.sid&&p.k>=Math.min(o.k||1,p.n))j=i;});return j<0?0:j;}
  function build(){if(bar)return;bar=document.createElement('div');bar.id='bk-bar';bar.setAttribute('role','navigation');bar.setAttribute('aria-label','تصفح صفحات الدرس');
   bar.innerHTML='<button type="button" class="pv">→ السابقة</button><div class="m"></div><button type="button" class="nx">التالية ←</button><button type="button" class="tg" title="التبديل بين وضع الكتاب والتمرير المتصل">📜</button>';
