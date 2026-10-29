@@ -464,9 +464,14 @@ function hideLab(inp){var l=inp&&inp.closest('label');if(l)l.classList.add('spss
 function slotMsg(x){var p=String(x||'').split('|');if(p[0]!=='TOO_EARLY')return '';
  return p[2]&&p[3]?'⏰ التسجيل متاح فقط من '+p[2]+' إلى '+p[3]+(p[1]?' (يوم '+p[1]+')':'')+'.':'⏰ لم يحن موعد الحصة بعد'+(p[1]?': تاريخها يوم '+p[1]:'')+'.';}
 window.spssSlotMsg=slotMsg;
-function teacherSessionUI(){var n='<div class="spss-who">👨‍🏫 وضع الأستاذ: يرى الطالب هنا زر <strong>تسجيل الحضور</strong> فقط.</div>';
- var fm=document.getElementById('att-form');if(fm){Array.prototype.forEach.call(fm.querySelectorAll('input,select,textarea'),function(e){e.removeAttribute('required');hideLab(e);});var b=document.getElementById('att-btn');if(b){b.textContent='تسجيل الحضور (للطلبة)';b.disabled=true;b.style.opacity='.6';}fm.addEventListener('submit',function(ev){ev.preventDefault();ev.stopImmediatePropagation();},true);fm.insertAdjacentHTML('afterbegin',n);}
- ['qz-bac','qz-code'].forEach(function(i){var e=document.getElementById(i);if(e)hideLab(e);});var g=document.getElementById('qz-go');if(g){g.textContent='تسجيل الحضور (للطلبة)';g.disabled=true;}}
+function teacherSessionUI(){var b=document.body;b.classList.add('spss-tch');
+ var un=function(){if(b.classList.contains('att-locked'))b.classList.remove('att-locked');};un();
+ try{new MutationObserver(un).observe(b,{attributes:true,attributeFilter:['class']});}catch(e){}
+ ['att-form','att-lock-note','att-frame-wrap'].forEach(function(i){var e=document.getElementById(i);if(e)e.style.display='none';});
+ ['qz-bac','qz-code','qz-go'].forEach(function(i){var e=document.getElementById(i);if(e)hideLab(e);});
+ var ma=document.getElementById('mod-attendance');if(ma&&!ma.querySelector('.spss-tnote')){var n=document.createElement('div');n.className='spss-who spss-tnote';n.innerHTML='👨‍🏫 وضع الأستاذ: المحتوى مفتوح لك دون تسجيل حضور. (الطالب يرى هنا زر <strong>تسجيل الحضور</strong> فقط.)';ma.appendChild(n);}
+ var db=document.getElementById('deck-btn');if(db){db.removeAttribute('onclick');db.disabled=false;db.innerHTML='<i class="fa-solid fa-display ml-2"></i>عرض الشرائح';
+  db.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation();try{if(window.dkLate)window.dkLate();if(window.dkCtl&&window.dkCtl.lock)window.dkCtl.lock(false);}catch(x){}if(typeof window.openDeck==='function')window.openDeck();},true);}}
 function sessionUI(){if(ID&&ID.role==='teacher'){teacherSessionUI();return;}if(!ID)return;document.body.classList.add('spss-st');
  var fm=document.getElementById('att-form'),btn=null,msg=null;
  var who=document.createElement('div');who.className='spss-who';who.innerHTML='👤 '+esc((ID.nom+' '+ID.prenom).trim())+(ID.role==='tstu'?' <small>(وضع الأستاذ كطالب)</small>':'')+' – <bdi dir="ltr">'+esc(ID.bac)+'</bdi>';
