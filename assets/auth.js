@@ -197,9 +197,9 @@ var ME_P=null;
 function meKey(){return 'spss_me_'+(ID&&ID.bac||'');}
 function meCache(){var c=pj(lg(meKey()));return c&&c.r&&c.r.ok&&Date.now()-c.t<6*3600e3?c:null;}
 // update74: الحضور من Firestore عند تفعيله لهذا الطالب (r.fs)، وإلا/عند أي خطأ تبقى بيانات الورقة كما هي
-function meFs(r){if(!r||!r.ok||!r.fs||!r.att)return r;return getJ({action:'asattfs',sbac:ID.bac}).then(function(f){if(f&&f.ok&&f.list){var M={};f.list.forEach(function(d){M[d.type+'|'+d.num]=d.st;});
+var FS_P=null;function meFs(r){if(!r||!r.ok||!r.fs||!r.att){FS_P=null;return r;}var q=FS_P||getJ({action:'asattfs',sbac:ID.bac});FS_P=null;return q.then(function(f){if(f&&f.ok&&f.list){var M={};f.list.forEach(function(d){M[d.type+'|'+d.num]=d.st;});
  ['lec','tp'].forEach(function(t){(r.att[t]||[]).forEach(function(x){var s=M[t+'|'+x.num];if(s==='present'||s==='pending')x.st='present';else if(s==='absent')x.st='rejected';});});r.attSrc='fs';}return r;},function(){return r;});}
-function meGet(){if(ME_P)return ME_P;ME_P=getJ({action:'asme',sbac:ID.bac}).then(meFs).then(function(r){ME_P=null;if(r&&r.ok){try{ls(meKey(),JSON.stringify({t:Date.now(),r:r}));}catch(e){}}return r;},function(e){ME_P=null;throw e;});return ME_P;}
+function meGet(){if(ME_P)return ME_P;try{var c0=meCache();if(c0&&c0.r&&c0.r.fs)FS_P=getJ({action:'asattfs',sbac:ID.bac});}catch(e){}ME_P=getJ({action:'asme',sbac:ID.bac}).then(meFs).then(function(r){ME_P=null;if(r&&r.ok){try{ls(meKey(),JSON.stringify({t:Date.now(),r:r}));}catch(e){}}return r;},function(e){ME_P=null;throw e;});return ME_P;}
 // أي فعل كتابة إلى الخادم (تسجيل حضور، تقييم، طلب…) يمسح النسخ المحلية فوراً كي لا تظهر علامة أو حضور قديم
 var RD_ACT={course:1,aslist:1,asme:1,asnotes:1,askey:1,asrqlist:1,asrqmine:1,asadmin:1,asstudlist:1,asstats:1,asattstats:1,asmsglist:1,asroll:1,qzgate:1,qzstatus:1,lqstatus:1,tsver:1,checkkey:1,slide:1,monitor:1,stsum:1,qzlist:1,qzstats:1,asfind:1,ascnt:1,lecqzst:1};
 function dataPurge(){try{Object.keys(localStorage).forEach(function(k){if(/^(spss_me_|spss_alc_|tp_c_)/.test(k))localStorage.removeItem(k);});}catch(e){}}
