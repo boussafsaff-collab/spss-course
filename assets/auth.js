@@ -464,7 +464,10 @@ function hideLab(inp){var l=inp&&inp.closest('label');if(l)l.classList.add('spss
 function slotMsg(x){var p=String(x||'').split('|');if(p[0]!=='TOO_EARLY')return '';
  return p[2]&&p[3]?'⏰ التسجيل متاح فقط من '+p[2]+' إلى '+p[3]+(p[1]?' (يوم '+p[1]+')':'')+'.':'⏰ لم يحن موعد الحصة بعد'+(p[1]?': تاريخها يوم '+p[1]:'')+'.';}
 window.spssSlotMsg=slotMsg;
-function sessionUI(){if(!ID||ID.role==='teacher')return;document.body.classList.add('spss-st');
+function teacherSessionUI(){var n='<div class="spss-who">👨‍🏫 وضع الأستاذ: يرى الطالب هنا زر <strong>تسجيل الحضور</strong> فقط.</div>';
+ var fm=document.getElementById('att-form');if(fm){Array.prototype.forEach.call(fm.querySelectorAll('input,select,textarea'),function(e){e.removeAttribute('required');hideLab(e);});var b=document.getElementById('att-btn');if(b){b.textContent='تسجيل الحضور (للطلبة)';b.disabled=true;b.style.opacity='.6';}fm.addEventListener('submit',function(ev){ev.preventDefault();ev.stopImmediatePropagation();},true);fm.insertAdjacentHTML('afterbegin',n);}
+ ['qz-bac','qz-code'].forEach(function(i){var e=document.getElementById(i);if(e)hideLab(e);});var g=document.getElementById('qz-go');if(g){g.textContent='تسجيل الحضور (للطلبة)';g.disabled=true;}}
+function sessionUI(){if(ID&&ID.role==='teacher'){teacherSessionUI();return;}if(!ID)return;document.body.classList.add('spss-st');
  var fm=document.getElementById('att-form'),btn=null,msg=null;
  var who=document.createElement('div');who.className='spss-who';who.innerHTML='👤 '+esc((ID.nom+' '+ID.prenom).trim())+(ID.role==='tstu'?' <small>(وضع الأستاذ كطالب)</small>':'')+' – <bdi dir="ltr">'+esc(ID.bac)+'</bdi>';
  if(fm){var bi=fm.querySelector('input[name="bac"]');
