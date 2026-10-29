@@ -772,6 +772,32 @@ function instShow(kind,manual){if(document.getElementById('spss-ins'))return;
   else if(a==='go'&&INS.bip){var ev=INS.bip;INS.bip=null;try{ev.prompt();ev.userChoice.then(function(c){if(c&&c.outcome==='accepted')instMark('prompt');else instClose();}).catch(function(){instClose();});}catch(err){instClose();}}
   else if(a==='copy'){var inp=w.querySelector('.lk input'),okf=function(){b.textContent='✓ تم النسخ';};
    try{if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(link).then(okf,function(){inp.select();try{document.execCommand('copy');okf();}catch(x){}});else{inp.select();document.execCommand('copy');okf();}}catch(err){inp.select();}}});}
+
+/* update82: تحميل الدرس للعمل دون اتصال (قراءة فقط). الحضور والتقييم والتنبيهات تبقى عبر الشبكة. */
+function offLesson(){if(PAGE!=='session'||!('caches' in window)||!navigator.serviceWorker)return;
+ var LC='spss-lesson-v1',pg=location.href.split('#')[0].split('?')[0],K='spss_off_'+location.pathname,b=document.body;
+ var FA='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/';
+ function urls(){var u=[pg];Array.prototype.forEach.call(document.querySelectorAll('script[src],link[rel="stylesheet"][href],img[src],link[rel="icon"][href],link[rel="manifest"][href]'),function(e){var x=e.src||e.href;if(x&&/^https?:/.test(x)&&!/script\.google|googleapis\.com\/.*(identitytoolkit|firestore)|gstatic\.com\/firebasejs/.test(x))u.push(x);});
+  ['fa-solid-900.woff2','fa-regular-400.woff2','fa-brands-400.woff2'].forEach(function(f){u.push(FA+f);});
+  return u.filter(function(x,i){return u.indexOf(x)===i;});}
+ if(!navigator.onLine&&lg(K)){var un=function(){if(b.classList.contains('att-locked'))b.classList.remove('att-locked');};un();try{new MutationObserver(un).observe(b,{attributes:true,attributeFilter:['class']});}catch(e){}}
+ var box=null;
+ function paint(st,t){if(!box)return;var m={none:['📥 تحميل الدرس للعمل دون اتصال','غير محمَّل'],ing:['⏳ جارٍ التحميل…',t||''],ok:['✅ الدرس متاح دون اتصال',t||''],err:['⚠️ تعذّر التحميل — أعد المحاولة',t||'']}[st];
+  box.innerHTML='<button type="button" class="ol-go" '+(st==='ing'||st==='ok'?'disabled':'')+'>'+m[0]+'</button> <small class="ol-s">'+esc(m[1])+'</small>'+(st==='ok'?' <button type="button" class="ol-rm">🗑️ حذف النسخة</button>':'')+(navigator.onLine?'':' <small>(أنت دون اتصال: الحضور والتقييم يحتاجان الشبكة)</small>');
+  var g=box.querySelector('.ol-go'),r=box.querySelector('.ol-rm');if(g&&st!=='ok')g.onclick=dl;if(r)r.onclick=rm;}
+ function dl(){if(!navigator.onLine){paint('err','لا يوجد اتصال');return;}paint('ing');var L=urls(),n=0,bad=0;
+  caches.open(LC).then(function(c){return Promise.all(L.map(function(u){var same=u.indexOf(location.origin)===0;
+   return fetch(u,same?{cache:'reload',credentials:'same-origin'}:{mode:'no-cors'}).then(function(r){if(r&&(r.ok||r.type==='opaque'))return c.put(u,r).then(function(){n++;paint('ing',n+' / '+L.length);});bad++;}).catch(function(){bad++;});}));})
+  .then(function(){if(bad&&n<2)throw 0;ls(K,JSON.stringify({t:Date.now(),n:n}));paint('ok',stamp());}).catch(function(){paint('err');});}
+ function rm(){caches.open(LC).then(function(c){return c.delete(pg);}).then(function(){ls(K,null);paint('none');});}
+ function stamp(){var o=pj(lg(K));return o?('حُمِّل '+new Date(o.t).toLocaleString('ar-DZ',{dateStyle:'short',timeStyle:'short'})):'';}
+ function show(){if(box||b.classList.contains('att-locked'))return;box=document.createElement('div');box.className='spss-off';box.setAttribute('role','status');
+  var a=document.getElementById('mod-attendance'),w=document.getElementById('main-content-wrapper');if(a&&a.parentNode)a.parentNode.insertBefore(box,a.nextSibling);else if(w)w.insertBefore(box,w.firstChild);else b.insertBefore(box,b.firstChild);
+  if(lg(K))caches.open(LC).then(function(c){return c.match(pg);}).then(function(h){if(h)paint('ok',stamp());else{ls(K,null);paint('none');}});else paint('none');}
+ var st=document.createElement('style');st.textContent='.spss-off{margin:12px auto;max-width:56rem;padding:10px 12px;border:1px solid #f59e0b55;border-radius:12px;background:#fffbeb;color:#78350f;font-size:14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}.dark .spss-off{background:#1e293b;color:#fde68a}.spss-off button{padding:6px 12px;border-radius:10px;background:#d97706;color:#fff;font-weight:700}.spss-off button[disabled]{opacity:.75}.spss-off .ol-rm{background:#64748b}';document.head.appendChild(st);
+ show();try{new MutationObserver(show).observe(b,{attributes:true,attributeFilter:['class']});}catch(e){}
+ window.addEventListener('online',function(){if(box)paint(lg(K)?'ok':'none',stamp());});window.addEventListener('offline',function(){if(box)paint(lg(K)?'ok':'none',stamp());});}
 window.SPSS_AUTH={id:ID,logout:logout,cur:cur,U:U,root:ROOT,slotMsg:slotMsg,meOpen:function(){if(ID&&ID.role!=='teacher')meOpen();},flt:FLT};
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+function init2(){init();try{offLesson();}catch(e){}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init2);else init2();
 })();
