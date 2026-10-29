@@ -90,7 +90,6 @@ function e(t,c,x){var n=document.createElement(t);if(c)n.className=c;if(x!=null)
 T.forEach(function(s){var c=e('article','card');c.appendChild(e('span','tag',s.tag));c.appendChild(e('h3',null,s.title));c.appendChild(e('p',null,s.desc));
  var f=e('div','fl');(s.files||[]).forEach(function(x){var ok=/^https:\/\/(drive|docs)\.google\.com\//.test(x.url||''),a=e('a','btn'+(ok?'':' soon'));
   a.textContent=(ok?'📥 ':'⏳ ')+x.label;if(ok){a.href=x.url;a.target='_blank';a.rel='noopener'}else{a.appendChild(e('small',null,' (قريبًا)'));a.setAttribute('aria-disabled','true')}f.appendChild(a)});
- if(s.page){var p=e('a','btn',' 📱 خطوات الحصة على المنصة');p.href=s.page;p.style.background='#d97706';f.appendChild(p)}
  c.appendChild(f);g.appendChild(c)});})();
 </script>
 </body>
