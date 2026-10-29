@@ -30,11 +30,13 @@ function ss(k,v){try{if(v==null)sessionStorage.removeItem(k);else sessionStorage
 try{if(!sessionStorage.getItem('spss_tkey')&&localStorage.getItem('spss_tkey'))sessionStorage.setItem('spss_tkey',localStorage.getItem('spss_tkey'));}catch(e){}
 function pj(t){try{return JSON.parse(t||'null')}catch(e){return null}}
 function esc(t){var d=document.createElement('span');d.textContent=t==null?'':String(t);return d.innerHTML;}
+/* update83: جلسة الطالب محلية بعد دخول ناجح عبر الشبكة؛ دون اتصال تبقى صالحة 7 أيام منذ آخر فتح متصل */
+var OFF_TTL=7*864e5;
 function cur(){var k=sg('spss_tkey');
  if(k){var t=pj(sg('spss_tstu'));if(t&&/^9900\d{4}$/.test(t.bac||''))return {role:'tstu',key:k,bac:t.bac,nom:t.nom,prenom:t.prenom,sp:t.sp,grp:t.grp,prof:t.prof};return {role:'teacher',key:k};}
- var s=pj(lg('spss_id'));if(s&&/^\d{5,10}$/.test(s.bac||''))return {role:'student',bac:s.bac,nom:s.nom,prenom:s.prenom,sp:s.sp,grp:s.grp,free:s.free};
+ var s=pj(lg('spss_id'));if(s&&/^\d{5,10}$/.test(s.bac||'')&&(navigator.onLine!==false||Date.now()-Number(lg('spss_seen')||s.t||0)<OFF_TTL))return {role:'student',bac:s.bac,nom:s.nom,prenom:s.prenom,sp:s.sp,grp:s.grp,free:s.free};
  return null;}
-var ID=cur();if(ID)window.__spssAL=1;
+var ID=cur();if(ID)window.__spssAL=1;if(ID&&ID.role==='student'&&navigator.onLine!==false)ls('spss_seen',String(Date.now()));
 // مفاتيح الحالة المحلية للصفحات (الدخول/الحضور، التقييم الجاري)
 var PK=/^((lec|tp)\d+[a-z]*-(login|attendance)-v\d+(-rv)?|as_bac|as_q_.*|as_a_.*|tp\d+-qz.*|tp3cfg-prof)$/;
 function bacOf(v){var o=pj(v);if(!o||typeof o!=='object')return '';return String(o.bac||o.matricule||(o.f&&(o.f.bac||o.f.matricule))||'');}
@@ -208,7 +210,7 @@ function getJ(q){return fetch(U+'?'+new URLSearchParams(q).toString()+'&t='+Date
 function goNext(){var n='';try{n=new URLSearchParams(location.search).get('next')||'';}catch(e){}
  var base=new URL(ROOT).pathname;if(n&&n.charAt(0)==='/'&&n.indexOf('//')!==0&&n.indexOf(base)===0){location.replace(n);return true;}return false;}
 function clearAll(){purge(true);dataPurge();try{Object.keys(localStorage).forEach(function(k){if(k.indexOf('spss_alc_')===0)localStorage.removeItem(k);});}catch(e){}['spss_id','as_bac'].forEach(function(k){ls(k,null)});['spss_tkey','spss_tstu','dk-prof','as_tkey','dk-open','tp-slide'].forEach(function(k){ss(k,null)});try{localStorage.removeItem('dk-prof')}catch(e){}}
-function logout(){appBadge(0);var pt=lg('spss_push_tok');if(pt){try{post({action:'aspushunreg',token:pt}).catch(function(){});}catch(e){}['spss_push_tok','spss_push_on','spss_push_who','spss_push_at'].forEach(function(k){ls(k,null);});}clearAll();location.href=ROOT+'index.html';}
+function logout(){if(navigator.onLine===false){alert('الخروج الآمن يحتاج الاتصال بالإنترنت.\nتبقى جلستك على هذا الجهاز لقراءة الدروس المحمّلة؛ أعد المحاولة عند عودة الاتصال.');return;}appBadge(0);var pt=lg('spss_push_tok');if(pt){try{post({action:'aspushunreg',token:pt}).catch(function(){});}catch(e){}['spss_push_tok','spss_push_on','spss_push_who','spss_push_at'].forEach(function(k){ls(k,null);});}clearAll();location.href=ROOT+'index.html';}
 function dlg(h,setup){var o=document.getElementById('spss-dl');if(o)o.remove();var w=document.createElement('div');w.id='spss-dl';w.innerHTML='<div class="c">'+h+'</div>';
  (document.fullscreenElement||document.body).appendChild(w);w.addEventListener('click',function(e){if(e.target===w)w.remove();});setup&&setup(w);return w;}
 function toStudent(){dlg('<h3>🧪 الدخول كطالب (تجربة)</h3><p>اختر الملف: تتصفح المنصة كطالب من هذا التخصص/الفوج برقم تجريبي، والتسجيل والتقييم يمرّان بالخادم الحقيقي دون المساس بالقوائم (نتائج تجريبية تُمسح بزر).</p><div class="g2">'+
@@ -448,7 +450,7 @@ function loginUI(){if(document.getElementById('spss-lg'))return;var w=document.c
  var cc=w.querySelector('.c');cc.setAttribute('tabindex','-1');try{cc.focus({preventScroll:true});}catch(e){}
  w.addEventListener('keydown',function(ev){if(ev.key!=='Tab')return;var F=Array.prototype.filter.call(w.querySelectorAll('button,input'),function(x){return !x.disabled&&x.offsetParent!==null;});if(!F.length)return;
   var a=document.activeElement,i=F.indexOf(a);if(ev.shiftKey&&(i<=0)){ev.preventDefault();F[F.length-1].focus();}else if(!ev.shiftKey&&(i<0||i===F.length-1)){ev.preventDefault();F[0].focus();}});
- f.onsubmit=function(ev){ev.preventDefault();if(go.disabled)return;sErr('');var v=inp.value.trim();
+ f.onsubmit=function(ev){ev.preventDefault();if(go.disabled)return;sErr('');if(navigator.onLine===false){sErr('تسجيل الدخول يحتاج الاتصال بالإنترنت (أول مرة أو بعد الخروج). اتصل ثم أعد المحاولة.');return;}var v=inp.value.trim();
   if(role==='s'){v=v.replace(/\D/g,'');if(!/^\d{5,10}$/.test(v)){sErr('اكتب رقم البكالوريا (أرقام فقط).');inp.focus();return;}busy(true);
    getJ({action:'aslist',sbac:v}).then(function(r){busy(false);
     if(!r.ok||!r.who){sErr(r.err==='UNKNOWN_BAC'?'رقم البكالوريا هذا غير موجود في قوائم الطلبة. تحقّق منه أو راجع الأستاذ.':r.err==='NO_ROSTER'?'قوائم الطلبة غير مهيّأة بعد.':'تعذّر الاتصال بالخادم، أعد المحاولة.');inp.focus();return;}

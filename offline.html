@@ -17,7 +17,17 @@ button{font:inherit;font-weight:700;background:#0f2744;color:#fff;border:0;borde
 <img src="icons/icon-192.png" alt="">
 <h1>لا يوجد اتصال بالإنترنت</h1>
 <p>تحتاج المنصة إلى الإنترنت لتسجيل الحضور والتقييم. تحقّق من الاتصال ثم أعد المحاولة.</p>
+<div id="ol"></div>
 <button type="button" onclick="location.reload()">إعادة المحاولة</button>
+<script>
+(function(){var el=document.getElementById('ol'),s=null,ls=[],ttl=7*864e5;try{s=JSON.parse(localStorage.getItem('spss_id')||'null');
+ for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k.indexOf('spss_off_')===0)ls.push(k.slice(9));}}catch(e){}
+ var ok=s&&s.bac&&(Date.now()-Number(localStorage.getItem('spss_seen')||s.t||0)<ttl);
+ if(!ok){el.innerHTML='<p style="color:#b45309">أول تسجيل دخول يحتاج الاتصال بالإنترنت. سجّل دخولك متصلاً ثم حمّل الدروس لقراءتها دون اتصال.</p>';return;}
+ var h='<p>جلستك محفوظة على هذا الجهاز. '+(ls.length?'الدروس المحمّلة:':'لا توجد دروس محمّلة بعد.')+'</p>';
+ ls.forEach(function(p){var n=decodeURIComponent(p.split('/').pop().replace(/\.html$/,'')).replace(/^spss25-/,'').replace(/-/g,' ');h+='<p><a href="'+p+'" style="color:#0f2744;font-weight:700">📘 '+n.replace(/[<>&"]/g,'')+'</a></p>';});
+ el.innerHTML=h;})();
+</script>
 </div>
 <footer dir="rtl" style="position:fixed;bottom:0;left:0;right:0;text-align:center;font-size:12px;color:#cbd5e1;padding:10px 12px calc(10px + env(safe-area-inset-bottom))">© 2026 <a href="https://www.linkedin.com/in/farid-boussafsaf" target="_blank" rel="noopener noreferrer" style="color:inherit;font-weight:700">د. بوصفصاف فريد</a>، كل الحقوق محفوظة · <a href="about.html" style="color:inherit;font-weight:700">من نحن</a></footer>
 </body>
