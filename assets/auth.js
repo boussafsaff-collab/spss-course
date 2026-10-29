@@ -15,7 +15,7 @@ var me=document.currentScript||document.querySelector('script[src*="auth.js"]');
 var PAGE=(me&&me.getAttribute('data-page'))||'session';
 var ROOT=new URL('../',(me&&me.src)?me.src:new URL('assets/auth.js',location.href).href).href;
 // اسم المنصة (مكان واحد مع manifest.webmanifest؛ للتغيير: tools/set-app-name.sh)
-var APP_NAME='بوصلة التعليم',APP_SHORT='بوصلة التعليم';
+var APP_NAME='بوصلتك مع الأستاذ',APP_SHORT='بوصلتك مع الأستاذ';
 var APP_TAG='الدرس في هاتفك، أينما كنت',APP_MODULE='برمجيات إحصائية SPSS';
 // سطر حقوق النشر (مكان واحد لكل الصفحات ولوحة الطالب وبطاقة الدخول؛ offline.html نسخة ثابتة)
 var APP_COPY_YEAR='2026',APP_OWNER='د. بوصفصاف فريد',APP_OWNER_URL='https://www.linkedin.com/in/farid-boussafsaf';

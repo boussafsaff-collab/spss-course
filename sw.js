@@ -5,7 +5,7 @@
    - update70: إشعارات الهاتف (Web Push عبر Firebase Cloud Messaging، رسائل data فقط): يعرض الإشعار، ويفتح رابطه عند النقر،
      ويُعلم الصفحة المفتوحة (شريط داخل المنصة + تحديث الجرس). لا كود Firebase داخل هذا الملف.
    - طلبات Apps Script (script.google.com) ومواقع أخرى: لا يتدخل أبداً. */
-var C='spss-pwa-v62',OFF='offline.html',ABOUT='about.html';
+var C='spss-pwa-v63',OFF='offline.html',ABOUT='about.html';
 self.addEventListener('install',function(e){e.waitUntil(caches.open(C).then(function(c){return c.addAll([OFF,ABOUT,'icons/icon-192.png','icons/logo-128.png?v=3','icons/badge-96.png']);}).then(function(){return self.skipWaiting();}));});
 self.addEventListener('activate',function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf('spss-pwa-')===0&&k!==C||k.indexOf('spss-static-')===0&&k!==SC;}).map(function(k){return caches.delete(k);}));}).then(function(){return self.clients.claim();}));});
 // update73: ملفات ثابتة: ذات ?v= (لا تتغيّر أبداً) ومكتبات CDN ذات الإصدار: من الذاكرة أولاً؛ الصور والخطوط: تُعرض المخزّنة وتُحدَّث في الخلفية.
@@ -32,7 +32,7 @@ self.addEventListener('push',function(e){var j={},d={};
  try{j=e.data?e.data.json():{};}catch(x){try{j={data:{body:e.data.text()}};}catch(y){}}
  d=j.data||j||{};if(j.notification){d.title=d.title||j.notification.title;d.body=d.body||j.notification.body;}
  var sc=self.registration.scope,url;try{url=new URL(d.url||'alerts.html',sc).href;}catch(x){url=sc+'alerts.html';}
- var ttl=String(d.title||'بوصلة التعليم'),bd=String(d.body||''),ios=/iPhone|iPad|iPod|Macintosh/i.test((self.navigator&&self.navigator.userAgent)||'');
+ var ttl=String(d.title||'بوصلتك مع الأستاذ'),bd=String(d.body||''),ios=/iPhone|iPad|iPod|Macintosh/i.test((self.navigator&&self.navigator.userAgent)||'');
  e.waitUntil(self.clients.matchAll({type:'window',includeUncontrolled:true}).then(function(cs){
   var fg=false;cs.forEach(function(c){try{c.postMessage({t:'push',title:ttl,body:bd,url:url,kind:d.kind||'',tag:d.tag||''});}catch(x){}if(c.visibilityState==='visible'&&c.focused)fg=true;});
   var nv=self.navigator;try{if(nv&&'setAppBadge' in nv)nv.setAppBadge().catch(function(){});}catch(x){}
