@@ -619,7 +619,7 @@ $('rmgo').addEventListener('click',function(){
   });
 });
 document.addEventListener('toggle',function(ev){var d=ev.target; if(d&&d.getAttribute&&d.getAttribute('data-sg')){if(d.open)stOpen[d.getAttribute('data-sg')]=1;else delete stOpen[d.getAttribute('data-sg')];}},true);
-function call(o){o.key=key;var a=o.action,c=TPC[a]&&!o.fresh&&!o.id;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{var j=JSON.parse(t);if(c&&j&&j.ok){try{localStorage.setItem('tp_c_'+a,JSON.stringify({t:Date.now(),r:j}));}catch(e){}}return j;}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
+var WSEQ=0;function call(o){o.key=key;var a=o.action,c=TPC[a]&&!o.fresh&&!o.id,w0=WSEQ;if(!TPC[a]&&!/^(askey|asroll|asattstats|asstats|asmsglist|asfind|ascnt)$/.test(a))WSEQ++;return fetch(API,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.text();}).then(function(t){try{var j=JSON.parse(t);if(c&&j&&j.ok&&w0===WSEQ){try{localStorage.setItem('tp_c_'+a,JSON.stringify({t:Date.now(),r:j}));}catch(e){}}return j;}catch(e){return {ok:0,err:'NET'};}}).catch(function(){return {ok:0,err:'NET'};});}
 /* update73: آخر نسخة من بيانات اللوحة تُعرض فوراً عند الفتح ثم تُستبدل بالجديدة (تُمسح عند أي تعديل) */
 var TPC={asadmin:1,asrqlist:1,asstudlist:1};
 function tpC(a){try{var c=JSON.parse(localStorage.getItem('tp_c_'+a)||'null');return c&&c.r&&c.r.ok&&Date.now()-c.t<6*3600e3?c.r:null;}catch(e){return null;}}
@@ -1030,10 +1030,12 @@ window.addEventListener('hashchange',function(){var h=hashTab();if(h&&h!==tab)se
 syncNav();
 setTab(hashTab()||SS.get('as_ttab')||'open');
 var LD_P=null;
+function reload(){return (LD_P||Promise.resolve()).then(function(){},function(){}).then(load);}
 function load(){if(LD_P)return LD_P;LD_P=load0().then(function(x){LD_P=null;return x;},function(e){LD_P=null;throw e;});return LD_P;}
 function load0(){
   if(!items.length){var c0=tpC('asadmin');if(c0&&c0.items){items=c0.items;try{render();}catch(e){}}}
-  return call({action:'asadmin'}).then(function(r){
+  var w0=WSEQ;return call({action:'asadmin'}).then(function(r){
+    if(r.ok&&w0!==WSEQ)return;   // update77: رد بدأ قبل تعديل: لا يُرسم (يتبعه تحميل جديد)
     if(!r.ok){if(r.err==='BAD_KEY'){logout();$('kerr').textContent=msg(r.err);}else $('perr').textContent=msg(r.err);return;}
     $('perr').textContent='';items=r.items;render();loadStats(false);
   });
@@ -1062,7 +1064,8 @@ function attLine(i){
   var a=i.att, t=a?Object.keys(a).map(function(k){return esc(k)+' '+a[k];}).join('، '):'';
   var ab=i.abs==='all';
   return '<div class="lr"><i class="fa-solid fa-user-check"></i> يجريه من سُجّل حضوره في المحاضرة'+(ab?'، و<b>الغائبون «غ»</b> أيضاً':' فقط')+(t?' (الحاضرون: '+t+')':'')+'.</div>'+
-   '<button class="btn lt" type="button" data-abs="'+esc(i.id)+'" data-absm="'+(ab?'off':'all')+'" aria-pressed="'+(ab?'true':'false')+'"><i class="fa-solid '+(ab?'fa-user-xmark':'fa-user-plus')+'"></i>'+(ab?'منع الغائبين «غ» من إجرائه':'السماح للغائبين «غ» بإجرائه')+'</button>'+(i.abs==='test'?'<span class="s"> (مفعّل للأرقام التجريبية فقط)</span>':'');
+   '<div class="lr" style="font-weight:700;color:'+(ab?'#15803d':'#64748b')+'"><i class="fa-solid '+(ab?'fa-toggle-on':'fa-toggle-off')+'"></i> تقييم الغائبين «غ»: '+(ab?'مفعّل':'غير مفعّل')+'</div>'+
+   '<button class="btn '+(ab?'red':'go')+'" type="button" data-abs="'+esc(i.id)+'" data-absm="'+(ab?'off':'all')+'" aria-pressed="'+(ab?'true':'false')+'"><i class="fa-solid '+(ab?'fa-user-xmark':'fa-user-plus')+'"></i>'+(ab?'منع الغائبين «غ» من إجرائه':'السماح للغائبين «غ» بإجرائه')+'</button>'+(i.abs==='test'?'<span class="s"> (مفعّل للأرقام التجريبية فقط)</span>':'');
 }
 function schSum(i){
   var S=i.sched||{};
@@ -1169,7 +1172,7 @@ $('secs').addEventListener('click',function(ev){
     else v=Number(t.getAttribute('data-tp'));
     if(v===curSec(i))delete dr[id];else dr[id]=v; tmsg[id]=''; render(); return;}
   var ab=ev.target.closest('[data-abs]');if(ab){var am=ab.getAttribute('data-absm');if(am==='all'&&!confirm('السماح للطلبة المسجَّلين غائبين «غ» في هذه المحاضرة بإجراء تقييمها؟ (من لم يسجّل حضوره أصلاً يبقى ممنوعاً)'))return;ab.disabled=true;
-   call({action:'asabs',id:ab.getAttribute('data-abs'),mode:am}).then(function(r){ab.disabled=false;if(!r.ok){$('perr').textContent=msg(r.err);return;}load();});return;}
+   var aid=ab.getAttribute('data-abs');call({action:'asabs',id:aid,mode:am}).then(function(r){ab.disabled=false;if(!r.ok){$('perr').textContent=msg(r.err);return;}var it=byId(aid);if(it){it.abs=r.mode;render();}reload();});return;}
   var b=ev.target.closest('[data-id]');if(!b)return;
   var id=b.getAttribute('data-id'),op=b.getAttribute('data-open');b.disabled=true;
   call({action:'asset',id:id,open:op}).then(function(r){b.disabled=false;if(!r.ok){$('perr').textContent=msg(r.err);return;}load();});});
