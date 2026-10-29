@@ -808,7 +808,7 @@ function bookMode(){if(PAGE!=='session')return;var b=document.body;
  var on=lg(PK)!=='scroll',P=[],AT=[],cur=0,bar=null,tm=0;
  function vis(e){return e.offsetHeight>0;}
  function atoms(e,H,out){var k=Array.prototype.filter.call(e.children,function(x){return !/^(SCRIPT|STYLE)$/.test(x.tagName);});
-  if(e.offsetHeight>H&&k.filter(vis).length>1)k.forEach(function(x){atoms(x,H,out);});else out.push(e);}
+  if(e.offsetHeight>H&&k.filter(vis).length>=1)k.forEach(function(x){atoms(x,H,out);});else out.push(e);}
  function measure(){AT.forEach(function(x){x.classList.remove('bk-off');});S.forEach(function(x){x.classList.remove('bk-off');});P=[];AT=[];
   var H=Math.max(320,window.innerHeight-210);
   S.forEach(function(sec){var kids=Array.prototype.filter.call(sec.children,function(x){return !/^(SCRIPT|STYLE)$/.test(x.tagName);});
