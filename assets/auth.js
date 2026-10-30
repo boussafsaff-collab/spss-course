@@ -567,7 +567,8 @@ function pnAuto(n){n=n||0;if(!ID||(puOk()&&Notification.permission==='granted')|
  var want=sg('spss_pn_after')==='1'||(isSA()&&sg('spss_pn_seen')!=='1'&&!pnSnz());if(!want)return;
  if(document.getElementById('spss-ins')||document.getElementById('spss-lg')){if(n<40)setTimeout(function(){pnAuto(n+1);},1500);return;}
  setTimeout(function(){if(!document.getElementById('spss-ins'))pnOpen();else pnAuto(n+1);},n?400:1800);}
-function init(){addCss();if(PAGE==='landing')landingUI();bar();if(PAGE==='alerts')alPage();puMsg();if(ID)setTimeout(puRefresh,2500);if(ID)setTimeout(pnInit,600);filterUI();instInit();anInit();lpInit();setTimeout(rwInst,3000);copyInit();aboutNav();
+function fontInit(){try{if(document.querySelector('link[href*="family=Cairo"]'))return;var l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap';document.head.appendChild(l);}catch(e){}}
+function init(){fontInit();addCss();if(PAGE==='landing')landingUI();bar();if(PAGE==='alerts')alPage();puMsg();if(ID)setTimeout(puRefresh,2500);if(ID)setTimeout(pnInit,600);filterUI();instInit();anInit();lpInit();setTimeout(rwInst,3000);copyInit();aboutNav();
  if(ID&&ID.role==='student'&&ID.free===undefined)getJ({action:'aslist',sbac:ID.bac}).then(function(r){if(r&&r.ok&&r.who){var s=pj(lg('spss_id'))||{};if(s.bac===ID.bac){s.free=r.who.free?1:0;ls('spss_id',JSON.stringify(s));if(s.free&&FLT)location.reload();}}});
  if(PAGE==='session'){if(!(BIZ&&TPPAGE))sessionUI();}else if(PAGE==='assess')assessUI();
  else if(PAGE==='teacher'&&ID&&ID.role==='tstu'){/* لوحة الأستاذ متاحة دائماً بالرمز */}}
