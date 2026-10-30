@@ -391,7 +391,7 @@ function mnBuild(){var r=ID.role,h='',home=ROOT+'index.html';
  else{
   h+='<p class="gh">لوحة الطالب</p>'+MET.map(function(x){return '<button type="button" class="it" data-x="me" data-g="'+x[0]+'"><span class="ic" aria-hidden="true">'+({m:'📊',a:'🗓️',l:'🧑‍🏫',p:'💻'}[x[0]]||'•')+'</span><span>'+x[2]+'</span></button>';}).join('');
   if(r==='tstu')h+='<p class="gh">وضع التجربة</p>'+mnItem('back','↩️','العودة إلى دور الأستاذ');}
- h+='<p class="gh">المنصة</p>'+mnItem('push','🔔',puLabel())+(instGone()?'':mnItem('inst',insIc,'تثبيت '+esc(APP_SHORT)))+mnItem('','ℹ️','من نحن','',ROOT+'about.html',PAGE==='about');  h+='<div class="spss-ver" style="margin:8px 12px 4px;padding:10px 12px;border-radius:12px;background:rgba(100,116,139,.12);font-size:13.5px;line-height:1.8"><div>📱 نسخة التطبيق الحالية: <b class="vn">'+verNm(lg('spss_ver_seen'))+'</b></div><button type="button" class="vc" style="margin-top:6px;width:100%;font:inherit;font-weight:800;border:0;border-radius:10px;padding:9px 10px;background:#0284c7;color:#fff;cursor:pointer">🔄 بحث عن تحديثات</button><div class="vm" role="status" aria-live="polite" style="margin-top:6px;font-weight:700"></div></div>';
+ h+='<p class="gh">المنصة</p>'+mnItem('push','🔔',puLabel())+(instGone()?'':mnItem('inst',insIc,'تثبيت '+esc(APP_SHORT)))+mnItem('','🏆','المكافآت والاستشهادات','',ROOT+'rewards.html',PAGE==='rewards')+mnItem('','ℹ️','من نحن','',ROOT+'about.html',PAGE==='about');  h+='<div class="spss-ver" style="margin:8px 12px 4px;padding:10px 12px;border-radius:12px;background:rgba(100,116,139,.12);font-size:13.5px;line-height:1.8"><div>📱 نسخة التطبيق الحالية: <b class="vn">'+verNm(lg('spss_ver_seen'))+'</b></div><button type="button" class="vc" style="margin-top:6px;width:100%;font:inherit;font-weight:800;border:0;border-radius:10px;padding:9px 10px;background:#0284c7;color:#fff;cursor:pointer">🔄 بحث عن تحديثات</button><div class="vm" role="status" aria-live="polite" style="margin-top:6px;font-weight:700"></div></div>';
  h+='</div><div class="ft">'+mnItem('out','🚪',r==='student'?'تغيير المستخدم / خروج':'خروج','dg')+'</div>';
  return h;}
 function verNm(v){var m=String(v||'').match(/v(\d+)/);if(!m)return'…';var n=+m[1];return 'الإصدار \u200e'+(1+Math.floor(n/1000))+'.'+('00'+(n%1000)).slice(-3)+'\u200e';}
@@ -567,7 +567,7 @@ function pnAuto(n){n=n||0;if(!ID||(puOk()&&Notification.permission==='granted')|
  var want=sg('spss_pn_after')==='1'||(isSA()&&sg('spss_pn_seen')!=='1'&&!pnSnz());if(!want)return;
  if(document.getElementById('spss-ins')||document.getElementById('spss-lg')){if(n<40)setTimeout(function(){pnAuto(n+1);},1500);return;}
  setTimeout(function(){if(!document.getElementById('spss-ins'))pnOpen();else pnAuto(n+1);},n?400:1800);}
-function init(){addCss();if(PAGE==='landing')landingUI();bar();if(PAGE==='alerts')alPage();puMsg();if(ID)setTimeout(puRefresh,2500);if(ID)setTimeout(pnInit,600);filterUI();instInit();anInit();copyInit();aboutNav();
+function init(){addCss();if(PAGE==='landing')landingUI();bar();if(PAGE==='alerts')alPage();puMsg();if(ID)setTimeout(puRefresh,2500);if(ID)setTimeout(pnInit,600);filterUI();instInit();anInit();lpInit();setTimeout(rwInst,3000);copyInit();aboutNav();
  if(ID&&ID.role==='student'&&ID.free===undefined)getJ({action:'aslist',sbac:ID.bac}).then(function(r){if(r&&r.ok&&r.who){var s=pj(lg('spss_id'))||{};if(s.bac===ID.bac){s.free=r.who.free?1:0;ls('spss_id',JSON.stringify(s));if(s.free&&FLT)location.reload();}}});
  if(PAGE==='session'){if(!(BIZ&&TPPAGE))sessionUI();}else if(PAGE==='assess')assessUI();
  else if(PAGE==='teacher'&&ID&&ID.role==='tstu'){/* لوحة الأستاذ متاحة دائماً بالرمز */}}
@@ -762,6 +762,29 @@ function anInit(){if(location.protocol!=='https:')return;var ev=['pv_'+anK()];
  if(document.visibilityState==='visible')go();
  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')go();else stop();});
  window.addEventListener('pagehide',stop);}
+// update135: تتبّع مراجعة المحاضرة (المحتوى + الشرائح 100%) شرطًا لتقييمها، ومكافأة تثبيت التطبيق
+function rwBac(){return ID&&(ID.role==='student'||ID.role==='tstu')?String(ID.bac||''):'';}
+function rwPost(o){o.sbac=rwBac();if(!o.sbac)return Promise.resolve(null);return fetch(U,{method:'POST',body:new URLSearchParams(o)}).then(function(r){return r.json()}).catch(function(){return null});}
+function rwInst(){var b=rwBac();if(!b)return;if(!(isSA()||lg('spss_inst')==='1'))return;var k='spss_rw_inst_'+b;if(lg(k)==='1')return;rwPost({action:'rwinst',how:isSA()?'sa':'mark'}).then(function(r){if(r&&r.ok)ls(k,'1');});}
+function lpInit(){if(PAGE!=='session'||TPPAGE)return;var m=location.pathname.match(/\/l(\d+)\//);if(!m)return;var num=+m[1],b=rwBac();
+ var K='spss_lp_'+num+'_'+(b||'g'),st=pj(lg(K))||{c:{},s:{}};function sv(){ls(K,JSON.stringify(st));}
+ var secs=[].slice.call(document.querySelectorAll('[id^="content-"]')).filter(function(e){return /^content-(intro|mod-\d+)$/.test(e.id);});
+ function cP(){return secs.length?Math.round(secs.filter(function(e){return st.c[e.id]}).length/secs.length*100):100;}
+ var dk=document.getElementById('dk'),N=dk?dk.querySelectorAll('.trk > *').length:0;
+ function slOff(){var bt=document.getElementById('deck-btn');return !dk||!N||(bt&&bt.disabled);}
+ function sP(){if(slOff())return 100;var n=0;for(var i=1;i<=N;i++)if(st.s[i])n++;return Math.round(n/N*100);}
+ var chip=document.createElement('div');chip.id='spss-lp';chip.setAttribute('role','status');
+ chip.style.cssText='position:fixed;bottom:12px;inset-inline-start:12px;z-index:2147482000;background:#0f172a;color:#fff;border-radius:999px;padding:7px 14px;font:700 12.5px/1.5 Cairo,system-ui,sans-serif;direction:rtl;box-shadow:0 6px 20px -6px #0008;cursor:pointer;max-width:calc(100vw - 24px)';
+ chip.title='تقدّم مراجعة المحاضرة';var sent=lg(K+'_ok')==='1';
+ function paint(){var c=cP(),p=sP(),ok=c>=100&&p>=100;chip.style.background=ok?'#15803d':'#0f172a';chip.textContent=ok?'✅ راجعت المحاضرة كاملةً'+(num>=3?' · التقييم متاح':''):'📖 المراجعة: المحتوى '+c+'% · الشرائح '+p+'%';
+  if(ok&&!sent&&b){sent=true;rwPost({action:'lpdone',lec:num,pc:c,ps:p}).then(function(r){if(r&&r.ok)ls(K+'_ok','1');else sent=false;});}}
+ chip.onclick=function(){var miss=secs.filter(function(e){return !st.c[e.id]}).map(function(e){var h=e.parentNode&&e.parentNode.querySelector('h2,h3,button');return h?h.textContent.trim().slice(0,50):e.id;});
+  alert('مراجعة المحاضرة '+num+':\n• المحتوى: '+cP()+'%'+(miss.length?'\n  أقسام لم تُكمل قراءتها حتى آخرها: '+miss.join('، '):'')+'\n• الشرائح: '+sP()+'%'+(sP()<100?' (اعرض الشرائح وتنقّل بينها حتى آخر شريحة)':'')+(num>=3?'\n\nلا يُفتح تقييم المحاضرة إلا بعد بلوغ 100% في الاثنين.':''));};
+ if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting&&x.target.offsetParent!==null){st.c[x.target.getAttribute('data-lp')]=1;sv();paint();}});},{threshold:0.5});
+  secs.forEach(function(e){var t=document.createElement('div');t.setAttribute('data-lp',e.id);t.style.cssText='height:2px';e.appendChild(t);io.observe(t);});}
+ else secs.forEach(function(e){st.c[e.id]=1;});
+ if(dk){var cn=dk.querySelector('.cnt');var rd=function(){var mm=(cn&&cn.textContent||'').match(/(\d+)\s*\/\s*(\d+)/);if(mm&&!st.s[mm[1]]){st.s[mm[1]]=1;sv();paint();}};if(cn){try{new MutationObserver(rd).observe(cn,{childList:true,characterData:true,subtree:true});}catch(e){}}var bt=document.getElementById('deck-btn');if(bt)try{new MutationObserver(paint).observe(bt,{attributes:true});}catch(e){}}
+ document.body.appendChild(chip);paint();}
 function instInit(){
  try{document.documentElement.setAttribute('data-ins',isSA()?'sa':(IOS?'ios':(INAPP?'inapp':'web')));}catch(e){}
  if(isSA()){if(lg('spss_inst')!=='1')ls('spss_inst_src','standalone');ls('spss_inst','1');}
@@ -771,7 +794,7 @@ function instInit(){
   // المتصفح لا يعرض هذا الحدث إن كانت المنصة مثبتة: علامة «مثبتة» قديمة ⇒ أُزيلت التطبيق
   if(lg('spss_inst')==='1'&&lg('spss_inst_src')!=='ios-btn'){ls('spss_inst',null);}
   if(INS.want===1)instShow('bip');});
- window.addEventListener('appinstalled',function(){instMark('appinstalled');});
+ window.addEventListener('appinstalled',function(){instMark('appinstalled');setTimeout(rwInst,1500);});
  if(navigator.getInstalledRelatedApps){try{navigator.getInstalledRelatedApps().then(function(a){if(a&&a.length)instMark('related');}).catch(function(){});}catch(e){}}
  if(!ID)return;
  var after=sg('spss_inst_after')==='1';

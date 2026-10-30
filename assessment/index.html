@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<script src="../assets/auth.js?v=710" data-page="assess"></script>
+<script src="../assets/auth.js?v=711" data-page="assess"></script>
 <link rel="manifest" href="../manifest.webmanifest?v=4">
 <meta name="theme-color" content="#0f2744">
 <link rel="icon" type="image/png" sizes="32x32" href="../icons/favicon-32.png?v=3">
@@ -251,7 +251,7 @@ function begin(id,btn){
   if(btn)btn.disabled=true;
   call({action:'asstart',sbac:bac,id:id}).then(function(r){
     if(btn)btn.disabled=false;
-    if(!r.ok){if(r.err!=='NET'){LS.del(skey(id));if(btn)alert(r.msg||msg(r.err));load();}else alert(msg(r.err));return;}
+    if(!r.ok){if(r.err!=='NET'){LS.del(skey(id));if(r.err==='NOT_READ'){if(confirm(r.msg+'\n\nهل تريد فتح صفحة المحاضرات الآن للمراجعة؟'))location.href='../lectures/';}else if(btn)alert(r.msg||msg(r.err));load();}else alert(msg(r.err));return;}
     var now=Date.now(), sig=r.qs.map(function(q){return q.id;}).join(',')+'|'+(r.vid||'');
     Q={id:r.id,title:r.title,topic:r.topic,mode:r.mode,total:r.total,qs:r.qs,vid:r.vid,sig:sig,t0:now-r.el*1000,qi:0,qt0:0,ans:{},cur:0,w:0,sent:false};
     var old=null; try{old=JSON.parse(LS.get(skey(id))||'null');}catch(e){}
