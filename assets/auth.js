@@ -777,10 +777,10 @@ function lpInit(){if(PAGE!=='session'||TPPAGE)return;var m=location.pathname.mat
  var chip=document.createElement('div');chip.id='spss-lp';chip.setAttribute('role','status');
  chip.style.cssText='position:fixed;bottom:12px;inset-inline-start:12px;z-index:2147482000;background:#0f172a;color:#fff;border-radius:999px;padding:7px 14px;font:700 12.5px/1.5 Cairo,system-ui,sans-serif;direction:rtl;box-shadow:0 6px 20px -6px #0008;cursor:pointer;max-width:calc(100vw - 24px)';
  chip.title='تقدّم مراجعة المحاضرة';var sent=lg(K+'_ok')==='1';
- function paint(){var c=cP(),p=sP(),ok=c>=100&&p>=100;chip.style.background=ok?'#15803d':'#0f172a';chip.textContent=ok?'✅ راجعت المحاضرة كاملةً'+(num>=3?' · التقييم متاح':''):'📖 المراجعة: المحتوى '+c+'% · الشرائح '+p+'%';
+ function paint(){var c=cP(),p=sP(),ok=c>=100&&p>=100;chip.style.background=ok?'#15803d':'#0f172a';chip.textContent=ok?'✅ راجعت المحاضرة كاملةً'+' · التقييم متاح':'📖 المراجعة: المحتوى '+c+'% · الشرائح '+p+'%';
   if(ok&&!sent&&b){sent=true;rwPost({action:'lpdone',lec:num,pc:c,ps:p}).then(function(r){if(r&&r.ok)ls(K+'_ok','1');else sent=false;});}}
  chip.onclick=function(){var miss=secs.filter(function(e){return !st.c[e.id]}).map(function(e){var h=e.parentNode&&e.parentNode.querySelector('h2,h3,button');return h?h.textContent.trim().slice(0,50):e.id;});
-  alert('مراجعة المحاضرة '+num+':\n• المحتوى: '+cP()+'%'+(miss.length?'\n  أقسام لم تُكمل قراءتها حتى آخرها: '+miss.join('، '):'')+'\n• الشرائح: '+sP()+'%'+(sP()<100?' (اعرض الشرائح وتنقّل بينها حتى آخر شريحة)':'')+(num>=3?'\n\nلا يُفتح تقييم المحاضرة إلا بعد بلوغ 100% في الاثنين.':''));};
+  alert('مراجعة المحاضرة '+num+':\n• المحتوى: '+cP()+'%'+(miss.length?'\n  أقسام لم تُكمل قراءتها حتى آخرها: '+miss.join('، '):'')+'\n• الشرائح: '+sP()+'%'+(sP()<100?' (اعرض الشرائح وتنقّل بينها حتى آخر شريحة)':'')+'\n\nلا يُفتح تقييم المحاضرة إلا بعد بلوغ 100% في الاثنين.');};
  if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting&&x.target.offsetParent!==null){st.c[x.target.getAttribute('data-lp')]=1;sv();paint();}});},{threshold:0.5});
   secs.forEach(function(e){var t=document.createElement('div');t.setAttribute('data-lp',e.id);t.style.cssText='height:2px';e.appendChild(t);io.observe(t);});}
  else secs.forEach(function(e){st.c[e.id]=1;});
